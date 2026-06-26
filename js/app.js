@@ -383,9 +383,9 @@ function buildMapView() {
   html += '<text x="210" y="260" class="fp-room-label">洗漱台</text>';
 
   // Kitchen
-  html += '<rect x="560" y="320" width="240" height="180" rx="6" class="fp-room fp-kitchen"/>';
-  html += '<text x="680" y="410" class="fp-room-label">厨房</text>';
-  html += '<text x="680" y="432" class="fp-room-area">~12㎡</text>';
+  html += '<rect x="380" y="320" width="420" height="180" rx="6" class="fp-room fp-kitchen"/>';
+  html += '<text x="590" y="410" class="fp-room-label">厨房</text>';
+  html += '<text x="590" y="432" class="fp-room-area">~12㎡</text>';
 
   // Entry Corridor
   html += '<rect x="280" y="320" width="100" height="180" rx="6" class="fp-room fp-entry"/>';
