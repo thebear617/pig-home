@@ -98,5 +98,16 @@ const phases = [
     subtitle: '记录每日水电用量，追踪能耗趋势',
     type: 'calendar',
     sections: []
+  },
+  {
+    id: 'home-map',
+    title: '猪窝地图',
+    subtitle: '记录重要物资的存放位置',
+    type: 'map',
+    sections: []
   }
+];
+
+const locations = [
+  { item: '合同', location: '主卧床头柜' }
 ];
