@@ -948,3 +948,44 @@ button {
   background: var(--line);
   flex-shrink: 0;
 }
+
+/* ─── Map ─── */
+
+.map-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: .75rem;
+  animation: fadeIn .2s ease;
+}
+
+.map-card {
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: var(--surface);
+  padding: 1.2rem 1.1rem;
+  box-shadow: var(--shadow);
+  transition: border-color .15s, transform .15s;
+}
+
+.map-card:hover {
+  border-color: #c08a2f;
+  transform: translateY(-2px);
+}
+
+.map-item-name {
+  font-size: 1.05rem;
+  font-weight: 900;
+  color: var(--dark);
+  letter-spacing: .03em;
+}
+
+.map-location {
+  margin-top: .4rem;
+  color: var(--muted);
+  font-size: .88rem;
+  font-weight: 600;
+}
+
+.map-location::before {
+  content: '📍 ';
+}

@@ -74,6 +74,7 @@ function getMonthRecords(year, month) {
 
 function getTotalItems(phase) {
   if (phase.type === 'calendar') return new Date(state.calendarYear, state.calendarMonth, 0).getDate() + '天';
+  if (phase.type === 'map') return locations.length + '项';
   let count = 0;
   if (phase.sections) for (const s of phase.sections) count += s.items.length;
   return count + '项';
@@ -360,11 +361,26 @@ function setupCalendar() {
   }
 }
 
+/* ─── Map view ─── */
+
+function buildMapView() {
+  let html = '<div class="map-grid">';
+  for (const loc of locations) {
+    html += '<div class="map-card">';
+    html += `<h3 class="map-item-name">${escapeHtml(loc.item)}</h3>`;
+    html += `<p class="map-location">${escapeHtml(loc.location)}</p>`;
+    html += '</div>';
+  }
+  html += '</div>';
+  return html;
+}
+
 /* ─── Render ─── */
 
 function buildPhaseContent(phase) {
   if (phase.type === 'checklist') return buildChecklistView(phase);
   if (phase.type === 'calendar') return buildCalendarView();
+  if (phase.type === 'map') return buildMapView();
   return '';
 }
 
