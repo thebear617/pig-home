@@ -383,18 +383,18 @@ function buildMapView() {
   html += '<text x="210" y="260" class="fp-room-label">洗漱台</text>';
 
   // Kitchen
-  html += '<rect x="0" y="320" width="210" height="180" rx="6" class="fp-room fp-kitchen"/>';
-  html += '<text x="105" y="410" class="fp-room-label">厨房</text>';
-  html += '<text x="105" y="432" class="fp-room-area">~7㎡</text>';
+  html += '<rect x="560" y="320" width="240" height="180" rx="6" class="fp-room fp-kitchen"/>';
+  html += '<text x="680" y="410" class="fp-room-label">厨房</text>';
+  html += '<text x="680" y="432" class="fp-room-area">~12㎡</text>';
 
   // Entry Corridor
-  html += '<rect x="210" y="320" width="90" height="180" rx="6" class="fp-room fp-entry"/>';
-  html += '<text x="255" y="415" class="fp-room-label fp-vertical-label">入户通道</text>';
+  html += '<rect x="280" y="320" width="100" height="180" rx="6" class="fp-room fp-entry"/>';
+  html += '<text x="330" y="415" class="fp-room-label fp-vertical-label">入户通道</text>';
 
   // 次卧
-  html += '<rect x="300" y="320" width="260" height="180" rx="6" class="fp-room fp-second"/>';
-  html += '<text x="430" y="410" class="fp-room-label">次卧</text>';
-  html += '<text x="430" y="432" class="fp-room-area">~12㎡</text>';
+  html += '<rect x="0" y="320" width="280" height="180" rx="6" class="fp-room fp-second"/>';
+  html += '<text x="140" y="410" class="fp-room-label">次卧</text>';
+  html += '<text x="140" y="432" class="fp-room-area">~7㎡</text>';
 
   // Dining + Living
   html += '<rect x="280" y="0" width="520" height="320" rx="6" class="fp-room fp-living"/>';
@@ -402,8 +402,8 @@ function buildMapView() {
   html += '<text x="540" y="178" class="fp-room-area fp-area-large">~30㎡</text>';
 
   // Door icon for entry
-  html += '<path d="M210 440 L180 440 L180 500" class="fp-door"/>';
-  html += '<text x="168" y="490" class="fp-door-label">入户门</text>';
+  html += '<path d="M280 440 L250 440 L250 500" class="fp-door"/>';
+  html += '<text x="238" y="490" class="fp-door-label">入户门</text>';
 
   html += '</svg>';
   html += '</div>';
