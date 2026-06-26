@@ -364,7 +364,53 @@ function setupCalendar() {
 /* ─── Map view ─── */
 
 function buildMapView() {
-  let html = '<div class="map-grid">';
+  let html = '';
+  html += '<div class="floor-plan">';
+  html += '<svg viewBox="0 0 800 500" class="fp-svg">';
+
+  // Master Bedroom
+  html += '<rect x="0" y="0" width="280" height="200" rx="6" class="fp-room fp-master"/>';
+  html += '<text x="140" y="100" class="fp-room-label">主卧</text>';
+  html += '<text x="140" y="122" class="fp-room-area">~12㎡</text>';
+
+  // Bathroom
+  html += '<rect x="0" y="200" width="140" height="120" rx="6" class="fp-room fp-bath"/>';
+  html += '<text x="70" y="260" class="fp-room-label">卫生间</text>';
+  html += '<text x="70" y="282" class="fp-room-area">~4㎡</text>';
+
+  // Wash Basin
+  html += '<rect x="140" y="200" width="140" height="120" rx="6" class="fp-room fp-wash"/>';
+  html += '<text x="210" y="260" class="fp-room-label">洗漱台</text>';
+
+  // Kitchen
+  html += '<rect x="0" y="320" width="210" height="180" rx="6" class="fp-room fp-kitchen"/>';
+  html += '<text x="105" y="410" class="fp-room-label">厨房</text>';
+  html += '<text x="105" y="432" class="fp-room-area">~7㎡</text>';
+
+  // Entry Corridor
+  html += '<rect x="210" y="320" width="90" height="180" rx="6" class="fp-room fp-entry"/>';
+  html += '<text x="255" y="415" class="fp-room-label fp-vertical-label">入户通道</text>';
+
+  // 次卧
+  html += '<rect x="300" y="320" width="260" height="180" rx="6" class="fp-room fp-second"/>';
+  html += '<text x="430" y="410" class="fp-room-label">次卧</text>';
+  html += '<text x="430" y="432" class="fp-room-area">~12㎡</text>';
+
+  // Dining + Living
+  html += '<rect x="280" y="0" width="520" height="320" rx="6" class="fp-room fp-living"/>';
+  html += '<text x="540" y="150" class="fp-room-label fp-label-large">餐厅 + 客厅</text>';
+  html += '<text x="540" y="178" class="fp-room-area fp-area-large">~30㎡</text>';
+
+  // Door icon for entry
+  html += '<path d="M210 440 L180 440 L180 500" class="fp-door"/>';
+  html += '<text x="168" y="490" class="fp-door-label">入户门</text>';
+
+  html += '</svg>';
+  html += '</div>';
+
+  html += '<div class="location-section">';
+  html += '<h2 class="location-title">重要物品存放</h2>';
+  html += '<div class="map-grid">';
   for (const loc of locations) {
     html += '<div class="map-card">';
     html += `<h3 class="map-item-name">${escapeHtml(loc.item)}</h3>`;
@@ -372,6 +418,8 @@ function buildMapView() {
     html += '</div>';
   }
   html += '</div>';
+  html += '</div>';
+
   return html;
 }
 
