@@ -951,6 +951,97 @@ button {
 
 /* ─── Map ─── */
 
+.floor-plan {
+  margin-bottom: 1.5rem;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: var(--surface);
+  box-shadow: var(--shadow);
+  overflow: hidden;
+}
+
+.fp-svg {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.fp-room {
+  fill: var(--surface-soft);
+  stroke: var(--line);
+  stroke-width: 1.5;
+  transition: fill .15s;
+}
+
+.fp-room:hover {
+  fill: #f0ece6;
+}
+
+.fp-master     { fill: #fdf2f8; }
+.fp-bath       { fill: #eff6ff; }
+.fp-wash       { fill: #f0fdf4; }
+.fp-kitchen    { fill: #fff7ed; }
+.fp-second     { fill: #f5f3ff; }
+.fp-living     { fill: #fefce8; }
+.fp-entry      { fill: #f9fafb; }
+
+.fp-room-label {
+  font-size: 14px;
+  font-weight: 800;
+  fill: var(--dark);
+  text-anchor: middle;
+  font-family: -apple-system, "Noto Sans SC", sans-serif;
+}
+
+.fp-room-area {
+  font-size: 11px;
+  font-weight: 600;
+  fill: var(--muted);
+  text-anchor: middle;
+  font-family: -apple-system, "Noto Sans SC", sans-serif;
+}
+
+.fp-label-large {
+  font-size: 18px;
+}
+
+.fp-area-large {
+  font-size: 13px;
+}
+
+.fp-vertical-label {
+  writing-mode: vertical-rl;
+}
+
+.fp-door {
+  fill: none;
+  stroke: var(--amber);
+  stroke-width: 3;
+  stroke-linecap: round;
+}
+
+.fp-door-label {
+  font-size: 11px;
+  font-weight: 700;
+  fill: var(--amber);
+  text-anchor: middle;
+  font-family: -apple-system, "Noto Sans SC", sans-serif;
+}
+
+.location-section {
+  margin-top: 1rem;
+}
+
+.location-title {
+  font-size: 1.05rem;
+  font-weight: 900;
+  color: var(--dark);
+  margin-bottom: .75rem;
+  padding-bottom: .5rem;
+  border-bottom: 2px solid var(--line);
+  letter-spacing: .03em;
+}
+
 .map-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
