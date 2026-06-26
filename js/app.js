@@ -366,7 +366,7 @@ function setupCalendar() {
 function buildMapView() {
   let html = '';
   html += '<div class="floor-plan">';
-  html += '<svg viewBox="0 0 800 500" class="fp-svg">';
+  html += '<svg viewBox="0 0 800 570" class="fp-svg">';
 
   // Master Bedroom
   html += '<rect x="0" y="0" width="280" height="200" rx="6" class="fp-room fp-master"/>';
@@ -402,8 +402,8 @@ function buildMapView() {
   html += '<text x="540" y="178" class="fp-room-area fp-area-large">~30㎡</text>';
 
   // Door icon for entry
-  html += '<path d="M280 440 L250 440 L250 500" class="fp-door"/>';
-  html += '<text x="238" y="490" class="fp-door-label">入户门</text>';
+  html += '<path d="M310 500 L310 530 L350 530 L350 500" class="fp-door"/>';
+  html += '<text x="330" y="550" class="fp-door-label">入户门</text>';
 
   html += '</svg>';
   html += '</div>';
