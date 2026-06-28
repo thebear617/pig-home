@@ -1,7 +1,8 @@
 const utilityRecords = {
   '2026-06-25': { elecRemaining: 15.81 },
   '2026-06-26': { elecRemaining: 11.32 },
-  '2026-06-27': { elecRemaining: 8.33 }
+  '2026-06-27': { elecRemaining: 8.33 },
+  '2026-06-28': { elecRemaining: 4.35 }
 };
 
 const phases = [
