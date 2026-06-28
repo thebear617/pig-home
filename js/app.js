@@ -134,7 +134,8 @@ function buildDetailPanel() {
   let nextRecord = null, consumption = null;
   if (idx >= 0 && idx < records.length - 1) {
     nextRecord = records[idx + 1];
-    consumption = record.elecRemaining - nextRecord.elecRemaining;
+    const nextRecharge = nextRecord.recharge || 0;
+    consumption = record.elecRemaining - nextRecord.elecRemaining + nextRecharge;
   }
 
   const d = new Date(state.selectedDay + 'T00:00:00');
@@ -150,6 +151,12 @@ function buildDetailPanel() {
     <span class="detail-label">剩余电费</span>
     <span class="detail-val">${record.elecRemaining.toFixed(2)} 元</span>
   </div>`;
+  if (record.recharge) {
+    html += `<div class="detail-row">
+      <span class="detail-label">当日充值</span>
+      <span class="detail-val" style="color:var(--green)">+${record.recharge.toFixed(2)} 元</span>
+    </div>`;
+  }
   if (consumption !== null) {
     html += `<div class="detail-row">
       <span class="detail-label">当日消耗</span>
@@ -175,7 +182,8 @@ function buildSummaryBar() {
 
   const first = records[0].elecRemaining;
   const last = records[records.length - 1].elecRemaining;
-  const total = first - last;
+  const totalRecharge = records.reduce((sum, r) => sum + (r.recharge || 0), 0);
+  const total = first + totalRecharge - last;
 
   const d1 = new Date(records[0].dateKey + 'T00:00:00');
   const d2 = new Date(records[records.length - 1].dateKey + 'T00:00:00');
