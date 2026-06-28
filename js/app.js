@@ -131,11 +131,11 @@ function buildDetailPanel() {
 
   const records = getMonthRecords(state.calendarYear, state.calendarMonth);
   const idx = records.findIndex(r => r.dateKey === state.selectedDay);
-  let nextRecord = null, consumption = null;
+  let nextRecord = null, consumption = null, nextRecharge = 0, nextPreBalance = 0;
   if (idx >= 0 && idx < records.length - 1) {
     nextRecord = records[idx + 1];
-    const nextRecharge = nextRecord.recharge || 0;
-    const nextPreBalance = nextRecord.elecRemaining - nextRecharge;
+    nextRecharge = nextRecord.recharge || 0;
+    nextPreBalance = nextRecord.elecRemaining - nextRecharge;
     consumption = record.elecRemaining - nextPreBalance;
   }
 
