@@ -135,7 +135,8 @@ function buildDetailPanel() {
   if (idx >= 0 && idx < records.length - 1) {
     nextRecord = records[idx + 1];
     const nextRecharge = nextRecord.recharge || 0;
-    consumption = record.elecRemaining - nextRecord.elecRemaining + nextRecharge;
+    const nextPreBalance = nextRecord.elecRemaining - nextRecharge;
+    consumption = record.elecRemaining - nextPreBalance;
   }
 
   const d = new Date(state.selectedDay + 'T00:00:00');
@@ -155,14 +156,19 @@ function buildDetailPanel() {
     html += `<div class="detail-row">
       <span class="detail-label">当日充值</span>
       <span class="detail-val" style="color:var(--green)">+${record.recharge.toFixed(2)} 元</span>
+      <span class="detail-note">（充值前余额 ${(record.elecRemaining - record.recharge).toFixed(2)}）</span>
     </div>`;
   }
   if (consumption !== null) {
     html += `<div class="detail-row">
       <span class="detail-label">当日消耗</span>
-      <span class="detail-val consumption">${consumption.toFixed(2)} 元</span>
-      <span class="detail-note">（次日剩余 ${nextRecord.elecRemaining.toFixed(2)}）</span>
-    </div>`;
+      <span class="detail-val consumption">${consumption.toFixed(2)} 元</span>`;
+    if (nextRecharge > 0) {
+      html += `<span class="detail-note">（次日充值前余额 ${nextPreBalance.toFixed(2)}，充值后 ${nextRecord.elecRemaining.toFixed(2)}）</span>`;
+    } else {
+      html += `<span class="detail-note">（次日剩余 ${nextRecord.elecRemaining.toFixed(2)}）</span>`;
+    }
+    html += `</div>`;
   } else {
     html += `<div class="detail-row muted">
       <span class="detail-label">当日消耗</span>
