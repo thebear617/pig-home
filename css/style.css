@@ -1080,3 +1080,75 @@ button {
 .map-location::before {
   content: '📍 ';
 }
+
+/* ─── Food detail ─── */
+
+.food-indicator {
+  font-size: .95rem;
+  line-height: 1;
+}
+
+.food-detail .detail-title::before {
+  content: '🍽️ ';
+}
+
+.food-dishes {
+  display: flex;
+  flex-direction: column;
+  gap: .5rem;
+}
+
+.food-dish-card {
+  display: flex;
+  align-items: center;
+  gap: .6rem;
+  padding: .7rem .9rem;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: var(--surface-soft);
+}
+
+.food-dish-icon {
+  font-size: 1.1rem;
+  flex-shrink: 0;
+}
+
+.food-dish-name {
+  font-size: .9rem;
+  font-weight: 700;
+  color: var(--text);
+}
+
+.food-divider {
+  height: 1px;
+  background: var(--line);
+  margin: .8rem 0;
+}
+
+.food-meta-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+  gap: .5rem;
+}
+
+.food-meta-item {
+  display: flex;
+  flex-direction: column;
+  gap: .15rem;
+}
+
+.food-meta-label {
+  font-size: .75rem;
+  font-weight: 700;
+  color: var(--muted);
+}
+
+.food-meta-value {
+  font-size: .95rem;
+  font-weight: 800;
+  color: var(--text);
+}
+
+.food-cost {
+  color: var(--red);
+}
