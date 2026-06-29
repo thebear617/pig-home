@@ -70,10 +70,24 @@ function getMonthRecords(year, month) {
   return result;
 }
 
+function getFoodMonthRecords(year, month) {
+  const prefix = `${year}-${pad(month)}`;
+  const result = [];
+  for (const [key, record] of Object.entries(foodRecords)) {
+    if (key.startsWith(prefix)) result.push({ dateKey: key, ...record });
+  }
+  result.sort((a, b) => a.dateKey.localeCompare(b.dateKey));
+  return result;
+}
+
 /* ─── Tab bar ─── */
 
 function getTotalItems(phase) {
   if (phase.type === 'calendar') return new Date(state.calendarYear, state.calendarMonth, 0).getDate() + '天';
+  if (phase.type === 'food-calendar') {
+    const records = getFoodMonthRecords(state.calendarYear, state.calendarMonth);
+    return records.length + '次';
+  }
   if (phase.type === 'map') return locations.length + '项';
   let count = 0;
   if (phase.sections) for (const s of phase.sections) count += s.items.length;
@@ -305,6 +319,154 @@ function buildCalendarView() {
   return html;
 }
 
+/* ─── Food calendar view ─── */
+
+function buildFoodCalendarView() {
+  const today = new Date();
+  const calYear = state.calendarYear;
+  const calMonth = state.calendarMonth;
+
+  const firstDay = new Date(calYear, calMonth - 1, 1);
+  const lastDay = new Date(calYear, calMonth, 0);
+  const daysInMonth = lastDay.getDate();
+  const startDow = firstDay.getDay();
+
+  const prevMonthLastDay = new Date(calYear, calMonth - 1, 0).getDate();
+
+  let html = '<div class="calendar-view">';
+
+  html += '<div class="cal-header">';
+  html += `<span class="cal-title">${calYear}年${calMonth}月</span>`;
+  html += '<div class="cal-nav">';
+  html += '<button class="cal-nav-btn" id="calPrev" title="上一月">◀</button>';
+  html += '<button class="cal-today-btn" id="calToday">今天</button>';
+  html += '<button class="cal-nav-btn" id="calNext" title="下一月">▶</button>';
+  html += '</div></div>';
+
+  html += '<div class="cal-weekdays">';
+  for (const w of ['日', '一', '二', '三', '四', '五', '六']) {
+    html += `<span class="cal-weekday">${w}</span>`;
+  }
+  html += '</div>';
+
+  html += '<div class="cal-grid">';
+
+  for (let i = 0; i < startDow; i++) {
+    const d = prevMonthLastDay - startDow + i + 1;
+    const lunar = getLunarInfo(calYear, calMonth - 1, d);
+    html += `<div class="cal-cell cal-other-month">
+      <span class="cal-lunar${lunar.isStart ? ' cal-lunar-start' : ''}">${lunar.isStart ? lunar.lMonthName : getLunarDayName(lunar.lDay)}</span>
+      <span class="cal-date">${d}日</span>
+    </div>`;
+  }
+
+  for (let d = 1; d <= daysInMonth; d++) {
+    const isToday = calYear === today.getFullYear() && calMonth === today.getMonth() + 1 && d === today.getDate();
+    const lunar = getLunarInfo(calYear, calMonth, d);
+    const key = dateKey(calYear, calMonth, d);
+    const record = foodRecords[key];
+    const isSelected = key === state.selectedDay;
+
+    let cls = 'cal-cell';
+    if (isToday) cls += ' cal-today';
+    if (record) cls += ' cal-has-data';
+    if (isSelected) cls += ' cal-selected';
+
+    html += `<div class="${cls}" data-date="${key}">`;
+    html += `<span class="cal-lunar${lunar.isStart ? ' cal-lunar-start' : ''}">${lunar.isStart ? lunar.lMonthName : getLunarDayName(lunar.lDay)}</span>`;
+    html += `<span class="cal-date${isToday ? ' cal-date-today' : ''}">${d}日</span>`;
+    if (record) {
+      html += `<span class="cal-balance food-indicator">🍳</span>`;
+    }
+    html += '</div>';
+  }
+
+  const totalCells = startDow + daysInMonth;
+  const remaining = totalCells % 7 === 0 ? 0 : 7 - (totalCells % 7);
+  for (let d = 1; d <= remaining; d++) {
+    const lunar = getLunarInfo(calYear, calMonth + 1, d);
+    html += `<div class="cal-cell cal-other-month">
+      <span class="cal-lunar${lunar.isStart ? ' cal-lunar-start' : ''}">${lunar.isStart ? lunar.lMonthName : getLunarDayName(lunar.lDay)}</span>
+      <span class="cal-date">${d}日</span>
+    </div>`;
+  }
+
+  html += '</div></div>';
+
+  html += buildFoodDetailPanel();
+  html += buildFoodSummaryBar();
+
+  return html;
+}
+
+function buildFoodDetailPanel() {
+  if (!state.selectedDay) return '';
+  const record = foodRecords[state.selectedDay];
+  if (!record) return '';
+
+  const d = new Date(state.selectedDay + 'T00:00:00');
+  const dayName = `${d.getMonth() + 1}月${d.getDate()}日`;
+
+  let html = '<div class="detail-panel food-detail">';
+  html += '<div class="detail-header">';
+  html += `<span class="detail-title">${dayName} 美食记录</span>`;
+  html += '<button class="detail-close" id="detailClose" title="关闭">✕</button>';
+  html += '</div>';
+  html += '<div class="detail-body">';
+
+  html += '<div class="food-dishes">';
+  for (const dish of record.dishes) {
+    html += `<div class="food-dish-card">
+      <span class="food-dish-icon">🥘</span>
+      <span class="food-dish-name">${escapeHtml(dish)}</span>
+    </div>`;
+  }
+  html += '</div>';
+
+  html += '<div class="food-divider"></div>';
+
+  html += '<div class="food-meta-grid">';
+  html += `<div class="food-meta-item">
+    <span class="food-meta-label">总花费</span>
+    <span class="food-meta-value food-cost">${record.cost} 元</span>
+  </div>`;
+  html += `<div class="food-meta-item">
+    <span class="food-meta-label">主厨</span>
+    <span class="food-meta-value">${escapeHtml(record.chef)}</span>
+  </div>`;
+  if (record.helper) {
+    html += `<div class="food-meta-item">
+      <span class="food-meta-label">帮手</span>
+      <span class="food-meta-value">${escapeHtml(record.helper)}</span>
+    </div>`;
+  }
+  html += '</div>';
+
+  html += '</div></div>';
+  return html;
+}
+
+function buildFoodSummaryBar() {
+  const records = getFoodMonthRecords(state.calendarYear, state.calendarMonth);
+  if (records.length === 0) return '';
+
+  let totalCost = 0;
+  for (const r of records) totalCost += r.cost || 0;
+
+  let html = '<div class="summary-bar">';
+  html += '<div class="summary-item">';
+  html += `<span class="summary-label">${state.calendarMonth}月做饭</span>`;
+  html += `<span class="summary-value">${records.length} 次</span>`;
+  html += '</div>';
+  html += '<div class="summary-divider"></div>';
+  html += '<div class="summary-item">';
+  html += '<span class="summary-label">花费</span>';
+  html += `<span class="summary-value">${totalCost} 元</span>`;
+  html += '</div>';
+  html += '</div>';
+  return html;
+}
+
 /* ─── Accordion ─── */
 
 function setupAccordion() {
@@ -442,6 +604,7 @@ function buildMapView() {
 function buildPhaseContent(phase) {
   if (phase.type === 'checklist') return buildChecklistView(phase);
   if (phase.type === 'calendar') return buildCalendarView();
+  if (phase.type === 'food-calendar') return buildFoodCalendarView();
   if (phase.type === 'map') return buildMapView();
   return '';
 }
@@ -465,7 +628,7 @@ function renderApp() {
   for (const tab of tabs) {
     tab.addEventListener('click', () => {
       state.activePhase = tab.dataset.phase;
-      if (tab.dataset.phase === 'utility-tracking') {
+      if (tab.dataset.phase === 'utility-tracking' || tab.dataset.phase === 'food-records') {
         const now = new Date();
         state.calendarYear = now.getFullYear();
         state.calendarMonth = now.getMonth() + 1;
