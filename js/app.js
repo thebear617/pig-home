@@ -1,3 +1,10 @@
+const TABS = [
+  { id: 'follow-up', title: '生活备忘录及物资采购', icon: '📋' },
+  { id: 'utility-tracking', title: '水电追踪', icon: '⚡' },
+  { id: 'food-records', title: '美食记录', icon: '🍳' },
+  { id: 'home-map', title: '猪窝地图', icon: '🗺️' }
+];
+
 const state = {
   activePhase: 'follow-up',
   calendarYear: new Date().getFullYear(),
@@ -80,31 +87,30 @@ function getFoodMonthRecords(year, month) {
   return result;
 }
 
-/* ─── Tab bar ─── */
+/* ─── Sidebar navigation ─── */
 
-function getTotalItems(phase) {
-  if (phase.type === 'calendar') return new Date(state.calendarYear, state.calendarMonth, 0).getDate() + '天';
-  if (phase.type === 'food-calendar') {
-    const records = getFoodMonthRecords(state.calendarYear, state.calendarMonth);
-    return records.length + '次';
-  }
-  if (phase.type === 'map') return locations.length + '项';
-  let count = 0;
-  if (phase.sections) for (const s of phase.sections) count += s.items.length;
-  return count + '项';
+function renderSidebar() {
+  const nav = document.getElementById('sidebarNav');
+  if (!nav) return;
+  nav.innerHTML = TABS.map(tab => {
+    const active = tab.id === state.activePhase ? ' active' : '';
+    return `<button class="sidebar-item${active}" data-phase="${tab.id}">
+      <span class="sidebar-icon">${tab.icon}</span>
+      <span>${escapeHtml(tab.title)}</span>
+    </button>`;
+  }).join('');
 }
 
-function buildTabBar() {
-  let html = '<nav class="phase-tabs" role="tablist">';
-  for (const phase of phases) {
-    const active = phase.id === state.activePhase ? ' active' : '';
-    html += `<button class="phase-tab${active}" role="tab" data-phase="${escapeHtml(phase.id)}">
-      <span class="tab-phase">${escapeHtml(phase.title)}</span>
-      <span class="tab-count">${getTotalItems(phase)}</span>
-    </button>`;
-  }
-  html += '</nav>';
-  return html;
+/* ─── Sidebar toggle (mobile) ─── */
+
+function closeSidebar() {
+  document.body.classList.remove('sidebar-open');
+  document.body.style.overflow = '';
+}
+
+function openSidebar() {
+  document.body.classList.add('sidebar-open');
+  document.body.style.overflow = 'hidden';
 }
 
 /* ─── Checklist view ─── */
@@ -245,7 +251,6 @@ function buildCalendarView() {
 
   let html = '<div class="calendar-view">';
 
-  // ── Header
   html += '<div class="cal-header">';
   html += `<span class="cal-title">${calYear}年${calMonth}月</span>`;
   html += '<div class="cal-nav">';
@@ -254,17 +259,14 @@ function buildCalendarView() {
   html += '<button class="cal-nav-btn" id="calNext" title="下一月">▶</button>';
   html += '</div></div>';
 
-  // ── Weekday header
   html += '<div class="cal-weekdays">';
   for (const w of ['日', '一', '二', '三', '四', '五', '六']) {
     html += `<span class="cal-weekday">${w}</span>`;
   }
   html += '</div>';
 
-  // ── Grid
   html += '<div class="cal-grid">';
 
-  // Previous month
   for (let i = 0; i < startDow; i++) {
     const d = prevMonthLastDay - startDow + i + 1;
     const lunar = getLunarInfo(calYear, calMonth - 1, d);
@@ -274,7 +276,6 @@ function buildCalendarView() {
     </div>`;
   }
 
-  // Current month
   for (let d = 1; d <= daysInMonth; d++) {
     const isToday = calYear === today.getFullYear() && calMonth === today.getMonth() + 1 && d === today.getDate();
     const lunar = getLunarInfo(calYear, calMonth, d);
@@ -296,7 +297,6 @@ function buildCalendarView() {
     html += '</div>';
   }
 
-  // Next month
   const totalCells = startDow + daysInMonth;
   const remaining = totalCells % 7 === 0 ? 0 : 7 - (totalCells % 7);
   for (let d = 1; d <= remaining; d++) {
@@ -307,13 +307,10 @@ function buildCalendarView() {
     </div>`;
   }
 
-  html += '</div>'; // cal-grid
-  html += '</div>'; // calendar-view
+  html += '</div>';
+  html += '</div>';
 
-  // Detail panel (below calendar, above summary)
   html += buildDetailPanel();
-
-  // Summary bar
   html += buildSummaryBar();
 
   return html;
@@ -522,10 +519,9 @@ function setupCalendar() {
     renderApp();
   });
 
-  // Click calendar cells with data
   const cells = document.querySelectorAll('.cal-has-data');
   for (const cell of cells) {
-    cell.addEventListener('click', (e) => {
+    cell.addEventListener('click', () => {
       const date = cell.dataset.date;
       if (date === state.selectedDay) {
         state.selectedDay = null;
@@ -544,40 +540,32 @@ function buildMapView() {
   html += '<div class="floor-plan">';
   html += '<svg viewBox="0 0 800 500" class="fp-svg">';
 
-  // Master Bedroom
   html += '<rect x="0" y="0" width="280" height="200" rx="6" class="fp-room fp-master"/>';
   html += '<text x="140" y="100" class="fp-room-label">主卧</text>';
   html += '<text x="140" y="122" class="fp-room-area">~12㎡</text>';
 
-  // Bathroom
   html += '<rect x="0" y="200" width="140" height="120" rx="6" class="fp-room fp-bath"/>';
   html += '<text x="70" y="260" class="fp-room-label">卫生间</text>';
   html += '<text x="70" y="282" class="fp-room-area">~4㎡</text>';
 
-  // Wash Basin
   html += '<rect x="140" y="200" width="140" height="120" rx="6" class="fp-room fp-wash"/>';
   html += '<text x="210" y="260" class="fp-room-label">洗漱台</text>';
 
-  // Kitchen
   html += '<rect x="380" y="320" width="420" height="180" rx="6" class="fp-room fp-kitchen"/>';
   html += '<text x="590" y="410" class="fp-room-label">厨房</text>';
   html += '<text x="590" y="432" class="fp-room-area">~12㎡</text>';
 
-  // Entry Corridor
   html += '<rect x="280" y="320" width="100" height="180" rx="6" class="fp-room fp-entry"/>';
   html += '<text x="330" y="415" class="fp-room-label fp-vertical-label">入户通道</text>';
 
-  // 次卧
   html += '<rect x="0" y="320" width="280" height="180" rx="6" class="fp-room fp-second"/>';
   html += '<text x="140" y="410" class="fp-room-label">次卧</text>';
   html += '<text x="140" y="432" class="fp-room-area">~7㎡</text>';
 
-  // Dining + Living
   html += '<rect x="280" y="0" width="520" height="320" rx="6" class="fp-room fp-living"/>';
   html += '<text x="540" y="150" class="fp-room-label fp-label-large">餐厅 + 客厅</text>';
   html += '<text x="540" y="178" class="fp-room-area fp-area-large">~30㎡</text>';
 
-  // Door icon for entry
   html += '<path d="M310 500 L310 470 L350 470 L350 500" class="fp-door"/>';
   html += '<text x="330" y="465" class="fp-door-label">入户门</text>';
 
@@ -613,30 +601,44 @@ function renderApp() {
   const app = document.getElementById('app');
   const phase = phases.find(p => p.id === state.activePhase) || phases[0];
 
-  let html = buildTabBar();
-  html += '<div class="phase-panel">';
-  html += buildPhaseContent(phase);
-  html += '</div>';
+  app.innerHTML = buildPhaseContent(phase);
 
-  app.innerHTML = html;
-
+  renderSidebar();
   setupAccordion();
   setupCalendar();
 
-  // Tab switching
-  const tabs = document.querySelectorAll('.phase-tab');
-  for (const tab of tabs) {
-    tab.addEventListener('click', () => {
-      state.activePhase = tab.dataset.phase;
-      if (tab.dataset.phase === 'utility-tracking' || tab.dataset.phase === 'food-records') {
-        const now = new Date();
-        state.calendarYear = now.getFullYear();
-        state.calendarMonth = now.getMonth() + 1;
-      }
-      state.selectedDay = null;
-      renderApp();
+  const sidebarNav = document.getElementById('sidebarNav');
+  if (sidebarNav) {
+    sidebarNav.querySelectorAll('.sidebar-item').forEach(btn => {
+      btn.addEventListener('click', () => {
+        state.activePhase = btn.dataset.phase;
+        if (btn.dataset.phase === 'utility-tracking' || btn.dataset.phase === 'food-records') {
+          const now = new Date();
+          state.calendarYear = now.getFullYear();
+          state.calendarMonth = now.getMonth() + 1;
+        }
+        state.selectedDay = null;
+        renderApp();
+        if (window.innerWidth < 720) closeSidebar();
+      });
     });
   }
 }
+
+/* ─── Sidebar toggle init ─── */
+
+(function initSidebarToggle() {
+  const toggle = document.getElementById('sidebarToggle');
+  const backdrop = document.getElementById('sidebarBackdrop');
+  const close = document.getElementById('sidebarClose');
+
+  if (toggle) toggle.addEventListener('click', openSidebar);
+  if (backdrop) backdrop.addEventListener('click', closeSidebar);
+  if (close) close.addEventListener('click', closeSidebar);
+})();
+
+document.addEventListener('keydown', event => {
+  if (event.key === 'Escape') closeSidebar();
+});
 
 document.addEventListener('DOMContentLoaded', () => { renderApp(); });
