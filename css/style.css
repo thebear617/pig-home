@@ -557,14 +557,6 @@ button {
   color: var(--muted);
 }
 
-.site-footer {
-  border-top: 1px solid var(--line);
-  color: var(--muted);
-  font-size: .82rem;
-  padding: 1.5rem 1rem;
-  text-align: center;
-}
-
 .checklist-ol {
   margin: 0;
   padding: .8rem 1.1rem .8rem 2.4rem;
