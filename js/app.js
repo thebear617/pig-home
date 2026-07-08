@@ -3,12 +3,13 @@ const TABS = [
   { id: 'utility-tracking', title: '水电追踪', icon: '⚡' },
   { id: 'food-records', title: '美食记录', icon: '🍳' },
   { id: 'food-map', title: '美食地图', icon: '🗺️' },
-  { id: 'travel-plans', title: '出发🛫', icon: '✈️' },
+  { id: 'travel-plans', title: '旅游🛫', icon: '✈️' },
+  { id: 'xian-walk', title: '西安 walk', icon: '🚶' },
   { id: 'home-map', title: '猪窝地图', icon: '🏠' }
 ];
 
 const state = {
-  activePhase: 'follow-up',
+  activePhase: 'travel-plans',
   calendarYear: new Date().getFullYear(),
   calendarMonth: new Date().getMonth() + 1,
   selectedDay: null
@@ -640,11 +641,8 @@ function buildFoodMapView() {
 
 /* ─── Travel timeline view ─── */
 
-function buildTravelTimeline() {
-  const sorted = [...trips].sort((a, b) => {
-    if (a.status !== b.status) return a.status === 'upcoming' ? -1 : 1;
-    return a.startDate.localeCompare(b.startDate);
-  });
+function buildTravelTimeline(tripsData = trips) {
+  const sorted = [...tripsData].sort((a, b) => a.startDate.localeCompare(b.startDate));
 
   let html = '<div class="timeline">';
 
@@ -662,7 +660,9 @@ function buildTravelTimeline() {
       const isUpcoming = trip.status === 'upcoming';
       const startD = new Date(trip.startDate + 'T00:00:00');
       const endD = new Date(trip.endDate + 'T00:00:00');
-      const dateStr = `${startD.getMonth() + 1}/${startD.getDate()} - ${endD.getMonth() + 1}/${endD.getDate()}`;
+      const dateStr = trip.startDate === trip.endDate
+        ? `${startD.getMonth() + 1}/${startD.getDate()}`
+        : `${startD.getMonth() + 1}/${startD.getDate()} - ${endD.getMonth() + 1}/${endD.getDate()}`;
 
       html += '<div class="timeline-item">';
       html += '<div class="timeline-marker">';
@@ -698,7 +698,8 @@ function buildPhaseContent(phase) {
   if (phase.type === 'calendar') return buildCalendarView();
   if (phase.type === 'food-calendar') return buildFoodCalendarView();
   if (phase.type === 'food-map') return buildFoodMapView();
-  if (phase.type === 'travel') return buildTravelTimeline();
+  if (phase.type === 'travel') return buildTravelTimeline(trips);
+  if (phase.type === 'xian-travel') return buildTravelTimeline(xianTrips);
   if (phase.type === 'map') return buildMapView();
   return '';
 }
