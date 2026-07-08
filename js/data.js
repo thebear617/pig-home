@@ -72,22 +72,106 @@ const foodPlaces = [
 
 const trips = [
   {
-    dest: '青岛',
-    startDate: '2026-08-01',
-    endDate: '2026-08-03',
-    status: 'upcoming',
-    travelers: ['过马路', '耙耙柑'],
-    transport: '高铁',
-    note: '海边走走，吃海鲜喝啤酒，栈桥看日出'
-  },
-  {
-    dest: '阿那亚',
-    startDate: '2026-06-20',
-    endDate: '2026-06-22',
+    dest: '大理',
+    startDate: '2023-07-30',
+    endDate: '2023-08-01',
     status: 'completed',
     travelers: ['过马路', '耙耙柑'],
+    transport: '高铁',
+    note: '这是我和过马路的第一次旅游，非常贵但也非常棒的复式小房子，一起去了苍山洱海，一起吃到了很不错的蘑菇锅，可惜第一次出门比较懒，也没有好好自驾游，以后一定还要再去一次！对了，晚上的大理古镇也很不错，还有喜洲古镇'
+  },
+  {
+    dest: '长沙',
+    startDate: '2023-08-25',
+    endDate: '2023-08-29',
+    status: 'completed',
+    travelers: ['过马路', '耙耙柑'],
+    transport: '高铁',
+    note: '去了五一广场、岳麓山、文和友、吃了很多小龙虾、一盏灯'
+  },
+  {
+    dest: '武汉',
+    startDate: '2023-08-29',
+    endDate: '2023-09-02',
+    status: 'completed',
+    travelers: ['过马路', '耙耙柑'],
+    transport: '火车',
+    note: '湖北博物院、东湖、汉江路步行街、黄鹤楼、小龙虾、热干面'
+  },
+  {
+    dest: '南京',
+    startDate: '2023-10-02',
+    endDate: '2023-10-05',
+    status: 'completed',
+    travelers: ['过马路', '耙耙柑', '蒋忠伟', '傅雨兴', '阮元戈', '梁非凡'],
+    transport: '火车',
+    note: '去了中山陵，在梧桐大道拍了很多照片，吃上了南京大排档，去新街口逛了最大最贵的厕所，吃到了很好吃的烤鸭，在玄武湖度过了一个难忘的"日出🌅"，去和过马路的闺蜜一起逛了南航，还去了老门东'
+  },
+  {
+    dest: '烟台',
+    startDate: '2024-12-24',
+    endDate: '2024-12-25',
+    status: 'completed',
+    travelers: ['过马路', '耙耙柑'],
+    transport: '飞机',
+    note: '这是我们第一次租车，第一次去海边，去了夜晚的海滨浴场，去了中午的渔人码头，还去了养马岛追日落日出，在烟台大学吃到了好吃美味的生蚝，还吃到了鲅鱼水饺和海肠捞饭'
+  },
+  {
+    dest: '威海',
+    startDate: '2024-12-25',
+    endDate: '2024-12-27',
+    status: 'completed',
+    travelers: ['过马路', '耙耙柑'],
+    transport: '高铁',
+    note: '在海源公园看平静的海、有很多海鲜市场的海，在悦海公园的灯塔下的秋千下合照，在威海公园的大相框旁拍照，也开车去看了大天鹅、布鲁威斯、那香海，还有火炬八街的日落，酒店旁边的大学和韩式脊骨汤'
+  },
+  {
+    dest: '大连',
+    startDate: '2024-12-28',
+    endDate: '2024-12-30',
+    status: 'completed',
+    travelers: ['过马路', '耙耙柑'],
+    transport: '船',
+    note: '这是我们第一次坐船，第一次去海边看日出（海之韵公园），在那里吃到了很好吃的日料（鲜生生），也去了很好逛的南山路 city walk，吃到了很难吃的铁锅炖，还去了银沙滩和跨海大桥，看到了小鹿和很美很美的日落'
+  },
+  {
+    dest: '成都',
+    startDate: '2025-05-11',
+    endDate: '2025-05-15',
+    status: 'completed',
+    travelers: ['过马路', '耙耙柑'],
+    transport: '高铁',
+    note: '吃到了很正宗的成都火锅（正南齐北），去了人民公园喝到了很苦的茶，去了杜甫草堂和宽窄巷子，还去了熊猫谷看大熊猫，接着要去都江堰的时候突然发烧了呜呜呜呜呜，过马路陪我去看的医生，很难受的状态下品尝到了蹄花，接着恢复后去逛了玉林路和九眼桥，最后还吃了一个夜宵蜀大侠火锅'
+  },
+  {
+    dest: '天津',
+    startDate: '2025-06-11',
+    endDate: '2025-06-13',
+    status: 'completed',
+    travelers: ['过马路', '耙耙柑'],
+    transport: '火车',
+    note: '去了很多故居，去了五大道，吃到了很好吃的刨冰'
+  },
+  {
+    dest: '天水 · 张家川平安草原',
+    startDate: '2026-05-01',
+    endDate: '2026-05-02',
+    status: 'completed',
+    travelers: ['过马路', '耙耙柑', '房小可', '原子中'],
     transport: '自驾',
-    note: '海边教堂拍照，图书馆发呆，吃了很好吃的海鲜面'
+    note: '吃到了很美味的烤羊排，比较一般的天水麻辣烫，感受到了风吹草低见牛羊的感觉，还骑了马，开了越野车，唯一的遗憾就是没有碰上篝火晚会，也是我们第一次住这种草原上的小木屋'
+  }
+];
+
+const xianTrips = [
+  {
+    dest: '小寨原力场',
+    startDate: '2026-07-08',
+    endDate: '2026-07-08',
+    status: 'completed',
+    travelers: ['过马路', '耙耙柑'],
+    transport: '地铁',
+    note: '和宝宝一起买帽子逛街吃东西'
   }
 ];
 
@@ -266,9 +350,16 @@ const phases = [
   },
   {
     id: 'travel-plans',
-    title: '出发🛫',
+    title: '旅游🛫',
     subtitle: '出行计划与已完成旅程',
     type: 'travel',
+    sections: []
+  },
+  {
+    id: 'xian-walk',
+    title: '西安 walk',
+    subtitle: '记录在西安的出行',
+    type: 'xian-travel',
     sections: []
   }
 ];
