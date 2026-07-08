@@ -2,7 +2,9 @@ const TABS = [
   { id: 'follow-up', title: '生活备忘录及物资采购', icon: '📋' },
   { id: 'utility-tracking', title: '水电追踪', icon: '⚡' },
   { id: 'food-records', title: '美食记录', icon: '🍳' },
-  { id: 'home-map', title: '猪窝地图', icon: '🗺️' }
+  { id: 'food-map', title: '美食地图', icon: '🗺️' },
+  { id: 'travel-plans', title: '出发🛫', icon: '✈️' },
+  { id: 'home-map', title: '猪窝地图', icon: '🏠' }
 ];
 
 const state = {
@@ -587,12 +589,116 @@ function buildMapView() {
   return html;
 }
 
+/* ─── Food map view ─── */
+
+function buildFoodMapView() {
+  const groups = {};
+  for (const place of foodPlaces) {
+    if (!groups[place.location]) groups[place.location] = [];
+    groups[place.location].push(place);
+  }
+  for (const key of Object.keys(groups)) {
+    groups[key].sort((a, b) => b.date.localeCompare(a.date));
+  }
+
+  const groupOrder = Object.keys(groups).sort();
+
+  let html = '';
+  for (const location of groupOrder) {
+    const places = groups[location];
+    html += '<div class="food-region">';
+    html += '<div class="food-region-header">';
+    html += `<h2 class="food-region-title">📍 ${escapeHtml(location)}</h2>`;
+    html += `<span class="food-region-count">${places.length} 家</span>`;
+    html += '</div>';
+    html += '<div class="food-grid">';
+    for (const place of places) {
+      html += '<div class="food-card">';
+      html += '<div class="food-card-top">';
+      html += `<h3 class="food-card-name">${escapeHtml(place.name)}</h3>`;
+      html += `<span class="food-card-date">${escapeHtml(place.date)}</span>`;
+      html += '</div>';
+      html += '<div class="food-card-dishes">';
+      for (const dish of place.dishes) {
+        html += `<span class="food-tag">${escapeHtml(dish)}</span>`;
+      }
+      html += '</div>';
+      if (place.note) {
+        html += `<p class="food-card-note">${escapeHtml(place.note)}</p>`;
+      }
+      html += '</div>';
+    }
+    html += '</div></div>';
+  }
+
+  if (groupOrder.length === 0) {
+    html += '<div class="empty-state"><p>还没记录好吃的，快去探店吧 🍜</p></div>';
+  }
+
+  return html;
+}
+
+/* ─── Travel timeline view ─── */
+
+function buildTravelTimeline() {
+  const sorted = [...trips].sort((a, b) => {
+    if (a.status !== b.status) return a.status === 'upcoming' ? -1 : 1;
+    return a.startDate.localeCompare(b.startDate);
+  });
+
+  let html = '<div class="timeline">';
+
+  const months = {};
+  for (const trip of sorted) {
+    const d = new Date(trip.startDate + 'T00:00:00');
+    const key = `${d.getFullYear()}年${d.getMonth() + 1}月`;
+    if (!months[key]) months[key] = [];
+    months[key].push(trip);
+  }
+
+  for (const [monthKey, monthTrips] of Object.entries(months)) {
+    html += `<div class="timeline-month">${monthKey}</div>`;
+    for (const trip of monthTrips) {
+      const isUpcoming = trip.status === 'upcoming';
+      const startD = new Date(trip.startDate + 'T00:00:00');
+      const endD = new Date(trip.endDate + 'T00:00:00');
+      const dateStr = `${startD.getMonth() + 1}/${startD.getDate()} - ${endD.getMonth() + 1}/${endD.getDate()}`;
+
+      html += '<div class="timeline-item">';
+      html += '<div class="timeline-marker">';
+      html += `<div class="timeline-dot${isUpcoming ? ' tl-dot-upcoming' : ' tl-dot-done'}"></div>`;
+      html += '<div class="timeline-line"></div>';
+      html += '</div>';
+      html += '<div class="timeline-card">';
+      html += '<div class="timeline-card-top">';
+      html += `<h3 class="timeline-card-title">${escapeHtml(trip.dest)}</h3>`;
+      html += `<span class="timeline-badge${isUpcoming ? ' tl-badge-upcoming' : ' tl-badge-done'}">${isUpcoming ? '计划中' : '已完成'}</span>`;
+      html += '</div>';
+      html += `<div class="timeline-card-meta">`;
+      html += `<span class="tl-meta">📅 ${dateStr}</span>`;
+      html += `<span class="tl-meta">🚗 ${escapeHtml(trip.transport)}</span>`;
+      html += `<span class="tl-meta">👤 ${trip.travelers.map(t => escapeHtml(t)).join('、')}</span>`;
+      html += '</div>';
+      if (trip.note) {
+        html += `<p class="timeline-card-note">${escapeHtml(trip.note)}</p>`;
+      }
+      html += '</div>';
+      html += '</div>';
+    }
+  }
+
+  html += '</div>';
+  return html;
+}
+
 /* ─── Render ─── */
 
 function buildPhaseContent(phase) {
   if (phase.type === 'checklist') return buildChecklistView(phase);
   if (phase.type === 'calendar') return buildCalendarView();
   if (phase.type === 'food-calendar') return buildFoodCalendarView();
+  if (phase.type === 'food-map') return buildFoodMapView();
+  if (phase.type === 'travel') return buildTravelTimeline();
   if (phase.type === 'map') return buildMapView();
   return '';
 }
