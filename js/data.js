@@ -41,30 +41,66 @@ const foodRecords = {
 
 const foodPlaces = [
   {
+    name: '一楼拉条子',
+    dishes: [],
+    area: '校内',
+    location: '丁香',
+    date: '',
+    note: ''
+  },
+  {
+    name: '二楼羊杂面',
+    dishes: [],
+    area: '校内',
+    location: '竹园',
+    date: '',
+    note: ''
+  },
+  {
+    name: '渝州小厨',
+    dishes: [],
+    area: '校内',
+    location: '综合楼',
+    date: '',
+    note: ''
+  },
+  {
+    name: '一楼螺狮粉',
+    dishes: [],
+    area: '校内',
+    location: '海棠',
+    date: '',
+    note: ''
+  },
+  {
     name: '潇湘阁',
     dishes: ['小炒黄牛肉', '剁椒鱼头', '酸豆角肉末'],
-    location: '国贸',
+    area: '校外',
+    location: '小寨',
     date: '2026-07-03',
     note: '辣得过瘾，牛肉很嫩，排队半小时值得'
   },
   {
     name: '铃木食堂',
     dishes: ['日式牛肉饭', '芥末章鱼', '杏仁豆腐'],
-    location: '国贸',
+    area: '校外',
+    location: '钟楼',
     date: '2026-07-05',
     note: '小院环境很好，牛肉饭分量足'
   },
   {
     name: '芈重山老火锅',
     dishes: ['毛肚', '鸭血', '嫩牛肉', '贡菜'],
-    location: '望京',
+    area: '校外',
+    location: '大雁塔',
     date: '2026-06-28',
     note: '九宫格很正宗，就是排队太久'
   },
   {
     name: '火烧云傣家菜',
     dishes: ['油焖鸡', '黑糖豆花', '蒜香小排'],
-    location: '望京',
+    area: '校外',
+    location: '小寨',
     date: '2026-07-01',
     note: '油焖鸡必点，配米饭绝了'
   }

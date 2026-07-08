@@ -1135,8 +1135,145 @@ button {
 
 /* ─── Food map ─── */
 
-.food-region {
-  margin-bottom: 1.5rem;
+.foodmap-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+  gap: .75rem;
+  margin-bottom: 1.25rem;
+}
+
+.foodmap-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: .25rem;
+  padding: 1.4rem .75rem;
+  border: none;
+  border-radius: var(--radius);
+  box-shadow: 0 2px 8px rgba(0,0,0,.08);
+  cursor: pointer;
+  transition: transform .2s, box-shadow .2s;
+  text-align: center;
+  color: #fff;
+}
+
+.foodmap-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 6px 20px rgba(0,0,0,.15);
+}
+
+.foodmap-card.active {
+  outline: 3px solid #fff;
+  outline-offset: -6px;
+  box-shadow: 0 4px 16px rgba(0,0,0,.18);
+}
+
+.foodmap-card[data-fm-area="校内"] {
+  background: linear-gradient(135deg, #6b8f7b, #8aaa96);
+}
+
+.foodmap-card[data-fm-area="校外"] {
+  background: linear-gradient(135deg, #b07d6a, #c49a87);
+}
+
+.foodmap-card[data-fm-area]:not([data-fm-area="校内"]):not([data-fm-area="校外"]) {
+  background: linear-gradient(135deg, #8b7e9b, #a69ab3);
+}
+
+.foodmap-card-label {
+  font-size: 1.15rem;
+  font-weight: 900;
+  text-shadow: 0 1px 4px rgba(0,0,0,.15);
+}
+
+.foodmap-card-sub {
+  font-size: .78rem;
+  font-weight: 600;
+  opacity: .85;
+}
+
+.foodmap-tabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: .5rem;
+  margin-bottom: 1.25rem;
+  padding-bottom: .75rem;
+  border-bottom: 1px solid var(--line);
+}
+
+.foodmap-tab {
+  display: inline-flex;
+  align-items: center;
+  gap: .35rem;
+  padding: .5rem .95rem;
+  border: none;
+  border-radius: 999px;
+  font-size: .85rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: transform .15s, box-shadow .15s, opacity .15s;
+  color: #fff;
+  opacity: .7;
+  box-shadow: 0 1px 4px rgba(0,0,0,.06);
+}
+
+.foodmap-tab:hover {
+  opacity: .9;
+  transform: translateY(-1px);
+  box-shadow: 0 3px 10px rgba(0,0,0,.12);
+}
+
+.foodmap-tab.active {
+  opacity: 1;
+  box-shadow: 0 3px 12px rgba(0,0,0,.18);
+  outline: 2px solid rgba(255,255,255,.6);
+  outline-offset: -4px;
+}
+
+.foodmap-tab-count {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 1.2rem;
+  height: 1.2rem;
+  padding: 0 .3rem;
+  border-radius: 999px;
+  background: rgba(255,255,255,.2);
+  font-size: .7rem;
+  font-weight: 800;
+  color: inherit;
+}
+
+.foodmap-tab[data-fm-location] {
+  background: #6b8f7b;
+}
+
+.foodmap-tab[data-fm-location="小寨"] {
+  background: #b07d6a;
+}
+
+.foodmap-tab[data-fm-location="钟楼"] {
+  background: #7a9bb5;
+}
+
+.foodmap-tab[data-fm-location="大雁塔"] {
+  background: #c4956a;
+}
+
+.foodmap-tab[data-fm-location="丁香"] {
+  background: #9b8ba3;
+}
+
+.foodmap-tab[data-fm-location="海棠"] {
+  background: #c49488;
+}
+
+.foodmap-tab[data-fm-location="竹园"] {
+  background: #7da0a8;
+}
+
+.foodmap-tab[data-fm-location="综合楼"] {
+  background: #b5a87a;
 }
 
 .food-region-header {
@@ -1168,17 +1305,24 @@ button {
 }
 
 .food-card {
-  border: 1px solid var(--line);
+  border: none;
   border-radius: var(--radius);
   background: var(--surface);
   padding: 1rem 1.1rem;
-  box-shadow: var(--shadow);
-  transition: border-color .15s, transform .15s;
+  box-shadow: 0 2px 8px rgba(0,0,0,.06);
+  transition: transform .2s, box-shadow .2s;
+  border-left: 4px solid #c49a87;
 }
 
+.food-card:nth-child(6n+2) { border-left-color: #7a9bb5; }
+.food-card:nth-child(6n+3) { border-left-color: #6b8f7b; }
+.food-card:nth-child(6n+4) { border-left-color: #c4956a; }
+.food-card:nth-child(6n+5) { border-left-color: #9b8ba3; }
+.food-card:nth-child(6n+6) { border-left-color: #b5a87a; }
+
 .food-card:hover {
-  border-color: #c08a2f;
   transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(0,0,0,.1);
 }
 
 .food-card-top {

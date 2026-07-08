@@ -12,7 +12,9 @@ const state = {
   activePhase: 'travel-plans',
   calendarYear: new Date().getFullYear(),
   calendarMonth: new Date().getMonth() + 1,
-  selectedDay: null
+  selectedDay: null,
+  foodMapArea: '校内',
+  foodMapLocation: null
 };
 
 function escapeHtml(value) {
@@ -593,50 +595,111 @@ function buildMapView() {
 /* ─── Food map view ─── */
 
 function buildFoodMapView() {
-  const groups = {};
+  const areas = {};
   for (const place of foodPlaces) {
-    if (!groups[place.location]) groups[place.location] = [];
-    groups[place.location].push(place);
-  }
-  for (const key of Object.keys(groups)) {
-    groups[key].sort((a, b) => b.date.localeCompare(a.date));
+    const area = place.area || '未分类';
+    if (!areas[area]) areas[area] = {};
+    if (!areas[area][place.location]) areas[area][place.location] = [];
+    areas[area][place.location].push(place);
   }
 
-  const groupOrder = Object.keys(groups).sort();
+  for (const area of Object.keys(areas)) {
+    for (const loc of Object.keys(areas[area])) {
+      areas[area][loc].sort((a, b) => b.date.localeCompare(a.date));
+    }
+  }
+
+  const areaOrder = ['校内', '校外'].filter(a => areas[a]);
+  const otherAreas = Object.keys(areas).filter(a => !areaOrder.includes(a)).sort();
+  areaOrder.push(...otherAreas);
+
+  if (state.foodMapArea && !areas[state.foodMapArea]) {
+    state.foodMapArea = areaOrder[0];
+  }
+  if (!state.foodMapArea) state.foodMapArea = areaOrder[0] || '';
+
+  const currentArea = state.foodMapArea;
+  const locations = areas[currentArea] ? Object.keys(areas[currentArea]).sort() : [];
+
+  if (state.foodMapLocation && !locations.includes(state.foodMapLocation)) {
+    state.foodMapLocation = locations[0] || null;
+  }
+  if (!state.foodMapLocation && locations.length) {
+    state.foodMapLocation = locations[0];
+  }
 
   let html = '';
-  for (const location of groupOrder) {
-    const places = groups[location];
-    html += '<div class="food-region">';
-    html += '<div class="food-region-header">';
-    html += `<h2 class="food-region-title">📍 ${escapeHtml(location)}</h2>`;
-    html += `<span class="food-region-count">${places.length} 家</span>`;
-    html += '</div>';
-    html += '<div class="food-grid">';
-    for (const place of places) {
-      html += '<div class="food-card">';
-      html += '<div class="food-card-top">';
-      html += `<h3 class="food-card-name">${escapeHtml(place.name)}</h3>`;
-      html += `<span class="food-card-date">${escapeHtml(place.date)}</span>`;
-      html += '</div>';
-      html += '<div class="food-card-dishes">';
-      for (const dish of place.dishes) {
-        html += `<span class="food-tag">${escapeHtml(dish)}</span>`;
-      }
-      html += '</div>';
-      if (place.note) {
-        html += `<p class="food-card-note">${escapeHtml(place.note)}</p>`;
-      }
-      html += '</div>';
-    }
-    html += '</div></div>';
+
+  /* Top-level area cards */
+  html += '<div class="foodmap-cards" data-fm="area">';
+  for (const area of areaOrder) {
+    const locCount = Object.keys(areas[area]).length;
+    const active = area === currentArea ? ' active' : '';
+    html += `<button class="foodmap-card${active}" data-fm-area="${escapeHtml(area)}">
+      <span class="foodmap-card-label">${escapeHtml(area)}</span>
+      <span class="foodmap-card-sub">${locCount} 个地点</span>
+    </button>`;
+  }
+  html += '</div>';
+
+  if (!currentArea || !locations.length) {
+    html += '<div class="empty-state"><p>还没记录好吃的，快去探店吧 🍜</p></div>';
+    return html;
   }
 
-  if (groupOrder.length === 0) {
-    html += '<div class="empty-state"><p>还没记录好吃的，快去探店吧 🍜</p></div>';
+  /* Sub-tabs for locations */
+  html += '<div class="foodmap-tabs" data-fm="location">';
+  for (const loc of locations) {
+    const places = areas[currentArea][loc];
+    const active = loc === state.foodMapLocation ? ' active' : '';
+    html += `<button class="foodmap-tab${active}" data-fm-location="${escapeHtml(loc)}">
+      📍 ${escapeHtml(loc)}
+      <span class="foodmap-tab-count">${places.length}</span>
+    </button>`;
   }
+  html += '</div>';
+
+  /* Restaurant cards for selected location */
+  const selectedPlaces = areas[currentArea][state.foodMapLocation] || [];
+  html += '<div class="food-grid">';
+  for (const place of selectedPlaces) {
+    html += '<div class="food-card">';
+    html += '<div class="food-card-top">';
+    html += `<h4 class="food-card-name">${escapeHtml(place.name)}</h4>`;
+    html += `<span class="food-card-date">${escapeHtml(place.date)}</span>`;
+    html += '</div>';
+    html += '<div class="food-card-dishes">';
+    for (const dish of place.dishes) {
+      html += `<span class="food-tag">${escapeHtml(dish)}</span>`;
+    }
+    html += '</div>';
+    if (place.note) {
+      html += `<p class="food-card-note">${escapeHtml(place.note)}</p>`;
+    }
+    html += '</div>';
+  }
+  html += '</div>';
 
   return html;
+}
+
+function setupFoodMap() {
+  const areaCards = document.querySelectorAll('[data-fm-area]');
+  for (const btn of areaCards) {
+    btn.addEventListener('click', () => {
+      state.foodMapArea = btn.dataset.fmArea;
+      state.foodMapLocation = null;
+      renderApp();
+    });
+  }
+
+  const locTabs = document.querySelectorAll('[data-fm-location]');
+  for (const btn of locTabs) {
+    btn.addEventListener('click', () => {
+      state.foodMapLocation = btn.dataset.fmLocation;
+      renderApp();
+    });
+  }
 }
 
 /* ─── Travel timeline view ─── */
@@ -713,6 +776,7 @@ function renderApp() {
   renderSidebar();
   setupAccordion();
   setupCalendar();
+  setupFoodMap();
 
   const sidebarNav = document.getElementById('sidebarNav');
   if (sidebarNav) {
