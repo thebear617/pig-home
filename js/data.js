@@ -11,7 +11,8 @@ const utilityRecords = {
   '2026-07-04': { elecRemaining: 51.39 },
   '2026-07-05': { elecRemaining: 51.39 },
   '2026-07-06': { elecRemaining: 51.39 },
-  '2026-07-07': { elecRemaining: 17.01 }
+  '2026-07-07': { elecRemaining: 17.01 },
+  '2026-07-08': { elecRemaining: 11.36 }
 };
 
 const foodRecords = {
@@ -30,8 +31,65 @@ const foodRecords = {
     dishes: ['猪肉大葱水饺（10元）', '咖喱洋葱胡萝卜土豆拌米饭（11.5元）'],
     cost: 21.5,
     chef: '过马路'
+  },
+  '2026-07-07': {
+    dishes: ['泡面（2元）'],
+    cost: 2,
+    chef: '耙耙柑'
   }
 };
+
+const foodPlaces = [
+  {
+    name: '潇湘阁',
+    dishes: ['小炒黄牛肉', '剁椒鱼头', '酸豆角肉末'],
+    location: '国贸',
+    date: '2026-07-03',
+    note: '辣得过瘾，牛肉很嫩，排队半小时值得'
+  },
+  {
+    name: '铃木食堂',
+    dishes: ['日式牛肉饭', '芥末章鱼', '杏仁豆腐'],
+    location: '国贸',
+    date: '2026-07-05',
+    note: '小院环境很好，牛肉饭分量足'
+  },
+  {
+    name: '芈重山老火锅',
+    dishes: ['毛肚', '鸭血', '嫩牛肉', '贡菜'],
+    location: '望京',
+    date: '2026-06-28',
+    note: '九宫格很正宗，就是排队太久'
+  },
+  {
+    name: '火烧云傣家菜',
+    dishes: ['油焖鸡', '黑糖豆花', '蒜香小排'],
+    location: '望京',
+    date: '2026-07-01',
+    note: '油焖鸡必点，配米饭绝了'
+  }
+];
+
+const trips = [
+  {
+    dest: '青岛',
+    startDate: '2026-08-01',
+    endDate: '2026-08-03',
+    status: 'upcoming',
+    travelers: ['过马路', '耙耙柑'],
+    transport: '高铁',
+    note: '海边走走，吃海鲜喝啤酒，栈桥看日出'
+  },
+  {
+    dest: '阿那亚',
+    startDate: '2026-06-20',
+    endDate: '2026-06-22',
+    status: 'completed',
+    travelers: ['过马路', '耙耙柑'],
+    transport: '自驾',
+    note: '海边教堂拍照，图书馆发呆，吃了很好吃的海鲜面'
+  }
+];
 
 const phases = [
   {
@@ -197,6 +255,20 @@ const phases = [
     title: '猪窝地图',
     subtitle: '记录重要物资的存放位置',
     type: 'map',
+    sections: []
+  },
+  {
+    id: 'food-map',
+    title: '美食地图',
+    subtitle: '记录我们在外面吃到的好吃的',
+    type: 'food-map',
+    sections: []
+  },
+  {
+    id: 'travel-plans',
+    title: '出发🛫',
+    subtitle: '出行计划与已完成旅程',
+    type: 'travel',
     sections: []
   }
 ];
