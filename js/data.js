@@ -212,6 +212,23 @@ const xianTrips = [
   }
 ];
 
+/* 吵架复盘：记录每一次和过马路的吵架，重点在复盘结论 */
+const quarrelRecords = [
+  {
+    date: '2026-07-08',
+    timeRange: '00:00 到 04:00',
+    title: '接站与承诺之争',
+    severity: '严重',
+    participants: ['过马路', '耙耙柑'],
+    trigger: '耙耙柑前一天没有及时去车站接他，且他外出这两天的两天里，耙耙柑没处理好他交代的家里事务与承诺，积压情绪爆发。',
+    myView: '过马路有点无理取闹。我已经连续道了两天歉，但好像怎么道歉都没成效，不知道还能怎么做。',
+    theirView: '我主要有三点不满：①耙耙柑没有正确正视我的情绪，在冷暴力我；②没有及时对前一天的过错（没及时去车站接我）做一个正式的道歉和正式的补偿；③我出去的这两天，耙耙柑都没有处理好家里我交代的事务和要完成的承诺。',
+    rootCause: '双方对"道歉/补偿"的预期不一致：耙耙柑以为口头道歉就够了，但过马路需要的是被正视情绪 + 正式的弥补；而耙耙柑没兑现承诺，让"道歉"显得空洞，情绪始终没被接住。',
+    resolution: '把该承诺、该答应的点都记了下来。这一次主要是耙耙柑要去改变。',
+    lesson: '耙耙柑的三条改变承诺：①说好的承诺要做到；②不能只感受爱，要学会付出爱；③要学会正视过马路的情绪，不能冷处理。'
+  }
+];
+
 const phases = [
   {
     id: 'follow-up',
@@ -386,17 +403,10 @@ const phases = [
     sections: []
   },
   {
-    id: 'travel-plans',
-    title: '旅游🛫',
-    subtitle: '出行计划与已完成旅程',
-    type: 'travel',
-    sections: []
-  },
-  {
-    id: 'xian-walk',
-    title: '西安 walk',
-    subtitle: '记录在西安的出行',
-    type: 'xian-travel',
+    id: 'relationship-timeline',
+    title: '关系时间线',
+    subtitle: '旅游 · 西安 walk · 吵架复盘',
+    type: 'relationship-timeline',
     sections: []
   }
 ];

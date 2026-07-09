@@ -1515,6 +1515,111 @@ button {
   margin-top: .3rem;
 }
 
+/* ─── Relationship timeline filter & quarrel ─── */
+
+.rel-wrap {
+  animation: fadeIn .2s ease;
+}
+
+.rel-filter {
+  display: flex;
+  flex-wrap: wrap;
+  gap: .5rem;
+  margin-bottom: 1.25rem;
+}
+
+.rel-filter-tab {
+  display: inline-flex;
+  align-items: center;
+  gap: .4rem;
+  padding: .5rem .95rem;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  font-size: .85rem;
+  font-weight: 700;
+  background: var(--surface);
+  color: var(--muted);
+  cursor: pointer;
+  transition: background .15s, color .15s, border-color .15s;
+}
+
+.rel-filter-tab:hover {
+  border-color: #c08a2f;
+  color: #c08a2f;
+}
+
+.rel-filter-tab.active {
+  background: #2f2924;
+  color: #f7c974;
+  border-color: #2f2924;
+}
+
+.rel-filter-count {
+  font-size: .72rem;
+  font-weight: 800;
+  opacity: .8;
+}
+
+.tl-cat-quarrel .timeline-card {
+  border-left: 3px solid var(--red);
+}
+
+.tl-dot-quarrel {
+  background: var(--red);
+  box-shadow: 0 0 0 3px rgba(185, 28, 28, .15);
+}
+
+.tl-badge-quarrel {
+  background: var(--red-bg);
+  color: var(--red);
+}
+
+.q-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  cursor: pointer;
+  user-select: none;
+}
+.q-header-main { flex: 1; min-width: 0; }
+.q-chevron {
+  flex: 0 0 auto;
+  font-size: 14px;
+  color: var(--red);
+  transition: transform .2s ease;
+  transform: rotate(0deg);
+}
+.q-header.open .q-chevron { transform: rotate(90deg); }
+.q-body { margin-top: 12px; }
+.q-body.collapsed { display: none; }
+
+.q-field {
+  padding: .5rem 0;
+  border-top: 1px dashed var(--line);
+}
+
+.q-field:first-child {
+  border-top: none;
+  padding-top: 0;
+}
+
+.q-field-label {
+  display: inline-block;
+  font-size: .72rem;
+  font-weight: 800;
+  color: var(--amber);
+  letter-spacing: .03em;
+  margin-bottom: .2rem;
+}
+
+.q-field-text {
+  font-size: .86rem;
+  line-height: 1.6;
+  color: var(--text);
+  margin: 0;
+}
+
 @media (max-width: 719px) {
   :root {
     --sidebar-w: 220px;

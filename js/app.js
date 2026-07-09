@@ -3,18 +3,18 @@ const TABS = [
   { id: 'utility-tracking', title: '水电追踪', icon: '⚡' },
   { id: 'food-records', title: '美食记录', icon: '🍳' },
   { id: 'food-map', title: '美食地图', icon: '🗺️' },
-  { id: 'travel-plans', title: '旅游🛫', icon: '✈️' },
-  { id: 'xian-walk', title: '西安 walk', icon: '🚶' },
+  { id: 'relationship-timeline', title: '关系时间线', icon: '💞' },
   { id: 'home-map', title: '猪窝地图', icon: '🏠' }
 ];
 
 const state = {
-  activePhase: 'travel-plans',
+  activePhase: 'relationship-timeline',
   calendarYear: new Date().getFullYear(),
   calendarMonth: new Date().getMonth() + 1,
   selectedDay: null,
   foodMapArea: '校内',
-  foodMapLocation: null
+  foodMapLocation: null,
+  relCategory: 'all'
 };
 
 function escapeHtml(value) {
@@ -754,6 +754,150 @@ function buildTravelTimeline(tripsData = trips) {
   return html;
 }
 
+/* ─── Relationship timeline (travel + xian + quarrel) ─── */
+
+function qField(label, text) {
+  return `<div class="q-field">
+    <span class="q-field-label">${escapeHtml(label)}</span>
+    <p class="q-field-text">${escapeHtml(text)}</p>
+  </div>`;
+}
+
+function buildTravelCard(trip) {
+  const isUpcoming = trip.status === 'upcoming';
+  const startD = new Date(trip.startDate + 'T00:00:00');
+  const endD = new Date(trip.endDate + 'T00:00:00');
+  const dateStr = trip.startDate === trip.endDate
+    ? `${startD.getMonth() + 1}/${startD.getDate()}`
+    : `${startD.getMonth() + 1}/${startD.getDate()} - ${endD.getMonth() + 1}/${endD.getDate()}`;
+  let html = '<div class="timeline-card-top">';
+  html += `<h3 class="timeline-card-title">${escapeHtml(trip.dest)}</h3>`;
+  html += `<span class="timeline-badge ${isUpcoming ? 'tl-badge-upcoming' : 'tl-badge-done'}">${isUpcoming ? '计划中' : '已完成'}</span>`;
+  html += '</div>';
+  html += '<div class="timeline-card-meta">';
+  html += `<span class="tl-meta">📅 ${dateStr}</span>`;
+  html += `<span class="tl-meta">🚗 ${escapeHtml(trip.transport)}</span>`;
+  html += `<span class="tl-meta">👤 ${trip.travelers.map(t => escapeHtml(t)).join('、')}</span>`;
+  html += '</div>';
+  if (trip.note) html += `<p class="timeline-card-note">${escapeHtml(trip.note)}</p>`;
+  return html;
+}
+
+function buildQuarrelCard(q) {
+  const d = new Date(q.date + 'T00:00:00');
+  const dateStr = `${d.getFullYear()}/${d.getMonth() + 1}/${d.getDate()}`;
+  const dateLabel = q.timeRange ? `${dateStr} ${q.timeRange}` : dateStr;
+  let html = '<div class="q-header" data-rl="q-toggle">';
+  html += '<div class="q-header-main">';
+  html += '<div class="timeline-card-top">';
+  html += `<h3 class="timeline-card-title">${escapeHtml(q.title)}</h3>`;
+  html += `<span class="timeline-badge tl-badge-quarrel">${escapeHtml(q.severity || '吵架')}</span>`;
+  html += '</div>';
+  html += '<div class="timeline-card-meta">';
+  html += `<span class="tl-meta">📅 ${escapeHtml(dateLabel)}</span>`;
+  if (q.participants) html += `<span class="tl-meta">👤 ${q.participants.map(t => escapeHtml(t)).join('、')}</span>`;
+  html += '</div>';
+  html += '</div>';
+  html += '<span class="q-chevron" aria-hidden="true">▸</span>';
+  html += '</div>';
+  html += '<div class="q-body collapsed">';
+  if (q.trigger) html += qField('起因', q.trigger);
+  if (q.myView) html += qField('我的视角', q.myView);
+  if (q.theirView) html += qField('过马路视角', q.theirView);
+  if (q.rootCause) html += qField('深层原因', q.rootCause);
+  if (q.resolution) html += qField('怎么和好', q.resolution);
+  if (q.lesson) html += qField('复盘结论', q.lesson);
+  html += '</div>';
+  return html;
+}
+
+function buildRelTimelineCard(ev) {
+  const isQuarrel = ev.cat === 'quarrel';
+  const dotClass = isQuarrel ? 'tl-dot-quarrel' : 'tl-dot-done';
+  const itemClass = `timeline-item tl-cat-${ev.cat}`;
+
+  let html = `<div class="${itemClass}">`;
+  html += '<div class="timeline-marker">';
+  html += `<div class="timeline-dot ${dotClass}"></div>`;
+  html += '<div class="timeline-line"></div>';
+  html += '</div>';
+  html += '<div class="timeline-card">';
+  html += isQuarrel ? buildQuarrelCard(ev.raw) : buildTravelCard(ev.raw);
+  html += '</div></div>';
+  return html;
+}
+
+function buildRelationshipTimeline() {
+  const cats = [
+    { key: 'all', label: '全部' },
+    { key: 'travel', label: '旅行 ✈️' },
+    { key: 'xian', label: '西安 walk 🚶' },
+    { key: 'quarrel', label: '吵架复盘 💢' }
+  ];
+  const counts = {
+    travel: trips.length,
+    xian: xianTrips.length,
+    quarrel: quarrelRecords.length
+  };
+  const total = counts.travel + counts.xian + counts.quarrel;
+
+  const want = (k) => state.relCategory === 'all' || state.relCategory === k;
+  let events = [];
+  if (want('travel')) for (const t of trips) events.push({ cat: 'travel', sortDate: t.startDate, raw: t });
+  if (want('xian')) for (const t of xianTrips) events.push({ cat: 'xian', sortDate: t.startDate, raw: t });
+  if (want('quarrel')) for (const q of quarrelRecords) events.push({ cat: 'quarrel', sortDate: q.date, raw: q });
+  events.sort((a, b) => a.sortDate.localeCompare(b.sortDate));
+
+  let html = '<div class="rel-wrap">';
+  html += '<div class="rel-filter" data-rl="filter">';
+  for (const c of cats) {
+    const active = c.key === state.relCategory ? ' active' : '';
+    const count = c.key === 'all' ? total : (counts[c.key] || 0);
+    html += `<button class="rel-filter-tab${active}" data-rl-cat="${c.key}">${c.label}<span class="rel-filter-count">${count}</span></button>`;
+  }
+  html += '</div>';
+
+  if (events.length === 0) {
+    html += '<div class="empty-state"><p>这里还空空如也～</p></div></div>';
+    return html;
+  }
+
+  const months = {};
+  for (const ev of events) {
+    const d = new Date(ev.sortDate + 'T00:00:00');
+    const key = `${d.getFullYear()}年${d.getMonth() + 1}月`;
+    if (!months[key]) months[key] = [];
+    months[key].push(ev);
+  }
+
+  html += '<div class="timeline">';
+  for (const [monthKey, monthEvents] of Object.entries(months)) {
+    html += `<div class="timeline-month">${monthKey}</div>`;
+    for (const ev of monthEvents) html += buildRelTimelineCard(ev);
+  }
+  html += '</div></div>';
+  return html;
+}
+
+function setupRelationshipTimeline() {
+  const tabs = document.querySelectorAll('[data-rl-cat]');
+  for (const btn of tabs) {
+    btn.addEventListener('click', () => {
+      state.relCategory = btn.dataset.rlCat;
+      renderApp();
+    });
+  }
+  const toggles = document.querySelectorAll('[data-rl="q-toggle"]');
+  for (const t of toggles) {
+    t.addEventListener('click', () => {
+      const body = t.parentElement.querySelector('.q-body');
+      if (!body) return;
+      const collapsed = body.classList.toggle('collapsed');
+      t.classList.toggle('open', !collapsed);
+    });
+  }
+}
+
 /* ─── Render ─── */
 
 function buildPhaseContent(phase) {
@@ -761,8 +905,7 @@ function buildPhaseContent(phase) {
   if (phase.type === 'calendar') return buildCalendarView();
   if (phase.type === 'food-calendar') return buildFoodCalendarView();
   if (phase.type === 'food-map') return buildFoodMapView();
-  if (phase.type === 'travel') return buildTravelTimeline(trips);
-  if (phase.type === 'xian-travel') return buildTravelTimeline(xianTrips);
+  if (phase.type === 'relationship-timeline') return buildRelationshipTimeline();
   if (phase.type === 'map') return buildMapView();
   return '';
 }
@@ -777,6 +920,7 @@ function renderApp() {
   setupAccordion();
   setupCalendar();
   setupFoodMap();
+  setupRelationshipTimeline();
 
   const sidebarNav = document.getElementById('sidebarNav');
   if (sidebarNav) {
