@@ -1078,6 +1078,25 @@ button {
   gap: .5rem;
 }
 
+.food-meal-block + .food-meal-block {
+  margin-top: .2rem;
+}
+
+.food-meal-head {
+  margin-bottom: .6rem;
+}
+
+.food-meal-tag {
+  display: inline-block;
+  padding: .2rem .7rem;
+  border-radius: 999px;
+  font-size: .8rem;
+  font-weight: 800;
+  color: #fff;
+  background: var(--red, #b5482f);
+  letter-spacing: .05em;
+}
+
 .food-dish-card {
   display: flex;
   align-items: center;

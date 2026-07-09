@@ -85,8 +85,11 @@ function getMonthRecords(year, month) {
 function getFoodMonthRecords(year, month) {
   const prefix = `${year}-${pad(month)}`;
   const result = [];
-  for (const [key, record] of Object.entries(foodRecords)) {
-    if (key.startsWith(prefix)) result.push({ dateKey: key, ...record });
+  for (const [key, meals] of Object.entries(foodRecords)) {
+    if (!key.startsWith(prefix)) continue;
+    for (const meal of meals) {
+      result.push({ dateKey: key, ...meal });
+    }
   }
   result.sort((a, b) => a.dateKey.localeCompare(b.dateKey));
   return result;
@@ -403,8 +406,8 @@ function buildFoodCalendarView() {
 
 function buildFoodDetailPanel() {
   if (!state.selectedDay) return '';
-  const record = foodRecords[state.selectedDay];
-  if (!record) return '';
+  const meals = foodRecords[state.selectedDay];
+  if (!meals || meals.length === 0) return '';
 
   const d = new Date(state.selectedDay + 'T00:00:00');
   const dayName = `${d.getMonth() + 1}月${d.getDate()}日`;
@@ -416,33 +419,36 @@ function buildFoodDetailPanel() {
   html += '</div>';
   html += '<div class="detail-body">';
 
-  html += '<div class="food-dishes">';
-  for (const dish of record.dishes) {
-    html += `<div class="food-dish-card">
-      <span class="food-dish-icon">🥘</span>
-      <span class="food-dish-name">${escapeHtml(dish)}</span>
-    </div>`;
-  }
-  html += '</div>';
-
-  html += '<div class="food-divider"></div>';
-
-  html += '<div class="food-meta-grid">';
-  html += `<div class="food-meta-item">
-    <span class="food-meta-label">总花费</span>
-    <span class="food-meta-value food-cost">${record.cost} 元</span>
-  </div>`;
-  html += `<div class="food-meta-item">
-    <span class="food-meta-label">主厨</span>
-    <span class="food-meta-value">${escapeHtml(record.chef)}</span>
-  </div>`;
-  if (record.helper) {
+  meals.forEach((meal, idx) => {
+    if (idx > 0) html += '<div class="food-divider"></div>';
+    html += '<div class="food-meal-block">';
+    html += `<div class="food-meal-head"><span class="food-meal-tag">${escapeHtml(meal.meal || '餐')}</span></div>`;
+    html += '<div class="food-dishes">';
+    for (const dish of meal.dishes) {
+      html += `<div class="food-dish-card">
+        <span class="food-dish-icon">🥘</span>
+        <span class="food-dish-name">${escapeHtml(dish)}</span>
+      </div>`;
+    }
+    html += '</div>';
+    html += '<div class="food-meta-grid">';
     html += `<div class="food-meta-item">
-      <span class="food-meta-label">帮手</span>
-      <span class="food-meta-value">${escapeHtml(record.helper)}</span>
+      <span class="food-meta-label">花费</span>
+      <span class="food-meta-value food-cost">${meal.cost} 元</span>
     </div>`;
-  }
-  html += '</div>';
+    html += `<div class="food-meta-item">
+      <span class="food-meta-label">主厨</span>
+      <span class="food-meta-value">${escapeHtml(meal.chef)}</span>
+    </div>`;
+    if (meal.helper) {
+      html += `<div class="food-meta-item">
+        <span class="food-meta-label">帮手</span>
+        <span class="food-meta-value">${escapeHtml(meal.helper)}</span>
+      </div>`;
+    }
+    html += '</div>';
+    html += '</div>';
+  });
 
   html += '</div></div>';
   return html;
@@ -455,10 +461,12 @@ function buildFoodSummaryBar() {
   let totalCost = 0;
   for (const r of records) totalCost += r.cost || 0;
 
+  const cookCount = records.filter(r => r.meal === '中饭' || r.meal === '晚饭').length;
+
   let html = '<div class="summary-bar">';
   html += '<div class="summary-item">';
   html += `<span class="summary-label">${state.calendarMonth}月做饭</span>`;
-  html += `<span class="summary-value">${records.length} 次</span>`;
+  html += `<span class="summary-value">${cookCount} 次</span>`;
   html += '</div>';
   html += '<div class="summary-divider"></div>';
   html += '<div class="summary-item">';
