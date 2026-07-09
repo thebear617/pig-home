@@ -57,6 +57,13 @@ const foodRecords = {
       cost: 8,
       chef: '过马路',
       helper: '耙耙柑'
+    },
+    {
+      meal: '晚饭',
+      dishes: ['油泼辣子韭菜鸡蛋水饺（10元）'],
+      cost: 10,
+      chef: '耙耙柑',
+      helper: '过马路'
     }
   ]
 };
