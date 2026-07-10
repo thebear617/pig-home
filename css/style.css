@@ -1168,83 +1168,271 @@ button {
   display: none;
 }
 
-/* ─── 做饭心得宫格 ─── */
-.tips-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
-  gap: 1rem;
+/* ─── 做饭心得：分类导航宫格 + 手风琴 Markdown 卡片 ─── */
+.cookbook {
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
 }
 
-.tips-card {
+.cookbook-nav {
   background: var(--surface);
   border: 1px solid var(--line);
   border-radius: var(--radius);
-  padding: 1rem 1.1rem 1.1rem;
+  padding: .9rem;
   box-shadow: var(--shadow);
 }
 
-.tips-card-head {
-  display: flex;
-  align-items: center;
-  gap: .5rem;
-  margin-bottom: .7rem;
-  padding-bottom: .6rem;
-  border-bottom: 1px dashed var(--line);
+.cook-nav-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+  gap: .6rem;
 }
 
-.tips-icon {
-  font-size: 1.25rem;
+.cook-nav-btn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: .25rem;
+  padding: .7rem .5rem;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  font-family: inherit;
+  font-weight: 800;
+  font-size: .9rem;
+  color: #2f2924;
+  cursor: pointer;
+  transition: filter .15s, box-shadow .15s, transform .1s;
+}
+
+.cook-nav-btn:hover {
+  filter: brightness(1.05);
+  box-shadow: var(--shadow);
+}
+
+.cook-nav-btn:active {
+  transform: translateY(1px);
+}
+
+.cook-nav-btn.active {
+  box-shadow: 0 0 0 2px var(--red, #b5482f);
+  filter: brightness(.97);
+}
+
+.cook-nav-btn:nth-child(6n+1) { background: linear-gradient(135deg, #e8f5e9, #c8e6c9); }
+.cook-nav-btn:nth-child(6n+2) { background: linear-gradient(135deg, #fff3e0, #ffe0b2); }
+.cook-nav-btn:nth-child(6n+3) { background: linear-gradient(135deg, #e3f2fd, #bbdefb); }
+.cook-nav-btn:nth-child(6n+4) { background: linear-gradient(135deg, #fdecea, #ffcdd2); }
+.cook-nav-btn:nth-child(6n+5) { background: linear-gradient(135deg, #fff8e1, #ffecb3); }
+.cook-nav-btn:nth-child(6n+6) { background: linear-gradient(135deg, #e0f2f1, #b2dfdb); }
+
+.cook-nav-icon {
+  font-size: 1.4rem;
   line-height: 1;
 }
 
-.tips-title {
-  flex: 1;
-  font-size: 1rem;
-  font-weight: 800;
-  color: var(--text);
+.cook-nav-label {
+  line-height: 1.2;
 }
 
-.tips-count {
-  font-size: .75rem;
+.cook-nav-count {
+  font-size: .7rem;
   font-weight: 700;
   color: var(--muted);
-  background: var(--surface-soft);
-  border: 1px solid var(--line);
+  background: rgba(255, 255, 255, .65);
   border-radius: 999px;
-  padding: .1rem .5rem;
+  padding: .05rem .45rem;
 }
 
-.tips-list {
-  list-style: none;
+.cook-cat-head {
+  display: flex;
+  align-items: baseline;
+  gap: .6rem;
+  margin-bottom: .8rem;
+}
+
+.cook-cat-head h3 {
+  font-size: 1.05rem;
+  font-weight: 900;
+  color: var(--dark);
+}
+
+.cook-cat-count {
+  font-size: .8rem;
+  font-weight: 700;
+  color: var(--muted);
+}
+
+.cook-rec-list {
   display: flex;
   flex-direction: column;
+  gap: .6rem;
+}
+
+.cook-rec {
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  overflow: hidden;
+  background: var(--surface);
+  box-shadow: var(--shadow);
+}
+
+.cook-rec-head {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
   gap: .5rem;
-}
-
-.tips-list li {
-  position: relative;
-  padding-left: 1rem;
-  font-size: .88rem;
-  line-height: 1.55;
+  padding: .75rem .95rem;
+  border: none;
+  background: var(--surface-soft);
+  font-family: inherit;
+  font-size: .92rem;
+  font-weight: 800;
   color: var(--text);
+  cursor: pointer;
+  text-align: left;
 }
 
-.tips-list li::before {
-  content: '';
-  position: absolute;
-  left: 0;
-  top: .65em;
-  width: 5px;
-  height: 5px;
-  border-radius: 50%;
-  background: var(--red, #b5482f);
+.cook-rec-head:hover {
+  background: #f3efe9;
 }
 
-.tips-empty {
+.cook-rec-arrow {
+  flex-shrink: 0;
+  font-size: .8rem;
+  color: var(--muted);
+  transition: transform .18s ease;
+}
+
+.cook-rec-head.open .cook-rec-arrow {
+  transform: rotate(90deg);
+}
+
+.cook-rec-body {
+  padding: .2rem .95rem .9rem;
+  border-top: 1px solid var(--line);
+}
+
+.cook-empty {
   color: var(--muted);
   font-size: .9rem;
   padding: 1.5rem 0;
   text-align: center;
+}
+
+/* ─── 做饭心得 Markdown 卡片正文 ─── */
+.cookbook-md {
+  margin-top: .6rem;
+  font-size: .88rem;
+  line-height: 1.65;
+  color: var(--text);
+}
+
+.cookbook-md h2 {
+  margin: 1.1rem 0 .5rem;
+  font-size: .92rem;
+  font-weight: 800;
+  color: var(--dark);
+}
+
+.cookbook-md h3 {
+  margin: .9rem 0 .4rem;
+  font-size: .88rem;
+  font-weight: 800;
+  color: var(--dark);
+}
+
+.cookbook-md p {
+  margin: .4rem 0;
+}
+
+.cookbook-md ul,
+.cookbook-md ol {
+  margin: .4rem 0;
+  padding-left: 1.3rem;
+}
+
+.cookbook-md li {
+  margin: .2rem 0;
+}
+
+.cookbook-md a {
+  color: var(--blue);
+  text-decoration: none;
+  word-break: break-all;
+}
+
+.cookbook-md a:hover {
+  text-decoration: underline;
+}
+
+.cookbook-md code {
+  font-family: "SF Mono", Menlo, Consolas, monospace;
+  font-size: .8rem;
+  padding: .1rem .35rem;
+  background: var(--surface-soft);
+  border: 1px solid var(--line);
+  border-radius: 4px;
+}
+
+.cookbook-md pre {
+  margin: .6rem 0;
+  padding: .7rem .85rem;
+  background: var(--surface-soft);
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  overflow-x: auto;
+}
+
+.cookbook-md pre code {
+  padding: 0;
+  border: none;
+  background: none;
+}
+
+.cookbook-md blockquote {
+  margin: .6rem 0;
+  padding: .4rem .8rem;
+  border-left: 3px solid #c08a2f;
+  background: var(--surface-soft);
+  color: var(--muted);
+  border-radius: 0 6px 6px 0;
+}
+
+.cookbook-md strong {
+  font-weight: 800;
+  color: var(--dark);
+}
+
+.cookbook-md hr {
+  margin: .9rem 0;
+  border: none;
+  border-top: 1px solid var(--line);
+}
+
+.cookbook-md table {
+  margin: .6rem 0;
+  width: 100%;
+  border-collapse: collapse;
+  font-size: .84rem;
+}
+
+.cookbook-md th,
+.cookbook-md td {
+  padding: .45rem .65rem;
+  border: 1px solid var(--line);
+  text-align: left;
+}
+
+.cookbook-md th {
+  background: var(--surface-soft);
+  font-weight: 800;
+  color: var(--dark);
+}
+
+.cookbook-md tr:nth-child(even) td {
+  background: var(--surface-soft);
 }
 
 .food-meta-grid {

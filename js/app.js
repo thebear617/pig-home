@@ -404,45 +404,106 @@ function buildFoodCalendarView() {
   return html;
 }
 
+function renderMarkdown(md) {
+  if (typeof marked !== 'undefined') {
+    try {
+      return marked.parse(md || '', { breaks: true, gfm: true });
+    } catch (e) {
+      return '<p>' + escapeHtml(md || '') + '</p>';
+    }
+  }
+  return '<p>' + escapeHtml(md || '') + '</p>';
+}
+
 function buildCookingTipsGrid(phase) {
-  const tips = phase.cookingTips || [];
-  if (!tips.length) {
+  const cats = phase.cookingTips || [];
+  if (!cats.length) {
     return '<div class="tips-empty">还没有做饭心得，先在 personal 记下做饭日程，再在这里沉淀技巧吧～</div>';
   }
-  let html = '<div class="tips-grid">';
-  for (const cat of tips) {
-    html += '<div class="tips-card">';
-    html += '<div class="tips-card-head">';
-    html += `<span class="tips-icon">${cat.icon || '🍳'}</span>`;
-    html += `<h3 class="tips-title">${escapeHtml(cat.category)}</h3>`;
-    html += `<span class="tips-count">${cat.tips.length} 条</span>`;
-    html += '</div>';
-    html += '<ul class="tips-list">';
-    for (const t of cat.tips) {
-      const line = (t || '').trim();
-      if (!line) continue;
-      html += `<li>${escapeHtml(line)}</li>`;
+
+  let html = '<div class="cookbook" id="cookbook">';
+
+  // 顶部：卡片包裹的分类导航宫格
+  html += '<div class="cookbook-nav"><div class="cook-nav-grid">';
+  cats.forEach((cat, i) => {
+    const count = (cat.records || []).length;
+    html += `<button class="cook-nav-btn${i === 0 ? ' active' : ''}" data-cat="${escapeHtml(cat.category)}">`;
+    html += `<span class="cook-nav-icon">${cat.icon || '🍳'}</span>`;
+    html += `<span class="cook-nav-label">${escapeHtml(cat.category)}</span>`;
+    html += `<span class="cook-nav-count">${count}</span>`;
+    html += '</button>';
+  });
+  html += '</div></div>';
+
+  // 内容区：每个分类一个面板（默认展示第一个）
+  html += '<div class="cookbook-content">';
+  cats.forEach((cat, i) => {
+    html += `<div class="cook-cat-panel" data-cat="${escapeHtml(cat.category)}"${i === 0 ? '' : ' hidden'}>`;
+    html += `<div class="cook-cat-head"><h3>${escapeHtml(cat.category)}</h3>`;
+    html += `<span class="cook-cat-count">${(cat.records || []).length} 条记录</span></div>`;
+    const recs = cat.records || [];
+    if (!recs.length) {
+      html += '<div class="cook-empty">暂无记录，去试试新菜吧～</div>';
+    } else {
+      html += '<div class="cook-rec-list">';
+      recs.forEach(rec => {
+        html += '<div class="cook-rec">';
+        html += `<button class="cook-rec-head" type="button">`;
+        html += `<span class="cook-rec-title">${escapeHtml(rec.title || '未命名')}</span>`;
+        html += '<span class="cook-rec-arrow">▸</span>';
+        html += '</button>';
+        html += `<div class="cook-rec-body cookbook-md" hidden>${renderMarkdown(rec.md)}</div>`;
+        html += '</div>';
+      });
+      html += '</div>';
     }
-    html += '</ul></div>';
-  }
-  html += '</div>';
+    html += '</div>';
+  });
+  html += '</div></div>';
+
   return html;
 }
 
 function setupFoodViews() {
   const tabs = document.getElementById('foodViewTabs');
-  if (!tabs) return;
-  tabs.querySelectorAll('.food-view-tab').forEach(btn => {
-    btn.addEventListener('click', () => {
-      const view = btn.dataset.view;
-      tabs.querySelectorAll('.food-view-tab').forEach(b => b.classList.toggle('active', b === btn));
-      const root = tabs.closest('.food-views');
-      if (!root) return;
-      root.querySelectorAll('.food-view-panel').forEach(p => {
-        p.hidden = p.dataset.panel !== view;
+  if (tabs) {
+    tabs.querySelectorAll('.food-view-tab').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const view = btn.dataset.view;
+        tabs.querySelectorAll('.food-view-tab').forEach(b => b.classList.toggle('active', b === btn));
+        const root = tabs.closest('.food-views');
+        if (!root) return;
+        root.querySelectorAll('.food-view-panel').forEach(p => {
+          p.hidden = p.dataset.panel !== view;
+        });
       });
     });
-  });
+  }
+
+  // 做饭心得：分类导航宫格 ↔ 分类面板
+  const cookbook = document.getElementById('cookbook');
+  if (cookbook) {
+    const navBtns = cookbook.querySelectorAll('.cook-nav-btn');
+    const panels = cookbook.querySelectorAll('.cook-cat-panel');
+    navBtns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        const cat = btn.dataset.cat;
+        navBtns.forEach(b => b.classList.toggle('active', b === btn));
+        panels.forEach(p => { p.hidden = p.dataset.cat !== cat; });
+      });
+    });
+    // 手风琴：每条记录点击展开/收起 Markdown 卡片
+    cookbook.querySelectorAll('.cook-rec-head').forEach(head => {
+      head.addEventListener('click', () => {
+        const rec = head.closest('.cook-rec');
+        if (!rec) return;
+        const body = rec.querySelector('.cook-rec-body');
+        const open = body && !body.hidden;
+        if (body) body.hidden = open;
+        head.classList.toggle('open', !open);
+      });
+    });
+  }
 }
 
 function buildFoodDetailPanel() {
