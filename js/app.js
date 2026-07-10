@@ -913,7 +913,10 @@ function buildPhaseContent(phase) {
   if (phase.type === 'calendar') return buildCalendarView();
   if (phase.type === 'food-calendar') {
     let html = buildFoodCalendarView();
-    if (phase.sections && phase.sections.length) html += buildChecklistView(phase);
+    if (phase.sections && phase.sections.length) {
+      html += '<div class="food-divider"></div>';
+      html += buildChecklistView(phase);
+    }
     return html;
   }
   if (phase.type === 'food-map') return buildFoodMapView();
