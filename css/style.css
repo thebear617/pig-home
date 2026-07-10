@@ -1197,16 +1197,17 @@ button {
   padding: .7rem .5rem;
   border: 1px solid var(--line);
   border-radius: 10px;
+  background: var(--surface);
   font-family: inherit;
   font-weight: 800;
   font-size: .9rem;
-  color: #2f2924;
+  color: var(--dark);
   cursor: pointer;
-  transition: filter .15s, box-shadow .15s, transform .1s;
+  transition: border-color .15s, box-shadow .15s, transform .1s, background .15s;
 }
 
 .cook-nav-btn:hover {
-  filter: brightness(1.05);
+  border-color: #d8cfc3;
   box-shadow: var(--shadow);
 }
 
@@ -1215,16 +1216,10 @@ button {
 }
 
 .cook-nav-btn.active {
-  box-shadow: 0 0 0 2px var(--red, #b5482f);
-  filter: brightness(.97);
+  border-color: #c08a2f;
+  box-shadow: 0 0 0 2px rgba(192, 138, 47, .35);
+  background: #fdf8ef;
 }
-
-.cook-nav-btn:nth-child(6n+1) { background: linear-gradient(135deg, #e8f5e9, #c8e6c9); }
-.cook-nav-btn:nth-child(6n+2) { background: linear-gradient(135deg, #fff3e0, #ffe0b2); }
-.cook-nav-btn:nth-child(6n+3) { background: linear-gradient(135deg, #e3f2fd, #bbdefb); }
-.cook-nav-btn:nth-child(6n+4) { background: linear-gradient(135deg, #fdecea, #ffcdd2); }
-.cook-nav-btn:nth-child(6n+5) { background: linear-gradient(135deg, #fff8e1, #ffecb3); }
-.cook-nav-btn:nth-child(6n+6) { background: linear-gradient(135deg, #e0f2f1, #b2dfdb); }
 
 .cook-nav-icon {
   font-size: 1.4rem;
@@ -1239,7 +1234,8 @@ button {
   font-size: .7rem;
   font-weight: 700;
   color: var(--muted);
-  background: rgba(255, 255, 255, .65);
+  background: var(--surface-soft);
+  border: 1px solid var(--line);
   border-radius: 999px;
   padding: .05rem .45rem;
 }
@@ -1282,9 +1278,10 @@ button {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: .5rem;
+  gap: .6rem;
   padding: .75rem .95rem;
   border: none;
+  border-bottom: 1px solid var(--line);
   background: var(--surface-soft);
   font-family: inherit;
   font-size: .92rem;
@@ -1292,6 +1289,19 @@ button {
   color: var(--text);
   cursor: pointer;
   text-align: left;
+}
+
+.cook-rec-icon {
+  flex-shrink: 0;
+  width: 30px;
+  height: 30px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  font-size: 1.05rem;
+  line-height: 1;
+  box-shadow: inset 0 0 0 1px rgba(0, 0, 0, .06);
 }
 
 .cook-rec-head:hover {

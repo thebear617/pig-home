@@ -415,6 +415,16 @@ function renderMarkdown(md) {
   return '<p>' + escapeHtml(md || '') + '</p>';
 }
 
+// 配色沿用 cats tab 的克制语言：柔底色 + 深字（绿/蓝/琥珀/红 四色循环）
+const COOK_CAT_COLORS = [
+  { bg: 'linear-gradient(135deg,#ffd9d9,#ffb0b0)', fg: '#b91c1c' }, // 炒菜 红
+  { bg: 'linear-gradient(135deg,#cdeede,#a6e0c2)', fg: '#047857' }, // 切菜 绿
+  { bg: 'linear-gradient(135deg,#fbe6bb,#f6d384)', fg: '#b45309' }, // 烘焙 琥珀
+  { bg: 'linear-gradient(135deg,#cfe4fd,#a7cafa)', fg: '#1d4ed8' }, // 烹煮 蓝
+  { bg: 'linear-gradient(135deg,#fdeeb6,#fbd969)', fg: '#a16207' }, // 烧烤 黄
+  { bg: 'linear-gradient(135deg,#cdeeeb,#a2e4dd)', fg: '#0f766e' }  // 腌制 青
+];
+
 function buildCookingTipsGrid(phase) {
   const cats = phase.cookingTips || [];
   if (!cats.length) {
@@ -437,6 +447,7 @@ function buildCookingTipsGrid(phase) {
 
   // 内容区：每个分类一个面板（默认展示第一个）
   html += '<div class="cookbook-content">';
+  let gIdx = 0; // 折叠条渐变按记录位置循环取色
   cats.forEach((cat, i) => {
     html += `<div class="cook-cat-panel" data-cat="${escapeHtml(cat.category)}"${i === 0 ? '' : ' hidden'}>`;
     html += `<div class="cook-cat-head"><h3>${escapeHtml(cat.category)}</h3>`;
@@ -447,8 +458,12 @@ function buildCookingTipsGrid(phase) {
     } else {
       html += '<div class="cook-rec-list">';
       recs.forEach(rec => {
-        html += '<div class="cook-rec">';
-        html += `<button class="cook-rec-head" type="button">`;
+        const grad = COOK_CAT_COLORS[gIdx % COOK_CAT_COLORS.length];
+        gIdx++;
+        const recIcon = rec.icon || cat.icon || '🍳';
+        html += `<div class="cook-rec">`;
+        html += `<button class="cook-rec-head" type="button" style="background:${grad.bg}">`;
+        html += `<span class="cook-rec-icon" style="background:#fff;color:${grad.fg}">${recIcon}</span>`;
         html += `<span class="cook-rec-title">${escapeHtml(rec.title || '未命名')}</span>`;
         html += '<span class="cook-rec-arrow">▸</span>';
         html += '</button>';
