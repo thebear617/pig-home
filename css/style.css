@@ -1124,6 +1124,129 @@ button {
   margin: .8rem 0;
 }
 
+/* ─── 美食记录双视图：日历 / 做饭心得 ─── */
+.food-views {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.food-view-tabs {
+  display: inline-flex;
+  gap: .4rem;
+  padding: .3rem;
+  background: var(--surface-soft);
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  align-self: flex-start;
+}
+
+.food-view-tab {
+  border: none;
+  background: transparent;
+  color: var(--muted);
+  font: inherit;
+  font-weight: 700;
+  font-size: .9rem;
+  padding: .45rem 1.1rem;
+  border-radius: 999px;
+  cursor: pointer;
+  transition: background .15s, color .15s;
+}
+
+.food-view-tab:hover {
+  color: var(--text);
+}
+
+.food-view-tab.active {
+  background: var(--surface);
+  color: var(--red, #b5482f);
+  box-shadow: var(--shadow);
+}
+
+.food-view-panel[hidden] {
+  display: none;
+}
+
+/* ─── 做饭心得宫格 ─── */
+.tips-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 1rem;
+}
+
+.tips-card {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 1rem 1.1rem 1.1rem;
+  box-shadow: var(--shadow);
+}
+
+.tips-card-head {
+  display: flex;
+  align-items: center;
+  gap: .5rem;
+  margin-bottom: .7rem;
+  padding-bottom: .6rem;
+  border-bottom: 1px dashed var(--line);
+}
+
+.tips-icon {
+  font-size: 1.25rem;
+  line-height: 1;
+}
+
+.tips-title {
+  flex: 1;
+  font-size: 1rem;
+  font-weight: 800;
+  color: var(--text);
+}
+
+.tips-count {
+  font-size: .75rem;
+  font-weight: 700;
+  color: var(--muted);
+  background: var(--surface-soft);
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  padding: .1rem .5rem;
+}
+
+.tips-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: .5rem;
+}
+
+.tips-list li {
+  position: relative;
+  padding-left: 1rem;
+  font-size: .88rem;
+  line-height: 1.55;
+  color: var(--text);
+}
+
+.tips-list li::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: .65em;
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: var(--red, #b5482f);
+}
+
+.tips-empty {
+  color: var(--muted);
+  font-size: .9rem;
+  padding: 1.5rem 0;
+  text-align: center;
+}
+
 .food-meta-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));

@@ -404,6 +404,47 @@ function buildFoodCalendarView() {
   return html;
 }
 
+function buildCookingTipsGrid(phase) {
+  const tips = phase.cookingTips || [];
+  if (!tips.length) {
+    return '<div class="tips-empty">还没有做饭心得，先在 personal 记下做饭日程，再在这里沉淀技巧吧～</div>';
+  }
+  let html = '<div class="tips-grid">';
+  for (const cat of tips) {
+    html += '<div class="tips-card">';
+    html += '<div class="tips-card-head">';
+    html += `<span class="tips-icon">${cat.icon || '🍳'}</span>`;
+    html += `<h3 class="tips-title">${escapeHtml(cat.category)}</h3>`;
+    html += `<span class="tips-count">${cat.tips.length} 条</span>`;
+    html += '</div>';
+    html += '<ul class="tips-list">';
+    for (const t of cat.tips) {
+      const line = (t || '').trim();
+      if (!line) continue;
+      html += `<li>${escapeHtml(line)}</li>`;
+    }
+    html += '</ul></div>';
+  }
+  html += '</div>';
+  return html;
+}
+
+function setupFoodViews() {
+  const tabs = document.getElementById('foodViewTabs');
+  if (!tabs) return;
+  tabs.querySelectorAll('.food-view-tab').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const view = btn.dataset.view;
+      tabs.querySelectorAll('.food-view-tab').forEach(b => b.classList.toggle('active', b === btn));
+      const root = tabs.closest('.food-views');
+      if (!root) return;
+      root.querySelectorAll('.food-view-panel').forEach(p => {
+        p.hidden = p.dataset.panel !== view;
+      });
+    });
+  });
+}
+
 function buildFoodDetailPanel() {
   if (!state.selectedDay) return '';
   const meals = foodRecords[state.selectedDay];
@@ -912,11 +953,14 @@ function buildPhaseContent(phase) {
   if (phase.type === 'checklist') return buildChecklistView(phase);
   if (phase.type === 'calendar') return buildCalendarView();
   if (phase.type === 'food-calendar') {
-    let html = buildFoodCalendarView();
-    if (phase.sections && phase.sections.length) {
-      html += '<div class="food-divider"></div>';
-      html += buildChecklistView(phase);
-    }
+    let html = '<div class="food-views">';
+    html += '<div class="food-view-tabs" id="foodViewTabs">';
+    html += '<button class="food-view-tab active" data-view="calendar">📅 美食日历</button>';
+    html += '<button class="food-view-tab" data-view="tips">💡 做饭心得</button>';
+    html += '</div>';
+    html += '<div class="food-view-panel" data-panel="calendar">' + buildFoodCalendarView() + '</div>';
+    html += '<div class="food-view-panel" data-panel="tips" hidden>' + buildCookingTipsGrid(phase) + '</div>';
+    html += '</div>';
     return html;
   }
   if (phase.type === 'food-map') return buildFoodMapView();
@@ -936,6 +980,7 @@ function renderApp() {
   setupCalendar();
   setupFoodMap();
   setupRelationshipTimeline();
+  setupFoodViews();
 
   const sidebarNav = document.getElementById('sidebarNav');
   if (sidebarNav) {
