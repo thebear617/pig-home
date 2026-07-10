@@ -66,6 +66,15 @@ const foodRecords = {
       chef: '耙耙柑',
       helper: '过马路'
     }
+  ],
+  '2026-07-10': [
+    {
+      meal: '中饭',
+      dishes: ['番茄酸菜肉丝米线'],
+      cost: 18,
+      chef: '过马路',
+      helper: '耙耙柑'
+    }
   ]
 };
 
