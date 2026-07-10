@@ -1445,6 +1445,51 @@ button {
   background: var(--surface-soft);
 }
 
+/* ─── 生活备忘录 / 物资采购：区域卡片正文 ─── */
+.ms-body {
+  font-size: .88rem;
+  line-height: 1.6;
+  color: var(--text);
+}
+
+.ms-note {
+  margin: .35rem 0 .2rem;
+}
+
+.ms-sub {
+  list-style: none;
+  margin: .4rem 0 .2rem;
+  padding-left: 0;
+}
+
+.ms-sub li {
+  position: relative;
+  padding: .28rem .2rem .28rem 1.4rem;
+  font-size: .85rem;
+  line-height: 1.55;
+  color: var(--text);
+  border-bottom: 1px dashed var(--line);
+}
+
+.ms-sub li:last-child {
+  border-bottom: none;
+}
+
+.ms-sub li::before {
+  content: '›';
+  position: absolute;
+  left: .3rem;
+  top: .26rem;
+  color: var(--muted);
+  font-weight: 900;
+}
+
+.ms-empty-mini {
+  color: var(--muted);
+  font-size: .85rem;
+  padding: .3rem 0;
+}
+
 .food-meta-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));

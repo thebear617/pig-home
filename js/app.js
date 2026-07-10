@@ -1,7 +1,7 @@
 const TABS = [
-  { id: 'follow-up', title: '生活备忘录及物资采购', icon: '📋' },
-  { id: 'utility-tracking', title: '水电追踪', icon: '⚡' },
+  { id: 'follow-up', title: '生活备忘录与物资采购', icon: '📋' },
   { id: 'food-records', title: '美食记录与做饭心得', icon: '🍳' },
+  { id: 'utility-tracking', title: '水电追踪', icon: '⚡' },
   { id: 'food-map', title: '美食地图', icon: '🗺️' },
   { id: 'relationship-timeline', title: '关系时间线', icon: '💞' },
   { id: 'home-map', title: '猪窝地图', icon: '🏠' }
@@ -480,22 +480,22 @@ function buildCookingTipsGrid(phase) {
 }
 
 function setupFoodViews() {
-  const tabs = document.getElementById('foodViewTabs');
-  if (tabs) {
+  // 1) 胶囊按钮切换各视图面板（通用：所有 .food-view-tabs）
+  document.querySelectorAll('.food-view-tabs').forEach(tabs => {
+    const root = tabs.closest('.food-views');
+    if (!root) return;
     tabs.querySelectorAll('.food-view-tab').forEach(btn => {
       btn.addEventListener('click', () => {
         const view = btn.dataset.view;
         tabs.querySelectorAll('.food-view-tab').forEach(b => b.classList.toggle('active', b === btn));
-        const root = tabs.closest('.food-views');
-        if (!root) return;
         root.querySelectorAll('.food-view-panel').forEach(p => {
           p.hidden = p.dataset.panel !== view;
         });
       });
     });
-  }
+  });
 
-  // 做饭心得：分类导航宫格 ↔ 分类面板
+  // 2) 做饭心得：分类导航宫格 ↔ 分类面板（仅 cookbook 内）
   const cookbook = document.getElementById('cookbook');
   if (cookbook) {
     const navBtns = cookbook.querySelectorAll('.cook-nav-btn');
@@ -507,18 +507,19 @@ function setupFoodViews() {
         panels.forEach(p => { p.hidden = p.dataset.cat !== cat; });
       });
     });
-    // 手风琴：每条记录点击展开/收起 Markdown 卡片
-    cookbook.querySelectorAll('.cook-rec-head').forEach(head => {
-      head.addEventListener('click', () => {
-        const rec = head.closest('.cook-rec');
-        if (!rec) return;
-        const body = rec.querySelector('.cook-rec-body');
-        const open = body && !body.hidden;
-        if (body) body.hidden = open;
-        head.classList.toggle('open', !open);
-      });
-    });
   }
+
+  // 3) 手风琴：所有 .cook-rec-head 记录点击展开/收起（做饭心得 + 生活备忘录/物资采购通用）
+  document.querySelectorAll('.cook-rec-head').forEach(head => {
+    head.addEventListener('click', () => {
+      const rec = head.closest('.cook-rec');
+      if (!rec) return;
+      const body = rec.querySelector('.cook-rec-body');
+      const open = body && !body.hidden;
+      if (body) body.hidden = open;
+      head.classList.toggle('open', !open);
+    });
+  });
 }
 
 function buildFoodDetailPanel() {
@@ -590,6 +591,71 @@ function buildFoodSummaryBar() {
   html += '<span class="summary-label">花费</span>';
   html += `<span class="summary-value">${totalCost} 元</span>`;
   html += '</div>';
+  html += '</div>';
+  return html;
+}
+
+/* ─── 生活备忘录 / 物资采购（仿美食日历双视图） ─── */
+
+function buildRegionCard(region, grad) {
+  const recIcon = region.icon || '📌';
+
+  // 正文统一用 Markdown 渲染（与生活备忘录/物资采购卡片一致）
+  let md = '';
+  if (region.note) md += region.note + '\n\n';
+  if (region.children && region.children.length) {
+    for (const child of region.children) {
+      const text = (child || '').trim();
+      if (!text) continue;
+      md += '- ' + text + '\n';
+    }
+  }
+  md = md.trim();
+  const bodyHtml = md
+    ? renderMarkdown(md)
+    : '<div class="ms-empty-mini">（暂无更多细节）</div>';
+
+  let html = '<div class="cook-rec">';
+  html += `<button class="cook-rec-head" type="button" style="background:${grad.bg}">`;
+  html += `<span class="cook-rec-icon" style="background:#fff;color:${grad.fg}">${recIcon}</span>`;
+  html += `<span class="cook-rec-title">${escapeHtml(region.region || '未命名')}</span>`;
+  html += '<span class="cook-rec-arrow">▸</span>';
+  html += '</button>';
+  html += `<div class="cook-rec-body cookbook-md" hidden>${bodyHtml}</div>`;
+  html += '</div>';
+  return html;
+}
+
+function buildMemoSuppliesView(phase) {
+  const groups = [
+    { key: 'memo', label: '📋 生活备忘录', items: phase.lifeMemo || [] },
+    { key: 'supplies', label: '🛒 物资采购', items: phase.procurement || [] }
+  ];
+
+  let html = '<div class="food-views">';
+  html += '<div class="food-view-tabs">';
+  groups.forEach((g, i) => {
+    html += `<button class="food-view-tab${i === 0 ? ' active' : ''}" data-view="${g.key}">${g.label}</button>`;
+  });
+  html += '</div>';
+
+  groups.forEach((g, i) => {
+    html += `<div class="food-view-panel" data-panel="${g.key}"${i === 0 ? '' : ' hidden'}>`;
+    if (!g.items.length) {
+      html += '<div class="cook-empty">这里还空空如也～</div>';
+    } else {
+      html += '<div class="cook-rec-list">';
+      let gIdx = 0;
+      for (const region of g.items) {
+        const grad = COOK_CAT_COLORS[gIdx % COOK_CAT_COLORS.length];
+        gIdx++;
+        html += buildRegionCard(region, grad);
+      }
+      html += '</div>';
+    }
+    html += '</div>';
+  });
+
   html += '</div>';
   return html;
 }
@@ -1040,6 +1106,7 @@ function buildPhaseContent(phase) {
     return html;
   }
   if (phase.type === 'food-map') return buildFoodMapView();
+  if (phase.type === 'memo-supplies') return buildMemoSuppliesView(phase);
   if (phase.type === 'relationship-timeline') return buildRelationshipTimeline();
   if (phase.type === 'map') return buildMapView();
   return '';
