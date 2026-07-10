@@ -1,7 +1,7 @@
 const TABS = [
   { id: 'follow-up', title: '生活备忘录及物资采购', icon: '📋' },
   { id: 'utility-tracking', title: '水电追踪', icon: '⚡' },
-  { id: 'food-records', title: '美食记录', icon: '🍳' },
+  { id: 'food-records', title: '美食记录与做饭心得', icon: '🍳' },
   { id: 'food-map', title: '美食地图', icon: '🗺️' },
   { id: 'relationship-timeline', title: '关系时间线', icon: '💞' },
   { id: 'home-map', title: '猪窝地图', icon: '🏠' }
@@ -911,7 +911,11 @@ function setupRelationshipTimeline() {
 function buildPhaseContent(phase) {
   if (phase.type === 'checklist') return buildChecklistView(phase);
   if (phase.type === 'calendar') return buildCalendarView();
-  if (phase.type === 'food-calendar') return buildFoodCalendarView();
+  if (phase.type === 'food-calendar') {
+    let html = buildFoodCalendarView();
+    if (phase.sections && phase.sections.length) html += buildChecklistView(phase);
+    return html;
+  }
   if (phase.type === 'food-map') return buildFoodMapView();
   if (phase.type === 'relationship-timeline') return buildRelationshipTimeline();
   if (phase.type === 'map') return buildMapView();
