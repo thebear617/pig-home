@@ -564,6 +564,12 @@ function buildFoodDetailPanel() {
         <span class="food-meta-value">${escapeHtml(meal.helper)}</span>
       </div>`;
     }
+    if (meal.cleanup) {
+      html += `<div class="food-meta-item">
+        <span class="food-meta-label">收拾后厨</span>
+        <span class="food-meta-value">${meal.cleanup} 分钟</span>
+      </div>`;
+    }
     html += '</div>';
     html += '</div>';
   });

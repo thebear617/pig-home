@@ -83,7 +83,8 @@ const foodRecords = {
       dishes: ['芦笋番茄黑椒牛排和鸡翅'],
       cost: 10,
       chef: '过马路',
-      helper: '耙耙柑'
+      helper: '耙耙柑',
+      cleanup: 20
     }
   ]
 };
