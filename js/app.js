@@ -340,6 +340,7 @@ function buildDailyTrackerView(phase) {
     html += `<div class="${cls}" data-date="${key}">`;
     html += `<span class="cal-lunar${lunar.isStart ? ' cal-lunar-start' : ''}">${lunar.isStart ? lunar.lMonthName : getLunarDayName(lunar.lDay)}</span>`;
     html += `<span class="cal-date${isToday ? ' cal-date-today' : ''}">${d}日</span>`;
+    if (rec && rec.value != null) html += `<span class="cal-value">${rec.value}</span>`;
     if (hasExpense) html += '<span class="cal-expense-dot" title="有支出"></span>';
     if (rec) html += '<span class="cal-sched-dot" title="有日程"></span>';
     html += '</div>';

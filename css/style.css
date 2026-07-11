@@ -796,6 +796,15 @@ button {
   margin-top: .25rem;
 }
 
+/* 原 personal 日历：有日记记录的日子显示已完成任务数（琥珀色） */
+.cal-value {
+  display: block;
+  font-size: .72rem;
+  font-weight: 700;
+  color: var(--amber);
+  margin-top: .25rem;
+}
+
 .cal-selected {
   outline: 2px solid #c08a2f;
   outline-offset: -2px;
@@ -890,66 +899,86 @@ button {
   color: #c9c1b7;
 }
 
-/* 每日追踪：支出(红)/日程(蓝) 标记点 */
+/* 每日追踪：支出(红)/日程(蓝) 标记点 —— 沿用原 personal 风格（红点右下、蓝点左下） */
 .cal-expense-dot {
   position: absolute;
-  top: .35rem; right: .4rem;
-  width: .45rem; height: .45rem;
+  bottom: .4rem; right: .4rem;
+  width: 6px; height: 6px;
   border-radius: 50%;
   background: var(--red);
 }
 .cal-sched-dot {
   position: absolute;
-  top: .35rem; right: .4rem;
-  width: .45rem; height: .45rem;
+  bottom: .4rem; left: .4rem;
+  width: 6px; height: 6px;
   border-radius: 50%;
   background: #2563eb;
 }
-/* 仅有日程、无支出时，蓝点放左下角避免与红点重叠 */
-.cal-has-sched-only .cal-sched-dot { right: auto; left: .4rem; }
 
 /* 当日日程任务列表 */
 .detail-tasks {
-  margin: .35rem 0 .2rem;
+  margin-top: .6rem;
+  padding-top: .6rem;
+  border-top: 1px solid var(--line);
   display: flex;
   flex-direction: column;
-  gap: .3rem;
+  gap: .35rem;
 }
 .task-item {
   display: flex;
-  align-items: baseline;
-  gap: .5rem;
-  font-size: .82rem;
-  padding: .3rem .45rem;
-  background: #faf7f2;
-  border-radius: 8px;
+  align-items: flex-start;
+  gap: .55rem;
+  padding: .35rem 0;
 }
 .task-item.done .task-text { color: var(--muted); text-decoration: line-through; }
 .task-num {
-  flex: none;
-  width: 1.2rem; height: 1.2rem;
-  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+  width: 1.4rem;
+  height: 1.4rem;
   border-radius: 50%;
-  background: #ede6db; color: #8a7a66;
-  font-size: .7rem; font-weight: 700;
+  background: #2f2924;
+  color: #f7c974;
+  font-size: .7rem;
+  font-weight: 800;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: .1rem;
 }
-.task-time { flex: none; color: var(--amber); font-weight: 700; font-variant-numeric: tabular-nums; }
-.task-text { color: var(--text); }
+.task-time {
+  flex-shrink: 0;
+  min-width: 7rem;
+  font-size: .76rem;
+  font-family: "SF Mono", Menlo, Consolas, monospace;
+  color: var(--muted);
+  font-weight: 600;
+  margin-top: .15rem;
+  white-space: nowrap;
+}
+.task-text {
+  font-size: .85rem;
+  color: var(--text);
+  line-height: 1.5;
+}
 
 /* 当日支出明细 */
 .expense-amount { color: var(--red); }
-.detail-expenses { margin-top: .35rem; display: flex; flex-direction: column; gap: .3rem; }
+.detail-expenses {
+  margin-top: .6rem;
+  padding-top: .6rem;
+  border-top: 1px solid var(--line);
+}
 .expense-detail-item {
-  display: flex; align-items: baseline; flex-wrap: wrap; gap: .4rem;
-  font-size: .82rem;
-  padding: .35rem .45rem;
-  background: #faf7f2;
-  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  gap: .5rem;
+  padding: .3rem 0;
+  font-size: .84rem;
 }
 .expense-detail-cat { font-weight: 700; color: var(--text); }
 .expense-detail-sub { color: var(--muted); }
-.expense-detail-note { color: #a99e8e; font-size: .75rem; flex: 1 1 100%; }
-.expense-detail-amount { margin-left: auto; font-weight: 800; color: var(--red); font-variant-numeric: tabular-nums; }
+.expense-detail-note { color: var(--muted); font-size: .78rem; flex: 1; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.expense-detail-amount { font-weight: 800; color: var(--red); margin-left: auto; flex-shrink: 0; }
 
 /* ─── Summary bar ─── */
 
