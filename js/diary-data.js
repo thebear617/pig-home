@@ -3488,7 +3488,7 @@ const diaryRecords = {
     ]
   },
   "2026-07-11": {
-    "value": 3,
+    "value": 4,
     "tasks": [
       {
         "status": "x",
@@ -3513,6 +3513,14 @@ const diaryRecords = {
         "isCooking": true,
         "mealType": "中饭",
         "dishGuess": "芦笋番茄黑椒牛排和鸡翅"
+      },
+      {
+        "status": "x",
+        "time": "15:30-18:30",
+        "desc": "开发：迁移日程和支出板块到猪窝，完善科研笔记板块",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
       }
     ]
   }
