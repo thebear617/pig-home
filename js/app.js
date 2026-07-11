@@ -3,6 +3,7 @@ const TABS = [
   { id: 'food-records', title: '美食记录与做饭心得', icon: '🍳' },
   { id: 'utility-tracking', title: '水电追踪', icon: '⚡' },
   { id: 'daily-tracker', title: '每日追踪', icon: '📅' },
+  { id: 'expense-records', title: '支出记录', icon: '💰' },
   { id: 'food-map', title: '美食地图', icon: '🗺️' },
   { id: 'relationship-timeline', title: '关系时间线', icon: '💞' },
   { id: 'home-map', title: '猪窝地图', icon: '🏠' }
@@ -443,6 +444,85 @@ function buildDailySummaryBar() {
 
 function summaryItem(label, value, cls) {
   return `<div class="summary-item"><span class="summary-label">${label}</span><span class="summary-value ${cls || ''}">${value}</span></div>`;
+}
+
+function buildExpenseView(phase) {
+  const year = state.calendarYear;
+  const month = state.calendarMonth;
+  const prefix = `${year}-${pad(month)}`;
+  const monthExpenses = expenseRecords
+    .filter(r => r.date.startsWith(prefix))
+    .sort((a, b) => b.date.localeCompare(a.date));
+  const monthTotal = monthExpenses.reduce((s, r) => s + r.amount, 0);
+  const dayCount = monthExpenses.length ? new Set(monthExpenses.map(r => r.date)).size : 0;
+  const monthAvg = monthExpenses.length ? (monthTotal / dayCount).toFixed(2) : '—';
+
+  const groups = expenseCategories
+    .map(cat => {
+      const items = monthExpenses.filter(r => r.cat === cat.name);
+      const total = items.reduce((s, r) => s + r.amount, 0);
+      return { ...cat, items, total };
+    })
+    .filter(g => g.items.length > 0)
+    .sort((a, b) => b.total - a.total);
+
+  let html = '<div class="expense-view">';
+  html += '<div class="cal-header">';
+  html += `<span class="cal-title">${year}年${month}月 · 支出</span>`;
+  html += '<div class="cal-nav">';
+  html += '<button class="cal-nav-btn" id="calPrev" title="上一月">◀</button>';
+  html += '<button class="cal-today-btn" id="calToday">本月</button>';
+  html += '<button class="cal-nav-btn" id="calNext" title="下一月">▶</button>';
+  html += '</div></div>';
+
+  if (monthTotal > 0) {
+    html += '<div class="summary-bar">';
+    html += summaryItem('本月支出', `¥${monthTotal.toFixed(2)}`, 'expense-amount');
+    html += '<div class="summary-divider"></div>';
+    html += summaryItem('记录笔数', `${monthExpenses.length}`);
+    html += '<div class="summary-divider"></div>';
+    html += summaryItem('日均', `¥${monthAvg}`);
+    html += '</div>';
+  }
+
+  if (monthTotal === 0) {
+    html += '<div class="empty-state"><p>本月暂无支出记录</p></div>';
+  }
+
+  for (const group of groups) {
+    html += '<div class="check-section open">';
+    html += '<div class="section-header">';
+    html += '<div class="section-header-left">';
+    html += `<span class="expense-cat-icon">${group.icon}</span>`;
+    html += `<h2>${escapeHtml(group.name)}</h2>`;
+    html += '</div>';
+    html += '<div class="section-header-right">';
+    html += `<span class="expense-cat-amount">¥${group.total.toFixed(2)}</span>`;
+    html += `<span class="section-count">${group.items.length}</span>`;
+    html += '<span class="section-arrow">▸</span>';
+    html += '</div>';
+    html += '</div>';
+    html += '<div class="section-body">';
+    for (const item of group.items) {
+      const d = new Date(item.date + 'T00:00:00');
+      const shortDate = `${d.getMonth() + 1}/${d.getDate()}`;
+      html += '<div class="expense-item">';
+      html += '<div class="expense-item-left">';
+      html += `<span class="expense-item-sub">${escapeHtml(item.sub)}</span>`;
+      if (item.note) html += `<span class="expense-item-note">${escapeHtml(item.note)}</span>`;
+      html += '</div>';
+      html += '<div class="expense-item-right">';
+      html += `<span class="expense-item-amount">¥${item.amount.toFixed(2)}</span>`;
+      html += `<span class="expense-item-date">${shortDate}</span>`;
+      html += '</div>';
+      html += '</div>';
+    }
+    html += '</div>';
+    html += '</div>';
+  }
+
+  html += '</div>';
+  return html;
 }
 
 /* ─── Calendar view ─── */
@@ -1303,6 +1383,7 @@ function buildPhaseContent(phase) {
   if (phase.type === 'checklist') return buildChecklistView(phase);
   if (phase.type === 'calendar') return buildCalendarView();
   if (phase.type === 'daily-tracker') return buildDailyTrackerView(phase);
+  if (phase.type === 'expense-records') return buildExpenseView(phase);
   if (phase.type === 'food-calendar') {
     let html = '<div class="food-views">';
     html += '<div class="food-view-tabs" id="foodViewTabs">';
@@ -1339,7 +1420,7 @@ function renderApp() {
     sidebarNav.querySelectorAll('.sidebar-item').forEach(btn => {
       btn.addEventListener('click', () => {
         state.activePhase = btn.dataset.phase;
-        if (btn.dataset.phase === 'utility-tracking' || btn.dataset.phase === 'food-records' || btn.dataset.phase === 'daily-tracker') {
+        if (btn.dataset.phase === 'utility-tracking' || btn.dataset.phase === 'food-records' || btn.dataset.phase === 'daily-tracker' || btn.dataset.phase === 'expense-records') {
           const now = new Date();
           state.calendarYear = now.getFullYear();
           state.calendarMonth = now.getMonth() + 1;

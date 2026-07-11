@@ -483,6 +483,13 @@ const phases = [
     sections: []
   },
   {
+    id: 'expense-records',
+    title: '支出记录',
+    subtitle: '按月汇总支出，按分类折叠查看每笔明细，从 Obsidian 日记自动同步',
+    type: 'expense-records',
+    sections: []
+  },
+  {
     id: 'home-map',
     title: '猪窝地图',
     subtitle: '记录重要物资的存放位置',
