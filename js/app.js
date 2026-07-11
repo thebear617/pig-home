@@ -336,13 +336,11 @@ function buildDailyTrackerView(phase) {
     if (isToday) cls += ' cal-today';
     if (hasData) cls += ' cal-has-data';
     if (isSelected) cls += ' cal-selected';
-    if (rec && !hasExpense) cls += ' cal-has-sched-only';
     html += `<div class="${cls}" data-date="${key}">`;
     html += `<span class="cal-lunar${lunar.isStart ? ' cal-lunar-start' : ''}">${lunar.isStart ? lunar.lMonthName : getLunarDayName(lunar.lDay)}</span>`;
     html += `<span class="cal-date${isToday ? ' cal-date-today' : ''}">${d}日</span>`;
     if (rec && rec.value != null) html += `<span class="cal-value">${rec.value}</span>`;
     if (hasExpense) html += '<span class="cal-expense-dot" title="有支出"></span>';
-    if (rec) html += '<span class="cal-sched-dot" title="有日程"></span>';
     html += '</div>';
   }
 
@@ -386,8 +384,7 @@ function buildDailyDetailPanel() {
     </div>`;
     html += '<div class="detail-tasks">';
     rec.tasks.forEach((task, i) => {
-      const doneCls = task.status === 'x' ? ' done' : '';
-      html += `<div class="task-item${doneCls}">
+      html += `<div class="task-item">
         <span class="task-num">${i + 1}</span>
         <span class="task-time">${escapeHtml(task.time)}</span>
         <span class="task-text">${escapeHtml(task.desc)}</span>
@@ -405,7 +402,6 @@ function buildDailyDetailPanel() {
     html += '<div class="detail-expenses">';
     dayExp.forEach(exp => {
       html += `<div class="expense-detail-item">
-        <span class="expense-detail-cat">${escapeHtml(exp.cat)}</span>
         <span class="expense-detail-sub">${escapeHtml(exp.sub)}</span>
         ${exp.note ? `<span class="expense-detail-note">${escapeHtml(exp.note)}</span>` : ''}
         <span class="expense-detail-amount">¥${exp.amount.toFixed(2)}</span>
@@ -432,8 +428,6 @@ function buildDailySummaryBar() {
     html += summaryItem('本月支出', `¥${total.toFixed(2)}`, 'expense-amount');
     html += '<div class="summary-divider"></div>';
     html += summaryItem('日均支出', `¥${avg.toFixed(2)}`, 'expense-amount');
-    html += '<div class="summary-divider"></div>';
-    html += summaryItem('记账天数', `${days} 天`);
   }
   if (sleep.count) {
     if (exps.length) html += '<div class="summary-divider"></div>';

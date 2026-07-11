@@ -907,13 +907,6 @@ button {
   border-radius: 50%;
   background: var(--red);
 }
-.cal-sched-dot {
-  position: absolute;
-  bottom: .4rem; left: .4rem;
-  width: 6px; height: 6px;
-  border-radius: 50%;
-  background: #2563eb;
-}
 
 /* 当日日程任务列表 */
 .detail-tasks {
@@ -930,7 +923,6 @@ button {
   gap: .55rem;
   padding: .35rem 0;
 }
-.task-item.done .task-text { color: var(--muted); text-decoration: line-through; }
 .task-num {
   flex-shrink: 0;
   width: 1.4rem;
@@ -975,7 +967,6 @@ button {
   padding: .3rem 0;
   font-size: .84rem;
 }
-.expense-detail-cat { font-weight: 700; color: var(--text); }
 .expense-detail-sub { color: var(--muted); }
 .expense-detail-note { color: var(--muted); font-size: .78rem; flex: 1; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 .expense-detail-amount { font-weight: 800; color: var(--red); margin-left: auto; flex-shrink: 0; }
