@@ -2,6 +2,7 @@ const TABS = [
   { id: 'follow-up', title: '生活备忘录与物资采购', icon: '📋' },
   { id: 'food-records', title: '美食记录与做饭心得', icon: '🍳' },
   { id: 'utility-tracking', title: '水电追踪', icon: '⚡' },
+  { id: 'daily-tracker', title: '每日追踪', icon: '📅' },
   { id: 'food-map', title: '美食地图', icon: '🗺️' },
   { id: 'relationship-timeline', title: '关系时间线', icon: '💞' },
   { id: 'home-map', title: '猪窝地图', icon: '🏠' }
@@ -241,6 +242,212 @@ function buildSummaryBar() {
   html += '</div>';
   html += '</div>';
   return html;
+}
+
+/* ─── Daily tracker view（从 personal 迁出的每日日历：支出 + 日程 + 睡眠） ─── */
+
+function parseHM(hm) {
+  const [h, m] = hm.split(':').map(Number);
+  return h * 60 + m;
+}
+function minToHM(min) {
+  const h = Math.floor(min / 60) % 24;
+  const m = Math.round(min % 60);
+  return `${pad(h)}:${pad(m)}`;
+}
+
+function dailyMonthExpense(year, month) {
+  const prefix = `${year}-${pad(month)}`;
+  return expenseRecords.filter(r => r.date.startsWith(prefix));
+}
+function dailySleepStats(year, month) {
+  const prefix = `${year}-${pad(month)}`;
+  const bedtimes = [], wakeups = [], durations = [];
+  Object.entries(diaryRecords).forEach(([key, record]) => {
+    if (!key.startsWith(prefix)) return;
+    const tasks = record.tasks || [];
+    let best = null, bestStart = -1;
+    for (const task of tasks) {
+      if (task.desc !== '睡觉' && task.desc !== '睡懒觉') continue;
+      const parts = task.time.split('-');
+      if (parts.length !== 2) continue;
+      const s = parseHM(parts[0].trim());
+      const e = parseHM(parts[1].trim());
+      if (isNaN(s) || isNaN(e)) continue;
+      if (s > bestStart) { bestStart = s; best = { s, e }; }
+    }
+    if (best) {
+      let endMin = best.e;
+      if (endMin <= best.s) endMin += 24 * 60;
+      bedtimes.push(best.s); wakeups.push(best.e); durations.push(endMin - best.s);
+    }
+  });
+  if (!bedtimes.length) return { count: 0, avgBedtime: '', avgWakeup: '', avgDuration: '' };
+  const avg = arr => arr.reduce((a, b) => a + b, 0) / arr.length;
+  return {
+    count: bedtimes.length,
+    avgBedtime: minToHM(avg(bedtimes)),
+    avgWakeup: minToHM(avg(wakeups)),
+    avgDuration: (avg(durations) / 60).toFixed(1)
+  };
+}
+
+function buildDailyTrackerView(phase) {
+  const today = new Date();
+  const calYear = state.calendarYear;
+  const calMonth = state.calendarMonth;
+  const firstDay = new Date(calYear, calMonth - 1, 1);
+  const lastDay = new Date(calYear, calMonth, 0);
+  const daysInMonth = lastDay.getDate();
+  const startDow = firstDay.getDay();
+  const prevMonthLastDay = new Date(calYear, calMonth - 1, 0).getDate();
+
+  let html = '<div class="calendar-view">';
+  html += '<div class="cal-header">';
+  html += `<span class="cal-title">${calYear}年${calMonth}月</span>`;
+  html += '<div class="cal-nav">';
+  html += '<button class="cal-nav-btn" id="calPrev" title="上一月">◀</button>';
+  html += '<button class="cal-today-btn" id="calToday">今天</button>';
+  html += '<button class="cal-nav-btn" id="calNext" title="下一月">▶</button>';
+  html += '</div></div>';
+  html += '<div class="cal-weekdays">';
+  for (const w of ['日', '一', '二', '三', '四', '五', '六']) html += `<span class="cal-weekday">${w}</span>`;
+  html += '</div>';
+  html += '<div class="cal-grid">';
+
+  for (let i = 0; i < startDow; i++) {
+    const d = prevMonthLastDay - startDow + i + 1;
+    const lunar = getLunarInfo(calYear, calMonth - 1, d);
+    html += `<div class="cal-cell cal-other-month">
+      <span class="cal-lunar${lunar.isStart ? ' cal-lunar-start' : ''}">${lunar.isStart ? lunar.lMonthName : getLunarDayName(lunar.lDay)}</span>
+      <span class="cal-date">${d}日</span>
+    </div>`;
+  }
+
+  for (let d = 1; d <= daysInMonth; d++) {
+    const isToday = calYear === today.getFullYear() && calMonth === today.getMonth() + 1 && d === today.getDate();
+    const lunar = getLunarInfo(calYear, calMonth, d);
+    const key = dateKey(calYear, calMonth, d);
+    const rec = diaryRecords[key] || null;
+    const hasExpense = expenseRecords.some(r => r.date === key);
+    const hasData = hasExpense || !!rec;
+    const isSelected = key === state.selectedDay;
+    let cls = 'cal-cell';
+    if (isToday) cls += ' cal-today';
+    if (hasData) cls += ' cal-has-data';
+    if (isSelected) cls += ' cal-selected';
+    if (rec && !hasExpense) cls += ' cal-has-sched-only';
+    html += `<div class="${cls}" data-date="${key}">`;
+    html += `<span class="cal-lunar${lunar.isStart ? ' cal-lunar-start' : ''}">${lunar.isStart ? lunar.lMonthName : getLunarDayName(lunar.lDay)}</span>`;
+    html += `<span class="cal-date${isToday ? ' cal-date-today' : ''}">${d}日</span>`;
+    if (hasExpense) html += '<span class="cal-expense-dot" title="有支出"></span>';
+    if (rec) html += '<span class="cal-sched-dot" title="有日程"></span>';
+    html += '</div>';
+  }
+
+  const totalCells = startDow + daysInMonth;
+  const remaining = totalCells % 7 === 0 ? 0 : 7 - (totalCells % 7);
+  for (let d = 1; d <= remaining; d++) {
+    const lunar = getLunarInfo(calYear, calMonth + 1, d);
+    html += `<div class="cal-cell cal-other-month">
+      <span class="cal-lunar${lunar.isStart ? ' cal-lunar-start' : ''}">${lunar.isStart ? lunar.lMonthName : getLunarDayName(lunar.lDay)}</span>
+      <span class="cal-date">${d}日</span>
+    </div>`;
+  }
+  html += '</div></div>';
+
+  html += buildDailyDetailPanel();
+  html += buildDailySummaryBar();
+  return html;
+}
+
+function buildDailyDetailPanel() {
+  const key = state.selectedDay;
+  if (!key) return '';
+  const rec = diaryRecords[key] || null;
+  const dayExp = expenseRecords.filter(r => r.date === key);
+  if (!rec && !dayExp.length) return '';
+
+  const d = new Date(key + 'T00:00:00');
+  const dayName = `${d.getMonth() + 1}月${d.getDate()}日`;
+  let html = '<div class="detail-panel">';
+  html += '<div class="detail-header">';
+  html += `<span class="detail-title">${dayName}</span>`;
+  html += '<button class="detail-close" id="detailClose" title="关闭">✕</button>';
+  html += '</div>';
+  html += '<div class="detail-body">';
+
+  if (rec && rec.tasks && rec.tasks.length) {
+    const done = rec.value != null ? rec.value : rec.tasks.filter(t => t.status === 'x').length;
+    html += `<div class="detail-row">
+      <span class="detail-label">当日日程</span>
+      <span class="detail-val">已完成 ${done} / 共 ${rec.tasks.length}</span>
+    </div>`;
+    html += '<div class="detail-tasks">';
+    rec.tasks.forEach((task, i) => {
+      const doneCls = task.status === 'x' ? ' done' : '';
+      html += `<div class="task-item${doneCls}">
+        <span class="task-num">${i + 1}</span>
+        <span class="task-time">${escapeHtml(task.time)}</span>
+        <span class="task-text">${escapeHtml(task.desc)}</span>
+      </div>`;
+    });
+    html += '</div>';
+  }
+
+  if (dayExp.length) {
+    const total = dayExp.reduce((s, r) => s + r.amount, 0);
+    html += `<div class="detail-row">
+      <span class="detail-label">当日支出</span>
+      <span class="detail-val expense-amount">¥${total.toFixed(2)}</span>
+    </div>`;
+    html += '<div class="detail-expenses">';
+    dayExp.forEach(exp => {
+      html += `<div class="expense-detail-item">
+        <span class="expense-detail-cat">${escapeHtml(exp.cat)}</span>
+        <span class="expense-detail-sub">${escapeHtml(exp.sub)}</span>
+        ${exp.note ? `<span class="expense-detail-note">${escapeHtml(exp.note)}</span>` : ''}
+        <span class="expense-detail-amount">¥${exp.amount.toFixed(2)}</span>
+      </div>`;
+    });
+    html += '</div>';
+  }
+
+  html += '</div></div>';
+  return html;
+}
+
+function buildDailySummaryBar() {
+  const year = state.calendarYear, month = state.calendarMonth;
+  const exps = dailyMonthExpense(year, month);
+  const sleep = dailySleepStats(year, month);
+  if (!exps.length && !sleep.count) return '';
+
+  let html = '<div class="summary-bar">';
+  if (exps.length) {
+    const total = exps.reduce((s, r) => s + r.amount, 0);
+    const days = new Set(exps.map(r => r.date)).size;
+    const avg = total / days;
+    html += summaryItem('本月支出', `¥${total.toFixed(2)}`, 'expense-amount');
+    html += '<div class="summary-divider"></div>';
+    html += summaryItem('日均支出', `¥${avg.toFixed(2)}`, 'expense-amount');
+    html += '<div class="summary-divider"></div>';
+    html += summaryItem('记账天数', `${days} 天`);
+  }
+  if (sleep.count) {
+    if (exps.length) html += '<div class="summary-divider"></div>';
+    html += summaryItem('平均入睡', sleep.avgBedtime);
+    html += '<div class="summary-divider"></div>';
+    html += summaryItem('平均起床', sleep.avgWakeup);
+    html += '<div class="summary-divider"></div>';
+    html += summaryItem('平均睡眠', `${sleep.avgDuration}h`);
+  }
+  html += '</div>';
+  return html;
+}
+
+function summaryItem(label, value, cls) {
+  return `<div class="summary-item"><span class="summary-label">${label}</span><span class="summary-value ${cls || ''}">${value}</span></div>`;
 }
 
 /* ─── Calendar view ─── */
@@ -1100,6 +1307,7 @@ function setupRelationshipTimeline() {
 function buildPhaseContent(phase) {
   if (phase.type === 'checklist') return buildChecklistView(phase);
   if (phase.type === 'calendar') return buildCalendarView();
+  if (phase.type === 'daily-tracker') return buildDailyTrackerView(phase);
   if (phase.type === 'food-calendar') {
     let html = '<div class="food-views">';
     html += '<div class="food-view-tabs" id="foodViewTabs">';
@@ -1136,7 +1344,7 @@ function renderApp() {
     sidebarNav.querySelectorAll('.sidebar-item').forEach(btn => {
       btn.addEventListener('click', () => {
         state.activePhase = btn.dataset.phase;
-        if (btn.dataset.phase === 'utility-tracking' || btn.dataset.phase === 'food-records') {
+        if (btn.dataset.phase === 'utility-tracking' || btn.dataset.phase === 'food-records' || btn.dataset.phase === 'daily-tracker') {
           const now = new Date();
           state.calendarYear = now.getFullYear();
           state.calendarMonth = now.getMonth() + 1;

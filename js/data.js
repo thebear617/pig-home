@@ -286,6 +286,21 @@ const quarrelRecords = [
   }
 ];
 
+// 支出分类（与 personal 迁出的记账体系一致；home 接管后作为「每日追踪」分类汇总依据）
+const expenseCategories = [
+  { name: '居家生活', icon: '🏠', subs: ['居家', '做饭', '洗漱', '洗衣服', '维修', '快递'] },
+  { name: '通讯订阅', icon: '📱', subs: ['通讯', '话费套餐', 'vip'] },
+  { name: '形象装扮', icon: '👔', subs: ['服饰', '美容'] },
+  { name: '市内出行', icon: '🍜', subs: ['外出餐饮', '借充电宝', '市内交通'] },
+  { name: '娱乐消费', icon: '🎮', subs: ['娱乐', '游戏充值', '抓娃娃', '彩票'] },
+  { name: '自我提升', icon: '📚', subs: ['学习', '办公', '运动健身'] },
+  { name: '电子产品', icon: '💻', subs: ['数码产品', '数码配件', '大家电', '小家电'] },
+  { name: '人情社交', icon: '🤝', subs: ['社交', '亲友', '节日', '纪念', '长辈', '爸爸妈妈', '孩子', '宝贝'] },
+  { name: '市外出行', icon: '✈️', subs: ['跨省交通', '住房', '旅行中途餐饮'] },
+  { name: '猫协救助', icon: '🐱', subs: ['宠物'] },
+  { name: '医疗保健', icon: '🏥', subs: ['医疗'] },
+];
+
 const phases = [
   {
     id: 'follow-up',
@@ -458,6 +473,13 @@ const phases = [
     title: '水电追踪',
     subtitle: '记录每日水电用量，追踪能耗趋势',
     type: 'calendar',
+    sections: []
+  },
+  {
+    id: 'daily-tracker',
+    title: '每日追踪',
+    subtitle: '每日记账（支出明细 · 分类汇总）+ 日程与睡眠，从 Obsidian 日记自动同步',
+    type: 'daily-tracker',
     sections: []
   },
   {
