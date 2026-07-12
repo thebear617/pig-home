@@ -3488,7 +3488,7 @@ const diaryRecords = {
     ]
   },
   "2026-07-11": {
-    "value": 4,
+    "value": 6,
     "tasks": [
       {
         "status": "x",
@@ -3518,6 +3518,22 @@ const diaryRecords = {
         "status": "x",
         "time": "15:30-18:30",
         "desc": "开发：迁移日程和支出板块到猪窝，完善科研笔记板块",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      },
+      {
+        "status": "x",
+        "time": "18:30-19:30",
+        "desc": "去门口买菜取快递",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      },
+      {
+        "status": "x",
+        "time": "20:00-22:00",
+        "desc": "备菜、做菜、收拾",
         "isCooking": false,
         "mealType": null,
         "dishGuess": null
