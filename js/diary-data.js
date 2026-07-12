@@ -3488,7 +3488,7 @@ const diaryRecords = {
     ]
   },
   "2026-07-11": {
-    "value": 6,
+    "value": 8,
     "tasks": [
       {
         "status": "x",
@@ -3534,6 +3534,59 @@ const diaryRecords = {
         "status": "x",
         "time": "20:00-22:00",
         "desc": "备菜、做菜、收拾",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      },
+      {
+        "status": "x",
+        "time": "22:05-22:20",
+        "desc": "洗澡",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      },
+      {
+        "status": "x",
+        "time": "22:20-24:00",
+        "desc": "打电动",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      }
+    ]
+  },
+  "2026-07-12": {
+    "value": 4,
+    "tasks": [
+      {
+        "status": "x",
+        "time": "00:00-00:30",
+        "desc": "打电动",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      },
+      {
+        "status": "x",
+        "time": "00:30-01:00",
+        "desc": "做相册",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      },
+      {
+        "status": "x",
+        "time": "01:00-01:40",
+        "desc": "查文献",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      },
+      {
+        "status": "x",
+        "time": "01:40-02:00",
+        "desc": "过马路煮螺狮粉，一起吃螺狮粉牛肉丸夜宵，收拾后厨",
         "isCooking": false,
         "mealType": null,
         "dishGuess": null

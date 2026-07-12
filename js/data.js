@@ -96,6 +96,16 @@ const foodRecords = {
         { name: '羊角菜肉沫汤', madeBy: '过马路', cost: 1, note: '肉沫' }
       ]
     }
+  ],
+  '2026-07-12': [
+    {
+      meal: '夜宵',
+      prep: 10,
+      cleanup: 10,
+      dishes: [
+        { name: '螺狮粉牛肉丸', madeBy: '过马路', cost: 13, note: '一起吃' }
+      ]
+    }
   ]
 };
 
