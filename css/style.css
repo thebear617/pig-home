@@ -1492,6 +1492,32 @@ button {
   transition: transform .18s ease;
 }
 
+.cook-rec-title {
+  flex: 1 1 auto;
+  min-width: 0;
+  margin-left: .15rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.cook-rec-ware {
+  flex-shrink: 0;
+  margin-left: .6rem;
+  display: inline-flex;
+  align-items: center;
+  gap: .25rem;
+  font-size: .76rem;
+  font-weight: 700;
+  color: #92400e;
+  background: rgba(255, 255, 255, .85);
+  border: 1px solid rgba(0, 0, 0, .08);
+  border-radius: 999px;
+  padding: .16rem .55rem;
+  white-space: nowrap;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, .06);
+}
+
 .cook-rec-head.open .cook-rec-arrow {
   transform: rotate(90deg);
 }

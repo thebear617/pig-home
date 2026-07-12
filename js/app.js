@@ -747,6 +747,9 @@ function buildCookingTipsGrid(phase) {
         html += `<button class="cook-rec-head" type="button" style="background:${grad.bg}">`;
         html += `<span class="cook-rec-icon" style="background:#fff;color:${grad.fg}">${recIcon}</span>`;
         html += `<span class="cook-rec-title">${escapeHtml(rec.title || '未命名')}</span>`;
+        if (rec.耗材) {
+          html += `<span class="cook-rec-ware" title="耗材">🍽 ${escapeHtml(rec.耗材)}</span>`;
+        }
         html += '<span class="cook-rec-arrow">▸</span>';
         html += '</button>';
         html += `<div class="cook-rec-body cookbook-md" hidden>${renderMarkdown(rec.md)}</div>`;
