@@ -830,12 +830,14 @@ function buildFoodDetailPanel() {
       for (const dish of meal.dishes) {
         html += `<div class="food-dish-card">
           <span class="food-dish-icon">🥘</span>
-          <span class="food-dish-main">
-            <span class="food-dish-name">${escapeHtml(dish.name)}</span>
-            <span class="food-dish-by">${escapeHtml(dish.madeBy || '')} 做</span>
-          </span>
-          <span class="food-dish-cost">${dish.cost != null ? dish.cost + ' 元' : ''}</span>
-          ${dish.note ? `<span class="food-dish-note">${escapeHtml(dish.note)}</span>` : ''}
+          <div class="food-dish-body">
+            <div class="food-dish-head">
+              <span class="food-dish-name">${escapeHtml(dish.name)}</span>
+              <span class="food-dish-by">${escapeHtml(dish.madeBy || '')} 做</span>
+              ${dish.cost != null ? `<span class="food-dish-cost">${dish.cost} 元</span>` : ''}
+            </div>
+            ${dish.note ? `<span class="food-dish-note">${escapeHtml(dish.note)}</span>` : ''}
+          </div>
         </div>`;
       }
     } else {
