@@ -113,6 +113,16 @@ const foodRecords = {
       dishes: [
         { name: '蛋炒饭', madeBy: '耙耙柑', cost: 2, note: '葱、鸡蛋两个、火腿肠，剩饭半个拉面碗、生抽、盐和味精' }
       ]
+    },
+    {
+      meal: '晚饭',
+      prep: 15,
+      cleanup: 5,
+      dishes: [
+        { name: '水煮玉米', madeBy: '耙耙柑', cost: 2 },
+        { name: '红油凉皮', madeBy: '耙耙柑', cost: 4 },
+        { name: '红豆红枣花生红糖汤', madeBy: '耙耙柑', cost: 5 }
+      ]
     }
   ]
 };

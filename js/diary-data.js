@@ -3557,7 +3557,7 @@ const diaryRecords = {
     ]
   },
   "2026-07-12": {
-    "value": 8,
+    "value": 10,
     "tasks": [
       {
         "status": "x",
@@ -3619,6 +3619,22 @@ const diaryRecords = {
         "status": "x",
         "time": "15:30-16:30",
         "desc": "做蛋炒饭，收拾后厨",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      },
+      {
+        "status": "x",
+        "time": "16:30-17:30",
+        "desc": "出门买菜，买红豆、红糖、西瓜、番茄和暖贴",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      },
+      {
+        "status": "x",
+        "time": "17:30-20:00",
+        "desc": "边煲汤边记录边哄宝宝",
         "isCooking": false,
         "mealType": null,
         "dishGuess": null
