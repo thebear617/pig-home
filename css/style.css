@@ -1257,6 +1257,33 @@ button {
   color: var(--text);
 }
 
+/* 新结构：每道菜显示 做的人 + 金额 + 备注 */
+.food-dish-main {
+  display: flex;
+  flex-direction: column;
+  gap: .1rem;
+  flex: 1 1 auto;
+  min-width: 0;
+}
+.food-dish-by {
+  font-size: .72rem;
+  font-weight: 600;
+  color: var(--muted);
+}
+.food-dish-cost {
+  flex-shrink: 0;
+  font-size: .85rem;
+  font-weight: 800;
+  color: var(--red);
+  font-variant-numeric: tabular-nums;
+}
+.food-dish-note {
+  flex-basis: 100%;
+  font-size: .72rem;
+  color: var(--muted);
+  margin-top: .1rem;
+}
+
 .food-divider {
   height: 1px;
   background: var(--line);

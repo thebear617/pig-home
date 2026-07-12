@@ -85,6 +85,16 @@ const foodRecords = {
       chef: '过马路',
       helper: '耙耙柑',
       cleanup: 20
+    },
+    {
+      meal: '晚饭',
+      prep: '30-40',
+      cleanup: 20,
+      dishes: [
+        { name: '白灼香螺', madeBy: '耙耙柑', cost: 1, note: '葱蒜姜、小米辣（与牛排共享 1 元）' },
+        { name: '黑胡椒迷迭香牛排', madeBy: '耙耙柑', cost: 1, note: '葱蒜姜、小米辣（与香螺共享 1 元）' },
+        { name: '羊角菜肉沫汤', madeBy: '过马路', cost: 1, note: '肉沫' }
+      ]
     }
   ]
 };

@@ -823,27 +823,60 @@ function buildFoodDetailPanel() {
     if (idx > 0) html += '<div class="food-divider"></div>';
     html += '<div class="food-meal-block">';
     html += `<div class="food-meal-head"><span class="food-meal-tag">${escapeHtml(meal.meal || '餐')}</span></div>`;
+
+    const isNew = meal.dishes.length && typeof meal.dishes[0] === 'object';
     html += '<div class="food-dishes">';
-    for (const dish of meal.dishes) {
-      html += `<div class="food-dish-card">
-        <span class="food-dish-icon">🥘</span>
-        <span class="food-dish-name">${escapeHtml(dish)}</span>
-      </div>`;
+    if (isNew) {
+      for (const dish of meal.dishes) {
+        html += `<div class="food-dish-card">
+          <span class="food-dish-icon">🥘</span>
+          <span class="food-dish-main">
+            <span class="food-dish-name">${escapeHtml(dish.name)}</span>
+            <span class="food-dish-by">${escapeHtml(dish.madeBy || '')} 做</span>
+          </span>
+          <span class="food-dish-cost">${dish.cost != null ? dish.cost + ' 元' : ''}</span>
+          ${dish.note ? `<span class="food-dish-note">${escapeHtml(dish.note)}</span>` : ''}
+        </div>`;
+      }
+    } else {
+      for (const dish of meal.dishes) {
+        html += `<div class="food-dish-card">
+          <span class="food-dish-icon">🥘</span>
+          <span class="food-dish-name">${escapeHtml(dish)}</span>
+        </div>`;
+      }
     }
     html += '</div>';
+
+    let mealCost = meal.cost;
+    if (mealCost == null && isNew) {
+      mealCost = meal.dishes.reduce((s, d) => s + (d.cost || 0), 0);
+    }
     html += '<div class="food-meta-grid">';
-    html += `<div class="food-meta-item">
-      <span class="food-meta-label">花费</span>
-      <span class="food-meta-value food-cost">${meal.cost} 元</span>
-    </div>`;
-    html += `<div class="food-meta-item">
-      <span class="food-meta-label">主厨</span>
-      <span class="food-meta-value">${escapeHtml(meal.chef)}</span>
-    </div>`;
-    if (meal.helper) {
+    if (mealCost != null) {
       html += `<div class="food-meta-item">
-        <span class="food-meta-label">帮手</span>
-        <span class="food-meta-value">${escapeHtml(meal.helper)}</span>
+        <span class="food-meta-label">花费</span>
+        <span class="food-meta-value food-cost">${mealCost} 元</span>
+      </div>`;
+    }
+    if (!isNew) {
+      if (meal.chef) {
+        html += `<div class="food-meta-item">
+          <span class="food-meta-label">主厨</span>
+          <span class="food-meta-value">${escapeHtml(meal.chef)}</span>
+        </div>`;
+      }
+      if (meal.helper) {
+        html += `<div class="food-meta-item">
+          <span class="food-meta-label">帮手</span>
+          <span class="food-meta-value">${escapeHtml(meal.helper)}</span>
+        </div>`;
+      }
+    }
+    if (meal.prep) {
+      html += `<div class="food-meta-item">
+        <span class="food-meta-label">餐前备菜</span>
+        <span class="food-meta-value">${escapeHtml(String(meal.prep))} 分钟</span>
       </div>`;
     }
     if (meal.cleanup) {
@@ -865,7 +898,13 @@ function buildFoodSummaryBar() {
   if (records.length === 0) return '';
 
   let totalCost = 0;
-  for (const r of records) totalCost += r.cost || 0;
+  for (const r of records) {
+    if (r.cost != null) {
+      totalCost += r.cost;
+    } else if (r.dishes && r.dishes.length && typeof r.dishes[0] === 'object') {
+      totalCost += r.dishes.reduce((s, d) => s + (d.cost || 0), 0);
+    }
+  }
 
   const cookCount = records.filter(r => r.meal === '中饭' || r.meal === '晚饭').length;
 
