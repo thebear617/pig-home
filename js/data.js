@@ -105,6 +105,14 @@ const foodRecords = {
       dishes: [
         { name: '螺狮粉牛肉丸', madeBy: '过马路', cost: 13, note: '一起吃' }
       ]
+    },
+    {
+      meal: '中饭',
+      prep: 10,
+      cleanup: 10,
+      dishes: [
+        { name: '蛋炒饭', madeBy: '耙耙柑', cost: 2, note: '葱、鸡蛋两个、火腿肠，剩饭半个拉面碗、生抽、盐和味精' }
+      ]
     }
   ]
 };
