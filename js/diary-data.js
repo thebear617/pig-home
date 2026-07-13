@@ -3666,7 +3666,7 @@ const diaryRecords = {
     ]
   },
   "2026-07-13": {
-    "value": 5,
+    "value": 6,
     "tasks": [
       {
         "status": "x",
@@ -3704,6 +3704,14 @@ const diaryRecords = {
         "status": "x",
         "time": "14:20-15:20",
         "desc": "进行这几天的日程支出补充，并充值 ChatGPT Plus（月抛）",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      },
+      {
+        "status": "x",
+        "time": "15:20-18:00",
+        "desc": "出门丢垃圾、烫头、存钱、取快递、回宿舍拿药",
         "isCooking": false,
         "mealType": null,
         "dishGuess": null
