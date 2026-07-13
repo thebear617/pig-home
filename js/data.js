@@ -126,6 +126,16 @@ const foodRecords = {
         { name: '红豆红枣花生红糖汤', madeBy: '耙耙柑', cost: 5 }
       ]
     }
+  ],
+  '2026-07-13': [
+    {
+      meal: '中饭',
+      prep: 0,
+      cleanup: 10,
+      dishes: [
+        { name: '猪肉大葱水饺', madeBy: '耙耙柑', cost: 10, note: '猪肉大葱口味' }
+      ]
+    }
   ]
 };
 
