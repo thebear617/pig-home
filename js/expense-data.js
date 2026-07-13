@@ -226,7 +226,7 @@ const expenseRecords = [
   },
   {
     "date": "2026-07-13",
-    "cat": "订阅",
+    "cat": "通讯订阅",
     "sub": "AI订阅",
     "amount": 24.72,
     "note": "ChatGPT Plus成品号"

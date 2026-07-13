@@ -339,7 +339,7 @@ const quarrelRecords = [
 // 支出分类（与 personal 迁出的记账体系一致；home 接管后作为「每日追踪」分类汇总依据）
 const expenseCategories = [
   { name: '居家生活', icon: '🏠', subs: ['居家', '做饭', '洗漱', '洗衣服', '维修', '快递'] },
-  { name: '通讯订阅', icon: '📱', subs: ['通讯', '话费套餐', 'vip'] },
+  { name: '通讯订阅', icon: '📱', subs: ['通讯', '话费套餐', 'vip', 'AI订阅'] },
   { name: '形象装扮', icon: '👔', subs: ['服饰', '美容'] },
   { name: '市内出行', icon: '🍜', subs: ['外出餐饮', '借充电宝', '市内交通'] },
   { name: '娱乐消费', icon: '🎮', subs: ['娱乐', '游戏充值', '抓娃娃', '彩票'] },
