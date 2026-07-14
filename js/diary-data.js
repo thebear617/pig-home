@@ -3666,7 +3666,7 @@ const diaryRecords = {
     ]
   },
   "2026-07-13": {
-    "value": 6,
+    "value": 12,
     "tasks": [
       {
         "status": "x",
@@ -3711,7 +3711,55 @@ const diaryRecords = {
       {
         "status": "x",
         "time": "15:20-18:00",
-        "desc": "出门丢垃圾、烫头、存钱、取快递、回宿舍拿药",
+        "desc": "出门丢垃圾、存钱、取快递、回宿舍拿药",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      },
+      {
+        "status": "x",
+        "time": "18:00-19:00",
+        "desc": "烫头",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      },
+      {
+        "status": "x",
+        "time": "19:00-19:30",
+        "desc": "回家休息",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      },
+      {
+        "status": "x",
+        "time": "19:30-20:20",
+        "desc": "回学校，送过马路，开组会，然后吃米线",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      },
+      {
+        "status": "x",
+        "time": "20:20-21:00",
+        "desc": "接着回丁香看大头，给赫兹喂药",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      },
+      {
+        "status": "x",
+        "time": "21:00-22:30",
+        "desc": "从学校出发去盒马采购",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      },
+      {
+        "status": "x",
+        "time": "22:30-24:00",
+        "desc": "吵架",
         "isCooking": false,
         "mealType": null,
         "dishGuess": null
