@@ -332,16 +332,19 @@ function buildDailyTrackerView(phase) {
     const rec = diaryRecords[key] || null;
     const hasExpense = expenseRecords.some(r => r.date === key);
     const hasData = hasExpense || !!rec;
+    const isMonday = new Date(calYear, calMonth - 1, d).getDay() === 1;
     const isSelected = key === state.selectedDay;
     let cls = 'cal-cell';
     if (isToday) cls += ' cal-today';
-    if (hasData) cls += ' cal-has-data';
+    if (hasData || isMonday) cls += ' cal-has-data';
+    if (isMonday) cls += ' cal-hema-day';
     if (isSelected) cls += ' cal-selected';
     html += `<div class="${cls}" data-date="${key}">`;
     html += `<span class="cal-lunar${lunar.isStart ? ' cal-lunar-start' : ''}">${lunar.isStart ? lunar.lMonthName : getLunarDayName(lunar.lDay)}</span>`;
     html += `<span class="cal-date${isToday ? ' cal-date-today' : ''}">${d}日</span>`;
     if (rec && rec.value != null) html += `<span class="cal-value">${rec.value}</span>`;
     if (hasExpense) html += '<span class="cal-expense-dot" title="有支出"></span>';
+    if (isMonday) html += '<span class="cal-hema-badge" title="盒马日">盒马日</span>';
     html += '</div>';
   }
 
@@ -366,7 +369,10 @@ function buildDailyDetailPanel() {
   if (!key) return '';
   const rec = diaryRecords[key] || null;
   const dayExp = expenseRecords.filter(r => r.date === key);
-  if (!rec && !dayExp.length) return '';
+  const isMonday = new Date(key + 'T00:00:00').getDay() === 1;
+  if (!rec && !dayExp.length && !hemaDayRecords[key]) {
+    if (!isMonday) return '';
+  }
 
   const d = new Date(key + 'T00:00:00');
   const dayName = `${d.getMonth() + 1}月${d.getDate()}日`;
@@ -409,6 +415,17 @@ function buildDailyDetailPanel() {
       </div>`;
     });
     html += '</div>';
+  }
+
+  const hema = hemaDayRecords[key];
+  if (hema) {
+    html += `<div class="detail-row"><span class="detail-label">盒马日</span><span class="detail-val">周一采购</span></div>`;
+    html += '<div class="hema-section">';
+    if (hema.bought) html += `<div class="hema-block"><span class="hema-tag hema-bought">本周购买</span><p class="hema-text">${escapeHtml(hema.bought)}</p></div>`;
+    if (hema.nextPlan) html += `<div class="hema-block"><span class="hema-tag hema-next">下周想买</span><p class="hema-text">${escapeHtml(hema.nextPlan)}</p></div>`;
+    html += '</div>';
+  } else if (isMonday) {
+    html += '<div class="hema-empty">本周还没记录盒马日，记得补上～</div>';
   }
 
   html += '</div></div>';

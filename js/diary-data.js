@@ -3767,7 +3767,7 @@ const diaryRecords = {
     ]
   },
   "2026-07-14": {
-    "value": 7,
+    "value": 10,
     "tasks": [
       {
         "status": "x",
@@ -3821,6 +3821,30 @@ const diaryRecords = {
         "status": "x",
         "time": "18:30-19:10",
         "desc": "和过马路进行旧物回收，把不要的东西拿出来，收拾房间",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      },
+      {
+        "status": "x",
+        "time": "19:10-19:20",
+        "desc": "休息",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      },
+      {
+        "status": "x",
+        "time": "19:20-21:00",
+        "desc": "做饭（4道菜：西红柿鸡蛋油泼面、紫菜虾米羊角菜汤、白灼香螺、黑胡椒黄油牛排；备菜15分钟+收拾后厨20分钟）",
+        "isCooking": true,
+        "mealType": "晚饭",
+        "dishGuess": null
+      },
+      {
+        "status": "x",
+        "time": "21:00-22:10",
+        "desc": "在家休息，进行科研的康复训练",
         "isCooking": false,
         "mealType": null,
         "dishGuess": null

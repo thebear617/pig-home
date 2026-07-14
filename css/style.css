@@ -971,6 +971,69 @@ button {
 .expense-detail-note { color: var(--muted); font-size: .78rem; flex: 1; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 .expense-detail-amount { font-weight: 800; color: var(--red); margin-left: auto; flex-shrink: 0; }
 
+/* ─── 盒马日（每周一）─── */
+
+.cal-hema-badge {
+  position: absolute;
+  top: .3rem;
+  right: .3rem;
+  padding: .05rem .35rem;
+  border-radius: 999px;
+  background: var(--amber);
+  color: #4a2c05;
+  font-size: .6rem;
+  font-weight: 700;
+  line-height: 1.4;
+  white-space: nowrap;
+}
+
+.cal-hema-day { background: #fffaf0; }
+.cal-hema-day:hover { background: #fdf2dc; }
+
+.hema-section {
+  margin-top: .6rem;
+  padding-top: .6rem;
+  border-top: 1px solid var(--line);
+  display: flex;
+  flex-direction: column;
+  gap: .55rem;
+}
+
+.hema-block {
+  display: flex;
+  align-items: flex-start;
+  gap: .55rem;
+}
+
+.hema-tag {
+  flex-shrink: 0;
+  margin-top: .1rem;
+  padding: .1rem .45rem;
+  border-radius: 999px;
+  font-size: .72rem;
+  font-weight: 700;
+  white-space: nowrap;
+}
+.hema-bought { background: #e7f0fb; color: #1d5fa8; }
+.hema-next { background: #e9f5e1; color: #3b6d11; }
+
+.hema-text {
+  margin: 0;
+  font-size: .85rem;
+  line-height: 1.6;
+  color: var(--text);
+}
+
+.hema-empty {
+  margin-top: .6rem;
+  padding: .55rem .7rem;
+  border-radius: var(--radius);
+  background: #fffaf0;
+  border: 1px dashed var(--amber);
+  font-size: .82rem;
+  color: var(--muted);
+}
+
 /* ─── Expense records view (迁移自 personal 记账 Tab) ─── */
 
 .expense-view { animation: fadeIn .2s ease; }
