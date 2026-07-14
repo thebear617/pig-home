@@ -3765,5 +3765,42 @@ const diaryRecords = {
         "dishGuess": null
       }
     ]
+  },
+  "2026-07-14": {
+    "value": 4,
+    "tasks": [
+      {
+        "status": "x",
+        "time": "00:00-01:00",
+        "desc": "过马路买夜宵回来吃，然后吵架复盘",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      },
+      {
+        "status": "x",
+        "time": "01:00-01:30",
+        "desc": "收拾洗澡",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      },
+      {
+        "status": "x",
+        "time": "01:30-12:30",
+        "desc": "睡觉",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      },
+      {
+        "status": "x",
+        "time": "12:30-13:40",
+        "desc": "过马路，下厨煮酸汤面吃",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      }
+    ]
   }
 };
