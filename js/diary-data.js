@@ -3767,7 +3767,7 @@ const diaryRecords = {
     ]
   },
   "2026-07-14": {
-    "value": 4,
+    "value": 6,
     "tasks": [
       {
         "status": "x",
@@ -3797,6 +3797,22 @@ const diaryRecords = {
         "status": "x",
         "time": "12:30-13:40",
         "desc": "过马路，下厨煮酸汤面吃",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      },
+      {
+        "status": "x",
+        "time": "13:40-15:00",
+        "desc": "在家开发：研究笔记站点开发 + 研究 Mac 定时弹窗提醒",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      },
+      {
+        "status": "x",
+        "time": "15:00-18:30",
+        "desc": "回学校查监控查小猫死因、和过马路又吵一架、去小猫旁收拾遗体并打扫卫生、回家、买雪碧和绿茶并调了一杯威士忌",
         "isCooking": false,
         "mealType": null,
         "dishGuess": null
