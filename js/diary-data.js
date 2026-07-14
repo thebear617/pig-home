@@ -3767,7 +3767,7 @@ const diaryRecords = {
     ]
   },
   "2026-07-14": {
-    "value": 6,
+    "value": 7,
     "tasks": [
       {
         "status": "x",
@@ -3813,6 +3813,14 @@ const diaryRecords = {
         "status": "x",
         "time": "15:00-18:30",
         "desc": "回学校查监控查小猫死因、和过马路又吵一架、去小猫旁收拾遗体并打扫卫生、回家、买雪碧和绿茶并调了一杯威士忌",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      },
+      {
+        "status": "x",
+        "time": "18:30-19:10",
+        "desc": "和过马路进行旧物回收，把不要的东西拿出来，收拾房间",
         "isCooking": false,
         "mealType": null,
         "dishGuess": null
