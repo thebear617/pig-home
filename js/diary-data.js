@@ -3860,7 +3860,7 @@ const diaryRecords = {
     ]
   },
   "2026-07-15": {
-    "value": 4,
+    "value": 12,
     "tasks": [
       {
         "status": "x",
@@ -3890,6 +3890,70 @@ const diaryRecords = {
         "status": "x",
         "time": "13:00-14:40",
         "desc": "煮泡面吃",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      },
+      {
+        "status": "x",
+        "time": "14:40-18:00",
+        "desc": "进行开发和科研，学习操作系统",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      },
+      {
+        "status": "x",
+        "time": "18:00-19:00",
+        "desc": "去买菜",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      },
+      {
+        "status": "x",
+        "time": "19:00-20:30",
+        "desc": "做饭吃饭",
+        "isCooking": true,
+        "mealType": "晚饭",
+        "dishGuess": null
+      },
+      {
+        "status": "x",
+        "time": "20:30-20:50",
+        "desc": "吃西瓜",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      },
+      {
+        "status": "x",
+        "time": "20:50-21:10",
+        "desc": "烧热水，收拾",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      },
+      {
+        "status": "x",
+        "time": "21:10-23:00",
+        "desc": "过马路，边喝汤边看剧边打电动",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      },
+      {
+        "status": "x",
+        "time": "23:00-23:30",
+        "desc": "过马路打完电动后，收拾厨房",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      },
+      {
+        "status": "x",
+        "time": "23:30-24:00",
+        "desc": "洗漱，然后进行开发",
         "isCooking": false,
         "mealType": null,
         "dishGuess": null
