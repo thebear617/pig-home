@@ -293,5 +293,12 @@ const expenseRecords = [
     "sub": "厨房用品",
     "amount": 74.67,
     "note": "九阳平底锅"
+  },
+  {
+    "date": "2026-07-15",
+    "cat": "居家生活",
+    "sub": "外卖",
+    "amount": 14.0,
+    "note": "肯德基"
   }
 ];

@@ -18,7 +18,8 @@ const utilityRecords = {
   '2026-07-11': { elecRemaining: 44.67 },
   '2026-07-12': { elecRemaining: 44.58 },
   '2026-07-13': { elecRemaining: 27.64 },
-  '2026-07-14': { elecRemaining: 21.44 }
+  '2026-07-14': { elecRemaining: 21.44 },
+  '2026-07-15': { elecRemaining: 14.19 }
 };
 
 const foodRecords = {

@@ -3767,7 +3767,7 @@ const diaryRecords = {
     ]
   },
   "2026-07-14": {
-    "value": 10,
+    "value": 11,
     "tasks": [
       {
         "status": "x",
@@ -3843,8 +3843,53 @@ const diaryRecords = {
       },
       {
         "status": "x",
-        "time": "21:00-22:10",
+        "time": "21:00-22:30",
         "desc": "在家休息，进行科研的康复训练",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      },
+      {
+        "status": "x",
+        "time": "22:30-24:00",
+        "desc": "出门买夜宵、调酒、吃小乌梅番茄",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      }
+    ]
+  },
+  "2026-07-15": {
+    "value": 4,
+    "tasks": [
+      {
+        "status": "x",
+        "time": "00:00-01:40",
+        "desc": "和过马路一起打电动",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      },
+      {
+        "status": "x",
+        "time": "01:40-12:30",
+        "desc": "睡觉",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      },
+      {
+        "status": "x",
+        "time": "12:30-13:00",
+        "desc": "床上玩手机",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      },
+      {
+        "status": "x",
+        "time": "13:00-14:40",
+        "desc": "煮泡面吃",
         "isCooking": false,
         "mealType": null,
         "dishGuess": null
