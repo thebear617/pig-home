@@ -3959,5 +3959,74 @@ const diaryRecords = {
         "dishGuess": null
       }
     ]
+  },
+  "2026-07-16": {
+    "value": 8,
+    "tasks": [
+      {
+        "status": "x",
+        "time": "00:00-03:00",
+        "desc": "和过马路聊天",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      },
+      {
+        "status": "x",
+        "time": "03:00-12:00",
+        "desc": "睡觉",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      },
+      {
+        "status": "x",
+        "time": "12:00-13:00",
+        "desc": "煮饺子吃（猪肉香菇水饺，过马路煮的）",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      },
+      {
+        "status": "x",
+        "time": "13:00-15:00",
+        "desc": "回学校搬运粮，签三方协议",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      },
+      {
+        "status": "x",
+        "time": "15:00-18:00",
+        "desc": "进行科研",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      },
+      {
+        "status": "x",
+        "time": "18:00-19:40",
+        "desc": "买菜做饭（煲仔饭）",
+        "isCooking": true,
+        "mealType": "晚饭",
+        "dishGuess": null
+      },
+      {
+        "status": "x",
+        "time": "19:40-21:00",
+        "desc": "进行开发学习",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      },
+      {
+        "status": "x",
+        "time": "21:00-21:40",
+        "desc": "收拾后厨，出去买零食，买生抽老抽",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      }
+    ]
   }
 };
