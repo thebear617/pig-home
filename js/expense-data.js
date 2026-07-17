@@ -389,7 +389,7 @@ const expenseRecords = [
     "date": "2026-07-17",
     "cat": "市内出行",
     "sub": "奶茶饮品",
-    "amount": 14.0,
+    "amount": 23.0,
     "note": "柠季"
   },
   {
