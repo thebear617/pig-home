@@ -4099,7 +4099,7 @@ const diaryRecords = {
     ]
   },
   "2026-07-18": {
-    "value": 2,
+    "value": 3,
     "tasks": [
       {
         "status": "x",
@@ -4113,6 +4113,14 @@ const diaryRecords = {
         "status": "x",
         "time": "01:40-02:00",
         "desc": "去兴隆夜市买盐津烤肉",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      },
+      {
+        "status": "x",
+        "time": "02:00-05:00",
+        "desc": "喝啤酒、吃烤肉、打电动",
         "isCooking": false,
         "mealType": null,
         "dishGuess": null
