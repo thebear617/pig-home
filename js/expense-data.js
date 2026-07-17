@@ -405,5 +405,12 @@ const expenseRecords = [
     "sub": "桌游剧本",
     "amount": 30.0,
     "note": "无忧桌游"
+  },
+  {
+    "date": "2026-07-18",
+    "cat": "市内出行",
+    "sub": "烧烤烤肉",
+    "amount": 28.0,
+    "note": "盐津烤肉（兴隆夜市）"
   }
 ];

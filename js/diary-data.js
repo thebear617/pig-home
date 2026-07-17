@@ -4097,5 +4097,26 @@ const diaryRecords = {
         "dishGuess": null
       }
     ]
+  },
+  "2026-07-18": {
+    "value": 2,
+    "tasks": [
+      {
+        "status": "x",
+        "time": "00:00-01:40",
+        "desc": "打车回家",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      },
+      {
+        "status": "x",
+        "time": "01:40-02:00",
+        "desc": "去兴隆夜市买盐津烤肉",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      }
+    ]
   }
 };
