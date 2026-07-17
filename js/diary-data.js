@@ -4038,7 +4038,7 @@ const diaryRecords = {
     ]
   },
   "2026-07-17": {
-    "value": 6,
+    "value": 7,
     "tasks": [
       {
         "status": "x",
@@ -4084,6 +4084,14 @@ const diaryRecords = {
         "status": "x",
         "time": "18:00-21:00",
         "desc": "和过马路去益田假日吃潇湘阁",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      },
+      {
+        "status": "x",
+        "time": "21:00-24:00",
+        "desc": "和王一坤、刘富宁、刘瑞、王广轩在科技路无忧桌游玩桌游",
         "isCooking": false,
         "mealType": null,
         "dishGuess": null

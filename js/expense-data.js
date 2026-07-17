@@ -398,5 +398,12 @@ const expenseRecords = [
     "sub": "交通",
     "amount": 50.0,
     "note": "地铁充值"
+  },
+  {
+    "date": "2026-07-17",
+    "cat": "娱乐",
+    "sub": "桌游剧本",
+    "amount": 30.0,
+    "note": "无忧桌游"
   }
 ];
