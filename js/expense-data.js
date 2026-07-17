@@ -370,5 +370,12 @@ const expenseRecords = [
     "sub": "厨房用品",
     "amount": 10.0,
     "note": "生抽、老抽"
+  },
+  {
+    "date": "2026-07-17",
+    "cat": "电子产品",
+    "sub": "数码配件",
+    "amount": 24.53,
+    "note": "显示器挂灯"
   }
 ];
