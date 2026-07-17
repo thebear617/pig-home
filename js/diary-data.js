@@ -4038,7 +4038,7 @@ const diaryRecords = {
     ]
   },
   "2026-07-17": {
-    "value": 3,
+    "value": 6,
     "tasks": [
       {
         "status": "x",
@@ -4060,6 +4060,30 @@ const diaryRecords = {
         "status": "x",
         "time": "13:00-14:00",
         "desc": "煮炒饭吃",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      },
+      {
+        "status": "x",
+        "time": "14:00-16:00",
+        "desc": "进行开发（入门 Tabby、oh-my-zsh、zsh-autosuggestions）",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      },
+      {
+        "status": "x",
+        "time": "16:00-18:00",
+        "desc": "打英雄联盟，打电动",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      },
+      {
+        "status": "x",
+        "time": "18:00-21:00",
+        "desc": "和过马路去益田假日吃潇湘阁",
         "isCooking": false,
         "mealType": null,
         "dishGuess": null
