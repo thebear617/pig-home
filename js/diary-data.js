@@ -4036,5 +4036,34 @@ const diaryRecords = {
         "dishGuess": null
       }
     ]
+  },
+  "2026-07-17": {
+    "value": 3,
+    "tasks": [
+      {
+        "status": "x",
+        "time": "00:00-02:00",
+        "desc": "和过马路玩玩具",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      },
+      {
+        "status": "x",
+        "time": "02:00-13:00",
+        "desc": "睡觉",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      },
+      {
+        "status": "x",
+        "time": "13:00-14:00",
+        "desc": "煮炒饭吃",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      }
+    ]
   }
 };
