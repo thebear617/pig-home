@@ -191,6 +191,16 @@ const foodRecords = {
         { name: '煲仔饭', madeBy: '过马路' }
       ]
     }
+  ],
+  '2026-07-18': [
+    {
+      meal: '中饭',
+      prep: 0,
+      cleanup: 2,
+      dishes: [
+        { name: '汤达人泡面', madeBy: '耙耙柑', cost: 2 }
+      ]
+    }
   ]
 };
 
