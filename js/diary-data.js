@@ -4099,7 +4099,7 @@ const diaryRecords = {
     ]
   },
   "2026-07-18": {
-    "value": 7,
+    "value": 8,
     "tasks": [
       {
         "status": "x",
@@ -4153,6 +4153,14 @@ const diaryRecords = {
         "status": "x",
         "time": "16:30-17:30",
         "desc": "回学校取猫砂盆，买电池，喂大头，给小车充电",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      },
+      {
+        "status": "x",
+        "time": "17:30-19:50",
+        "desc": "开发：熊窝增加英雄联盟tab和看板tab，研究笔记重构表征学习",
         "isCooking": false,
         "mealType": null,
         "dishGuess": null
