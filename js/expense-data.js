@@ -433,5 +433,12 @@ const expenseRecords = [
     "sub": "交通",
     "amount": 11.16,
     "note": "打车"
+  },
+  {
+    "date": "2026-07-18",
+    "cat": "市内出行",
+    "sub": "校内饮食",
+    "amount": 18.0,
+    "note": "黄焖鸡米饭"
   }
 ];
