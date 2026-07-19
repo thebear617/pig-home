@@ -4184,7 +4184,7 @@ const diaryRecords = {
     ]
   },
   "2026-07-19": {
-    "value": 4,
+    "value": 8,
     "tasks": [
       {
         "status": "x",
@@ -4214,6 +4214,38 @@ const diaryRecords = {
         "status": "x",
         "time": "13:00-14:20",
         "desc": "回学校，吃豆花米线，买水",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      },
+      {
+        "status": "x",
+        "time": "14:20-16:00",
+        "desc": "开大组会（信号组-信号分类的域适应、小样本、表征学习-自监督），王晨旭师兄主讲，讲邢汉童师兄的六个工作和王晨旭师兄的两个工作",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      },
+      {
+        "status": "x",
+        "time": "16:00-17:00",
+        "desc": "开发：完善端到端的 paper2html 的 skill",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      },
+      {
+        "status": "x",
+        "time": "17:00-17:30",
+        "desc": "给被车撞死的小猫收拾",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      },
+      {
+        "status": "x",
+        "time": "17:30-18:30",
+        "desc": "开发：完善 personal 的开发-优化看板视图和逻辑，询问子宇哥学习路线",
         "isCooking": false,
         "mealType": null,
         "dishGuess": null
