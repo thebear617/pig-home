@@ -454,5 +454,12 @@ const expenseRecords = [
     "sub": "校内餐饮",
     "amount": 1.98,
     "note": "水"
+  },
+  {
+    "date": "2026-07-19",
+    "cat": "市内出行",
+    "sub": "校内餐饮",
+    "amount": 20.2,
+    "note": "曹氏鸭脖"
   }
 ];
