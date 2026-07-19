@@ -4184,7 +4184,7 @@ const diaryRecords = {
     ]
   },
   "2026-07-19": {
-    "value": 2,
+    "value": 3,
     "tasks": [
       {
         "status": "x",
@@ -4198,6 +4198,14 @@ const diaryRecords = {
         "status": "x",
         "time": "02:30-12:00",
         "desc": "睡觉",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      },
+      {
+        "status": "x",
+        "time": "12:00-13:00",
+        "desc": "洗澡、打电动",
         "isCooking": false,
         "mealType": null,
         "dishGuess": null
