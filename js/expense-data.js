@@ -461,5 +461,12 @@ const expenseRecords = [
     "sub": "校内餐饮",
     "amount": 20.2,
     "note": "曹氏鸭脖"
+  },
+  {
+    "date": "2026-07-20",
+    "cat": "市内出行",
+    "sub": "面食泡馍",
+    "amount": 26.0,
+    "note": "黄家泡馍（和过马路）"
   }
 ];

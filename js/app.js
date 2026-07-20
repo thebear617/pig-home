@@ -334,17 +334,20 @@ function buildDailyTrackerView(phase) {
     const hasData = hasExpense || !!rec;
     const isMonday = new Date(calYear, calMonth - 1, d).getDay() === 1;
     const isSelected = key === state.selectedDay;
+    const spEvent = (typeof specialEvents !== 'undefined') ? (specialEvents[key] || null) : null;
     let cls = 'cal-cell';
     if (isToday) cls += ' cal-today';
     if (hasData || isMonday) cls += ' cal-has-data';
     if (isMonday) cls += ' cal-hema-day';
     if (isSelected) cls += ' cal-selected';
+    if (spEvent) cls += ' cal-special';
     html += `<div class="${cls}" data-date="${key}">`;
     html += `<span class="cal-lunar${lunar.isStart ? ' cal-lunar-start' : ''}">${lunar.isStart ? lunar.lMonthName : getLunarDayName(lunar.lDay)}</span>`;
     html += `<span class="cal-date${isToday ? ' cal-date-today' : ''}">${d}日</span>`;
     if (rec && rec.value != null) html += `<span class="cal-value">${rec.value}</span>`;
     if (hasExpense) html += '<span class="cal-expense-dot" title="有支出"></span>';
     if (isMonday) html += '<span class="cal-hema-badge" title="盒马日">盒马日</span>';
+    if (spEvent) html += `<span class="cal-special-icons" title="${escapeHtml(spEvent.keywords.join('、'))}">${spEvent.icons.join('')}</span>`;
     html += '</div>';
   }
 

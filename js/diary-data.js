@@ -4184,7 +4184,7 @@ const diaryRecords = {
     ]
   },
   "2026-07-19": {
-    "value": 9,
+    "value": 12,
     "tasks": [
       {
         "status": "x",
@@ -4257,7 +4257,89 @@ const diaryRecords = {
         "isCooking": false,
         "mealType": null,
         "dishGuess": null
+      },
+      {
+        "status": "x",
+        "time": "19:40-21:20",
+        "desc": "开发：把 devnotes 从 Vue 3（164KB 运行时、CDN 自托管）迁移到 Astro 5（零运行时），变更：SPA 单页 tab 切换→多页路由（/notes /blog /pricing /os）、新增博客模块（Content Collections + Markdown）、CSS 整体迁移、数据文件改 ES module，共 21 个文件 +6303/-607 行，提交 21380b0 feat(v0.2.0): Vue 3 → Astro 5 重构",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      },
+      {
+        "status": "x",
+        "time": "21:20-21:40",
+        "desc": "回家",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      },
+      {
+        "status": "x",
+        "time": "21:40-03:30",
+        "desc": "打电动（跨天到 7/20 凌晨）",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
       }
+    ]
+  },
+  "2026-07-20": {
+    "value": 3,
+    "tasks": [
+      {
+        "status": "x",
+        "time": "03:30-05:30",
+        "desc": "哄过马路，和过马路上天台跳舞并且看日出（第一次）",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      },
+      {
+        "status": "x",
+        "time": "05:30-14:30",
+        "desc": "睡觉",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      },
+      {
+        "status": "x",
+        "time": "14:30-15:45",
+        "desc": "和过马路去吃门口的黄家泡馍",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      }
+    ]
+  }
+};
+const specialEvents = {
+  "2026-06-10": {
+    "icons": [
+      "🎓"
+    ],
+    "keywords": [
+      "毕业"
+    ]
+  },
+  "2026-06-17": {
+    "icons": [
+      "🎂"
+    ],
+    "keywords": [
+      "生日"
+    ]
+  },
+  "2026-07-20": {
+    "icons": [
+      "🌅"
+    ],
+    "keywords": [
+      "日出",
+      "天台",
+      "跳舞",
+      "第一次"
     ]
   }
 };

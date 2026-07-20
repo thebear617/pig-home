@@ -12,6 +12,14 @@ records = {}
 expenses = []
 seen = set()
 
+# 从配置文件加载特殊纪念关键词→图标映射
+KW_FILE = ROOT / 'scripts' / 'special-keywords.json'
+SPECIAL_KEYWORDS = {}
+if KW_FILE.exists():
+    with open(KW_FILE, encoding='utf-8') as f:
+        SPECIAL_KEYWORDS = json.load(f)
+special_events = {}
+
 
 def classify_meal(hhmm):
     """按时间段归类餐型（推荐默认阈值）。hhmm 形如 '12:30'。"""
@@ -69,6 +77,18 @@ for fname in sorted(os.listdir(DIARY_DIR)):
             done_count = sum(1 for t in tasks if t['status'] == 'x')
             records[date] = {'value': done_count, 'tasks': tasks}
 
+            # 检测特殊纪念日程（每天最多一个图标）
+            date_icons = {}
+            for t in tasks:
+                for kw, icon in SPECIAL_KEYWORDS.items():
+                    if kw in t['desc']:
+                        date_icons[kw] = icon
+            if date_icons:
+                special_events[date] = {
+                    'icons': [list(date_icons.values())[0]],    # 每天最多一个图标
+                    'keywords': list(date_icons.keys()),
+                }
+
     # ---- # 支出 table → expenseRecords ----
     me = re.search(r'# 支出\n(.*?)(?=\n# |\Z)', content, re.DOTALL)
     if me:
@@ -113,6 +133,9 @@ with open(DIARY_OUT, 'w', encoding='utf-8') as f:
     f.write('// Auto-generated from _diary/*.md by scripts/build-diary.py\n')
     f.write('const diaryRecords = ')
     json.dump(records, f, ensure_ascii=False, indent=2)
+    f.write(';\n')
+    f.write('const specialEvents = ')
+    json.dump(special_events, f, ensure_ascii=False, indent=2)
     f.write(';\n')
 
 with open(EXPENSE_OUT, 'w', encoding='utf-8') as f:

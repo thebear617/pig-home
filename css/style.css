@@ -812,6 +812,28 @@ button {
   z-index: 1;
 }
 
+/* 特殊纪念日程高亮 */
+.cal-special {
+  background: linear-gradient(135deg, #fef9f0 0%, #fdf2e0 100%);
+  border-left: 3px solid #e8a840;
+}
+
+.cal-special:hover {
+  background: linear-gradient(135deg, #fdf2e0 0%, #fce8c4 100%);
+}
+
+.cal-special.cal-today {
+  background: linear-gradient(135deg, #fef2f2 0%, #fdf2e0 50%);
+}
+
+.cal-special-icons {
+  display: block;
+  font-size: .75rem;
+  text-align: center;
+  margin-top: 2px;
+  letter-spacing: 1px;
+}
+
 /* ─── Detail panel ─── */
 
 .detail-panel {
