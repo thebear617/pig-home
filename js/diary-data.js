@@ -4285,7 +4285,7 @@ const diaryRecords = {
     ]
   },
   "2026-07-20": {
-    "value": 3,
+    "value": 5,
     "tasks": [
       {
         "status": "x",
@@ -4307,6 +4307,22 @@ const diaryRecords = {
         "status": "x",
         "time": "14:30-15:45",
         "desc": "和过马路去吃门口的黄家泡馍",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      },
+      {
+        "status": "x",
+        "time": "15:45-19:00",
+        "desc": "开发",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      },
+      {
+        "status": "x",
+        "time": "19:00-21:30",
+        "desc": "盒马购物（买了柠檬大口茶、美人茶、紫苏话梅啤酒、大芒果、小番茄、凉菜、锅贴🥟、香水柠檬蛋糕🎂）",
         "isCooking": false,
         "mealType": null,
         "dishGuess": null
