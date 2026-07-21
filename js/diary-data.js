@@ -4346,7 +4346,7 @@ const diaryRecords = {
     ]
   },
   "2026-07-21": {
-    "value": 2,
+    "value": 7,
     "tasks": [
       {
         "status": "x",
@@ -4363,6 +4363,59 @@ const diaryRecords = {
         "isCooking": true,
         "mealType": "中饭",
         "dishGuess": "汤达人泡面"
+      },
+      {
+        "status": "x",
+        "time": "14:30-15:20",
+        "desc": "开发：完善 devnotes 个人开发时间线逻辑 - 重构 sync-timeline.py 版本检测，timeline_versions → timeline_all_versions 跟踪每站所有完整版本号、repo_version_commits 按 (major,minor,patch) 分桶，scripts/sync-timeline.py 改动 32+/39-（71 行），解决 patch 版需手动补痛点；同步更新 ~/.claude/skills/sync-timeline/SKILL.md 工作流对齐新逻辑",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      },
+      {
+        "status": "x",
+        "time": "15:20-16:00",
+        "desc": "回学校拿泳裤和泳帽",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      },
+      {
+        "status": "x",
+        "time": "16:00-18:00",
+        "desc": "去高新万达，和过马路吃滨寿司，逛 KKV，吃源麦田榴莲宝宝碗，给过马路过生日（源麦甜宝宝碗作为生日蛋糕 42.8 元）",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      },
+      {
+        "status": "x",
+        "time": "18:00-22:30",
+        "desc": "和过马路去高新清水瓦台，洗浴、游泳、影院初体验（双人门票+泳帽+烤肠+鸡排 187 元、充电宝 3 元、打车 10.6 元）",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      },
+      {
+        "status": "x",
+        "time": "22:30-24:00",
+        "desc": "去甘家寨夜市和过马路吃麻辣烫后回家（麻辣烫 31 元、骑车 1.5 元）",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      }
+    ]
+  },
+  "2026-07-22": {
+    "value": 1,
+    "tasks": [
+      {
+        "status": "x",
+        "time": "00:00-02:00",
+        "desc": "回来喝了盒马的紫苏杨梅啤酒（不太好喝），整理 7/21 日程与支出，做了一点开发收尾",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
       }
     ]
   }
@@ -4393,6 +4446,14 @@ const specialEvents = {
       "天台",
       "跳舞",
       "第一次"
+    ]
+  },
+  "2026-07-21": {
+    "icons": [
+      "🎂"
+    ],
+    "keywords": [
+      "生日"
     ]
   }
 };
