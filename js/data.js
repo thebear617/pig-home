@@ -25,6 +25,7 @@ const utilityRecords = {
   '2026-07-18': { elecRemaining: 47.74 },
   '2026-07-19': { elecRemaining: 43.26 },
   '2026-07-20': { elecRemaining: 39.27 },
+  '2026-07-21': { elecRemaining: 33.29 },
 };
 
 const foodRecords = {
@@ -202,6 +203,16 @@ const foodRecords = {
       cleanup: 2,
       dishes: [
         { name: '汤达人泡面', madeBy: '耙耙柑', cost: 2 }
+      ]
+    }
+  ],
+  '2026-07-21': [
+    {
+      meal: '中饭',
+      prep: 0,
+      cleanup: 5,
+      dishes: [
+        { name: '汤达人泡面', madeBy: '耙耙柑', cost: 4 }
       ]
     }
   ]

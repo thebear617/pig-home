@@ -4285,7 +4285,7 @@ const diaryRecords = {
     ]
   },
   "2026-07-20": {
-    "value": 5,
+    "value": 7,
     "tasks": [
       {
         "status": "x",
@@ -4326,6 +4326,43 @@ const diaryRecords = {
         "isCooking": false,
         "mealType": null,
         "dishGuess": null
+      },
+      {
+        "status": "x",
+        "time": "21:30-22:20",
+        "desc": "开发：完善 devnotes 个人开发时间线迁移 - 把 personal v0.12.x（v0.12.0 英雄联盟与每日看板、v0.12.1 跨日未完成待办、VSCode 工作平台集成、Open Chamber 插件、sync-timeline 系统）等里程碑同步到 devnotes/src/content/timeline/",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      },
+      {
+        "status": "x",
+        "time": "22:30-24:00",
+        "desc": "打电动",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      }
+    ]
+  },
+  "2026-07-21": {
+    "value": 2,
+    "tasks": [
+      {
+        "status": "x",
+        "time": "00:00-13:30",
+        "desc": "睡觉",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      },
+      {
+        "status": "x",
+        "time": "13:30-14:30",
+        "desc": "做饭：汤达人泡面，收拾后厨 5 分钟（备菜 0 分钟 / 主厨耙耙柑 / 花费 4 元）",
+        "isCooking": true,
+        "mealType": "中饭",
+        "dishGuess": "汤达人泡面"
       }
     ]
   }
