@@ -496,12 +496,5 @@ const expenseRecords = [
     "sub": "宝宝报销",
     "amount": 24.0,
     "note": "报销过马路打车费"
-  },
-  {
-    "date": "2026-07-21",
-    "cat": "居家生活",
-    "sub": "速食",
-    "amount": 4.0,
-    "note": "汤达人泡面"
   }
 ];
