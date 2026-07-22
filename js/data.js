@@ -216,6 +216,17 @@ const foodRecords = {
         { name: '汤达人泡面', madeBy: '耙耙柑', cost: 4 }
       ]
     }
+  ],
+  '2026-07-22': [
+    {
+      meal: '中饭',
+      prep: 0,
+      cleanup: 10,
+      dishes: [
+        { name: '饺子', madeBy: '耙耙柑', cost: 8 },
+        { name: '煎牛排', madeBy: '过马路', cost: 0 }
+      ]
+    }
   ]
 };
 
