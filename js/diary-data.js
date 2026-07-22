@@ -4407,7 +4407,7 @@ const diaryRecords = {
     ]
   },
   "2026-07-22": {
-    "value": 5,
+    "value": 8,
     "tasks": [
       {
         "status": "x",
@@ -4445,6 +4445,30 @@ const diaryRecords = {
         "status": "x",
         "time": "15:00-18:00",
         "desc": "开发：改造 lifenotes 站点 v0.7.0 + 学习个人博客站点构建 pipeline - 完成 2 个 commit：(1) c31f214 17:19 feat(v0.7.0): 统一领域博客详情体验，22 文件 +506/-179，新增 src/components/ArticleToc.astro（60 行 TOC 组件）、src/data/topics.js、所有 4 个 board 路由（life/hotel/phone/[board] + 各 index）重构、src/layouts/Layout.astro +22、src/styles/global.css +81；(2) be7a789 18:00 fix: 放宽内容字段兼容迁移文章，13 文件 +263/-35，新增 src/data/content.js、修补各 board 路由与 src/content/config.ts，并整理 2 条视频转录（粮食防虫小妙招 / 这才是米饭的天花板做法）入 src/content/life/ 正式条目。整体参考 devnotes/src/content/blog/个人博客站点构建.md pipeline 后落地到 lifenotes",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      },
+      {
+        "status": "x",
+        "time": "18:00-19:40",
+        "desc": "打电动",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      },
+      {
+        "status": "x",
+        "time": "19:40-22:00",
+        "desc": "和过马路去门前兴隆夜市吃刘能行鲜货地摊火锅（吊龙牛肉有点亏；午餐肉、鸭血、鞭炮笋还可以。下次点餐建议：尽量点 12.8 元以下的菜）",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      },
+      {
+        "status": "x",
+        "time": "22:00-24:00",
+        "desc": "打电动（打海克斯大乱斗）",
         "isCooking": false,
         "mealType": null,
         "dishGuess": null
