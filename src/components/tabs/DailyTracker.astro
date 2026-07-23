@@ -1,0 +1,49 @@
+---
+import { getLunarInfo, getLunarDayName, dateKey, pad, escapeHtml } from '../../lib/helpers';
+
+const today = new Date();
+const calYear = today.getFullYear();
+const calMonth = today.getMonth() + 1;
+const firstDay = new Date(calYear, calMonth - 1, 1);
+const daysInMonth = new Date(calYear, calMonth, 0).getDate();
+const startDow = firstDay.getDay();
+const prevMonthLastDay = new Date(calYear, calMonth - 1, 0).getDate();
+const weekdays = ['日', '一', '二', '三', '四', '五', '六'];
+---
+
+<div data-tab="daily-tracker">
+  <div class="calendar-view">
+    <div class="cal-header">
+      <span class="cal-title">{calYear}年{calMonth}月</span>
+      <div class="cal-nav">
+        <button class="cal-nav-btn cal-prev">◀</button>
+        <button class="cal-today-btn cal-today">今天</button>
+        <button class="cal-nav-btn cal-next">▶</button>
+      </div>
+    </div>
+    <div class="cal-weekdays">{weekdays.map(w => <span class="cal-weekday">{w}</span>)}</div>
+    <div class="cal-grid" id="dailyCalendar">
+      {Array.from({ length: startDow }, (_, i) => {
+        const d = prevMonthLastDay - startDow + i + 1;
+        const lunar = getLunarInfo(calYear, calMonth - 1, d);
+        return <div class="cal-cell cal-other-month"><span class={`cal-lunar${lunar.isStart ? ' cal-lunar-start' : ''}`}>{lunar.isStart ? lunar.lMonthName : getLunarDayName(lunar.lDay)}</span><span class="cal-date">{d}日</span></div>;
+      })}
+      {Array.from({ length: daysInMonth }, (_, i) => {
+        const d = i + 1;
+        const isToday = calYear === today.getFullYear() && calMonth === today.getMonth() + 1 && d === today.getDate();
+        const lunar = getLunarInfo(calYear, calMonth, d);
+        const key = dateKey(calYear, calMonth, d);
+        let cls = 'cal-cell';
+        if (isToday) cls += ' cal-today';
+        return <div class={cls} data-date={key} id={`cell-${key}`}><span class={`cal-lunar${lunar.isStart ? ' cal-lunar-start' : ''}`}>{lunar.isStart ? lunar.lMonthName : getLunarDayName(lunar.lDay)}</span><span class={`cal-date${isToday ? ' cal-date-today' : ''}`}>{d}日</span></div>;
+      })}
+      {Array.from({ length: (7 - ((startDow + daysInMonth) % 7)) % 7 }, (_, i) => {
+        const d = i + 1;
+        const lunar = getLunarInfo(calYear, calMonth + 1, d);
+        return <div class="cal-cell cal-other-month"><span class={`cal-lunar${lunar.isStart ? ' cal-lunar-start' : ''}`}>{lunar.isStart ? lunar.lMonthName : getLunarDayName(lunar.lDay)}</span><span class="cal-date">{d}日</span></div>;
+      })}
+    </div>
+  </div>
+  <div class="daily-detail-container" id="dailyDetail"></div>
+  <div class="daily-summary-container" id="dailySummary"></div>
+</div>

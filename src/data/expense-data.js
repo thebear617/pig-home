@@ -1,5 +1,5 @@
 // Auto-generated from _diary/*.md by scripts/build-diary.py
-const expenseRecords = [
+export const expenseRecords = [
   {
     "date": "2026-07-06",
     "cat": "市内出行",

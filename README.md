@@ -1,77 +1,75 @@
 # 猪窝
 
-纯静态个人工具页面，汇总入住后的待办事项、生活备忘、物资采购清单、水电追踪、美食记录和物品位置记录。
+个人家庭管理工具，包含生活备忘录、物资采购、水电追踪、每日记账、美食记录、关系时间线等模块。
 
 在线地址：https://thebear617.github.io/pig-home/
+
+## 技术栈
+
+- **Astro 5** — 静态站点生成，内容集合驱动
+- **纯 CSS + 原生 JS** — 无框架，客户端交互通过事件委托 + DOM 操作
+- **marked** — Markdown 渲染（服务端）
 
 ## 文件结构
 
 ```
-├── index.html          # 页面入口
-├── css/
-│   └── style.css       # 所有样式
-└── js/
-    ├── data.js         # 数据层：phases / utilityRecords / foodRecords / locations
-    └── app.js          # 渲染引擎、tab 切换、日历交互
+├── src/
+│   ├── pages/
+│   │   └── index.astro          # 主页面
+│   ├── components/
+│   │   └── tabs/                # 8 个 Tab 组件
+│   ├── content/                 # Markdown 内容集合
+│   │   ├── cooking-tips/        # 做饭心得
+│   │   ├── memos/               # 生活备忘录
+│   │   ├── procurement/         # 物资采购清单
+│   │   ├── food-places/         # 探店记录
+│   │   ├── trips/               # 旅行记录
+│   │   ├── xian-trips/          # 西安 walk
+│   │   └── quarrels/            # 吵架复盘
+│   ├── data/                    # 数值型数据模块
+│   │   ├── utility-records.ts   # 电费记录
+│   │   ├── food-records.ts      # 做饭记录
+│   │   ├── hema-records.ts      # 盒马采购
+│   │   ├── locations.ts         # 物品位置
+│   │   ├── expense-categories.ts # 支出分类
+│   │   ├── diary-data.js        # 日记数据（自动生成）
+│   │   ├── expense-data.js      # 支出数据（自动生成）
+│   │   └── special-keywords.json
+│   ├── lib/
+│   │   ├── helpers.ts           # 工具函数（农历、日期等）
+│   │   └── tabs.ts              # Tab 配置
+│   └── styles/
+│       └── global.css
+├── scripts/
+│   ├── build-diary.py           # Obsidian 日记 → 数据文件
+│   └── special-keywords.json
+├── _diary/                      # Obsidian 日记（软链）
+├── public/images/               # 静态图片
+├── astro.config.mjs
+├── package.json
+└── .github/workflows/deploy.yml # 自动部署
 ```
 
-## Tab 一览
+## 内容集合
 
-| Tab | id | 内容 |
-|-----|----|------|
-| 生活备忘录及物资采购 | `follow-up` | 待办 / 生活备忘 / 物资采购（折叠清单） |
-| 水电追踪 | `utility-tracking` | 当月电费日历 |
-| 美食记录 | `food-records` | 当月做饭日历 |
-| 美食地图 | `food-map` | 校外/校内探店卡片 |
-| 关系时间线 | `relationship-timeline` | 旅游 + 西安 walk + 吵架复盘（分类切换） |
-| 猪窝地图 | `home-map` | 户型图 + 物品存放 |
+所有半结构化内容（做饭心得、备忘录、旅行记录等）以 Markdown 文件存储在 `src/content/` 中，支持 YAML frontmatter。编辑 Markdown 文件即可更新站点内容。
 
-### 关系时间线（`relationship-timeline`）
+## 数据管线
 
-顶部用分类标签在 **全部 / 旅行 ✈️ / 西安 walk 🚶 / 吵架复盘 💢** 之间切换，下方为按月份聚合的时间线。旅行与西安 walk 沿用原数据结构；吵架复盘为新增记录。
-
-### 吵架复盘数据
-
-在 `data.js` 的 `quarrelRecords` 数组中追加对象，例如：
-
-```js
-{
-  date: '2026-07-09',            // 吵架当天
-  title: '关于…的争执',           // 一句话概括
-  severity: '轻微',               // 轻微 / 中等 / 严重（显示在徽章）
-  participants: ['过马路', '耙耙柑'],
-  trigger: '直接起因',
-  myView: '我当时怎么想',
-  theirView: '过马路怎么想',
-  rootCause: '深层原因',
-  resolution: '最后怎么和好',
-  lesson: '复盘结论 / 以后怎么避免'
-}
-```
+1. 用户在 Obsidian 中编写日记（`_diary/` 软链）
+2. 运行 `python3 scripts/build-diary.py` 解析日记
+3. 生成 `src/data/diary-data.js` 和 `src/data/expense-data.js`
+4. Astro 构建时导入所有数据
 
 ## 开发
 
-### 新增 Tab
-
-在 `data.js` 的 `phases` 数组中追加对象，再到 `app.js` 的 `buildPhaseContent()` 中新增对应 type 的分发。
-
-### 新增水电数据
-
-在 `data.js` 的 `utilityRecords` 中添加 `YYYY-MM-DD` 键值对即可。
-
-### 新增美食数据
-
-在 `data.js` 的 `foodRecords` 中添加 `YYYY-MM-DD` 键值对，例如：
-
-```js
-'2026-06-29': {
-  dishes: ['凉拌西兰花和萝卜（3元）', '可乐鸡翅（28元）'],
-  cost: 31,
-  chef: '过马路',
-  helper: '耙耙柑'
-}
+```bash
+npm install
+npm run dev        # 本地开发（SITE_BASE='/'）
+npm run build      # 生产构建（含日记生成）
+npm run preview    # 预览构建结果
 ```
 
-### 新增物品位置
+## 部署
 
-在 `data.js` 的 `locations` 数组中追加 `{ item, location }` 对象。
+Push 到 main 分支后，GitHub Actions 自动构建并部署到 GitHub Pages。

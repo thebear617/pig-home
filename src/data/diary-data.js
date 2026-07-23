@@ -1,5 +1,5 @@
 // Auto-generated from _diary/*.md by scripts/build-diary.py
-const diaryRecords = {
+export const diaryRecords = {
   "2026-05-18": {
     "value": 10,
     "tasks": [
@@ -4537,7 +4537,7 @@ const diaryRecords = {
     ]
   }
 };
-const specialEvents = {
+export const specialEvents = {
   "2026-06-10": {
     "icons": [
       "🎓"

@@ -1,0 +1,124 @@
+---
+import { getCollection } from 'astro:content';
+
+const trips = await getCollection('trips');
+const xianTrips = await getCollection('xian-trips');
+const quarrels = await getCollection('quarrels');
+
+interface Event {
+  cat: 'travel' | 'xian' | 'quarrel';
+  sortDate: string;
+  raw: typeof trips[0] | typeof xianTrips[0] | typeof quarrels[0];
+}
+
+const allEvents: Event[] = [
+  ...trips.map(t => ({ cat: 'travel' as const, sortDate: t.data.startDate, raw: t })),
+  ...xianTrips.map(t => ({ cat: 'xian' as const, sortDate: t.data.startDate, raw: t })),
+  ...quarrels.map(q => ({ cat: 'quarrel' as const, sortDate: q.data.date, raw: q })),
+];
+
+allEvents.sort((a, b) => a.sortDate.localeCompare(b.sortDate));
+
+// Group by year-month
+const months = new Map<string, Event[]>();
+for (const ev of allEvents) {
+  const d = new Date(ev.sortDate + 'T00:00:00');
+  const key = `${d.getFullYear()}年${d.getMonth() + 1}月`;
+  if (!months.has(key)) months.set(key, []);
+  months.get(key)!.push(ev);
+}
+
+const counts = { travel: trips.length, xian: xianTrips.length, quarrel: quarrels.length };
+const total = counts.travel + counts.xian + counts.quarrel;
+
+function formatDate(start: string, end: string): string {
+  const sd = new Date(start + 'T00:00:00');
+  const ed = new Date(end + 'T00:00:00');
+  if (start === end) return `${sd.getMonth() + 1}/${sd.getDate()}`;
+  return `${sd.getMonth() + 1}/${sd.getDate()} - ${ed.getMonth() + 1}/${ed.getDate()}`;
+}
+---
+
+<div data-tab="relationship-timeline">
+  <div class="rel-wrap">
+    <div class="rel-filter" data-rl-filter>
+      <button class="rel-filter-tab active" data-rl-cat="all">全部<span class="rel-filter-count">{total}</span></button>
+      <button class="rel-filter-tab" data-rl-cat="travel">旅行 ✈️<span class="rel-filter-count">{counts.travel}</span></button>
+      <button class="rel-filter-tab" data-rl-cat="xian">西安 walk 🚶<span class="rel-filter-count">{counts.xian}</span></button>
+      <button class="rel-filter-tab" data-rl-cat="quarrel">吵架复盘 💢<span class="rel-filter-count">{counts.quarrel}</span></button>
+    </div>
+
+    <div class="timeline">
+      {Array.from(months.entries()).map(([monthKey, monthEvents]) => (
+        <>
+          <div class="timeline-month">{monthKey}</div>
+          {monthEvents.map(ev => {
+            const isQuarrel = ev.cat === 'quarrel';
+            const dotClass = isQuarrel ? 'tl-dot-quarrel' : 'tl-dot-done';
+            const itemClass = `timeline-item tl-cat-${ev.cat}`;
+
+            if (isQuarrel) {
+              const q = ev.raw as typeof quarrels[0];
+              const dl = q.data.timeRange ? `${q.data.date} ${q.data.timeRange}` : q.data.date;
+              return (
+                <div class={itemClass}>
+                  <div class="timeline-marker">
+                    <div class={`timeline-dot ${dotClass}`}></div>
+                    <div class="timeline-line"></div>
+                  </div>
+                  <div class="timeline-card">
+                    <div class="q-header" data-rl-q-toggle>
+                      <div class="q-header-main">
+                        <div class="timeline-card-top">
+                          <h3 class="timeline-card-title">{q.data.title}</h3>
+                          <span class="timeline-badge tl-badge-quarrel">{q.data.severity}</span>
+                        </div>
+                        <div class="timeline-card-meta">
+                          <span class="tl-meta">📅 {dl}</span>
+                          <span class="tl-meta">👤 {q.data.participants.join('、')}</span>
+                        </div>
+                      </div>
+                      <span class="q-chevron">▸</span>
+                    </div>
+                    <div class="q-body collapsed">
+                      {q.data.trigger && <div class="q-field"><span class="q-field-label">起因</span><p class="q-field-text">{q.data.trigger}</p></div>}
+                      {q.data.myView && <div class="q-field"><span class="q-field-label">我的视角</span><p class="q-field-text">{q.data.myView}</p></div>}
+                      {q.data.theirView && <div class="q-field"><span class="q-field-label">过马路视角</span><p class="q-field-text">{q.data.theirView}</p></div>}
+                      {q.data.rootCause && <div class="q-field"><span class="q-field-label">深层原因</span><p class="q-field-text">{q.data.rootCause}</p></div>}
+                      {q.data.resolution && <div class="q-field"><span class="q-field-label">怎么和好</span><p class="q-field-text">{q.data.resolution}</p></div>}
+                      {q.data.lesson && <div class="q-field"><span class="q-field-label">复盘结论</span><p class="q-field-text">{q.data.lesson}</p></div>}
+                    </div>
+                  </div>
+                </div>
+              );
+            } else {
+              const t = ev.raw as typeof trips[0];
+              const isUpcoming = t.data.status === 'upcoming';
+              const dateStr = formatDate(t.data.startDate, t.data.endDate);
+              return (
+                <div class={itemClass}>
+                  <div class="timeline-marker">
+                    <div class={`timeline-dot ${isUpcoming ? 'tl-dot-upcoming' : 'tl-dot-done'}`}></div>
+                    <div class="timeline-line"></div>
+                  </div>
+                  <div class="timeline-card">
+                    <div class="timeline-card-top">
+                      <h3 class="timeline-card-title">{t.data.dest}</h3>
+                      <span class={`timeline-badge ${isUpcoming ? 'tl-badge-upcoming' : 'tl-badge-done'}`}>{isUpcoming ? '计划中' : '已完成'}</span>
+                    </div>
+                    <div class="timeline-card-meta">
+                      <span class="tl-meta">📅 {dateStr}</span>
+                      <span class="tl-meta">🚗 {t.data.transport}</span>
+                      <span class="tl-meta">👤 {t.data.travelers.join('、')}</span>
+                    </div>
+                    {t.body && <p class="timeline-card-note">{t.body}</p>}
+                  </div>
+                </div>
+              );
+            }
+          })}
+        </>
+      ))}
+    </div>
+  </div>
+</div>

@@ -1,0 +1,86 @@
+---
+import { getCollection } from 'astro:content';
+
+const places = await getCollection('food-places');
+
+// Group by area → location
+const areaMap = new Map<string, Map<string, typeof places>>();
+for (const p of places) {
+  const area = p.data.area;
+  const loc = p.data.location;
+  if (!areaMap.has(area)) areaMap.set(area, new Map());
+  const locMap = areaMap.get(area)!;
+  if (!locMap.has(loc)) locMap.set(loc, []);
+  locMap.get(loc)!.push(p);
+}
+
+const areaOrder = ['校内', '校外', ...Array.from(areaMap.keys()).filter(a => !['校内', '校外'].includes(a))].filter(a => areaMap.has(a));
+const defaultArea = areaOrder[0] || '';
+const firstLocationEntries = areaMap.get(defaultArea);
+const firstLocations = firstLocationEntries ? Array.from(firstLocationEntries.keys()).sort() : [];
+const defaultLocation = firstLocations[0] || '';
+---
+
+<div data-tab="food-map">
+  <div class="foodmap-cards">
+    {areaOrder.map(area => {
+      const locCount = areaMap.get(area)?.size || 0;
+      const active = area === defaultArea ? ' active' : '';
+      return (
+        <button class={`foodmap-card${active}`} data-fm-area={area}>
+          <span class="foodmap-card-label">{area}</span>
+          <span class="foodmap-card-sub">{locCount} 个地点</span>
+        </button>
+      );
+    })}
+  </div>
+
+  {areaOrder.map(area => {
+    const locMap = areaMap.get(area);
+    if (!locMap) return null;
+    const locations = Array.from(locMap.keys()).sort();
+    const hidden = area !== defaultArea;
+    return (
+      <div data-fm-area-content={area} hidden={hidden}>
+        {locations.length > 0 && (
+          <div class="foodmap-tabs">
+            {locations.map(loc => {
+              const items = locMap.get(loc) || [];
+              const activeClass = area === defaultArea && loc === defaultLocation ? ' active' : '';
+              return (
+                <button class={`foodmap-tab${activeClass}`} data-fm-location={loc}>
+                  📍 {loc}
+                  <span class="foodmap-tab-count">{items.length}</span>
+                </button>
+              );
+            })}
+          </div>
+        )}
+        {locations.map(loc => {
+          const items = locMap.get(loc) || [];
+          const hiddenLoc = area !== defaultArea || loc !== defaultLocation;
+          return (
+            <div data-fm-location-content={loc} hidden={hiddenLoc}>
+              <div class="food-grid">
+                {items.map(p => (
+                  <div class="food-card">
+                    <div class="food-card-top">
+                      <h4 class="food-card-name">{p.data.name}</h4>
+                      {p.data.date && <span class="food-card-date">{p.data.date}</span>}
+                    </div>
+                    {p.data.dishes.length > 0 && (
+                      <div class="food-card-dishes">
+                        {p.data.dishes.map(d => <span class="food-tag">{d}</span>)}
+                      </div>
+                    )}
+                    {p.data.note && <p class="food-card-note">{p.data.note}</p>}
+                  </div>
+                ))}
+              </div>
+            </div>
+          );
+        })}
+      </div>
+    );
+  })}
+</div>

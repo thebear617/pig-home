@@ -1,0 +1,96 @@
+---
+import { utilityRecords } from '../../data/utility-records';
+import { getLunarInfo, getLunarDayName, dateKey, pad, escapeHtml } from '../../lib/helpers';
+
+const today = new Date();
+const calYear = today.getFullYear();
+const calMonth = today.getMonth() + 1;
+const firstDay = new Date(calYear, calMonth - 1, 1);
+const daysInMonth = new Date(calYear, calMonth, 0).getDate();
+const startDow = firstDay.getDay();
+const prevMonthLastDay = new Date(calYear, calMonth - 1, 0).getDate();
+
+const prefix = `${calYear}-${pad(calMonth)}`;
+const monthRecords = Object.entries(utilityRecords)
+  .filter(([k]) => k.startsWith(prefix))
+  .map(([k, v]) => ({ dateKey: k, ...v }))
+  .sort((a, b) => a.dateKey.localeCompare(b.dateKey));
+
+// Summary
+let summaryHtml = '';
+if (monthRecords.length >= 2) {
+  const first = monthRecords[0].elecRemaining;
+  const last = monthRecords[monthRecords.length - 1].elecRemaining;
+  const totalRecharge = monthRecords.reduce((s, r) => s + (r.recharge || 0), 0);
+  const total = first + totalRecharge - last;
+  const d1 = new Date(monthRecords[0].dateKey + 'T00:00:00');
+  const d2 = new Date(monthRecords[monthRecords.length - 1].dateKey + 'T00:00:00');
+  const spanDays = Math.round((d2.getTime() - d1.getTime()) / (1000 * 60 * 60 * 24)) || 1;
+  summaryHtml = `<div class="summary-bar">
+    <div class="summary-item"><span class="summary-label">${calMonth}月累计用电</span><span class="summary-value">${total.toFixed(2)} 元</span></div>
+    <div class="summary-divider"></div>
+    <div class="summary-item"><span class="summary-label">日均</span><span class="summary-value">${(total / spanDays).toFixed(2)} 元</span></div>
+    <div class="summary-divider"></div>
+    <div class="summary-item"><span class="summary-label">记录</span><span class="summary-value">${monthRecords.length} 天</span></div>
+  </div>`;
+}
+
+const weekdays = ['日', '一', '二', '三', '四', '五', '六'];
+---
+
+<div data-tab="utility-tracking">
+  <div class="calendar-view">
+    <div class="cal-header">
+      <span class="cal-title">{calYear}年{calMonth}月</span>
+      <div class="cal-nav">
+        <button class="cal-nav-btn cal-prev" title="上一月">◀</button>
+        <button class="cal-today-btn cal-today">今天</button>
+        <button class="cal-nav-btn cal-next" title="下一月">▶</button>
+      </div>
+    </div>
+    <div class="cal-weekdays">
+      {weekdays.map(w => <span class="cal-weekday">{w}</span>)}
+    </div>
+    <div class="cal-grid" id="utilCalendar">
+      {Array.from({ length: startDow }, (_, i) => {
+        const d = prevMonthLastDay - startDow + i + 1;
+        const lunar = getLunarInfo(calYear, calMonth - 1, d);
+        return (
+          <div class="cal-cell cal-other-month">
+            <span class={`cal-lunar${lunar.isStart ? ' cal-lunar-start' : ''}`}>{lunar.isStart ? lunar.lMonthName : getLunarDayName(lunar.lDay)}</span>
+            <span class="cal-date">{d}日</span>
+          </div>
+        );
+      })}
+      {Array.from({ length: daysInMonth }, (_, i) => {
+        const d = i + 1;
+        const isToday = calYear === today.getFullYear() && calMonth === today.getMonth() + 1 && d === today.getDate();
+        const lunar = getLunarInfo(calYear, calMonth, d);
+        const key = dateKey(calYear, calMonth, d);
+        const record = utilityRecords[key];
+        let cls = 'cal-cell';
+        if (isToday) cls += ' cal-today';
+        if (record) cls += ' cal-has-data';
+        return (
+          <div class={cls} data-date={key}>
+            <span class={`cal-lunar${lunar.isStart ? ' cal-lunar-start' : ''}`}>{lunar.isStart ? lunar.lMonthName : getLunarDayName(lunar.lDay)}</span>
+            <span class={`cal-date${isToday ? ' cal-date-today' : ''}`}>{d}日</span>
+            {record && <span class="cal-balance">¥{record.elecRemaining.toFixed(2)}</span>}
+          </div>
+        );
+      })}
+      {Array.from({ length: (7 - ((startDow + daysInMonth) % 7)) % 7 }, (_, i) => {
+        const d = i + 1;
+        const lunar = getLunarInfo(calYear, calMonth + 1, d);
+        return (
+          <div class="cal-cell cal-other-month">
+            <span class={`cal-lunar${lunar.isStart ? ' cal-lunar-start' : ''}`}>{lunar.isStart ? lunar.lMonthName : getLunarDayName(lunar.lDay)}</span>
+            <span class="cal-date">{d}日</span>
+          </div>
+        );
+      })}
+    </div>
+  </div>
+  <div class="summary-container">{summaryHtml ? <Fragment set:html={summaryHtml} /> : null}</div>
+  <div class="detail-container" id="utilDetail"></div>
+</div>

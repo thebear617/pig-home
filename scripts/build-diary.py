@@ -5,8 +5,8 @@ from pathlib import Path
 
 ROOT = Path(__file__).parent.parent
 DIARY_DIR = ROOT / '_diary'
-DIARY_OUT = ROOT / 'js' / 'diary-data.js'
-EXPENSE_OUT = ROOT / 'js' / 'expense-data.js'
+DIARY_OUT = ROOT / 'src' / 'data' / 'diary-data.js'
+EXPENSE_OUT = ROOT / 'src' / 'data' / 'expense-data.js'
 
 records = {}
 expenses = []
@@ -131,16 +131,16 @@ for fname in sorted(os.listdir(DIARY_DIR)):
 
 with open(DIARY_OUT, 'w', encoding='utf-8') as f:
     f.write('// Auto-generated from _diary/*.md by scripts/build-diary.py\n')
-    f.write('const diaryRecords = ')
+    f.write('export const diaryRecords = ')
     json.dump(records, f, ensure_ascii=False, indent=2)
     f.write(';\n')
-    f.write('const specialEvents = ')
+    f.write('export const specialEvents = ')
     json.dump(special_events, f, ensure_ascii=False, indent=2)
     f.write(';\n')
 
 with open(EXPENSE_OUT, 'w', encoding='utf-8') as f:
     f.write('// Auto-generated from _diary/*.md by scripts/build-diary.py\n')
-    f.write('const expenseRecords = ')
+    f.write('export const expenseRecords = ')
     json.dump(expenses, f, ensure_ascii=False, indent=2)
     f.write(';\n')
 

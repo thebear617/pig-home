@@ -1,0 +1,734 @@
+---
+import '../styles/global.css';
+import { TABS, DEFAULT_TAB } from '../lib/tabs';
+import { utilityRecords } from '../data/utility-records';
+import { foodRecords } from '../data/food-records';
+import { hemaDayRecords } from '../data/hema-records';
+import { locations } from '../data/locations';
+import { expenseCategories } from '../data/expense-categories';
+import { diaryRecords, specialEvents } from '../data/diary-data';
+import { expenseRecords } from '../data/expense-data';
+import specialtyKeywords from '../data/special-keywords.json';
+
+import FollowUp from '../components/tabs/FollowUp.astro';
+import FoodRecords from '../components/tabs/FoodRecords.astro';
+import UtilityTracking from '../components/tabs/UtilityTracking.astro';
+import DailyTracker from '../components/tabs/DailyTracker.astro';
+import ExpenseRecords from '../components/tabs/ExpenseRecords.astro';
+import FoodMap from '../components/tabs/FoodMap.astro';
+import RelationshipTimeline from '../components/tabs/RelationshipTimeline.astro';
+import HomeMap from '../components/tabs/HomeMap.astro';
+
+const activeTab = DEFAULT_TAB;
+---
+
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>猪窝</title>
+</head>
+<body>
+  <div class="layout">
+    <button class="sidebar-toggle" id="sidebarToggle" aria-label="切换侧边栏">☰</button>
+    <div class="sidebar-backdrop" id="sidebarBackdrop" hidden></div>
+
+    <nav class="sidebar" id="sidebar" aria-label="主导航">
+      <div class="sidebar-brand">
+        <button class="sidebar-close" id="sidebarClose" aria-label="关闭侧边栏">✕</button>
+        <p class="sidebar-eyebrow">Home Sweet Home</p>
+        <h1 class="sidebar-title">猪窝</h1>
+      </div>
+      <div class="sidebar-nav" id="sidebarNav">
+        {TABS.map(tab => (
+          <button class={`sidebar-item${tab.id === activeTab ? ' active' : ''}`} data-tab={tab.id}>
+            <span class="sidebar-icon">{tab.icon}</span>
+            <span>{tab.title}</span>
+          </button>
+        ))}
+      </div>
+    </nav>
+
+    <div class="main-area">
+      <main id="app" class="app-shell">
+        <div class="tab-panel" id="follow-up" hidden>
+          <FollowUp />
+        </div>
+        <div class="tab-panel" id="food-records" hidden>
+          <FoodRecords />
+        </div>
+        <div class="tab-panel" id="utility-tracking" hidden>
+          <UtilityTracking />
+        </div>
+        <div class="tab-panel" id="daily-tracker" hidden>
+          <DailyTracker />
+        </div>
+        <div class="tab-panel" id="expense-records" hidden>
+          <ExpenseRecords />
+        </div>
+        <div class="tab-panel" id="food-map" hidden>
+          <FoodMap />
+        </div>
+        <div class="tab-panel" id="relationship-timeline" hidden>
+          <RelationshipTimeline />
+        </div>
+        <div class="tab-panel" id="home-map" hidden>
+          <HomeMap />
+        </div>
+      </main>
+    </div>
+  </div>
+
+  <script>
+    document.getElementById('relationship-timeline')?.removeAttribute('hidden');
+  </script>
+
+  <script define:vars={{ utilityRecords, foodRecords, hemaDayRecords, locations, expenseCategories, diaryRecords, expenseRecords, specialEvents, specialtyKeywords }}>
+    window.__utilityRecords = utilityRecords;
+    window.__foodRecords = foodRecords;
+    window.__hemaDayRecords = hemaDayRecords;
+    window.__locations = locations;
+    window.__expenseCategories = expenseCategories;
+    window.__diaryRecords = diaryRecords;
+    window.__expenseRecords = expenseRecords;
+    window.__specialEvents = specialEvents;
+    window.__specialtyKeywords = specialtyKeywords;
+  </script>
+
+  {/* ─── Client-side interactivity ─── */}
+  <script is:inline>
+    (function() {
+      const STATE = {
+        activeTab: 'relationship-timeline',
+        calYear: new Date().getFullYear(),
+        calMonth: new Date().getMonth() + 1,
+        selectedDay: null,
+        foodMapArea: '',
+        foodMapLocation: '',
+        relCategory: 'all',
+      };
+
+      const TABS = [
+        { id: 'follow-up', title: '生活备忘录与物资采购', icon: '📋' },
+        { id: 'food-records', title: '美食记录与做饭心得', icon: '🍳', months: true },
+        { id: 'utility-tracking', title: '水电追踪', icon: '⚡', months: true },
+        { id: 'daily-tracker', title: '每日追踪', icon: '📅', months: true },
+        { id: 'expense-records', title: '支出记录', icon: '💰', months: true },
+        { id: 'food-map', title: '美食地图', icon: '🗺️' },
+        { id: 'relationship-timeline', title: '关系时间线', icon: '💞' },
+        { id: 'home-map', title: '猪窝地图', icon: '🏠' },
+      ];
+
+      const MONTH_TABS = new Set(TABS.filter(t => t.months).map(t => t.id));
+
+      function H(t) { return String(t ?? '').replaceAll('&', '&amp;').replaceAll('<', '&lt;').replaceAll('>', '&gt;').replaceAll('"', '&quot;').replaceAll("'", '&#039;'); }
+      function P(n) { return String(n).padStart(2, '0'); }
+      function DK(y, m, d) { return `${y}-${P(m)}-${P(d)}`; }
+      function SF(label, value, cls) { return `<div class="summary-item"><span class="summary-label">${H(label)}</span><span class="summary-value ${cls||''}">${H(value)}</span></div>`; }
+
+      function renderMd(md) {
+        if (typeof marked !== 'undefined') {
+          try { return marked.parse(md || '', { breaks: true, gfm: true }); }
+          catch { return '<p>' + H(md || '') + '</p>'; }
+        }
+        return '<p>' + H(md || '') + '</p>';
+      }
+
+      // ─── LUNAR ───
+      const LU_MONTHS = ['', '正月', '二月', '三月', '四月', '五月', '六月', '七月', '八月', '九月', '十月', '十一月', '十二月'];
+      const LU_DAYS = { 1:'初一',2:'初二',3:'初三',4:'初四',5:'初五',6:'初六',7:'初七',8:'初八',9:'初九',10:'初十',11:'十一',12:'十二',13:'十三',14:'十四',15:'十五',16:'十六',17:'十七',18:'十八',19:'十九',20:'二十',21:'廿一',22:'廿二',23:'廿三',24:'廿四',25:'廿五',26:'廿六',27:'廿七',28:'廿八',29:'廿九',30:'三十' };
+      const LU_STARTS = [[1,19,12],[2,17,1],[3,19,2],[4,17,3],[5,17,4],[6,15,5],[7,15,6],[8,13,7],[9,12,8],[10,11,9],[11,10,10],[12,9,11]];
+      function LDN(n) { return LU_DAYS[n] || String(n); }
+      function GLI(y, m, d) {
+        const t = new Date(y, m-1, d);
+        if (m === 1 && d < 19) {
+          const p = new Date(2025, 11, 21);
+          const diff = Math.floor((t-p)/(1000*60*60*24));
+          if (diff >= 0 && diff < 30) return { lm: 11, ld: diff+1, lmn: '十一月', is: diff===0 };
+          if (diff >= 30) return { lm: 12, ld: diff-29, lmn: '十二月', is: diff===30 };
+          return { lm: 11, ld: 20, lmn: '十一月', is: false };
+        }
+        let best = null;
+        for (const [mo, da, lm] of LU_STARTS) {
+          const s = new Date(y, mo-1, da);
+          if (s <= t) best = { s, lm };
+        }
+        if (!best) return { lm: 11, ld: 20, lmn: '十一月', is: false };
+        const diff = Math.floor((t - best.s)/(1000*60*60*24));
+        return { lm: best.lm, ld: diff+1, lmn: LU_MONTHS[best.lm], is: diff+1===1 };
+      }
+
+      // ─── Calendar cell HTML generators ───
+      function prevMonthCells(y, m, startDow) {
+        const prevLast = new Date(y, m-1, 0).getDate();
+        let h = '';
+        for (let i = 0; i < startDow; i++) {
+          const d = prevLast - startDow + i + 1;
+          const lu = GLI(y, m-1, d);
+          h += `<div class="cal-cell cal-other-month"><span class="cal-lunar${lu.is?' cal-lunar-start':''}">${lu.is?lu.lmn:LDN(lu.ld)}</span><span class="cal-date">${d}日</span></div>`;
+        }
+        return h;
+      }
+
+      function nextMonthCells(y, m, totalCells) {
+        const rem = totalCells % 7 === 0 ? 0 : 7 - (totalCells % 7);
+        let h = '';
+        for (let d = 1; d <= rem; d++) {
+          const lu = GLI(y, m+1, d);
+          h += `<div class="cal-cell cal-other-month"><span class="cal-lunar${lu.is?' cal-lunar-start':''}">${lu.is?lu.lmn:LDN(lu.ld)}</span><span class="cal-date">${d}日</span></div>`;
+        }
+        return h;
+      }
+
+      // ─── Build utility calendar grid ───
+      function buildUtilGrid(y, m) {
+        const today = new Date();
+        const firstDay = new Date(y, m-1, 1);
+        const startDow = firstDay.getDay();
+        const daysInMonth = new Date(y, m, 0).getDate();
+        let h = prevMonthCells(y, m, startDow);
+        for (let d = 1; d <= daysInMonth; d++) {
+          const isToday = y === today.getFullYear() && m === today.getMonth()+1 && d === today.getDate();
+          const lu = GLI(y, m, d);
+          const key = DK(y, m, d);
+          const rec = (window.__utilityRecords || {})[key];
+          const isSel = key === STATE.selectedDay;
+          let cls = 'cal-cell';
+          if (isToday) cls += ' cal-today';
+          if (rec) cls += ' cal-has-data';
+          if (isSel) cls += ' cal-selected';
+          h += `<div class="${cls}" data-date="${key}"><span class="cal-lunar${lu.is?' cal-lunar-start':''}">${lu.is?lu.lmn:LDN(lu.ld)}</span><span class="cal-date${isToday?' cal-date-today':''}">${d}日</span>${rec ? `<span class="cal-balance">¥${rec.elecRemaining.toFixed(2)}</span>` : ''}</div>`;
+        }
+        h += nextMonthCells(y, m, startDow + daysInMonth);
+        return h;
+      }
+
+      function buildUtilSummary(y, m) {
+        const prefix = `${y}-${P(m)}`;
+        const recs = [];
+        for (const [k, v] of Object.entries(window.__utilityRecords || {})) {
+          if (k.startsWith(prefix)) recs.push({ dk: k, ...v });
+        }
+        recs.sort((a, b) => a.dk.localeCompare(b.dk));
+        if (recs.length < 2) return '';
+        const first = recs[0].elecRemaining;
+        const last = recs[recs.length-1].elecRemaining;
+        const totalR = recs.reduce((s, r) => s + (r.recharge||0), 0);
+        const total = first + totalR - last;
+        const d1 = new Date(recs[0].dk+'T00:00:00');
+        const d2 = new Date(recs[recs.length-1].dk+'T00:00:00');
+        const span = Math.round((d2-d1)/(1000*60*60*24))||1;
+        return `<div class="summary-bar">${SF(`${m}月累计用电`, `${total.toFixed(2)} 元`)}<div class="summary-divider"></div>${SF('日均', `${(total/span).toFixed(2)} 元`)}<div class="summary-divider"></div>${SF('记录', `${recs.length} 天`)}</div>`;
+      }
+
+      function renderUtilDetail(key) {
+        if (!key) return '';
+        const rec = (window.__utilityRecords||{})[key];
+        if (!rec) return '';
+        const y = parseInt(key.slice(0,4)), m = parseInt(key.slice(5,7));
+        const prefix = `${y}-${P(m)}`;
+        const recs = [];
+        for (const [k, v] of Object.entries(window.__utilityRecords||{})) {
+          if (k.startsWith(prefix)) recs.push({ dk: k, ...v });
+        }
+        recs.sort((a,b)=>a.dk.localeCompare(b.dk));
+        const idx = recs.findIndex(r => r.dk === key);
+        let consumption = null, nextRecharge = 0, nextPreBal = 0;
+        if (idx >= 0 && idx < recs.length-1) {
+          const nr = recs[idx+1];
+          nextRecharge = nr.recharge||0;
+          nextPreBal = nr.elecRemaining - nextRecharge;
+          consumption = rec.elecRemaining - nextPreBal;
+        }
+        const d = new Date(key+'T00:00:00');
+        const dn = `${d.getMonth()+1}月${d.getDate()}日`;
+        let h = '<div class="detail-panel"><div class="detail-header"><span class="detail-title">'+H(dn)+'</span><button class="detail-close util-dc">✕</button></div><div class="detail-body">';
+        h += `<div class="detail-row"><span class="detail-label">剩余电费</span><span class="detail-val">${rec.elecRemaining.toFixed(2)} 元</span></div>`;
+        if (rec.recharge) h += `<div class="detail-row"><span class="detail-label">当日充值</span><span class="detail-val" style="color:#047857">+${rec.recharge.toFixed(2)} 元</span><span class="detail-note">（充值前余额 ${(rec.elecRemaining-rec.recharge).toFixed(2)}）</span></div>`;
+        if (consumption !== null) {
+          h += `<div class="detail-row"><span class="detail-label">当日消耗</span><span class="detail-val consumption">${consumption.toFixed(2)} 元</span>`;
+          if (nextRecharge>0) h += `<span class="detail-note">（次日充值前余额 ${nextPreBal.toFixed(2)}，充值后 ${recs[idx+1].elecRemaining.toFixed(2)}）</span>`;
+          else h += `<span class="detail-note">（次日剩余 ${recs[idx+1].elecRemaining.toFixed(2)}）</span>`;
+          h += '</div>';
+        }
+        h += '</div></div>';
+        return h;
+      }
+
+      // ─── Build food calendar ───
+      function buildFoodGrid(y, m) {
+        const today = new Date();
+        const firstDay = new Date(y, m-1, 1);
+        const startDow = firstDay.getDay();
+        const daysInMonth = new Date(y, m, 0).getDate();
+        const fr = window.__foodRecords || {};
+        let h = prevMonthCells(y, m, startDow);
+        for (let d = 1; d <= daysInMonth; d++) {
+          const isToday = y === today.getFullYear() && m === today.getMonth()+1 && d === today.getDate();
+          const lu = GLI(y, m, d);
+          const key = DK(y, m, d);
+          const rec = fr[key];
+          const isSel = key === STATE.selectedDay;
+          let cls = 'cal-cell';
+          if (isToday) cls += ' cal-today';
+          if (rec) cls += ' cal-has-data';
+          if (isSel) cls += ' cal-selected';
+          h += `<div class="${cls}" data-date="${key}"><span class="cal-lunar${lu.is?' cal-lunar-start':''}">${lu.is?lu.lmn:LDN(lu.ld)}</span><span class="cal-date${isToday?' cal-date-today':''}">${d}日</span>${rec?'<span class="cal-balance food-indicator">🍳</span>':''}</div>`;
+        }
+        h += nextMonthCells(y, m, startDow + daysInMonth);
+        return h;
+      }
+
+      function renderFoodDetail(key) {
+        if (!key) return '';
+        const meals = (window.__foodRecords||{})[key];
+        if (!meals || !meals.length) return '';
+        const d = new Date(key+'T00:00:00');
+        const dn = `${d.getMonth()+1}月${d.getDate()}日`;
+        let h = '<div class="detail-panel food-detail"><div class="detail-header"><span class="detail-title">'+H(dn)+' 美食记录</span><button class="detail-close util-dc">✕</button></div><div class="detail-body">';
+        meals.forEach((meal, idx) => {
+          if (idx>0) h += '<div class="food-divider"></div>';
+          h += `<div class="food-meal-block"><div class="food-meal-head"><span class="food-meal-tag">${H(meal.meal||'餐')}</span></div><div class="food-dishes">`;
+          const isNew = meal.dishes.length && typeof meal.dishes[0] === 'object';
+          for (const dish of meal.dishes) {
+            if (isNew) {
+              h += `<div class="food-dish-card"><span class="food-dish-icon">🥘</span><div class="food-dish-body"><div class="food-dish-head"><span class="food-dish-name">${H(dish.name)}</span><span class="food-dish-by">${H(dish.madeBy||'')} 做</span>${dish.cost!=null?`<span class="food-dish-cost">${dish.cost} 元</span>`:''}</div>${dish.note?`<span class="food-dish-note">${H(dish.note)}</span>`:''}</div></div>`;
+            } else {
+              h += `<div class="food-dish-card"><span class="food-dish-icon">🥘</span><span class="food-dish-name">${H(dish)}</span></div>`;
+            }
+          }
+          h += '</div>';
+          if (meal.image) h += `<div class="food-photo"><img src="${H(meal.image)}" alt="照片" loading="lazy" /></div>`;
+          let mealCost = meal.cost;
+          if (mealCost == null && isNew) mealCost = meal.dishes.reduce((s,d)=>s+(d.cost||0),0);
+          h += '<div class="food-meta-grid">';
+          if (mealCost!=null) h += `<div class="food-meta-item"><span class="food-meta-label">花费</span><span class="food-meta-value food-cost">${mealCost} 元</span></div>`;
+          if (!isNew) {
+            if (meal.chef) h += `<div class="food-meta-item"><span class="food-meta-label">主厨</span><span class="food-meta-value">${H(meal.chef)}</span></div>`;
+            if (meal.helper) h += `<div class="food-meta-item"><span class="food-meta-label">帮手</span><span class="food-meta-value">${H(meal.helper)}</span></div>`;
+          }
+          if (meal.prep) h += `<div class="food-meta-item"><span class="food-meta-label">餐前备菜</span><span class="food-meta-value">${H(String(meal.prep))} 分钟</span></div>`;
+          if (meal.cleanup) h += `<div class="food-meta-item"><span class="food-meta-label">收拾后厨</span><span class="food-meta-value">${meal.cleanup} 分钟</span></div>`;
+          h += '</div></div>';
+        });
+        h += '</div></div>';
+        return h;
+      }
+
+      // ─── Daily tracker ───
+      function buildDailyGrid(y, m) {
+        const today = new Date();
+        const firstDay = new Date(y, m-1, 1);
+        const startDow = firstDay.getDay();
+        const daysInMonth = new Date(y, m, 0).getDate();
+        const dr = window.__diaryRecords || {};
+        const er = window.__expenseRecords || [];
+        const se = window.__specialEvents || {};
+        const hd = window.__hemaDayRecords || {};
+        let h = prevMonthCells(y, m, startDow);
+        for (let d = 1; d <= daysInMonth; d++) {
+          const isToday = y === today.getFullYear() && m === today.getMonth()+1 && d === today.getDate();
+          const lu = GLI(y, m, d);
+          const key = DK(y, m, d);
+          const rec = dr[key] || null;
+          const hasExp = er.some(r => r.date === key);
+          const hasData = hasExp || !!rec;
+          const isMon = new Date(y, m-1, d).getDay() === 1;
+          const isSel = key === STATE.selectedDay;
+          const spEv = se[key] || null;
+          let cls = 'cal-cell';
+          if (isToday) cls += ' cal-today';
+          if (hasData || isMon) cls += ' cal-has-data';
+          if (isMon) cls += ' cal-hema-day';
+          if (isSel) cls += ' cal-selected';
+          if (spEv) cls += ' cal-special';
+          h += `<div class="${cls}" data-date="${key}"><span class="cal-lunar${lu.is?' cal-lunar-start':''}">${lu.is?lu.lmn:LDN(lu.ld)}</span><span class="cal-date${isToday?' cal-date-today':''}">${d}日</span>`;
+          if (rec && rec.value != null) h += `<span class="cal-value">${rec.value}</span>`;
+          if (hasExp) h += '<span class="cal-expense-dot" title="有支出"></span>';
+          if (isMon) h += '<span class="cal-hema-badge" title="盒马日">盒马日</span>';
+          if (spEv) h += `<span class="cal-special-icons" title="${H(spEv.keywords.join('、'))}">${spEv.icons.join('')}</span>`;
+          h += '</div>';
+        }
+        h += nextMonthCells(y, m, startDow + daysInMonth);
+        return h;
+      }
+
+      function renderDailyDetail(key) {
+        if (!key) return '';
+        const dr = window.__diaryRecords || {};
+        const er = window.__expenseRecords || [];
+        const hd = window.__hemaDayRecords || {};
+        const rec = dr[key] || null;
+        const dayExp = er.filter(r => r.date === key);
+        const isMon = new Date(key+'T00:00:00').getDay() === 1;
+        if (!rec && !dayExp.length && !hd[key] && !isMon) return '';
+        const d = new Date(key+'T00:00:00');
+        const dn = `${d.getMonth()+1}月${d.getDate()}日`;
+        let h = '<div class="detail-panel"><div class="detail-header"><span class="detail-title">'+H(dn)+'</span><button class="detail-close util-dc">✕</button></div><div class="detail-body">';
+        if (rec && rec.tasks && rec.tasks.length) {
+          const done = rec.value != null ? rec.value : rec.tasks.filter(t => t.status==='x').length;
+          h += `<div class="detail-row"><span class="detail-label">当日日程</span><span class="detail-val">已完成 ${done} / 共 ${rec.tasks.length}</span></div><div class="detail-tasks">`;
+          rec.tasks.forEach((task, i) => {
+            h += `<div class="task-item"><span class="task-num">${i+1}</span><span class="task-time">${H(task.time)}</span><span class="task-text">${H(task.desc)}</span></div>`;
+          });
+          h += '</div>';
+        }
+        if (dayExp.length) {
+          const total = dayExp.reduce((s, r) => s + r.amount, 0);
+          h += `<div class="detail-row"><span class="detail-label">当日支出</span><span class="detail-val expense-amount">¥${total.toFixed(2)}</span></div><div class="detail-expenses">`;
+          dayExp.forEach(exp => {
+            h += `<div class="expense-detail-item"><span class="expense-detail-sub">${H(exp.sub)}</span>${exp.note?`<span class="expense-detail-note">${H(exp.note)}</span>`:''}<span class="expense-detail-amount">¥${exp.amount.toFixed(2)}</span></div>`;
+          });
+          h += '</div>';
+        }
+        const hema = hd[key];
+        if (hema) {
+          h += '<div class="detail-row"><span class="detail-label">盒马日</span><span class="detail-val">周一采购</span></div><div class="hema-section">';
+          if (hema.bought) h += `<div class="hema-block"><span class="hema-tag hema-bought">本周购买</span><p class="hema-text">${H(hema.bought)}</p></div>`;
+          if (hema.nextPlan) h += `<div class="hema-block"><span class="hema-tag hema-next">下周想买</span><p class="hema-text">${H(hema.nextPlan)}</p></div>`;
+          h += '</div>';
+        } else if (isMon) {
+          h += '<div class="hema-empty">本周还没记录盒马日，记得补上～</div>';
+        }
+        h += '</div></div>';
+        return h;
+      }
+
+      function buildDailySummary(y, m) {
+        const er = window.__expenseRecords || [];
+        const dr = window.__diaryRecords || {};
+        const prefix = `${y}-${P(m)}`;
+        const exps = er.filter(r => r.date.startsWith(prefix));
+        let h = '';
+        if (exps.length) {
+          const total = exps.reduce((s,r)=>s+r.amount,0);
+          const days = new Set(exps.map(r=>r.date)).size;
+          h += SF('本月支出', `¥${total.toFixed(2)}`, 'expense-amount');
+          h += '<div class="summary-divider"></div>';
+          h += SF('日均支出', `¥${(total/days).toFixed(2)}`, 'expense-amount');
+        }
+        // Sleep stats
+        function parseHM(hm) { const [h,m]=hm.split(':').map(Number); return h*60+m; }
+        function mToHM(min) { const h=Math.floor(min/60)%24; const m=Math.round(min%60); return `${P(h)}:${P(m)}`; }
+        const bed=[], wake=[], dur=[];
+        for (const [k, rec] of Object.entries(dr)) {
+          if (!k.startsWith(prefix)) continue;
+          const tasks = rec.tasks || [];
+          let best=null, bestS=-1;
+          for (const t of tasks) {
+            if (t.desc!=='睡觉' && t.desc!=='睡懒觉') continue;
+            const parts = t.time.split('-');
+            if (parts.length!==2) continue;
+            const s=parseHM(parts[0].trim()), e=parseHM(parts[1].trim());
+            if (isNaN(s)||isNaN(e)) continue;
+            if (s>bestS) { bestS=s; best={s,e}; }
+          }
+          if (best) { let em=best.e; if(em<=best.s) em+=24*60; bed.push(best.s); wake.push(best.e); dur.push(em-best.s); }
+        }
+        if (bed.length) {
+          const avg = a => a.reduce((a,b)=>a+b,0)/a.length;
+          if (exps.length) h += '<div class="summary-divider"></div>';
+          h += SF('平均入睡', mToHM(avg(bed)));
+          h += '<div class="summary-divider"></div>';
+          h += SF('平均起床', mToHM(avg(wake)));
+          h += '<div class="summary-divider"></div>';
+          h += SF('平均睡眠', `${(avg(dur)/60).toFixed(1)}h`);
+        }
+        return h ? `<div class="summary-bar">${h}</div>` : '';
+      }
+
+      // ─── Expense records ───
+      function buildExpenseView(y, m) {
+        const er = window.__expenseRecords || [];
+        const ec = window.__expenseCategories || [];
+        const prefix = `${y}-${P(m)}`;
+        const monthExps = er.filter(r => r.date.startsWith(prefix)).sort((a,b)=>b.date.localeCompare(a.date));
+        const monthTotal = monthExps.reduce((s,r)=>s+r.amount,0);
+        const dayCount = monthExps.length ? new Set(monthExps.map(r=>r.date)).size : 0;
+        const monthAvg = monthExps.length ? (monthTotal/dayCount).toFixed(2) : '—';
+        const groups = ec.map(cat => {
+          const items = monthExps.filter(r => r.cat === cat.name);
+          const total = items.reduce((s,r)=>s+r.amount,0);
+          return { ...cat, items, total };
+        }).filter(g => g.items.length > 0).sort((a,b) => b.total - a.total);
+
+        let h = '';
+        if (monthTotal > 0) {
+          h += '<div class="summary-bar">';
+          h += SF('本月支出', `¥${monthTotal.toFixed(2)}`, 'expense-amount');
+          h += '<div class="summary-divider"></div>';
+          h += SF('记录笔数', `${monthExps.length}`);
+          h += '<div class="summary-divider"></div>';
+          h += SF('日均', `¥${monthAvg}`);
+          h += '</div>';
+        }
+        if (monthTotal === 0) h += '<div class="empty-state"><p>本月暂无支出记录</p></div>';
+        for (const g of groups) {
+          h += `<div class="check-section open"><div class="section-header"><div class="section-header-left"><span class="expense-cat-icon">${g.icon}</span><h2>${H(g.name)}</h2></div><div class="section-header-right"><span class="expense-cat-amount">¥${g.total.toFixed(2)}</span><span class="section-count">${g.items.length}</span><span class="section-arrow">▸</span></div></div><div class="section-body">`;
+          for (const item of g.items) {
+            const d = new Date(item.date+'T00:00:00');
+            const sd = `${d.getMonth()+1}/${d.getDate()}`;
+            h += `<div class="expense-item"><div class="expense-item-left"><span class="expense-item-sub">${H(item.sub)}</span>${item.note?`<span class="expense-item-note">${H(item.note)}</span>`:''}</div><div class="expense-item-right"><span class="expense-item-amount">¥${item.amount.toFixed(2)}</span><span class="expense-item-date">${sd}</span></div></div>`;
+          }
+          h += '</div></div>';
+        }
+        return h;
+      }
+
+      // ─── Accordion setup ───
+      function setupAccordion(root) {
+        const headers = root.querySelectorAll('.section-header');
+        for (const hd of headers) {
+          hd.addEventListener('click', () => {
+            const sec = hd.parentElement;
+            sec.classList.toggle('open');
+            sec.classList.toggle('collapsed');
+            const body = sec.querySelector('.section-body');
+            if (body) body.style.maxHeight = sec.classList.contains('open') ? body.scrollHeight + 'px' : '0px';
+          });
+        }
+        const bodies = root.querySelectorAll('.section-body');
+        for (const b of bodies) {
+          const sec = b.parentElement;
+          if (sec.classList.contains('open')) b.style.maxHeight = b.scrollHeight + 'px';
+          else b.style.maxHeight = '0px';
+        }
+      }
+
+      // ─── Sidebar toggle (mobile) ───
+      function closeSidebar() { document.body.classList.remove('sidebar-open'); document.body.style.overflow = ''; }
+      function openSidebar() { document.body.classList.add('sidebar-open'); document.body.style.overflow = 'hidden'; }
+
+      // ─── Main app module ───
+      window.STATE = STATE;
+      window.buildUtilGrid = buildUtilGrid;
+      window.buildUtilSummary = buildUtilSummary;
+      window.renderUtilDetail = renderUtilDetail;
+      window.buildFoodGrid = buildFoodGrid;
+      window.renderFoodDetail = renderFoodDetail;
+      window.buildDailyGrid = buildDailyGrid;
+      window.renderDailyDetail = renderDailyDetail;
+      window.buildDailySummary = buildDailySummary;
+      window.buildExpenseView = buildExpenseView;
+      window.setupAccordion = setupAccordion;
+      window.MONTH_TABS = MONTH_TABS;
+
+      // Init mobile sidebar
+      const st = document.getElementById('sidebarToggle');
+      const sb = document.getElementById('sidebarBackdrop');
+      const sc = document.getElementById('sidebarClose');
+      if (st) st.addEventListener('click', openSidebar);
+      if (sb) sb.addEventListener('click', closeSidebar);
+      if (sc) sc.addEventListener('click', closeSidebar);
+      document.addEventListener('keydown', e => { if (e.key === 'Escape') closeSidebar(); });
+
+      // Initialize expense view content
+      const ev = document.getElementById('expenseContent');
+      if (ev) ev.innerHTML = buildExpenseView(STATE.calYear, STATE.calMonth);
+
+      // Fill food map initial state
+      const firstAreaBtn = document.querySelector('[data-fm-area].active');
+      if (firstAreaBtn) STATE.foodMapArea = firstAreaBtn.dataset.fmArea;
+      const firstLocBtn = document.querySelector('[data-fm-location].active');
+      if (firstLocBtn) STATE.foodMapLocation = firstLocBtn.dataset.fmLocation;
+
+      // Global delegated click handler
+      document.addEventListener('click', function(e) {
+        // Sidebar tab switching
+        const si = e.target.closest('.sidebar-item');
+        if (si) {
+          const tabId = si.dataset.tab;
+          if (tabId) {
+            STATE.activeTab = tabId;
+            document.querySelectorAll('.tab-panel').forEach(p => p.hidden = p.id !== tabId);
+            document.querySelectorAll('.sidebar-item').forEach(b => b.classList.toggle('active', b.dataset.tab === tabId));
+            // Reset month to current when switching to month tabs
+            if (MONTH_TABS.has(tabId)) {
+              const now = new Date();
+              STATE.calYear = now.getFullYear();
+              STATE.calMonth = now.getMonth() + 1;
+            }
+            STATE.selectedDay = null;
+            // Refresh calendar views
+            refreshActiveCalendar();
+            if (window.innerWidth < 720) closeSidebar();
+          }
+        }
+
+        // Calendar prev
+        const cp = e.target.closest('.cal-prev');
+        if (cp) {
+          if (STATE.calMonth === 1) { STATE.calYear--; STATE.calMonth = 12; }
+          else STATE.calMonth--;
+          STATE.selectedDay = null;
+          refreshActiveCalendar();
+        }
+
+        // Calendar next
+        const cn = e.target.closest('.cal-next');
+        if (cn) {
+          if (STATE.calMonth === 12) { STATE.calYear++; STATE.calMonth = 1; }
+          else STATE.calMonth++;
+          STATE.selectedDay = null;
+          refreshActiveCalendar();
+        }
+
+        // Calendar today
+        const ct = e.target.closest('.cal-today');
+        if (ct) {
+          const now = new Date();
+          STATE.calYear = now.getFullYear();
+          STATE.calMonth = now.getMonth() + 1;
+          STATE.selectedDay = null;
+          refreshActiveCalendar();
+        }
+
+        // Calendar cell click
+        const cell = e.target.closest('.cal-has-data');
+        if (cell) {
+          const date = cell.dataset.date;
+          STATE.selectedDay = STATE.selectedDay === date ? null : date;
+          refreshActiveCalendar();
+        }
+
+        // Detail close
+        const dc = e.target.closest('.util-dc');
+        if (dc) {
+          STATE.selectedDay = null;
+          refreshActiveCalendar();
+        }
+
+        // Accordion click is handled by setupAccordion on each re-render
+
+        // Food map area
+        const fa = e.target.closest('[data-fm-area]');
+        if (fa) {
+          STATE.foodMapArea = fa.dataset.fmArea;
+          STATE.foodMapLocation = '';
+          document.querySelectorAll('[data-fm-area]').forEach(b => b.classList.toggle('active', b === fa));
+          document.querySelectorAll('[data-fm-area-content]').forEach(p => p.hidden = p.dataset.fmAreaContent !== STATE.foodMapArea);
+          // Activate first location
+          const firstLoc = document.querySelector(`[data-fm-area-content="${STATE.foodMapArea}"] [data-fm-location]`);
+          if (firstLoc) {
+            STATE.foodMapLocation = firstLoc.dataset.fmLocation;
+            const locContent = document.querySelector(`[data-fm-area-content="${STATE.foodMapArea}"]`);
+            if (locContent) {
+              locContent.querySelectorAll('[data-fm-location]').forEach(b => b.classList.toggle('active', b.dataset.fmLocation === STATE.foodMapLocation));
+              locContent.querySelectorAll('[data-fm-location-content]').forEach(p => p.hidden = p.dataset.fmLocationContent !== STATE.foodMapLocation);
+            }
+          }
+        }
+
+        // Food map location
+        const fl = e.target.closest('[data-fm-location]');
+        if (fl) {
+          STATE.foodMapLocation = fl.dataset.fmLocation;
+          const parent = fl.closest('[data-fm-area-content]');
+          if (parent) {
+            parent.querySelectorAll('[data-fm-location]').forEach(b => b.classList.toggle('active', b === fl));
+            parent.querySelectorAll('[data-fm-location-content]').forEach(p => p.hidden = p.dataset.fmLocationContent !== STATE.foodMapLocation);
+          }
+        }
+
+        // Relationship timeline filter
+        const rc = e.target.closest('[data-rl-cat]');
+        if (rc) {
+          STATE.relCategory = rc.dataset.rlCat;
+          document.querySelectorAll('[data-rl-cat]').forEach(b => b.classList.toggle('active', b === rc));
+          document.querySelectorAll('.tl-cat-travel, .tl-cat-xian, .tl-cat-quarrel').forEach(el => {
+            if (STATE.relCategory === 'all') { el.hidden = false; return; }
+            const catCls = 'tl-cat-' + STATE.relCategory;
+            el.hidden = !el.classList.contains(catCls);
+          });
+        }
+
+        // Quarrel toggle
+        const qt = e.target.closest('[data-rl-q-toggle]');
+        if (qt) {
+          const body = qt.parentElement.querySelector('.q-body');
+          if (body) {
+            const collapsed = body.classList.toggle('collapsed');
+            qt.classList.toggle('open', !collapsed);
+          }
+        }
+
+        // Food view tabs
+        const fvt = e.target.closest('.food-view-tab');
+        if (fvt) {
+          const view = fvt.dataset.view;
+          const root = fvt.closest('.food-views');
+          if (root) {
+            root.querySelectorAll('.food-view-tab').forEach(b => b.classList.toggle('active', b === fvt));
+            root.querySelectorAll('.food-view-panel').forEach(p => p.hidden = p.dataset.panel !== view);
+          }
+        }
+
+        // Cooking tips nav
+        const ctn = e.target.closest('.cook-nav-btn');
+        if (ctn) {
+          const cat = ctn.dataset.cat;
+          const root = ctn.closest('.cookbook');
+          if (root) {
+            root.querySelectorAll('.cook-nav-btn').forEach(b => b.classList.toggle('active', b === ctn));
+            root.querySelectorAll('.cook-cat-panel').forEach(p => { p.hidden = p.dataset.cat !== cat; });
+          }
+        }
+
+        // Cook rec head (accordion in cooking tips / memo / procurement)
+        const crh = e.target.closest('.cook-rec-head');
+        if (crh) {
+          const rec = crh.closest('.cook-rec');
+          if (rec) {
+            const body = rec.querySelector('.cook-rec-body');
+            const open = body && !body.hidden;
+            if (body) body.hidden = open;
+            crh.classList.toggle('open', !open);
+          }
+        }
+      });
+
+      function refreshActiveCalendar() {
+        const tab = STATE.activeTab;
+        if (tab === 'utility-tracking') {
+          const grid = document.getElementById('utilCalendar');
+          if (grid) grid.innerHTML = buildUtilGrid(STATE.calYear, STATE.calMonth);
+          const title = document.querySelector('#utility-tracking .cal-title');
+          if (title) title.textContent = `${STATE.calYear}年${STATE.calMonth}月`;
+          const summary = document.querySelector('#utility-tracking .summary-container');
+          if (summary) summary.innerHTML = buildUtilSummary(STATE.calYear, STATE.calMonth);
+          const detail = document.getElementById('utilDetail');
+          if (detail) detail.innerHTML = renderUtilDetail(STATE.selectedDay);
+        } else if (tab === 'food-records') {
+          const grid = document.getElementById('foodCalendar');
+          if (grid) grid.innerHTML = buildFoodGrid(STATE.calYear, STATE.calMonth);
+          const title = document.querySelector('#food-records .cal-title');
+          if (title) title.textContent = `${STATE.calYear}年${STATE.calMonth}月`;
+          const detail = document.querySelector('#food-records .food-detail-container');
+          if (detail) detail.innerHTML = renderFoodDetail(STATE.selectedDay);
+        } else if (tab === 'daily-tracker') {
+          const grid = document.getElementById('dailyCalendar');
+          if (grid) grid.innerHTML = buildDailyGrid(STATE.calYear, STATE.calMonth);
+          const title = document.querySelector('#daily-tracker .cal-title');
+          if (title) title.textContent = `${STATE.calYear}年${STATE.calMonth}月`;
+          const detail = document.getElementById('dailyDetail');
+          if (detail) detail.innerHTML = renderDailyDetail(STATE.selectedDay);
+          const summary = document.getElementById('dailySummary');
+          if (summary) summary.innerHTML = buildDailySummary(STATE.calYear, STATE.calMonth);
+        } else if (tab === 'expense-records') {
+          const title = document.querySelector('#expense-records .cal-title');
+          if (title) title.textContent = `${STATE.calYear}年${STATE.calMonth}月 · 支出`;
+          const content = document.getElementById('expenseContent');
+          if (content) {
+            content.innerHTML = buildExpenseView(STATE.calYear, STATE.calMonth);
+            setupAccordion(content);
+          }
+        }
+      }
+
+      // Initial calendar refresh to apply data markers
+      setTimeout(refreshActiveCalendar, 0);
+    })();
+  </script>
+</body>
+</html>

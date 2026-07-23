@@ -1,0 +1,95 @@
+---
+import { getCollection } from 'astro:content';
+import { marked } from 'marked';
+
+const tips = await getCollection('cooking-tips');
+const catMap = new Map<string, typeof tips>();
+for (const tip of tips) {
+  const cat = tip.data.category;
+  if (!catMap.has(cat)) catMap.set(cat, []);
+  catMap.get(cat)!.push(tip);
+}
+const tipCategories = Array.from(catMap.entries());
+const categoryOrder = ['备菜', '炒菜', '烘焙', '烹煮', '煎制', '饮品'];
+tipCategories.sort(([a], [b]) => {
+  const ai = categoryOrder.indexOf(a);
+  const bi = categoryOrder.indexOf(b);
+  return (ai < 0 ? categoryOrder.length : ai) - (bi < 0 ? categoryOrder.length : bi);
+});
+
+const cardColors = [
+  { bg: 'linear-gradient(135deg,#ffd9d9,#ffb0b0)', fg: '#b91c1c' },
+  { bg: 'linear-gradient(135deg,#cdeede,#a6e0c2)', fg: '#047857' },
+  { bg: 'linear-gradient(135deg,#fbe6bb,#f6d384)', fg: '#b45309' },
+  { bg: 'linear-gradient(135deg,#cfe4fd,#a7cafa)', fg: '#1d4ed8' },
+  { bg: 'linear-gradient(135deg,#fdeeb6,#fbd969)', fg: '#a16207' },
+  { bg: 'linear-gradient(135deg,#cdeeeb,#a2e4dd)', fg: '#0f766e' },
+];
+
+const weekdays = ['日', '一', '二', '三', '四', '五', '六'];
+---
+
+<div data-tab="food-records">
+  <div class="food-views">
+    <div class="food-view-tabs">
+      <button class="food-view-tab active" data-view="calendar">📅 美食日历</button>
+      <button class="food-view-tab" data-view="tips">💡 做饭心得</button>
+    </div>
+    <div class="food-view-panel" data-panel="calendar">
+      <div class="calendar-view">
+        <div class="cal-header">
+          <span class="cal-title"></span>
+          <div class="cal-nav">
+            <button class="cal-nav-btn cal-prev">◀</button>
+            <button class="cal-today-btn cal-today">今天</button>
+            <button class="cal-nav-btn cal-next">▶</button>
+          </div>
+        </div>
+        <div class="cal-weekdays">{weekdays.map(w => <span class="cal-weekday">{w}</span>)}</div>
+        <div class="cal-grid" id="foodCalendar"></div>
+      </div>
+      <div class="food-detail-container"></div>
+    </div>
+    <div class="food-view-panel" data-panel="tips" hidden>
+      <div class="cookbook">
+        <div class="cookbook-nav">
+          <div class="cook-nav-grid">
+            {tipCategories.map(([cat, records], i) => (
+              <button class={`cook-nav-btn${i === 0 ? ' active' : ''}`} data-cat={cat}>
+                <span class="cook-nav-icon">{records[0]?.data.icon || '🍳'}</span>
+                <span class="cook-nav-label">{cat}</span>
+                <span class="cook-nav-count">{records.length}</span>
+              </button>
+            ))}
+          </div>
+        </div>
+        <div class="cookbook-content">
+          {tipCategories.map(([cat, records], i) => (
+            <div class="cook-cat-panel" data-cat={cat} hidden={i > 0}>
+              <div class="cook-cat-head"><h3>{cat}</h3><span class="cook-cat-count">{records.length} 条记录</span></div>
+              <div class="cook-rec-list">
+                {records.map((rec, ri) => {
+                  const c = cardColors[(ri + i * 10) % cardColors.length];
+                  const bodyHtml = rec.body ? marked.parse(rec.body, { breaks: true, gfm: true }) as string : '';
+                  return (
+                    <div class="cook-rec">
+                      <button class="cook-rec-head" type="button" style={`background:${c.bg}`}>
+                        <span class="cook-rec-icon" style={`background:#fff;color:${c.fg}`}>{rec.data.icon}</span>
+                        <span class="cook-rec-title">{rec.data.title}</span>
+                        {rec.data.ware && <span class="cook-rec-ware">🍽 {rec.data.ware}</span>}
+                        <span class="cook-rec-arrow">▸</span>
+                      </button>
+                      <div class="cook-rec-body cookbook-md" hidden>
+                        {bodyHtml ? <Fragment set:html={bodyHtml} /> : <div class="cook-empty">暂无内容</div>}
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
