@@ -873,6 +873,10 @@ function buildFoodDetailPanel() {
     }
     html += '</div>';
 
+    if (meal.image) {
+      html += `<div class="food-photo"><img src="${escapeHtml(meal.image)}" alt="${escapeHtml((meal.meal || '餐') + ' 照片')}" loading="lazy" /></div>`;
+    }
+
     let mealCost = meal.cost;
     if (mealCost == null && isNew) {
       mealCost = meal.dishes.reduce((s, d) => s + (d.cost || 0), 0);
@@ -952,14 +956,17 @@ function buildFoodSummaryBar() {
 function buildRegionCard(region, grad) {
   const recIcon = region.icon || '📌';
 
-  // 正文统一用 Markdown 渲染（与生活备忘录/物资采购卡片一致）
   let md = '';
-  if (region.note) md += region.note + '\n\n';
-  if (region.children && region.children.length) {
-    for (const child of region.children) {
-      const text = (child || '').trim();
-      if (!text) continue;
-      md += '- ' + text + '\n';
+  if (region.markdown) {
+    md = region.markdown;
+  } else {
+    if (region.note) md += region.note + '\n\n';
+    if (region.children && region.children.length) {
+      for (const child of region.children) {
+        const text = (child || '').trim();
+        if (!text) continue;
+        md += '- ' + text + '\n';
+      }
     }
   }
   md = md.trim();

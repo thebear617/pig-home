@@ -1386,6 +1386,20 @@ button {
   margin: .8rem 0;
 }
 
+.food-photo {
+  margin: .6rem 0;
+  border-radius: 10px;
+  overflow: hidden;
+  border: 1px solid var(--line);
+}
+
+.food-photo img {
+  display: block;
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+}
+
 /* ─── 美食记录双视图：日历 / 做饭心得 ─── */
 .food-views {
   display: flex;

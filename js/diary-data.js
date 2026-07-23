@@ -4474,6 +4474,67 @@ const diaryRecords = {
         "dishGuess": null
       }
     ]
+  },
+  "2026-07-23": {
+    "value": 7,
+    "tasks": [
+      {
+        "status": "x",
+        "time": "00:40-03:00",
+        "desc": "和过马路一起打电动（耙耙柑玩《英雄联盟》跟《无畏契约》，过马路玩《星露谷物语》）",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      },
+      {
+        "status": "x",
+        "time": "03:00-05:00",
+        "desc": "过马路看视频",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      },
+      {
+        "status": "x",
+        "time": "05:00-13:30",
+        "desc": "睡觉",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      },
+      {
+        "status": "x",
+        "time": "13:30-18:30",
+        "desc": "肚子疼反胃酸，做饭：酸汤面、牛排、煎蛋，收拾后厨 5 分钟（过马路煮 / 备菜 0 分钟 / 不花钱），吃完睡觉休息",
+        "isCooking": true,
+        "mealType": "中饭",
+        "dishGuess": "酸汤面、牛排、煎蛋"
+      },
+      {
+        "status": "x",
+        "time": "18:30-20:50",
+        "desc": "开小组会（世界模型，参考 devnotes/src/content/blog/小组会-世界模型.md），中间过马路做饭：腊肠炒肉、番茄炒蛋，收拾后厨 25 分钟（备菜 10 分钟 / 腊肠炒肉 4 元 + 番茄炒蛋 2 元 / 家煮不计入 # 支出），然后收拾后厨+消毒碗筷",
+        "isCooking": true,
+        "mealType": "晚饭",
+        "dishGuess": "腊肠炒肉、番茄炒蛋"
+      },
+      {
+        "status": "x",
+        "time": "20:50-22:00",
+        "desc": "开发：3 站点并行改进 - (1) 猪窝 (home)：foodRecord 7/23 晚饭条目新增 image 字段 + 补 4 个 foodPlaces 校内模板（一楼拉条子/二楼羊杂面/渝州小厨/一楼螺狮粉），同步 app.js + style.css (mtime 21:25-21:45)，新增 images/ 目录 (2) 猫猫 (cats)：3 个 commit 落在窗口 — 33a2d3d 21:24 chore: 增补大头照片 datou11（206KB + thumb 40KB）、00d4825 21:24 chore: 约定加图用 chore 并列出已用 type、aeb55ef 21:41 feat: 大头固定首图 新增 cover 字段与 getCatCover helper (3) 开发笔记 (devnotes)：AI 价格 tab — src/pages/pricing.astro mtime 21:55 + scripts/sync-models.mjs 21:43 新脚本 + src/styles/global.css 21:31 + 多项 blog 文章与 config 微调。所有改动时间戳均在 20:50-22:00 窗口内",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      },
+      {
+        "status": "x",
+        "time": "22:00-24:00",
+        "desc": "打电动（耙耙柑玩《英雄联盟》跟《无畏契约》，过马路玩《星露谷物语》）",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      }
+    ]
   }
 };
 const specialEvents = {
