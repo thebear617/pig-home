@@ -4537,7 +4537,7 @@ export const diaryRecords = {
     ]
   },
   "2026-07-24": {
-    "value": 6,
+    "value": 9,
     "tasks": [
       {
         "status": "x",
@@ -4586,6 +4586,30 @@ export const diaryRecords = {
         "isCooking": true,
         "mealType": "中饭",
         "dishGuess": "蛋炒饭"
+      },
+      {
+        "status": "x",
+        "time": "13:20-17:30",
+        "desc": "边打电动边开发（猪窝重构） - 1 个 commit 62febea 17:08 feat(v1.1.0): 多路由家居管理与视图重构，51 文件 +2044/-1019。把单页 index.astro 拆为 9 个独立路由（daily-tracker/expense-records/follow-up/food-map/food-records/home-archive/home-map/relationship-timeline/utility-tracking），新增 src/components/tabs/{FollowUp,FoodMap,HomeArchive}.astro + src/scripts/{layout,page}.ts + src/styles/global.css +786；src/content/memos 与 procurement 重组重命名；新上传 4 张图片（含 7/24 夜宵、消毒柜、床板搬运记录照）",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      },
+      {
+        "status": "x",
+        "time": "17:30-22:00",
+        "desc": "和过马路爸爸妈妈爷爷奶奶弟弟们去创汇吃麻六烤肉（不是我付钱，不记支出）",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      },
+      {
+        "status": "x",
+        "time": "22:00-22:40",
+        "desc": "回家，洗衣服 + 洗澡 + 消毒杯子",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
       }
     ]
   }
