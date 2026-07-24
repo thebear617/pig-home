@@ -118,6 +118,7 @@ button {
   font-weight: 700;
   cursor: pointer;
   text-align: left;
+  text-decoration: none;
   transition: background .15s, color .15s;
 }
 
@@ -148,6 +149,172 @@ button {
   max-width: var(--max-w);
   margin: 0 auto;
   padding: 1.2rem 1rem 3rem;
+}
+
+.follow-up-index {
+  display: grid;
+  gap: 1.2rem;
+}
+
+.follow-up-header,
+.follow-up-directory,
+.follow-up-article {
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: var(--surface);
+  box-shadow: var(--shadow);
+}
+
+.follow-up-header {
+  padding: 1.4rem 1.5rem;
+}
+
+.section-kicker {
+  color: var(--muted);
+  font-size: .72rem;
+  font-weight: 800;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+}
+
+.follow-up-header h1,
+.follow-up-article h1 {
+  margin-top: .25rem;
+  font-size: 1.55rem;
+  line-height: 1.25;
+}
+
+.follow-up-header > p:last-child {
+  margin-top: .5rem;
+  color: var(--muted);
+}
+
+.follow-up-directory {
+  padding: 1.2rem 1.3rem;
+}
+
+.follow-up-section-heading {
+  display: flex;
+  align-items: end;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: .65rem;
+}
+
+.follow-up-section-heading h2 {
+  margin-top: .15rem;
+  font-size: 1.08rem;
+}
+
+.follow-up-section-heading > span {
+  color: var(--muted);
+  font-size: .8rem;
+  white-space: nowrap;
+}
+
+.follow-up-link-list {
+  border-top: 1px solid var(--line);
+}
+
+.follow-up-link {
+  display: flex;
+  align-items: center;
+  gap: .8rem;
+  min-height: 4.1rem;
+  padding: .75rem .25rem;
+  border-bottom: 1px solid var(--line);
+  color: var(--text);
+  text-decoration: none;
+  transition: padding .15s, color .15s;
+}
+
+.follow-up-link:last-child {
+  border-bottom: none;
+}
+
+.follow-up-link:hover {
+  padding-left: .5rem;
+  color: var(--green);
+}
+
+.follow-up-link-icon {
+  display: grid;
+  width: 2.2rem;
+  height: 2.2rem;
+  place-items: center;
+  border-radius: 8px;
+  background: var(--surface-soft);
+  font-size: 1.15rem;
+  flex-shrink: 0;
+}
+
+.follow-up-link-main {
+  display: grid;
+  gap: .1rem;
+  min-width: 0;
+}
+
+.follow-up-link-main strong {
+  font-size: .94rem;
+}
+
+.follow-up-link-main small {
+  overflow: hidden;
+  color: var(--muted);
+  font-size: .76rem;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.follow-up-link-arrow {
+  margin-left: auto;
+  color: var(--muted);
+  font-size: 1.1rem;
+}
+
+.follow-up-article {
+  padding: 1.4rem 1.5rem 2rem;
+}
+
+.article-back-link {
+  display: inline-block;
+  color: var(--muted);
+  font-size: .82rem;
+  text-decoration: none;
+}
+
+.article-back-link:hover {
+  color: var(--green);
+}
+
+.follow-up-article-header {
+  display: flex;
+  align-items: flex-start;
+  gap: .8rem;
+  margin-top: 1.25rem;
+  padding-bottom: 1.1rem;
+  border-bottom: 1px solid var(--line);
+}
+
+.follow-up-article-icon {
+  display: grid;
+  width: 2.5rem;
+  height: 2.5rem;
+  place-items: center;
+  border-radius: 9px;
+  background: var(--surface-soft);
+  font-size: 1.3rem;
+  flex-shrink: 0;
+}
+
+.follow-up-article-note {
+  margin-top: .25rem;
+  color: var(--muted);
+  font-size: .84rem;
+}
+
+.follow-up-article-body {
+  padding-top: 1.2rem;
 }
 
 .phase-panel {
@@ -791,15 +958,6 @@ button {
 .cal-balance {
   display: block;
   font-size: .7rem;
-  font-weight: 700;
-  color: var(--amber);
-  margin-top: .25rem;
-}
-
-/* 原 personal 日历：有日记记录的日子显示已完成任务数（琥珀色） */
-.cal-value {
-  display: block;
-  font-size: .72rem;
   font-weight: 700;
   color: var(--amber);
   margin-top: .25rem;
@@ -2408,7 +2566,615 @@ button {
     font-size: .82rem;
   }
 
-  .main-area {
+.main-area {
     padding-top: .2rem;
+  }
+}
+
+/* 生活备忘录与物资采购：Color Hunt 暖酒红配色，仅作用于此页面 */
+body[data-page="follow-up"] {
+  --follow-accent: #6d2932;
+  --follow-deep: #561c24;
+  --follow-clay: #c7b7a3;
+  --follow-cream: #f6e6cb;
+  --follow-blush: #e3cdc1;
+}
+
+body[data-page="follow-up"] .follow-up-header {
+  border-color: var(--follow-clay);
+  background: var(--follow-cream);
+}
+
+body[data-page="follow-up"] .follow-up-header h1,
+body[data-page="follow-up"] .follow-up-section-heading h2,
+body[data-page="follow-up"] .follow-up-article h1 {
+  color: var(--follow-deep);
+}
+
+body[data-page="follow-up"] .follow-up-directory,
+body[data-page="follow-up"] .follow-up-article {
+  border-color: var(--follow-clay);
+}
+
+body[data-page="follow-up"] .section-kicker {
+  color: var(--follow-accent);
+}
+
+body[data-page="follow-up"] .follow-up-link-list,
+body[data-page="follow-up"] .follow-up-link,
+body[data-page="follow-up"] .follow-up-article-header {
+  border-color: var(--follow-blush);
+}
+
+body[data-page="follow-up"] .follow-up-link-icon,
+body[data-page="follow-up"] .follow-up-article-icon {
+  background: var(--follow-blush);
+}
+
+body[data-page="follow-up"] .follow-up-link:hover,
+body[data-page="follow-up"] .article-back-link:hover {
+  color: var(--follow-accent);
+}
+
+body[data-page="follow-up"] .follow-up-link:hover {
+  background: rgba(227, 205, 193, .24);
+}
+
+body[data-page="home-archive"] {
+  --follow-accent: #6d2932;
+  --follow-deep: #561c24;
+  --follow-clay: #c7b7a3;
+  --follow-cream: #f6e6cb;
+  --follow-blush: #e3cdc1;
+}
+
+.home-archive {
+  display: grid;
+  gap: 1rem;
+}
+
+.home-archive-header,
+.home-events-panel {
+  border: 1px solid var(--follow-clay, var(--line));
+  border-radius: var(--radius);
+  background: var(--follow-cream, var(--surface));
+  box-shadow: var(--shadow);
+}
+
+.home-archive-header {
+  padding: 1.4rem 1.5rem;
+}
+
+.home-archive-header h1 {
+  margin-top: .25rem;
+  color: var(--follow-deep, var(--text));
+  font-size: 1.55rem;
+  line-height: 1.25;
+}
+
+.home-archive-header > p:last-child {
+  margin-top: .5rem;
+  color: var(--muted);
+}
+
+.home-view-tabs {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: .5rem;
+}
+
+.home-view-tab {
+  min-height: 2.8rem;
+  border: 1px solid var(--follow-clay, var(--line));
+  border-radius: 8px;
+  background: var(--surface);
+  color: var(--text);
+  font-size: .85rem;
+  font-weight: 800;
+  cursor: pointer;
+  transition: background .15s, color .15s, border-color .15s;
+}
+
+.home-view-tab:hover,
+.home-view-tab.active {
+  border-color: var(--follow-accent, var(--green));
+  background: var(--follow-accent, var(--green));
+  color: #fffaf3;
+}
+
+.home-view[hidden] {
+  display: none;
+}
+
+.home-view > .follow-up-directory,
+.home-view > .home-events-panel {
+  border-color: var(--follow-clay, var(--line));
+}
+
+.home-events-panel {
+  padding: 1.2rem 1.3rem;
+}
+
+.home-events-list {
+  border-top: 1px solid var(--follow-blush, var(--line));
+}
+
+.home-event {
+  display: grid;
+  grid-template-columns: 7rem 1fr;
+  gap: 1rem;
+  padding: .9rem .25rem;
+  border-bottom: 1px solid var(--follow-blush, var(--line));
+}
+
+.home-event time {
+  color: var(--follow-accent, var(--muted));
+  font-size: .82rem;
+  font-variant-numeric: tabular-nums;
+}
+
+.home-event strong {
+  color: var(--follow-deep, var(--text));
+}
+
+.home-event p,
+.home-empty-state {
+  margin-top: .25rem;
+  color: var(--muted);
+  font-size: .84rem;
+}
+
+.home-event-image {
+  display: block;
+  width: min(100%, 28rem);
+  max-height: 18rem;
+  margin-top: .7rem;
+  border: 1px solid var(--follow-blush, var(--line));
+  border-radius: 8px;
+  object-fit: cover;
+}
+
+.home-event-image-trigger {
+  display: block;
+  width: fit-content;
+  max-width: 100%;
+  margin: 0;
+  padding: 0;
+  border: none;
+  border-radius: 8px;
+  background: transparent;
+  cursor: zoom-in;
+}
+
+.home-event-image-trigger:focus-visible {
+  outline: 2px solid var(--follow-accent, var(--green));
+  outline-offset: 3px;
+}
+
+.home-image-modal[hidden] {
+  display: none;
+}
+
+.home-image-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 50;
+  display: grid;
+  place-items: center;
+  padding: 1.5rem;
+}
+
+.home-image-modal-backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(47, 41, 36, .78);
+  cursor: zoom-out;
+}
+
+.home-image-modal-content {
+  position: relative;
+  z-index: 1;
+  max-width: min(92vw, 1100px);
+  max-height: 92vh;
+}
+
+.home-image-modal-content img {
+  display: block;
+  max-width: 100%;
+  max-height: 88vh;
+  border-radius: 10px;
+  box-shadow: 0 12px 40px rgba(0, 0, 0, .3);
+}
+
+.home-image-modal-close {
+  position: absolute;
+  top: -.75rem;
+  right: -.75rem;
+  z-index: 2;
+  display: grid;
+  width: 2rem;
+  height: 2rem;
+  place-items: center;
+  border: 1px solid rgba(255, 255, 255, .35);
+  border-radius: 999px;
+  background: var(--follow-deep, #2f2924);
+  color: #fff;
+  cursor: pointer;
+}
+
+.home-empty-state code {
+  color: var(--follow-accent, var(--text));
+  font-size: .8rem;
+}
+
+body[data-page="home-archive"] .follow-up-directory,
+body[data-page="home-archive"] .follow-up-article {
+  border-color: var(--follow-clay);
+}
+
+body[data-page="home-archive"] .section-kicker {
+  color: var(--follow-accent);
+}
+
+body[data-page="home-archive"] .follow-up-link-list,
+body[data-page="home-archive"] .follow-up-link {
+  border-color: var(--follow-blush);
+}
+
+body[data-page="home-archive"] .follow-up-link-icon {
+  background: var(--follow-blush);
+}
+
+.tracker-page {
+  display: grid;
+  gap: 1rem;
+}
+
+.tracker-view-tabs {
+  display: inline-flex;
+  align-self: start;
+  gap: .35rem;
+  padding: .3rem;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  background: var(--surface);
+  box-shadow: var(--shadow);
+}
+
+.tracker-view-tab {
+  min-height: 2.35rem;
+  padding: .45rem .85rem;
+  border: none;
+  border-radius: 7px;
+  background: transparent;
+  color: var(--muted);
+  font-size: .86rem;
+  font-weight: 800;
+  cursor: pointer;
+  transition: background .15s, color .15s;
+}
+
+.tracker-view-tab:hover {
+  color: var(--text);
+  background: var(--surface-soft);
+}
+
+.tracker-view-tab.active {
+  background: var(--dark);
+  color: #fff;
+}
+
+.tracker-view-panel[hidden] {
+  display: none;
+}
+
+@media (max-width: 600px) {
+  .home-view-tabs {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .home-view-tab {
+    font-size: .8rem;
+  }
+
+  .home-event {
+    grid-template-columns: 1fr;
+    gap: .15rem;
+  }
+}
+
+/* 美食地图：区域目录 + 餐厅列表 */
+.foodmap-page {
+  display: grid;
+  gap: 1rem;
+}
+
+.foodmap-header {
+  display: flex;
+  align-items: end;
+  justify-content: space-between;
+  gap: 1rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid var(--line);
+}
+
+.foodmap-header h1 {
+  margin-top: .2rem;
+  color: var(--dark);
+  font-size: 1.55rem;
+}
+
+.foodmap-header p:last-child {
+  margin-top: .35rem;
+  color: var(--muted);
+  font-size: .86rem;
+}
+
+.foodmap-total {
+  display: flex;
+  align-items: baseline;
+  gap: .3rem;
+  color: var(--muted);
+  white-space: nowrap;
+}
+
+.foodmap-total strong {
+  color: var(--dark);
+  font-size: 1.6rem;
+  line-height: 1;
+}
+
+.foodmap-total span {
+  font-size: .8rem;
+}
+
+.foodmap-layout {
+  display: grid;
+  grid-template-columns: 190px minmax(0, 1fr);
+  gap: 1.2rem;
+  align-items: start;
+}
+
+.foodmap-sidebar {
+  position: sticky;
+  top: 1rem;
+  display: grid;
+  gap: 1rem;
+}
+
+.foodmap-search {
+  display: grid;
+  gap: .35rem;
+}
+
+.foodmap-search span {
+  color: var(--muted);
+  font-size: .75rem;
+  font-weight: 800;
+}
+
+.foodmap-search input {
+  width: 100%;
+  min-height: 2.5rem;
+  padding: .5rem .65rem;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: var(--surface);
+  color: var(--text);
+  outline: none;
+}
+
+.foodmap-search input:focus {
+  border-color: var(--amber);
+  box-shadow: 0 0 0 3px rgba(180, 83, 9, .12);
+}
+
+.foodmap-area-list {
+  display: grid;
+  gap: .25rem;
+}
+
+.foodmap-area-button,
+.foodmap-location-button {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  border: none;
+  cursor: pointer;
+  text-align: left;
+}
+
+.foodmap-area-button {
+  gap: .5rem;
+  padding: .7rem .75rem;
+  border-left: 3px solid transparent;
+  background: transparent;
+  color: var(--text);
+}
+
+.foodmap-area-button:hover {
+  background: var(--surface-soft);
+}
+
+.foodmap-area-button.active {
+  border-left-color: var(--amber);
+  background: var(--surface-soft);
+  color: var(--dark);
+}
+
+.foodmap-area-button span:first-child {
+  display: grid;
+  gap: .15rem;
+}
+
+.foodmap-area-button b {
+  font-size: .92rem;
+}
+
+.foodmap-area-button small,
+.foodmap-location-button small {
+  color: var(--muted);
+  font-size: .72rem;
+}
+
+.foodmap-area-button > span:last-child {
+  color: var(--muted);
+  font-size: 1.25rem;
+}
+
+.foodmap-results {
+  min-width: 0;
+  min-height: 22rem;
+  padding-left: 1.2rem;
+  border-left: 1px solid var(--line);
+}
+
+.foodmap-results-heading,
+.foodmap-location-heading {
+  display: flex;
+  align-items: end;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.foodmap-results-heading {
+  margin-bottom: .8rem;
+}
+
+.foodmap-results-heading h2,
+.foodmap-location-heading h3 {
+  margin-top: .15rem;
+  color: var(--dark);
+}
+
+.foodmap-results-heading > span,
+.foodmap-location-heading > span {
+  color: var(--muted);
+  font-size: .78rem;
+}
+
+.foodmap-location-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: .35rem;
+  margin-bottom: 1.15rem;
+  padding-bottom: .75rem;
+  border-bottom: 1px solid var(--line);
+}
+
+.foodmap-location-button {
+  width: auto;
+  gap: .5rem;
+  padding: .45rem .7rem;
+  border: 1px solid var(--line);
+  border-radius: 7px;
+  background: var(--surface);
+  color: var(--muted);
+  font-size: .82rem;
+  font-weight: 700;
+}
+
+.foodmap-location-button:hover,
+.foodmap-location-button.active {
+  border-color: var(--amber);
+  background: var(--amber-bg);
+  color: var(--dark);
+}
+
+.foodmap-location-content[hidden],
+.foodmap-area-content[hidden],
+.foodmap-list-item[hidden],
+.foodmap-no-results[hidden] {
+  display: none;
+}
+
+.foodmap-location-heading {
+  margin-bottom: .55rem;
+}
+
+.foodmap-location-heading h3 {
+  font-size: 1.12rem;
+}
+
+.foodmap-list {
+  border-top: 1px solid var(--line);
+}
+
+.foodmap-list-item {
+  display: flex;
+  align-items: start;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: .85rem .15rem;
+  border-bottom: 1px solid var(--line);
+}
+
+.foodmap-list-item h4 {
+  color: var(--dark);
+  font-size: .96rem;
+}
+
+.foodmap-list-item time {
+  flex-shrink: 0;
+  color: var(--muted);
+  font-size: .75rem;
+  font-variant-numeric: tabular-nums;
+}
+
+.foodmap-dishes,
+.foodmap-note {
+  margin-top: .2rem;
+  color: var(--muted);
+  font-size: .8rem;
+  line-height: 1.5;
+}
+
+.foodmap-dishes {
+  color: var(--amber);
+}
+
+.foodmap-no-results {
+  margin-top: .8rem;
+  color: var(--muted);
+  font-size: .84rem;
+}
+
+@media (max-width: 700px) {
+  .foodmap-header {
+    align-items: start;
+  }
+
+  .foodmap-layout {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+
+  .foodmap-sidebar {
+    position: static;
+  }
+
+  .foodmap-area-list {
+    display: flex;
+    overflow-x: auto;
+    gap: .35rem;
+  }
+
+  .foodmap-area-button {
+    flex: 0 0 auto;
+    min-width: 7.5rem;
+    border-left: none;
+    border-bottom: 3px solid transparent;
+    border-radius: 7px;
+  }
+
+  .foodmap-area-button.active {
+    border-bottom-color: var(--amber);
+    border-left: none;
+  }
+
+  .foodmap-results {
+    padding-left: 0;
+    border-left: none;
   }
 }

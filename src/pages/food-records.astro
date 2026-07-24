@@ -1,0 +1,15 @@
+---
+import Layout from '../layouts/Layout.astro';
+import FoodRecords from '../components/tabs/FoodRecords.astro';
+import { foodRecords } from '../data/food-records';
+---
+
+<Layout activeTab="food-records" title="美食记录与做饭心得 · 猪窝">
+  <FoodRecords />
+  <script define:vars={{ foodRecords }}>
+    window.__foodRecords = foodRecords;
+  </script>
+  <script>
+    import '../scripts/page';
+  </script>
+</Layout>

@@ -1,67 +1,59 @@
 ---
 import { getCollection } from 'astro:content';
-import { marked } from 'marked';
 
-const memos = await getCollection('memos');
-const sortedMemos = memos.sort((a, b) => a.data.order - b.data.order);
-
-const procurement = await getCollection('procurement');
-const sortedProcurement = procurement.sort((a, b) => a.data.order - b.data.order);
-
-const cardColors = [
-  { bg: 'linear-gradient(135deg,#ffd9d9,#ffb0b0)', fg: '#b91c1c' },
-  { bg: 'linear-gradient(135deg,#cdeede,#a6e0c2)', fg: '#047857' },
-  { bg: 'linear-gradient(135deg,#fbe6bb,#f6d384)', fg: '#b45309' },
-  { bg: 'linear-gradient(135deg,#cfe4fd,#a7cafa)', fg: '#1d4ed8' },
-  { bg: 'linear-gradient(135deg,#fdeeb6,#fbd969)', fg: '#a16207' },
-  { bg: 'linear-gradient(135deg,#cdeeeb,#a2e4dd)', fg: '#0f766e' },
-];
+const memos = (await getCollection('memos')).sort((a, b) => a.data.order - b.data.order);
+const procurement = (await getCollection('procurement')).sort((a, b) => a.data.order - b.data.order);
+const base = import.meta.env.BASE_URL;
 ---
 
-<div class="food-views" data-tab="follow-up">
-  <div class="food-view-tabs">
-    <button class="food-view-tab active" data-view="memo">📋 生活备忘录</button>
-    <button class="food-view-tab" data-view="supplies">🛒 物资采购</button>
-  </div>
+<div class="follow-up-index" data-tab="follow-up">
+  <header class="follow-up-header">
+    <p class="section-kicker">Home Reference</p>
+    <h1>生活备忘录与物资采购</h1>
+    <p>把家里的规则、设备说明和采购清单整理成可独立访问的条目。</p>
+  </header>
 
-  <div class="food-view-panel" data-panel="memo">
-    <div class="cook-rec-list">
-      {sortedMemos.map((memo, i) => {
-        const c = cardColors[i % cardColors.length];
-        const bodyHtml = memo.body ? marked.parse(memo.body, { breaks: true, gfm: true }) as string : '';
-        return (
-          <div class="cook-rec">
-            <button class="cook-rec-head" type="button" style={`background:${c.bg}`}>
-              <span class="cook-rec-icon" style={`background:#fff;color:${c.fg}`}>{memo.data.icon}</span>
-              <span class="cook-rec-title">{memo.data.region}</span>
-              <span class="cook-rec-arrow">▸</span>
-            </button>
-            <div class="cook-rec-body cookbook-md" hidden>
-              {bodyHtml ? <Fragment set:html={bodyHtml} /> : <div class="cook-empty">暂无内容</div>}
-            </div>
-          </div>
-        );
-      })}
+  <section class="follow-up-directory" aria-labelledby="memo-title">
+    <div class="follow-up-section-heading">
+      <div>
+        <p class="section-kicker">Reference</p>
+        <h2 id="memo-title">生活备忘录</h2>
+      </div>
+      <span>{memos.length} 个条目</span>
     </div>
-  </div>
+    <div class="follow-up-link-list">
+      {memos.map(memo => (
+        <a class="follow-up-link" href={`${base}follow-up/memos/${memo.slug}/`}>
+          <span class="follow-up-link-icon">{memo.data.icon || '📋'}</span>
+          <span class="follow-up-link-main">
+            <strong>{memo.data.region}</strong>
+            <small>{memo.data.category}</small>
+          </span>
+          <span class="follow-up-link-arrow">→</span>
+        </a>
+      ))}
+    </div>
+  </section>
 
-  <div class="food-view-panel" data-panel="supplies" hidden>
-    {sortedProcurement.map((proc, i) => {
-      const c = cardColors[i % cardColors.length];
-      const bodyHtml = proc.body ? marked.parse(proc.body, { breaks: true, gfm: true }) as string : '';
-      return (
-        <div class="cook-rec">
-          <button class="cook-rec-head" type="button" style={`background:${c.bg}`}>
-            <span class="cook-rec-icon" style={`background:#fff;color:${c.fg}`}>{proc.data.icon}</span>
-            <span class="cook-rec-title">{proc.data.region}</span>
-            {proc.data.note && <span class="cook-rec-ware">📝 {proc.data.note}</span>}
-            <span class="cook-rec-arrow">▸</span>
-          </button>
-          <div class="cook-rec-body cookbook-md" hidden>
-            {bodyHtml ? <Fragment set:html={bodyHtml} /> : <div class="cook-empty">暂无内容</div>}
-          </div>
-        </div>
-      );
-    })}
-  </div>
+  <section class="follow-up-directory" aria-labelledby="procurement-title">
+    <div class="follow-up-section-heading">
+      <div>
+        <p class="section-kicker">Checklist</p>
+        <h2 id="procurement-title">物资采购</h2>
+      </div>
+      <span>{procurement.length} 个区域</span>
+    </div>
+    <div class="follow-up-link-list">
+      {procurement.map(item => (
+        <a class="follow-up-link" href={`${base}follow-up/procurement/${item.slug}/`}>
+          <span class="follow-up-link-icon">{item.data.icon || '🛒'}</span>
+          <span class="follow-up-link-main">
+            <strong>{item.data.region}</strong>
+            <small>{item.data.category}{item.data.note ? ` · ${item.data.note}` : ''}</small>
+          </span>
+          <span class="follow-up-link-arrow">→</span>
+        </a>
+      ))}
+    </div>
+  </section>
 </div>

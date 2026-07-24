@@ -1,0 +1,17 @@
+---
+import Layout from '../layouts/Layout.astro';
+import ExpenseRecords from '../components/tabs/ExpenseRecords.astro';
+import { expenseCategories } from '../data/expense-categories';
+import { expenseRecords } from '../data/expense-data';
+---
+
+<Layout activeTab="expense-records" title="支出记录 · 猪窝">
+  <ExpenseRecords />
+  <script define:vars={{ expenseCategories, expenseRecords }}>
+    window.__expenseCategories = expenseCategories;
+    window.__expenseRecords = expenseRecords;
+  </script>
+  <script>
+    import '../scripts/page';
+  </script>
+</Layout>

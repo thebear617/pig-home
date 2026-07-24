@@ -4537,7 +4537,7 @@ export const diaryRecords = {
     ]
   },
   "2026-07-24": {
-    "value": 5,
+    "value": 6,
     "tasks": [
       {
         "status": "x",
@@ -4578,6 +4578,14 @@ export const diaryRecords = {
         "isCooking": false,
         "mealType": null,
         "dishGuess": null
+      },
+      {
+        "status": "x",
+        "time": "12:00-13:20",
+        "desc": "做饭：蛋炒饭，收拾后厨 5 分钟（耙耙柑 / 备菜 5 分钟 / 花费 3 元 / 家煮不计入 # 支出）",
+        "isCooking": true,
+        "mealType": "中饭",
+        "dishGuess": "蛋炒饭"
       }
     ]
   }

@@ -1,0 +1,34 @@
+---
+import Layout from '../layouts/Layout.astro';
+import DailyTracker from '../components/tabs/DailyTracker.astro';
+import UtilityTracking from '../components/tabs/UtilityTracking.astro';
+import { hemaDayRecords } from '../data/hema-records';
+import { diaryRecords, specialEvents } from '../data/diary-data';
+import { expenseRecords } from '../data/expense-data';
+import { utilityRecords } from '../data/utility-records';
+---
+
+<Layout activeTab="daily-tracker" title="每日追踪 · 猪窝">
+  <div class="tracker-page" data-tracker-page>
+    <nav class="tracker-view-tabs" aria-label="追踪视图">
+      <button class="tracker-view-tab active" type="button" data-tracker-view="daily">📅 每日追踪</button>
+      <button class="tracker-view-tab" type="button" data-tracker-view="utility">⚡ 水电追踪</button>
+    </nav>
+    <section class="tracker-view-panel" data-tracker-panel="daily">
+      <DailyTracker />
+    </section>
+    <section class="tracker-view-panel" data-tracker-panel="utility" hidden>
+      <UtilityTracking />
+    </section>
+  </div>
+  <script define:vars={{ hemaDayRecords, diaryRecords, specialEvents, expenseRecords, utilityRecords }}>
+    window.__hemaDayRecords = hemaDayRecords;
+    window.__diaryRecords = diaryRecords;
+    window.__specialEvents = specialEvents;
+    window.__expenseRecords = expenseRecords;
+    window.__utilityRecords = utilityRecords;
+  </script>
+  <script>
+    import '../scripts/page';
+  </script>
+</Layout>

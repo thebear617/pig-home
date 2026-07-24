@@ -2,85 +2,118 @@
 import { getCollection } from 'astro:content';
 
 const places = await getCollection('food-places');
-
-// Group by area → location
 const areaMap = new Map<string, Map<string, typeof places>>();
-for (const p of places) {
-  const area = p.data.area;
-  const loc = p.data.location;
+for (const place of places) {
+  const area = place.data.area;
+  const location = place.data.location;
   if (!areaMap.has(area)) areaMap.set(area, new Map());
-  const locMap = areaMap.get(area)!;
-  if (!locMap.has(loc)) locMap.set(loc, []);
-  locMap.get(loc)!.push(p);
+  const locationMap = areaMap.get(area)!;
+  if (!locationMap.has(location)) locationMap.set(location, []);
+  locationMap.get(location)!.push(place);
 }
 
-const areaOrder = ['校内', '校外', ...Array.from(areaMap.keys()).filter(a => !['校内', '校外'].includes(a))].filter(a => areaMap.has(a));
+const areaOrder = ['校内', '校外', ...Array.from(areaMap.keys()).filter(area => !['校内', '校外'].includes(area))]
+  .filter(area => areaMap.has(area));
 const defaultArea = areaOrder[0] || '';
-const firstLocationEntries = areaMap.get(defaultArea);
-const firstLocations = firstLocationEntries ? Array.from(firstLocationEntries.keys()).sort() : [];
-const defaultLocation = firstLocations[0] || '';
+const defaultLocation = Array.from(areaMap.get(defaultArea)?.keys() || []).sort()[0] || '';
+const totalPlaces = places.length;
 ---
 
-<div data-tab="food-map">
-  <div class="foodmap-cards">
-    {areaOrder.map(area => {
-      const locCount = areaMap.get(area)?.size || 0;
-      const active = area === defaultArea ? ' active' : '';
-      return (
-        <button class={`foodmap-card${active}`} data-fm-area={area}>
-          <span class="foodmap-card-label">{area}</span>
-          <span class="foodmap-card-sub">{locCount} 个地点</span>
-        </button>
-      );
-    })}
-  </div>
+<div class="foodmap-page" data-tab="food-map">
+  <header class="foodmap-header">
+    <div>
+      <p class="section-kicker">Food Notes</p>
+      <h1>美食地图</h1>
+      <p>按区域和地点整理去过、想去以及不再推荐的店。</p>
+    </div>
+    <div class="foodmap-total"><strong>{totalPlaces}</strong><span>家记录</span></div>
+  </header>
 
-  {areaOrder.map(area => {
-    const locMap = areaMap.get(area);
-    if (!locMap) return null;
-    const locations = Array.from(locMap.keys()).sort();
-    const hidden = area !== defaultArea;
-    return (
-      <div data-fm-area-content={area} hidden={hidden}>
-        {locations.length > 0 && (
-          <div class="foodmap-tabs">
-            {locations.map(loc => {
-              const items = locMap.get(loc) || [];
-              const activeClass = area === defaultArea && loc === defaultLocation ? ' active' : '';
-              return (
-                <button class={`foodmap-tab${activeClass}`} data-fm-location={loc}>
-                  📍 {loc}
-                  <span class="foodmap-tab-count">{items.length}</span>
-                </button>
-              );
-            })}
-          </div>
-        )}
-        {locations.map(loc => {
-          const items = locMap.get(loc) || [];
-          const hiddenLoc = area !== defaultArea || loc !== defaultLocation;
+  <div class="foodmap-layout">
+    <aside class="foodmap-sidebar" aria-label="美食地点导航">
+      <label class="foodmap-search">
+        <span>搜索记录</span>
+        <input type="search" data-fm-search placeholder="餐厅、菜品或评价" />
+      </label>
+      <div class="foodmap-area-list">
+        {areaOrder.map(area => {
+          const locationCount = areaMap.get(area)?.size || 0;
+          const placeCount = Array.from(areaMap.get(area)?.values() || []).reduce((sum, items) => sum + items.length, 0);
           return (
-            <div data-fm-location-content={loc} hidden={hiddenLoc}>
-              <div class="food-grid">
-                {items.map(p => (
-                  <div class="food-card">
-                    <div class="food-card-top">
-                      <h4 class="food-card-name">{p.data.name}</h4>
-                      {p.data.date && <span class="food-card-date">{p.data.date}</span>}
-                    </div>
-                    {p.data.dishes.length > 0 && (
-                      <div class="food-card-dishes">
-                        {p.data.dishes.map(d => <span class="food-tag">{d}</span>)}
-                      </div>
-                    )}
-                    {p.data.note && <p class="food-card-note">{p.data.note}</p>}
-                  </div>
-                ))}
-              </div>
-            </div>
+            <button class={`foodmap-area-button${area === defaultArea ? ' active' : ''}`} data-fm-area={area} type="button">
+              <span><b>{area}</b><small>{locationCount} 个地点 · {placeCount} 家</small></span>
+              <span aria-hidden="true">›</span>
+            </button>
           );
         })}
       </div>
-    );
-  })}
+    </aside>
+
+    <main class="foodmap-results">
+      {areaOrder.map(area => {
+        const locationMap = areaMap.get(area);
+        if (!locationMap) return null;
+        const locations = Array.from(locationMap.keys()).sort();
+        return (
+          <div class="foodmap-area-content" data-fm-area-content={area} hidden={area !== defaultArea}>
+            <div class="foodmap-results-heading">
+              <div><p class="section-kicker">{area}</p><h2>去哪吃</h2></div>
+              <span>{locations.length} 个地点</span>
+            </div>
+            <div class="foodmap-location-list">
+              {locations.map(location => {
+                const items = locationMap.get(location) || [];
+                return (
+                  <button class={`foodmap-location-button${area === defaultArea && location === defaultLocation ? ' active' : ''}`} data-fm-location={location} type="button">
+                    <span>📍 {location}</span><small>{items.length}</small>
+                  </button>
+                );
+              })}
+            </div>
+            {locations.map(location => {
+              const items = locationMap.get(location) || [];
+              const hidden = area !== defaultArea || location !== defaultLocation;
+              return (
+                <div class="foodmap-location-content" data-fm-location-content={location} hidden={hidden}>
+                  <div class="foodmap-location-heading"><h3>{location}</h3><span>{items.length} 家记录</span></div>
+                  <div class="foodmap-list">
+                    {items.map(place => (
+                      <article class="foodmap-list-item" data-fm-search-text={`${place.data.name} ${place.data.dishes.join(' ')} ${place.data.note || ''}`}>
+                        <div class="foodmap-list-main">
+                          <h4>{place.data.name}</h4>
+                          {place.data.dishes.length > 0 && <p class="foodmap-dishes">{place.data.dishes.join(' · ')}</p>}
+                          {place.data.note && <p class="foodmap-note">{place.data.note}</p>}
+                        </div>
+                        {place.data.date && <time datetime={place.data.date}>{place.data.date}</time>}
+                      </article>
+                    ))}
+                  </div>
+                  <p class="foodmap-no-results" hidden>没有匹配的记录</p>
+                </div>
+              );
+            })}
+          </div>
+        );
+      })}
+    </main>
+  </div>
 </div>
+
+<script>
+  const root = document.querySelector<HTMLElement>('[data-tab="food-map"]');
+  const search = root?.querySelector<HTMLInputElement>('[data-fm-search]');
+  search?.addEventListener('input', () => {
+    const query = search.value.trim().toLocaleLowerCase();
+    root?.querySelectorAll<HTMLElement>('[data-fm-location-content]').forEach(location => {
+      const items = location.querySelectorAll<HTMLElement>('[data-fm-search-text]');
+      let visible = 0;
+      items.forEach(item => {
+        const match = !query || (item.dataset.fmSearchText || '').toLocaleLowerCase().includes(query);
+        item.hidden = !match;
+        if (match) visible += 1;
+      });
+      const empty = location.querySelector<HTMLElement>('.foodmap-no-results');
+      if (empty) empty.hidden = visible > 0;
+    });
+  });
+</script>

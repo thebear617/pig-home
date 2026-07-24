@@ -1,0 +1,147 @@
+---
+import { getCollection } from 'astro:content';
+import HomeMap from './HomeMap.astro';
+import { homeEvents } from '../../data/home-events';
+
+const memos = (await getCollection('memos')).sort((a, b) => a.data.order - b.data.order);
+const procurement = (await getCollection('procurement')).sort((a, b) => a.data.order - b.data.order);
+const base = import.meta.env.BASE_URL;
+const events = [...homeEvents].sort((a, b) => b.date.localeCompare(a.date));
+---
+
+<div class="home-archive" data-tab="home-archive">
+  <header class="home-archive-header">
+    <p class="section-kicker">Home Archive</p>
+    <h1>家居档案</h1>
+    <p>记录家的布局、入住清单，以及后来发生的每一次变化。</p>
+  </header>
+
+  <nav class="home-view-tabs" aria-label="家居档案视图">
+    <button class="home-view-tab active" type="button" data-home-view="memos">📋 生活备忘录</button>
+    <button class="home-view-tab" type="button" data-home-view="map">🗺️ 猪窝地图</button>
+    <button class="home-view-tab" type="button" data-home-view="events">🔄 家居变动</button>
+    <button class="home-view-tab" type="button" data-home-view="move-in">📦 入住清单</button>
+  </nav>
+
+  <section class="home-view active" data-home-panel="memos" aria-labelledby="memos-title">
+    <div class="follow-up-directory">
+      <div class="follow-up-section-heading">
+        <div><p class="section-kicker">Reference</p><h2 id="memos-title">生活备忘录</h2></div>
+        <span>{memos.length} 个条目</span>
+      </div>
+      <div class="follow-up-link-list">
+        {memos.map(memo => (
+          <a class="follow-up-link" href={`${base}follow-up/memos/${memo.slug}/`}>
+            <span class="follow-up-link-icon">{memo.data.icon || '📋'}</span>
+            <span class="follow-up-link-main"><strong>{memo.data.region}</strong><small>{memo.data.category}</small></span>
+            <span class="follow-up-link-arrow">→</span>
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="home-view" data-home-panel="map" aria-label="猪窝地图" hidden>
+    <HomeMap />
+  </section>
+
+  <section class="home-view" data-home-panel="events" aria-labelledby="events-title" hidden>
+    <div class="home-events-panel">
+      <div class="follow-up-section-heading">
+        <div><p class="section-kicker">Changes</p><h2 id="events-title">家居变动</h2></div>
+        <span>{events.length} 条记录</span>
+      </div>
+      {events.length > 0 ? (
+        <div class="home-events-list">
+          {events.map(event => (
+            <article class="home-event">
+              <time datetime={event.date}>{event.date}</time>
+              <div>
+                <strong>{event.type} · {event.title}</strong>
+                {event.note && <p>{event.note}</p>}
+                {event.image && (
+                  <button class="home-event-image-trigger" type="button" data-image-src={`${base}${event.image}`} data-image-alt={`${event.type}：${event.title}`} title="点击查看大图">
+                    <img class="home-event-image" src={`${base}${event.image}`} alt={`${event.type}：${event.title}`} loading="lazy" />
+                  </button>
+                )}
+              </div>
+            </article>
+          ))}
+        </div>
+      ) : (
+        <p class="home-empty-state">还没有家居变动记录。以后添置、搬走、更换或维修物品时，可以在 <code>src/data/home-events.ts</code> 里追加。</p>
+      )}
+    </div>
+  </section>
+
+  <section class="home-view" data-home-panel="move-in" aria-labelledby="move-in-title" hidden>
+    <div class="follow-up-directory">
+      <div class="follow-up-section-heading">
+        <div><p class="section-kicker">Checklist</p><h2 id="move-in-title">入住清单</h2></div>
+        <span>{procurement.length} 个区域</span>
+      </div>
+      <div class="follow-up-link-list">
+        {procurement.map(item => (
+          <a class="follow-up-link" href={`${base}follow-up/procurement/${item.slug}/`}>
+            <span class="follow-up-link-icon">{item.data.icon || '📦'}</span>
+            <span class="follow-up-link-main"><strong>{item.data.region}</strong><small>{item.data.category}{item.data.note ? ` · ${item.data.note}` : ''}</small></span>
+            <span class="follow-up-link-arrow">→</span>
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+</div>
+
+<script>
+  const root = document.querySelector<HTMLElement>('[data-tab="home-archive"]');
+  const tabs = root?.querySelectorAll<HTMLButtonElement>('[data-home-view]');
+  const panels = root?.querySelectorAll<HTMLElement>('[data-home-panel]');
+  const validViews = new Set(['memos', 'map', 'events', 'move-in']);
+
+  function selectView(view: string, replace = false) {
+    const next = validViews.has(view) ? view : 'memos';
+    tabs?.forEach(tab => tab.classList.toggle('active', tab.dataset.homeView === next));
+    panels?.forEach(panel => {
+      const active = panel.dataset.homePanel === next;
+      panel.hidden = !active;
+      panel.classList.toggle('active', active);
+    });
+    const url = new URL(window.location.href);
+    url.searchParams.set('view', next);
+    window.history[replace ? 'replaceState' : 'pushState']({}, '', url);
+  }
+
+  tabs?.forEach(tab => tab.addEventListener('click', () => selectView(tab.dataset.homeView || 'memos')));
+  selectView(new URLSearchParams(window.location.search).get('view') || 'memos', true);
+  window.addEventListener('popstate', () => selectView(new URLSearchParams(window.location.search).get('view') || 'memos', true));
+
+  const imageModal = document.querySelector<HTMLElement>('#homeImageModal');
+  const imageModalImage = imageModal?.querySelector<HTMLImageElement>('[data-modal-image]');
+  const closeImageModal = () => {
+    if (imageModal) imageModal.hidden = true;
+    document.body.style.overflow = '';
+  };
+
+  root?.querySelectorAll<HTMLButtonElement>('[data-image-src]').forEach(trigger => {
+    trigger.addEventListener('click', () => {
+      if (!imageModal || !imageModalImage) return;
+      imageModalImage.src = trigger.dataset.imageSrc || '';
+      imageModalImage.alt = trigger.dataset.imageAlt || '';
+      imageModal.hidden = false;
+      document.body.style.overflow = 'hidden';
+    });
+  });
+  imageModal?.querySelectorAll<HTMLElement>('[data-modal-close]').forEach(button => button.addEventListener('click', closeImageModal));
+  document.addEventListener('keydown', event => {
+    if (event.key === 'Escape' && imageModal && !imageModal.hidden) closeImageModal();
+  });
+</script>
+
+<div class="home-image-modal" id="homeImageModal" role="dialog" aria-modal="true" aria-label="家居变动图片" hidden>
+  <div class="home-image-modal-backdrop" data-modal-close></div>
+  <div class="home-image-modal-content">
+    <button class="home-image-modal-close" type="button" data-modal-close aria-label="关闭图片预览">✕</button>
+    <img data-modal-image src="" alt="" />
+  </div>
+</div>

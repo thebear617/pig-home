@@ -1,6 +1,7 @@
 ---
 region: 厨房
 icon: 🍳
+category: 厨房
 order: 1
 ---
 

@@ -14,7 +14,8 @@ const memosCollection = defineCollection({
   type: 'content',
   schema: z.object({
     region: z.string(),
-    icon: z.string(),
+    icon: z.string().default(''),
+    category: z.string(),
     order: z.number().default(0),
   }),
 });
@@ -23,7 +24,8 @@ const procurementCollection = defineCollection({
   type: 'content',
   schema: z.object({
     region: z.string(),
-    icon: z.string(),
+    icon: z.string().default(''),
+    category: z.string(),
     note: z.string().optional(),
     order: z.number().default(0),
   }),

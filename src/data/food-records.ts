@@ -93,10 +93,13 @@ export const foodRecords: Record<string, FoodMeal[]> = {
     ]}
   ],
   '2026-07-24': [
-    { meal: '夜宵', prep: 5, cleanup: 10, dishes: [
+    { meal: '夜宵', image: 'images/food/2026-07-24-yexiao.jpg', prep: 5, cleanup: 10, dishes: [
       { name: '汤达人泡面', madeBy: '耙耙柑', cost: 0 },
       { name: '牛排', madeBy: '耙耙柑', cost: 0 },
       { name: '鱿鱼', madeBy: '过马路', cost: 0 }
+    ]},
+    { meal: '中饭', prep: 5, cleanup: 5, dishes: [
+      { name: '蛋炒饭', madeBy: '耙耙柑', cost: 3 }
     ]}
   ]
 };
