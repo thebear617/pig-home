@@ -4537,7 +4537,7 @@ export const diaryRecords = {
     ]
   },
   "2026-07-24": {
-    "value": 9,
+    "value": 10,
     "tasks": [
       {
         "status": "x",
@@ -4607,6 +4607,27 @@ export const diaryRecords = {
         "status": "x",
         "time": "22:00-22:40",
         "desc": "回家，洗衣服 + 洗澡 + 消毒杯子",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      },
+      {
+        "status": "x",
+        "time": "22:40-24:00",
+        "desc": "打电动英雄联盟（和沈文泉一起）",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      }
+    ]
+  },
+  "2026-07-25": {
+    "value": 1,
+    "tasks": [
+      {
+        "status": "x",
+        "time": "00:00-02:00",
+        "desc": "开发：3 站点并行 - (1) 开发笔记 (devnotes)：2 commit 落在窗口 — c06c678 01:36 feat: 博客新增 updated 字段支持区分发布与修改时间（4 文件 +9/-5：package.json + src/content/config.ts + src/pages/blog/{[slug],index}.astro）；519b3f1 01:48 feat: 操作系统学习页改写为博客《操作系统入门》并下掉 /os/ tab（5 文件 +136/-811：新增 src/content/blog/操作系统入门.md 135 行 + 删除 src/pages/os.astro 与 src/data/os.js 177 行 + 清理 global.css 中 499 行 os-* 样式）（对应 personal 看板 c2 todo「删除开发笔记页面的操作系统」） (2) 个人主页 (personal)：1 commit 7769c8b 01:39 chore: 每日看板更新（生活 l2/l4 done + l5 todo + 科研 r2 移视频 v4 + 编程 c2 done + c3 todo）。顺便充值\"魔戒\"备用梯子（130 GB / 通讯订阅-梯子节点-魔戒 ¥19.9）",
         "isCooking": false,
         "mealType": null,
         "dishGuess": null
