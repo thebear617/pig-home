@@ -4535,6 +4535,51 @@ export const diaryRecords = {
         "dishGuess": null
       }
     ]
+  },
+  "2026-07-24": {
+    "value": 5,
+    "tasks": [
+      {
+        "status": "x",
+        "time": "00:00-04:00",
+        "desc": "和过马路出去晃荡看了外面夜市摊后回来做饭（夜宵）：汤达人泡面、牛排、鱿鱼，收拾后厨 10 分钟（备菜 5 分钟 / 耙耙柑煮泡面+煎牛排 0 元 / 过马路煎鱿鱼 0 元 / 家煮不计入 # 支出）",
+        "isCooking": true,
+        "mealType": "其他",
+        "dishGuess": null
+      },
+      {
+        "status": "x",
+        "time": "04:00-10:00",
+        "desc": "睡觉",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      },
+      {
+        "status": "x",
+        "time": "10:00-10:30",
+        "desc": "把床板搬走，搬去 4 号楼",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      },
+      {
+        "status": "x",
+        "time": "10:30-11:40",
+        "desc": "回家以后在床上玩手机休息",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      },
+      {
+        "status": "x",
+        "time": "11:40-12:00",
+        "desc": "洗澡 + 消毒碗筷",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      }
+    ]
   }
 };
 export const specialEvents = {
