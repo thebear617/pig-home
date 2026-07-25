@@ -25,11 +25,14 @@ function relativeTime(dateStr?: string): string {
   const today = new Date();
   today.setHours(0, 0, 0, 0);
   const diff = Math.round((today.getTime() - d.getTime()) / 86400000);
+  if (diff < 0) {
+    return `${d.getMonth() + 1}月${d.getDate()}日`;
+  }
   if (diff === 0) return '今天';
   if (diff === 1) return '昨天';
-  if (diff <= 6) return `${diff} 天前`;
-  if (diff <= 13) return '1 周前';
-  if (diff <= 30) return `${Math.round(diff / 7)} 周前`;
+  if (diff >= 2 && diff <= 6) return `${diff} 天前`;
+  if (diff >= 7 && diff <= 13) return '1 周前';
+  if (diff >= 14 && diff <= 30) return `${Math.round(diff / 7)} 周前`;
   return dateStr;
 }
 
@@ -51,11 +54,16 @@ function allItems(): TodoItem[] {
 
 function todoItems(): TodoItem[] {
   const today = todayStr();
-  return allItems().filter(it => {
-    const status = it.status || 'todo';
-    const date = it.date || today;
-    return status === 'todo' && date <= today;
-  });
+  return allItems()
+    .filter(it => {
+      const status = it.status || 'todo';
+      return status === 'todo';
+    })
+    .sort((a, b) => {
+      const da = a.date || today;
+      const db = b.date || today;
+      return da.localeCompare(db);
+    });
 }
 
 function doingItems(): TodoItem[] {
@@ -130,7 +138,13 @@ function renderCard(item: TodoItem): string {
     : `<h3 class="todo-card-title">${escape(item.title)}</h3>`;
 
   const noteHtml = item.note ? `<p class="todo-card-note">${escape(item.note)}</p>` : '';
-  const metaHtml = item.createdAt ? `<div class="todo-card-meta">📅 ${escape(relativeTime(item.createdAt))}</div>` : '';
+  const dueHtml = item.date
+    ? `<div class="todo-card-meta"><span class="todo-card-meta-icon">📅</span> ${escape(relativeTime(item.date))}</div>`
+    : '';
+  const createHtml = item.createdAt
+    ? `<div class="todo-card-meta"><span class="todo-card-meta-icon">🕒</span> ${escape(relativeTime(item.createdAt))}</div>`
+    : '';
+  const metaHtml = dueHtml + createHtml;
 
   let cls = 'todo-card';
   if (item.status === 'doing') cls += ' todo-card-doing';

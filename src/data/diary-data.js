@@ -4622,7 +4622,7 @@ export const diaryRecords = {
     ]
   },
   "2026-07-25": {
-    "value": 6,
+    "value": 9,
     "tasks": [
       {
         "status": "x",
@@ -4671,6 +4671,30 @@ export const diaryRecords = {
         "isCooking": true,
         "mealType": "中饭",
         "dishGuess": "汤达人泡面"
+      },
+      {
+        "status": "x",
+        "time": "13:40-17:30",
+        "desc": "开发：personal 删除每日看板功能并迁移至 home 站 - d2fa323 14:04 chore（6 文件 +10/-680：删除 js/todo-data.js 49 行 + js/components/TodoBoard.js 258 行 + css/style.css 365 行 + 调整 index.html / app.js + CHANGELOG 7 行）",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      },
+      {
+        "status": "x",
+        "time": "13:40-17:30",
+        "desc": "开发：personal 无畏契约板块接入深色攻略主题并补全 6 张地图 - f7dee43 15:38 feat（4 文件 +155/-70：css 重做深色样式 + 移除渐变卡片 + 新增源工重镇/盐海矿镇/森寒冬港/天枢云阙/日落之城/深窟幽境 6 张地图 section，数据改为站点自维护不再依赖笔记仓库构建）。背景：理清 Vibe Working 与 Vibe Coding 的边界",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      },
+      {
+        "status": "x",
+        "time": "17:30-20:00",
+        "desc": "回学校：收拾宿舍（床腾空，衣服未清理）+ 吃黄焖鸡 ¥18（市内出行/校内餐饮）+ 寄 + 回家洗澡+洗毛巾+洗衣服+收拾从学校带回来的东西",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
       }
     ]
   }
@@ -4709,6 +4733,14 @@ export const specialEvents = {
     ],
     "keywords": [
       "生日"
+    ]
+  },
+  "2026-07-25": {
+    "icons": [
+      "🌇"
+    ],
+    "keywords": [
+      "日落"
     ]
   }
 };

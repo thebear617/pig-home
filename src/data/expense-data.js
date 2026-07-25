@@ -573,5 +573,12 @@ export const expenseRecords = [
     "sub": "梯子节点",
     "amount": 19.9,
     "note": "魔戒（130GB 流量）"
+  },
+  {
+    "date": "2026-07-25",
+    "cat": "市内出行",
+    "sub": "校内餐饮",
+    "amount": 18.0,
+    "note": "黄焖鸡"
   }
 ];
