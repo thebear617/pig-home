@@ -20,6 +20,11 @@ if KW_FILE.exists():
         SPECIAL_KEYWORDS = json.load(f)
 special_events = {}
 
+# GitHub Actions 不包含本地 Obsidian 日记目录时，沿用仓库中已提交的生成数据。
+if not DIARY_DIR.is_dir():
+    print(f'Warning: {DIARY_DIR} not found; keep existing generated data.')
+    raise SystemExit(0)
+
 
 def classify_meal(hhmm):
     """按时间段归类餐型（推荐默认阈值）。hhmm 形如 '12:30'。"""
