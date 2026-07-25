@@ -4622,15 +4622,55 @@ export const diaryRecords = {
     ]
   },
   "2026-07-25": {
-    "value": 1,
+    "value": 6,
     "tasks": [
       {
         "status": "x",
-        "time": "00:00-02:00",
-        "desc": "开发：3 站点并行 - (1) 开发笔记 (devnotes)：2 commit 落在窗口 — c06c678 01:36 feat: 博客新增 updated 字段支持区分发布与修改时间（4 文件 +9/-5：package.json + src/content/config.ts + src/pages/blog/{[slug],index}.astro）；519b3f1 01:48 feat: 操作系统学习页改写为博客《操作系统入门》并下掉 /os/ tab（5 文件 +136/-811：新增 src/content/blog/操作系统入门.md 135 行 + 删除 src/pages/os.astro 与 src/data/os.js 177 行 + 清理 global.css 中 499 行 os-* 样式）（对应 personal 看板 c2 todo「删除开发笔记页面的操作系统」） (2) 个人主页 (personal)：1 commit 7769c8b 01:39 chore: 每日看板更新（生活 l2/l4 done + l5 todo + 科研 r2 移视频 v4 + 编程 c2 done + c3 todo）。顺便充值\"魔戒\"备用梯子（130 GB / 通讯订阅-梯子节点-魔戒 ¥19.9）",
+        "time": "00:00-03:00",
+        "desc": "开发：devnotes 博客新增 updated 字段支持区分发布与修改时间 - c06c678 01:36 feat（4 文件 +9/-5：package.json + src/content/config.ts + src/pages/blog/{[slug],index}.astro）",
         "isCooking": false,
         "mealType": null,
         "dishGuess": null
+      },
+      {
+        "status": "x",
+        "time": "00:00-03:00",
+        "desc": "开发：devnotes 操作系统学习页改写为博客《操作系统入门》并下掉 /os/ tab - 519b3f1 01:48 feat（5 文件 +136/-811：新增 src/content/blog/操作系统入门.md 135 行 + 删除 src/pages/os.astro 与 src/data/os.js 177 行 + 清理 global.css 中 499 行 os-* 样式，对应 personal 看板 c2 todo）",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      },
+      {
+        "status": "x",
+        "time": "00:00-03:00",
+        "desc": "开发：personal 每日看板更新 - 7769c8b 01:39 chore（生活 l2/l4 done + l5 todo「7/25 回学校」+ 科研 r2 移视频 v4 + 编程 c2 done「删 /os/ tab」+ c3 todo「提示词工程新板块」），并充值\"魔戒\"备用梯子（130 GB / 通讯订阅-梯子节点-魔戒 ¥19.9）",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      },
+      {
+        "status": "x",
+        "time": "03:00-04:30",
+        "desc": "玩手机",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      },
+      {
+        "status": "x",
+        "time": "04:30-13:00",
+        "desc": "睡觉",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      },
+      {
+        "status": "x",
+        "time": "13:00-13:40",
+        "desc": "做饭：汤达人泡面，收拾后厨 2 分钟（耙耙柑 / 备菜 0 分钟 / 花费 2 元 / 家煮不计入 # 支出）",
+        "isCooking": true,
+        "mealType": "中饭",
+        "dishGuess": "汤达人泡面"
       }
     ]
   }
