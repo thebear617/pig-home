@@ -40,7 +40,6 @@ export const TODO_BOARDS: TodoBoard[] = [
     name: '编程',
     icon: '💻',
     items: [
-      { id: 'c1', title: '看别人简历上的项目进行复现', status: 'doing', date: '2026-07-19', createdAt: '2026-07-19', url: '', note: '' },
       { id: 'c2', title: '删除开发笔记页面的操作系统', status: 'done', date: '2026-07-24', createdAt: '2026-07-24', url: '', note: '' },
       { id: 'c3', title: '增加一个新板块，叫做"提示词工程"，专门记录当前 Agent 的一些好的使用案例和好的提示词', status: 'done', date: '2026-07-25', createdAt: '2026-07-24', url: '', note: '' }
     ]
