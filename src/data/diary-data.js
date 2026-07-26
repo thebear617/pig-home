@@ -4747,7 +4747,7 @@ export const diaryRecords = {
     ]
   },
   "2026-07-26": {
-    "value": 3,
+    "value": 6,
     "tasks": [
       {
         "status": "x",
@@ -4769,6 +4769,30 @@ export const diaryRecords = {
         "status": "x",
         "time": "14:00-14:30",
         "desc": "来学校：买鸡腿 ¥12（市内出行/校内餐饮）+ 去网安 + 拿行李箱过来",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      },
+      {
+        "status": "x",
+        "time": "14:30-16:30",
+        "desc": "在学校开大组会（申师兄讲世界模型）",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      },
+      {
+        "status": "x",
+        "time": "16:30-17:30",
+        "desc": "去 11 楼帮王老师盯着修空调",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      },
+      {
+        "status": "x",
+        "time": "17:30-18:30",
+        "desc": "在学校吃吊龙牛肉米粉 ¥22（市内出行/校内餐饮）+ 水 ¥2（校内餐饮）+ 熊麻婆借充电宝 ¥4（市内出行/充电宝）",
         "isCooking": false,
         "mealType": null,
         "dishGuess": null
