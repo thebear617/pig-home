@@ -41,7 +41,10 @@ export const TODO_BOARDS: TodoBoard[] = [
     icon: '💻',
     items: [
       { id: 'c2', title: '删除开发笔记页面的操作系统', status: 'done', date: '2026-07-24', createdAt: '2026-07-24', url: '', note: '' },
-      { id: 'c3', title: '增加一个新板块，叫做"提示词工程"，专门记录当前 Agent 的一些好的使用案例和好的提示词', status: 'done', date: '2026-07-25', createdAt: '2026-07-24', url: '', note: '' }
+      { id: 'c3', title: '增加一个新板块，叫做"提示词工程"，专门记录当前 Agent 的一些好的使用案例和好的提示词', status: 'done', date: '2026-07-25', createdAt: '2026-07-24', url: '', note: '' },
+      { id: 'c4', title: '写一篇博客叫 Vibe Working——how to make a PPT', status: 'todo', date: '2026-07-26', createdAt: '2026-07-26', url: '', note: '' },
+      { id: 'c5', title: 'design a site: Valorant', status: 'todo', date: '2026-07-26', createdAt: '2026-07-26', url: '', note: '' },
+      { id: 'c6', title: '写一篇博客叫 Vibe Working——how to make a picture', status: 'todo', date: '2026-07-26', createdAt: '2026-07-26', url: '', note: '' }
     ]
   },
   {
@@ -54,7 +57,7 @@ export const TODO_BOARDS: TodoBoard[] = [
       { id: 'l3', title: '约会安排', status: 'done', date: '2026-07-20', createdAt: '2026-07-20', url: '', note: '' },
       { id: 'l4', title: '把床板搬走', status: 'done', date: '2026-07-24', createdAt: '2026-07-24', url: '', note: '' },
       { id: 'l5', title: '7 月 26 日回学校放游泳装备、拿电脑、拿身份证、收拾宿舍', status: 'done', date: '2026-07-25', createdAt: '2026-07-24', url: '', note: '提前 7/25 完成' },
-      { id: 'l6', title: '带行李箱回去学校把衣服收拾好，把泳衣泳帽拿回去', status: 'todo', date: '2026-07-26', createdAt: '2026-07-25', url: '', note: '' }
+      { id: 'l6', title: '带行李箱回去学校把衣服收拾好，把泳衣泳帽拿回去', status: 'done', date: '2026-07-26', createdAt: '2026-07-25', url: '', note: '' }
     ]
   }
 ];

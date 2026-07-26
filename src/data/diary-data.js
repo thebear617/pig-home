@@ -4683,7 +4683,7 @@ export const diaryRecords = {
       {
         "status": "x",
         "time": "13:40-17:30",
-        "desc": "开发：personal 无畏契约板块接入深色攻略主题并补全 6 张地图 - f7dee43 15:38 feat（4 文件 +155/-70：css 重做深色样式 + 移除渐变卡片 + 新增源工重镇/盐海矿镇/森寒冬港/天枢云阙/日落之城/深窟幽境 6 张地图 section，数据改为站点自维护不再依赖笔记仓库构建）。背景：理清 Vibe Working 与 Vibe Coding 的边界",
+        "desc": "开发：personal 无畏契约板块接入深色攻略主题并补全 6 张地图 - f7dee43 15:38 feat（4 文件 +155/-70：css 重做深色样式 + 移除渐变卡片 + 新增源工重镇/盐海矿镇/森寒冬港/天枢云阙/Sunset City/深窟幽境 6 张地图 section，数据改为站点自维护不再依赖笔记仓库构建）。背景：理清 Vibe Working 与 Vibe Coding 的边界",
         "isCooking": false,
         "mealType": null,
         "dishGuess": null
@@ -4747,7 +4747,7 @@ export const diaryRecords = {
     ]
   },
   "2026-07-26": {
-    "value": 6,
+    "value": 7,
     "tasks": [
       {
         "status": "x",
@@ -4796,6 +4796,14 @@ export const diaryRecords = {
         "isCooking": false,
         "mealType": null,
         "dishGuess": null
+      },
+      {
+        "status": "x",
+        "time": "18:40-19:30",
+        "desc": "在宿舍收拾衣服（用行李箱装带回家）+ 洗澡",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
       }
     ]
   }
@@ -4834,14 +4842,6 @@ export const specialEvents = {
     ],
     "keywords": [
       "生日"
-    ]
-  },
-  "2026-07-25": {
-    "icons": [
-      "🌇"
-    ],
-    "keywords": [
-      "日落"
     ]
   }
 };
