@@ -4747,7 +4747,7 @@ export const diaryRecords = {
     ]
   },
   "2026-07-26": {
-    "value": 7,
+    "value": 11,
     "tasks": [
       {
         "status": "x",
@@ -4801,6 +4801,38 @@ export const diaryRecords = {
         "status": "x",
         "time": "18:40-19:30",
         "desc": "在宿舍收拾衣服（用行李箱装带回家）+ 洗澡",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      },
+      {
+        "status": "x",
+        "time": "19:30-21:30",
+        "desc": "开发：3 子任务并行 - (a) 写了 devnotes 提示词库《如何制作 PPT》博客（devnotes 0842ab6 21:54 feat(v0.6.1)：提示词库重构为统一框架，17 文件 +610/-143，含 src/content/prompts/how-to-make-ppt.md + lit-to-ppt.md 等） (b) 调整了 personal 无畏契约站点的设计（融合到 personal v0.15.0 Astro 迁移） (c) 重构了 personal 架构（ec226e0 22:57 feat(v0.15.0)：Astro 迁移与无畏契约资料库重构，147 文件 +7698/-2024）",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      },
+      {
+        "status": "x",
+        "time": "21:30-22:30",
+        "desc": "打电动（《英雄联盟》）",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      },
+      {
+        "status": "x",
+        "time": "22:30-23:30",
+        "desc": "继续开发：完成 personal v0.15.0 Astro 迁移与无畏契约资料库重构 - ec226e0 22:57 feat（147 文件 +7698/-2024：src/pages/{valorant,lol,membership,routes,index}.astro 独立路由化 + src/data/lol.js +393 / src/data/site.js 迁移 + src/components/lol/MageGuide.astro 新增 + src/layouts/SiteLayout.astro 新增 40 行 + 大量旧 js/ → src/ 迁移）",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      },
+      {
+        "status": "x",
+        "time": "23:30-24:00",
+        "desc": "想出门但未出门（突然停水），随后查询了停水原因",
         "isCooking": false,
         "mealType": null,
         "dishGuess": null
