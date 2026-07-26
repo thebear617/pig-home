@@ -580,5 +580,12 @@ export const expenseRecords = [
     "sub": "校内餐饮",
     "amount": 18.0,
     "note": "黄焖鸡"
+  },
+  {
+    "date": "2026-07-26",
+    "cat": "市内出行",
+    "sub": "校内餐饮",
+    "amount": 12.0,
+    "note": "鸡腿"
   }
 ];

@@ -4622,7 +4622,7 @@ export const diaryRecords = {
     ]
   },
   "2026-07-25": {
-    "value": 9,
+    "value": 15,
     "tasks": [
       {
         "status": "x",
@@ -4692,6 +4692,83 @@ export const diaryRecords = {
         "status": "x",
         "time": "17:30-20:00",
         "desc": "回学校：收拾宿舍（床腾空，衣服未清理）+ 吃黄焖鸡 ¥18（市内出行/校内餐饮）+ 寄 + 回家洗澡+洗毛巾+洗衣服+收拾从学校带回来的东西",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      },
+      {
+        "status": "x",
+        "time": "20:00-20:45",
+        "desc": "开发：devnotes 博客新增二级标签体系 + KaTeX 公式支持 + 排版优化 - 4eabbb8 20:19 feat(v0.6.0)（16 文件 +419/-33：astro.config.mjs 装 remark-math + rehype-katex + katex@0.18.1、package.json 加依赖、src/content/blog/agent-work-overview.md 新增 129 行、所有博客 frontmatter 加 tags 二级标签、src/pages/blog/{index,[slug]}.astro 改造 + prompts/[slug].astro、global.css +27）",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      },
+      {
+        "status": "x",
+        "time": "20:00-20:45",
+        "desc": "开发：devnotes v0.6.0 时间线记录写入 - adefce7 20:26 docs（src/content/timeline/devnotes-v060.md +33）",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      },
+      {
+        "status": "x",
+        "time": "20:00-20:45",
+        "desc": "开发：devnotes 增加调研到视频端到端提示词案例（落实 home 看板 c3「提示词工程」todo） - ebdaa5c 20:38 feat（src/content/prompts/gb200-nvl72-research-presentation.md 新增 135 行）",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      },
+      {
+        "status": "x",
+        "time": "20:00-20:45",
+        "desc": "开发：devnotes 猪窝 v1.2.1 时间线增补到 home-v120 - 2688784 20:41 docs（src/content/timeline/home-v120.md +10，patch 不单独建文件）",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      },
+      {
+        "status": "x",
+        "time": "20:00-20:45",
+        "desc": "开发：home 每日看板未来 todo 显示 + due/create 双图标 + 未来日期 M月D日 格式 - 1c8fb85 20:29 feat(v1.2.1)（6 文件 +74/-12：CHANGELOG.md + package.json 1.2.0→1.2.1 + src/scripts/todo-board.ts 32 行逻辑 + src/data/todo-data.ts l5/l6 增删）",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      },
+      {
+        "status": "x",
+        "time": "20:40-24:00",
+        "desc": "打电动（先无畏契约，后英雄联盟）",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      }
+    ]
+  },
+  "2026-07-26": {
+    "value": 3,
+    "tasks": [
+      {
+        "status": "x",
+        "time": "00:00-04:00",
+        "desc": "无脑狂怒地打电动（先英雄联盟-再无畏契约-再英雄联盟）",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      },
+      {
+        "status": "x",
+        "time": "04:00-14:00",
+        "desc": "睡觉",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      },
+      {
+        "status": "x",
+        "time": "14:00-14:30",
+        "desc": "来学校：买鸡腿 ¥12（市内出行/校内餐饮）+ 去网安 + 拿行李箱过来",
         "isCooking": false,
         "mealType": null,
         "dishGuess": null
