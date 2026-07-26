@@ -42,7 +42,7 @@ export const TODO_BOARDS: TodoBoard[] = [
     items: [
       { id: 'c2', title: '删除开发笔记页面的操作系统', status: 'done', date: '2026-07-24', createdAt: '2026-07-24', url: '', note: '' },
       { id: 'c3', title: '增加一个新板块，叫做"提示词工程"，专门记录当前 Agent 的一些好的使用案例和好的提示词', status: 'done', date: '2026-07-25', createdAt: '2026-07-24', url: '', note: '' },
-      { id: 'c4', title: '写一篇博客叫 Vibe Working——how to make a PPT', status: 'todo', date: '2026-07-26', createdAt: '2026-07-26', url: '', note: '' },
+      { id: 'c4', title: '写一篇博客叫 Vibe Working——how to make a PPT', status: 'done', date: '2026-07-26', createdAt: '2026-07-26', url: '', note: '产物：devnotes/src/content/prompts/lit-to-ppt.md' },
       { id: 'c5', title: 'design a site: Valorant', status: 'todo', date: '2026-07-26', createdAt: '2026-07-26', url: '', note: '' },
       { id: 'c6', title: '写一篇博客叫 Vibe Working——how to make a picture', status: 'todo', date: '2026-07-26', createdAt: '2026-07-26', url: '', note: '' }
     ]
