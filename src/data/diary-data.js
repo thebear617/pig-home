@@ -4838,6 +4838,43 @@ export const diaryRecords = {
         "dishGuess": null
       }
     ]
+  },
+  "2026-07-27": {
+    "value": 4,
+    "tasks": [
+      {
+        "status": "x",
+        "time": "00:00-01:00",
+        "desc": "继续开发：devnotes PPT 提示词库重构（合并案例与优质资源合集，新增 7 个 skill 评测对照表） - ab05923 00:54 feat",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      },
+      {
+        "status": "x",
+        "time": "01:00-02:30",
+        "desc": "打电动",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      },
+      {
+        "status": "x",
+        "time": "02:30-03:00",
+        "desc": "进行开发",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      },
+      {
+        "status": "x",
+        "time": "03:00-10:00",
+        "desc": "睡觉",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      }
+    ]
   }
 };
 export const specialEvents = {

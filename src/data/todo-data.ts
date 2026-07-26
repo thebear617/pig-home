@@ -26,7 +26,8 @@ export const TODO_BOARDS: TodoBoard[] = [
       { id: 'v3', title: 'GPT-5.6 + image2 三步法输出高质量学术 PPT', url: 'https://www.bilibili.com/video/BV1mgNj6MEuX/', status: 'done', note: '预计归 reanotes/dlproject（产物：devnotes/src/content/prompts/lit-to-ppt.md）', createdAt: '2026-07-18', date: '2026-07-26' },
       { id: 'v4', title: '如何学习AI全栈 - 数据、算法、模型、硬件、架构', url: 'https://github.com/lvy010/AI-wiki', status: 'done', note: '来源：@lvyneko 小红书笔记，含 AI-wiki 思维导图（原科研看板 r2）', createdAt: '2026-07-22', date: '2026-07-26' },
       { id: 'v5', title: '5.9K Star 神器 drawio-skill 版本大升级 更专业 更全面 更优秀', url: 'https://www.bilibili.com/video/BV1bcNZ6xEK3/', status: 'done', note: '预计归 devnotes/提示词库', createdAt: '2026-07-26', date: '2026-07-27' },
-      { id: 'v6', title: '从夯到拉锐评中美七大桌面办公AI agent', url: 'https://www.bilibili.com/video/BV15f336QETT/', status: 'done', note: '', createdAt: '2026-07-26', date: '2026-07-27' }
+      { id: 'v6', title: '从夯到拉锐评中美七大桌面办公AI agent', url: 'https://www.bilibili.com/video/BV15f336QETT/', status: 'done', note: '', createdAt: '2026-07-26', date: '2026-07-27' },
+      { id: 'v7', title: '猫乱尿的知识点都给你们咯！- 孙文-猫行为学', url: 'https://www.xiaohongshu.com/discovery/item/6544c3260000000025017af3?source=webshare&xhsshare=pc_web&xsec_token=CB0CMzuCfT2-fiNEBL1BMfUMrEJEnCQxkcgcIM0ESxumY=&xsec_source=pc_share', status: 'todo', note: '来源：小红书 @孙文-猫行为学；预计归 lifenotes/猫协', createdAt: '2026-07-27', date: '2026-07-27' }
     ]
   },
   {
