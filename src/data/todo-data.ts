@@ -47,7 +47,8 @@ export const TODO_BOARDS: TodoBoard[] = [
       { id: 'c3', title: '增加一个新板块，叫做"提示词工程"，专门记录当前 Agent 的一些好的使用案例和好的提示词', status: 'done', date: '2026-07-25', createdAt: '2026-07-24', url: '', note: '' },
       { id: 'c4', title: '写一篇博客叫 Vibe Working——how to make a PPT', status: 'done', date: '2026-07-26', createdAt: '2026-07-26', url: '', note: '产物：devnotes/src/content/prompts/lit-to-ppt.md' },
       { id: 'c5', title: 'design a site: Valorant', status: 'done', date: '2026-07-26', createdAt: '2026-07-26', url: '', note: '' },
-      { id: 'c6', title: '写一篇博客叫 Vibe Working——how to make a picture', status: 'todo', date: '2026-07-26', createdAt: '2026-07-26', url: '', note: '' }
+      { id: 'c6', title: '写一篇博客叫 Vibe Working——how to make a picture', status: 'done', date: '2026-07-27', createdAt: '2026-07-26', url: '', note: '' },
+      { id: 'c7', title: '依据 dash.valorant-api.com API 站点去建立无畏契约的站点', url: 'https://dash.valorant-api.com/endpoints/agents', status: 'todo', date: '2026-07-27', createdAt: '2026-07-27', note: '' }
     ]
   },
   {
