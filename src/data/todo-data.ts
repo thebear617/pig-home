@@ -23,8 +23,8 @@ export const TODO_BOARDS: TodoBoard[] = [
     items: [
       { id: 'v1', title: '世界模型：在 AI 里抛硬币，概率是 50% 吗？', url: 'https://b23.tv/1RotOy9', status: 'todo', note: '预计归 lifenotes/AI产业', createdAt: '2026-07-18', date: '2026-07-18' },
       { id: 'v2', title: '中科院研究生如何用 AI 把 idea 一步步变成论文', url: 'https://www.bilibili.com/video/BV1LKjS6gEh4/', status: 'todo', note: '预计归 reanotes/literature', createdAt: '2026-07-18', date: '2026-07-18' },
-      { id: 'v3', title: 'GPT-5.6 + image2 三步法输出高质量学术 PPT', url: 'https://www.bilibili.com/video/BV1mgNj6MEuX/', status: 'todo', note: '预计归 reanotes/dlproject', createdAt: '2026-07-18', date: '2026-07-18' },
-      { id: 'v4', title: '如何学习AI全栈 - 数据、算法、模型、硬件、架构', url: 'https://github.com/lvy010/AI-wiki', status: 'todo', note: '来源：@lvyneko 小红书笔记，含 AI-wiki 思维导图（原科研看板 r2）', createdAt: '2026-07-22', date: '2026-07-22' }
+      { id: 'v3', title: 'GPT-5.6 + image2 三步法输出高质量学术 PPT', url: 'https://www.bilibili.com/video/BV1mgNj6MEuX/', status: 'done', note: '预计归 reanotes/dlproject（产物：devnotes/src/content/prompts/lit-to-ppt.md）', createdAt: '2026-07-18', date: '2026-07-26' },
+      { id: 'v4', title: '如何学习AI全栈 - 数据、算法、模型、硬件、架构', url: 'https://github.com/lvy010/AI-wiki', status: 'done', note: '来源：@lvyneko 小红书笔记，含 AI-wiki 思维导图（原科研看板 r2）', createdAt: '2026-07-22', date: '2026-07-26' }
     ]
   },
   {
