@@ -25,7 +25,7 @@ export const TODO_BOARDS: TodoBoard[] = [
       { id: 'v2', title: '中科院研究生如何用 AI 把 idea 一步步变成论文', url: 'https://www.bilibili.com/video/BV1LKjS6gEh4/', status: 'todo', note: '预计归 reanotes/literature', createdAt: '2026-07-18', date: '2026-07-18' },
       { id: 'v3', title: 'GPT-5.6 + image2 三步法输出高质量学术 PPT', url: 'https://www.bilibili.com/video/BV1mgNj6MEuX/', status: 'done', note: '预计归 reanotes/dlproject（产物：devnotes/src/content/prompts/lit-to-ppt.md）', createdAt: '2026-07-18', date: '2026-07-26' },
       { id: 'v4', title: '如何学习AI全栈 - 数据、算法、模型、硬件、架构', url: 'https://github.com/lvy010/AI-wiki', status: 'done', note: '来源：@lvyneko 小红书笔记，含 AI-wiki 思维导图（原科研看板 r2）', createdAt: '2026-07-22', date: '2026-07-26' },
-      { id: 'v5', title: '5.9K Star 神器 drawio-skill 版本大升级 更专业 更全面 更优秀', url: 'https://www.bilibili.com/video/BV1bcNZ6xEK3/', status: 'todo', note: '预计归 devnotes/提示词库', createdAt: '2026-07-26', date: '2026-07-26' },
+      { id: 'v5', title: '5.9K Star 神器 drawio-skill 版本大升级 更专业 更全面 更优秀', url: 'https://www.bilibili.com/video/BV1bcNZ6xEK3/', status: 'done', note: '预计归 devnotes/提示词库', createdAt: '2026-07-26', date: '2026-07-27' },
       { id: 'v6', title: '从夯到拉锐评中美七大桌面办公AI agent', url: 'https://www.bilibili.com/video/BV15f336QETT/', status: 'done', note: '', createdAt: '2026-07-26', date: '2026-07-27' }
     ]
   },
