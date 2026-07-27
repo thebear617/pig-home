@@ -615,5 +615,19 @@ export const expenseRecords = [
     "sub": "水电燃气",
     "amount": 50.0,
     "note": ""
+  },
+  {
+    "date": "2026-07-27",
+    "cat": "市内出行",
+    "sub": "校内餐饮",
+    "amount": 15.0,
+    "note": "川味盖浇饭"
+  },
+  {
+    "date": "2026-07-27",
+    "cat": "市内出行",
+    "sub": "校内餐饮",
+    "amount": 3.0,
+    "note": "可乐"
   }
 ];

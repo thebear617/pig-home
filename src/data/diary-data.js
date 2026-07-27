@@ -4840,7 +4840,7 @@ export const diaryRecords = {
     ]
   },
   "2026-07-27": {
-    "value": 4,
+    "value": 5,
     "tasks": [
       {
         "status": "x",
@@ -4870,6 +4870,14 @@ export const diaryRecords = {
         "status": "x",
         "time": "03:00-13:00",
         "desc": "睡觉",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      },
+      {
+        "status": "x",
+        "time": "13:00-14:40",
+        "desc": "买盖浇饭吃（川味盖浇饭 ¥15 / 市内出行/校内餐饮）+ 回学校吃饭",
         "isCooking": false,
         "mealType": null,
         "dishGuess": null
