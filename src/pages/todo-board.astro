@@ -1,6 +1,7 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import { TODO_BOARDS } from '../data/todo-data';
+import { ARCHIVED_TODO_BOARDS } from '../data/archived-todo-data';
 import { pad } from '../lib/helpers';
 
 const today = new Date();
@@ -68,8 +69,9 @@ const firstBoard = TODO_BOARDS[0];
       <div class="todo-board-empty">看板数据未加载。请检查 todo-data.ts 是否正常编译。</div>
     )}
   </div>
-  <script define:vars={{ boards: TODO_BOARDS }}>
+  <script define:vars={{ boards: TODO_BOARDS, archived: ARCHIVED_TODO_BOARDS }}>
     window.__TODO_BOARDS = boards;
+    window.__ARCHIVED_TODO_BOARDS = archived;
   </script>
   <script>
     import '../scripts/todo-board';
