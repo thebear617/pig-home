@@ -4840,7 +4840,7 @@ export const diaryRecords = {
     ]
   },
   "2026-07-27": {
-    "value": 5,
+    "value": 8,
     "tasks": [
       {
         "status": "x",
@@ -4878,6 +4878,43 @@ export const diaryRecords = {
         "status": "x",
         "time": "13:00-14:40",
         "desc": "买盖浇饭吃（川味盖浇饭 ¥15 / 市内出行/校内餐饮）+ 回学校吃饭",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      },
+      {
+        "status": "x",
+        "time": "14:40-17:00",
+        "desc": "在学校图书馆学习 + 进行开发",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      },
+      {
+        "status": "x",
+        "time": "17:00-18:30",
+        "desc": "和薛皓元、董师兄一起去游泳",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      },
+      {
+        "status": "x",
+        "time": "18:30-24:00",
+        "desc": "在外面吃状元阁烤肉（和薛皓元、张晋伦一起吃 ¥70）+ 看电影《年会不能停 2》（万科 ¥26）",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      }
+    ]
+  },
+  "2026-07-28": {
+    "value": 1,
+    "tasks": [
+      {
+        "status": "x",
+        "time": "00:00-01:00",
+        "desc": "回家洗澡 + 喝啤酒 + 打了一把《英雄联盟》",
         "isCooking": false,
         "mealType": null,
         "dishGuess": null
