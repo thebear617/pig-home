@@ -11,5 +11,9 @@ export const hemaDayRecords: Record<string, HemaRecord> = {
   '2026-07-20': {
     bought: '柠檬大口茶、美人茶、紫苏话梅啤酒、大芒果、小番茄、凉菜、锅贴🥟、香水柠檬蛋糕🎂',
     nextPlan: '这周尝紫苏话梅啤酒和柠檬大口茶；下周不买了（要回家）'
+  },
+  '2026-07-27': {
+    bought: '本周没有去盒马采购（过马路已回家）',
+    nextPlan: '下周是否采购待定'
   }
 };
