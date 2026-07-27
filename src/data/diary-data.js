@@ -4868,7 +4868,7 @@ export const diaryRecords = {
       },
       {
         "status": "x",
-        "time": "03:00-10:00",
+        "time": "03:00-13:00",
         "desc": "睡觉",
         "isCooking": false,
         "mealType": null,
