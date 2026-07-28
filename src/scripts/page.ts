@@ -215,6 +215,93 @@ function formatMin(min: number): string {
 const RECENT_PER_PAGE = 3;
 let recentPage = 0;
 
+function monthlyStatsHtml(): string {
+  const records = window.__foodRecords || {};
+  const prefix = `${state.year}-${pad(state.month)}`;
+  let days = 0, totalCost = 0, totalMin = 0, mealCount = 0;
+  for (const [date, meals] of Object.entries(records)) {
+    if (!date.startsWith(prefix)) continue;
+    days++;
+    for (const meal of meals) {
+      mealCount++;
+      const dishes = meal.dishes || [];
+      const obj = dishes.length > 0 && typeof dishes[0] === 'object';
+      totalMin += parseMin(meal.prep) + parseMin(meal.shopping) + parseMin(meal.cleanup);
+      totalCost += meal.cost ?? (obj ? dishes.reduce((s: number, d: any) => s + (d.cost || 0), 0) : 0);
+    }
+  }
+  if (!days) return '<div class="food-kanban-head"><h3 class="food-kanban-title">📊 本月统计</h3></div><div class="food-kanban-empty">本月暂无记录</div>';
+  const avg = mealCount ? (totalCost / mealCount).toFixed(1) : '0';
+  const timeStr = formatMin(totalMin);
+  return `<div class="food-kanban-head"><h3 class="food-kanban-title">📊 本月统计</h3></div>
+<div class="food-stats-grid">
+  <div class="food-stat-item"><span class="food-stat-label">做饭</span><span class="food-stat-value">${days}天</span></div>
+  <div class="food-stat-item"><span class="food-stat-label">花费</span><span class="food-stat-value food-cost">¥${totalCost.toFixed(0)}</span></div>
+  <div class="food-stat-item"><span class="food-stat-label">均费</span><span class="food-stat-value">¥${avg}</span></div>
+  <div class="food-stat-item"><span class="food-stat-label">用时</span><span class="food-stat-value">${timeStr || '-'}</span></div>
+</div>`;
+}
+
+function topDishesHtml(): string {
+  const records = window.__foodRecords || {};
+  const count = new Map<string, number>();
+  for (const meals of Object.values(records)) {
+    for (const meal of meals) {
+      const dishes = meal.dishes || [];
+      const obj = dishes.length > 0 && typeof dishes[0] === 'object';
+      for (const d of dishes) {
+        const name = obj ? d.name : String(d);
+        count.set(name, (count.get(name) || 0) + 1);
+      }
+    }
+  }
+  const top = [...count.entries()].sort((a, b) => b[1] - a[1]).slice(0, 5);
+  if (!top.length) return '<div class="food-kanban-head"><h3 class="food-kanban-title">🥘 高频菜品</h3></div><div class="food-kanban-empty">暂无数据</div>';
+  const max = top[0][1];
+  let html = '<div class="food-kanban-head"><h3 class="food-kanban-title">🥘 高频菜品</h3></div><div class="food-top-list">';
+  for (const [name, n] of top) {
+    const pct = Math.round((n / max) * 100);
+    html += `<div class="food-top-item"><span class="food-top-name">${escape(name)}</span><span class="food-top-bar"><span class="food-top-fill" style="width:${pct}%"></span></span><span class="food-top-count">${n}次</span></div>`;
+  }
+  return html + '</div>';
+}
+
+function chefRankHtml(): string {
+  const records = window.__foodRecords || {};
+  const chefs = new Map<string, { count: number; cost: number }>();
+  for (const meals of Object.values(records)) {
+    for (const meal of meals) {
+      const dishes = meal.dishes || [];
+      const obj = dishes.length > 0 && typeof dishes[0] === 'object';
+      if (obj) {
+        for (const d of dishes) {
+          const name = d.madeBy || '未知';
+          const c = chefs.get(name) || { count: 0, cost: 0 };
+          c.count++;
+          c.cost += d.cost || 0;
+          chefs.set(name, c);
+        }
+      } else {
+        const name = meal.chef || '未知';
+        const c = chefs.get(name) || { count: 0, cost: 0 };
+        c.count += dishes.length;
+        c.cost += meal.cost || 0;
+        chefs.set(name, c);
+      }
+    }
+  }
+  const rank = [...chefs.entries()].sort((a, b) => b[1].count - a[1].count);
+  if (!rank.length) return '<div class="food-kanban-head"><h3 class="food-kanban-title">🏆 厨师排行</h3></div><div class="food-kanban-empty">暂无数据</div>';
+  const medals = ['🥇', '🥈', '🥉'];
+  let html = '<div class="food-kanban-head"><h3 class="food-kanban-title">🏆 厨师排行</h3></div><div class="food-chef-list">';
+  for (let i = 0; i < rank.length; i++) {
+    const [name, data] = rank[i];
+    const medal = medals[i] || `${i + 1}.`;
+    html += `<div class="food-chef-item"><span class="food-chef-medal">${medal}</span><span class="food-chef-name">${escape(name)}</span><span class="food-chef-count">${data.count}道菜</span><span class="food-chef-cost">¥${data.cost.toFixed(0)}</span></div>`;
+  }
+  return html + '</div>';
+}
+
 function getRecentDishes() {
   const records = window.__foodRecords || {};
   const dates = Object.keys(records).sort().reverse();
@@ -417,6 +504,12 @@ function refresh() {
   } else if (page === 'food-records') {
     document.getElementById('foodCalendar')!.innerHTML = foodGrid();
     document.querySelector('.food-detail-container')!.innerHTML = foodDetail(state.selected);
+    const statsEl = document.getElementById('foodMonthlyStats');
+    if (statsEl) statsEl.innerHTML = monthlyStatsHtml();
+    const topEl = document.getElementById('foodTopDishes');
+    if (topEl) topEl.innerHTML = topDishesHtml();
+    const chefEl = document.getElementById('foodChefRank');
+    if (chefEl) chefEl.innerHTML = chefRankHtml();
     const recentEl = document.getElementById('foodRecentKanban');
     if (recentEl) recentEl.innerHTML = recentDishesHtml();
     setTitle('[data-tab="food-records"] .cal-title');
