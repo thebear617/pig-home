@@ -4544,7 +4544,7 @@ export const diaryRecords = {
         "time": "00:00-04:00",
         "desc": "和过马路出去晃荡看了外面夜市摊后回来做饭（夜宵）：汤达人泡面、牛排、鱿鱼，收拾后厨 10 分钟（备菜 5 分钟 / 耙耙柑煮泡面+煎牛排 0 元 / 过马路煎鱿鱼 0 元 / 家煮不计入 # 支出）",
         "isCooking": true,
-        "mealType": "其他",
+        "mealType": "夜宵",
         "dishGuess": null
       },
       {
@@ -4909,7 +4909,7 @@ export const diaryRecords = {
     ]
   },
   "2026-07-28": {
-    "value": 7,
+    "value": 9,
     "tasks": [
       {
         "status": "x",
@@ -4966,6 +4966,51 @@ export const diaryRecords = {
         "isCooking": true,
         "mealType": "晚饭",
         "dishGuess": "土豆火腿鸡蛋酱汁米饭"
+      },
+      {
+        "status": "x",
+        "time": "20:30-23:00",
+        "desc": "做开发",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      },
+      {
+        "status": "x",
+        "time": "23:00-24:00",
+        "desc": "打电动（英雄联盟）",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      }
+    ]
+  },
+  "2026-07-29": {
+    "value": 3,
+    "tasks": [
+      {
+        "status": "x",
+        "time": "00:00-00:30",
+        "desc": "打英雄联盟",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      },
+      {
+        "status": "x",
+        "time": "00:30-02:00",
+        "desc": "继续做开发",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      },
+      {
+        "status": "x",
+        "time": "02:00-02:20",
+        "desc": "做饭：煮了母鸡汤泡面、耙耙柑。（备菜 4 分钟，收拾后厨 4 分钟，花费 3 块钱）",
+        "isCooking": true,
+        "mealType": "夜宵",
+        "dishGuess": "煮了母鸡汤泡面、耙耙柑"
       }
     ]
   }

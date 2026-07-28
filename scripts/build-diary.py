@@ -30,6 +30,8 @@ def classify_meal(hhmm):
     """按时间段归类餐型（推荐默认阈值）。hhmm 形如 '12:30'。"""
     h, m = int(hhmm[:2]), int(hhmm[3:5])
     t = h * 60 + m
+    if t >= 22 * 60 or t < 6 * 60:
+        return '夜宵'
     if 6 * 60 <= t <= 9 * 60 + 59:
         return '早饭'
     if 10 * 60 <= t <= 14 * 60 + 59:
