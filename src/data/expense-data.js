@@ -401,7 +401,7 @@ export const expenseRecords = [
   },
   {
     "date": "2026-07-17",
-    "cat": "娱乐",
+    "cat": "娱乐消费",
     "sub": "桌游剧本",
     "amount": 30.0,
     "note": "无忧桌游"
@@ -661,7 +661,7 @@ export const expenseRecords = [
   {
     "date": "2026-07-27",
     "cat": "娱乐消费",
-    "sub": "娱乐",
+    "sub": "电影消费",
     "amount": 26.0,
     "note": "电影《年会不能停 2》（万科）"
   },

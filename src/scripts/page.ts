@@ -9,6 +9,7 @@ declare global {
     __specialEvents?: Record<string, any>;
     __expenseRecords?: any[];
     __expenseCategories?: any[];
+    __membershipRecords?: any[];
   }
 }
 
@@ -518,23 +519,167 @@ function dailyHemaDayHtml(): string {
   return html + '</div>';
 }
 
+let expenseCatView = 'bar';
+let expenseCatPages: Record<string, number> = {};
+let expenseTrendSelectedDay: number | null = null;
+let expenseTopPage = 0;
+let membershipView = 'active';
+
 function expenseView() {
   const records = (window.__expenseRecords || []).filter(item => item.date.startsWith(`${state.year}-${pad(state.month)}`)).sort((a, b) => b.date.localeCompare(a.date));
   const categories = window.__expenseCategories || [];
   const total = records.reduce((sum, item) => sum + item.amount, 0);
   const days = new Set(records.map(item => item.date)).size;
   let html = total ? `<div class="summary-bar"><div class="summary-item"><span class="summary-label">本月支出</span><span class="summary-value expense-amount">¥${total.toFixed(2)}</span></div><div class="summary-divider"></div><div class="summary-item"><span class="summary-label">记录笔数</span><span class="summary-value">${records.length}</span></div><div class="summary-divider"></div><div class="summary-item"><span class="summary-label">日均</span><span class="summary-value expense-amount">¥${(total / days).toFixed(2)}</span></div></div>` : '<div class="empty-state"><p>本月暂无支出记录</p></div>';
+
   const groups = categories.map(category => ({ ...category, items: records.filter(item => item.cat === category.name) })).filter(group => group.items.length).sort((a, b) => b.items.reduce((s, item) => s + item.amount, 0) - a.items.reduce((s, item) => s + item.amount, 0));
+
+  html += '<div class="expense-grid">';
   for (const group of groups) {
     const groupTotal = group.items.reduce((sum, item) => sum + item.amount, 0);
-    html += `<div class="check-section open"><div class="section-header"><div class="section-header-left"><span class="expense-cat-icon">${group.icon}</span><h2>${escape(group.name)}</h2></div><div class="section-header-right"><span class="expense-cat-amount">¥${groupTotal.toFixed(2)}</span><span class="section-count">${group.items.length}</span><span class="section-arrow">▸</span></div></div><div class="section-body">`;
-    for (const item of group.items) {
+    const catKey = group.name;
+    if (!(catKey in expenseCatPages)) expenseCatPages[catKey] = 0;
+    const perPage = 5;
+    const totalPages = Math.max(1, Math.ceil(group.items.length / perPage));
+    if (expenseCatPages[catKey] >= totalPages) expenseCatPages[catKey] = totalPages - 1;
+    const page = expenseCatPages[catKey];
+    const pageItems = group.items.slice(page * perPage, (page + 1) * perPage);
+
+    html += `<div class="expense-grid-card"><div class="expense-grid-header"><div class="expense-grid-header-left"><span class="expense-cat-icon">${group.icon}</span><h3>${escape(group.name)}</h3></div><div class="expense-grid-header-right"><span class="expense-cat-amount">¥${groupTotal.toFixed(2)}</span></div></div>`;
+
+    if (totalPages > 1) {
+      html += `<div class="expense-grid-nav"><button class="expense-grid-btn expense-grid-prev"${page === 0 ? ' disabled' : ''} data-cat="${escape(catKey)}">◀</button><span class="expense-grid-page">${page + 1}/${totalPages}</span><button class="expense-grid-btn expense-grid-next"${page >= totalPages - 1 ? ' disabled' : ''} data-cat="${escape(catKey)}">▶</button></div>`;
+    }
+
+    html += '<div class="expense-grid-body">';
+    for (const item of pageItems) {
       const date = new Date(`${item.date}T00:00:00`);
       html += `<div class="expense-item"><div class="expense-item-left"><span class="expense-item-sub">${escape(item.sub)}</span>${item.note ? `<span class="expense-item-note">${escape(item.note)}</span>` : ''}</div><div class="expense-item-right"><span class="expense-item-amount">¥${item.amount.toFixed(2)}</span><span class="expense-item-date">${date.getMonth() + 1}/${date.getDate()}</span></div></div>`;
+    }
+    if (!pageItems.length) html += '<div class="expense-grid-empty">暂无记录</div>';
+    html += '</div></div>';
+  }
+  html += '</div>';
+  return html;
+}
+
+function expenseTrendHtml(): string {
+  const records = (window.__expenseRecords || []).filter(item => item.date.startsWith(`${state.year}-${pad(state.month)}`));
+  if (!records.length) return '<div class="expense-kanban-head"><h3 class="expense-kanban-title"> 支出趋势</h3></div><div class="expense-kanban-empty">本月暂无支出</div>';
+  const daysInMonth = new Date(state.year, state.month, 0).getDate();
+  if (expenseTrendSelectedDay && expenseTrendSelectedDay > daysInMonth) expenseTrendSelectedDay = null;
+  const dailyTotals = Array.from({ length: daysInMonth }, (_, index) => records.filter(record => Number(record.date.slice(-2)) === index + 1).reduce((sum, record) => sum + record.amount, 0));
+  const max = Math.max(...dailyTotals, 1);
+  const width = 760;
+  const height = 190;
+  const padding = { top: 18, right: 16, bottom: 30, left: 48 };
+  const plotWidth = width - padding.left - padding.right;
+  const plotHeight = height - padding.top - padding.bottom;
+  const points = dailyTotals.map((total, index) => ({ x: padding.left + (index * plotWidth) / Math.max(daysInMonth - 1, 1), y: padding.top + (1 - total / max) * plotHeight }));
+  const linePath = points.map((item, index) => `${index ? 'L' : 'M'}${item.x.toFixed(1)},${item.y.toFixed(1)}`).join(' ');
+  const areaPath = `${linePath} L${points[points.length - 1].x.toFixed(1)},${(padding.top + plotHeight).toFixed(1)} L${points[0].x.toFixed(1)},${(padding.top + plotHeight).toFixed(1)} Z`;
+  const gridLines = [0, .5, 1].map(ratio => { const y = padding.top + (1 - ratio) * plotHeight; return `<line class="expense-line-grid" x1="${padding.left}" x2="${width - padding.right}" y1="${y.toFixed(1)}" y2="${y.toFixed(1)}"/><text class="expense-line-y-label" x="${padding.left - 8}" y="${(y + 3).toFixed(1)}">¥${(max * ratio).toFixed(0)}</text>`; }).join('');
+  const labels = [...new Set([1, 8, 15, 22, daysInMonth])].map(day => `<text class="expense-line-x-label" x="${points[day - 1].x.toFixed(1)}" y="${height - 8}">${day}日</text>`).join('');
+  const nodes = points.map((item, index) => `<circle class="expense-line-node${dailyTotals[index] === 0 ? ' zero' : ''}${expenseTrendSelectedDay === index + 1 ? ' selected' : ''}" data-expense-trend-day="${index + 1}" cx="${item.x.toFixed(1)}" cy="${item.y.toFixed(1)}" r="3.2" role="button" tabindex="0"><title>${state.month}/${index + 1} · ¥${dailyTotals[index].toFixed(2)}</title></circle>`).join('');
+  let tooltip = '';
+  if (expenseTrendSelectedDay) {
+    const selectedIndex = expenseTrendSelectedDay - 1;
+    const selectedPoint = points[selectedIndex];
+    const selectedRecords = records.filter(record => Number(record.date.slice(-2)) === expenseTrendSelectedDay);
+    const details = selectedRecords.length ? selectedRecords.map(record => `<li><span><b>${escape(record.cat)}</b> · ${escape(record.sub)}${record.note ? `<small>${escape(record.note)}</small>` : ''}</span><strong>¥${record.amount.toFixed(2)}</strong></li>`).join('') : '<li class="expense-line-tooltip-empty">当天无支出</li>';
+    const tooltipTop = selectedPoint.y > 88 ? Math.max(8, selectedPoint.y - 84) : selectedPoint.y + 12;
+    tooltip = `<div class="expense-line-tooltip" style="--point-x:${(selectedPoint.x / width * 100).toFixed(2)}%; top:${tooltipTop.toFixed(1)}px"><div class="expense-line-tooltip-head"><strong>${state.month}/${expenseTrendSelectedDay} · ¥${dailyTotals[selectedIndex].toFixed(2)}</strong><button class="expense-line-tooltip-close" type="button" aria-label="关闭当天支出详情">×</button></div><ul>${details}</ul></div>`;
+  }
+  const peak = Math.max(...dailyTotals);
+  const peakDay = dailyTotals.indexOf(peak) + 1;
+  return `<div class="expense-kanban-head"><h3 class="expense-kanban-title">📈 每日支出趋势</h3></div><div class="expense-line-chart-wrap"><svg class="expense-line-chart" viewBox="0 0 ${width} ${height}" role="img" aria-label="${state.month}月每日支出趋势">${gridLines}<path class="expense-line-area" d="${areaPath}"/><path class="expense-line-path" d="${linePath}"/>${nodes}${labels}</svg>${tooltip}</div><div class="expense-line-meta"><span>共 ${daysInMonth} 个每日节点</span><span>峰值：${state.month}/${peakDay} ¥${peak.toFixed(0)}</span></div>`;
+}
+
+function expenseCategoryChartHtml(): string {
+  const records = (window.__expenseRecords || []).filter(item => item.date.startsWith(`${state.year}-${pad(state.month)}`));
+  if (!records.length) return '<div class="expense-kanban-head"><h3 class="expense-kanban-title">📊 分类占比</h3></div><div class="expense-kanban-empty">本月暂无支出</div>';
+  const catMap = new Map<string, { amount: number; count: number }>();
+  for (const r of records) {
+    const c = catMap.get(r.cat) || { amount: 0, count: 0 };
+    c.amount += r.amount;
+    c.count++;
+    catMap.set(r.cat, c);
+  }
+  const cats = [...catMap.entries()].sort((a, b) => b[1].amount - a[1].amount);
+  const total = cats.reduce((s, c) => s + c[1].amount, 0);
+  let html = '<div class="expense-kanban-head"><h3 class="expense-kanban-title">📊 分类占比</h3>';
+  html += `<div class="expense-cat-view-nav"><button class="expense-cat-view-btn${expenseCatView === 'bar' ? ' active' : ''}" data-catview="bar">柱状</button><button class="expense-cat-view-btn${expenseCatView === 'pie' ? ' active' : ''}" data-catview="pie">饼图</button></div>`;
+  html += '</div>';
+  if (expenseCatView === 'bar') {
+    const max = cats[0][1].amount;
+    html += '<div class="expense-cat-bar-list">';
+    for (const [cat, data] of cats) {
+      const pct = Math.round((data.amount / max) * 100);
+      html += `<div class="expense-cat-bar-item"><span class="expense-cat-bar-name">${escape(cat)}</span><div class="expense-cat-bar-track"><div class="expense-cat-bar-fill" style="width:${pct}%"></div></div><span class="expense-cat-bar-amount">¥${data.amount.toFixed(0)}</span></div>`;
+    }
+    html += '</div>';
+  } else {
+    const colors = ['#4f46e5','#059669','#d97706','#dc2626','#7c3aed','#0891b2','#be185d','#65a30d','#ea580c','#475569','#8b5cf6'];
+    let offset = 0;
+    const segments: string[] = [];
+    for (let i = 0; i < cats.length; i++) {
+      const pct = (cats[i][1].amount / total) * 100;
+      segments.push(`${colors[i % colors.length]} ${offset}% ${offset + pct}%`);
+      offset += pct;
+    }
+    html += `<div class="expense-cat-pie"><div class="expense-cat-pie-ring" style="background:conic-gradient(${segments.join(', ')})"><div class="expense-cat-pie-center"><span class="expense-cat-pie-total">¥${total.toFixed(0)}</span></div></div><div class="expense-cat-pie-legend">`;
+    for (let i = 0; i < cats.length; i++) {
+      const pct = ((cats[i][1].amount / total) * 100).toFixed(0);
+      html += `<div class="expense-cat-pie-legend-item"><span class="expense-cat-pie-dot" style="background:${colors[i % colors.length]}"></span><span class="expense-cat-pie-legend-name">${escape(cats[i][0])}</span><span class="expense-cat-pie-legend-pct">${pct}%</span></div>`;
     }
     html += '</div></div>';
   }
   return html;
+}
+
+function expenseTopItemsHtml(): string {
+  const records = (window.__expenseRecords || []).filter(item => item.date.startsWith(`${state.year}-${pad(state.month)}`)).sort((a, b) => b.amount - a.amount);
+  if (!records.length) return '<div class="expense-kanban-head"><h3 class="expense-kanban-title">🔥 最高支出</h3></div><div class="expense-kanban-empty">本月暂无支出</div>';
+  const perPage = 5;
+  const totalPages = Math.ceil(records.length / perPage);
+  if (expenseTopPage >= totalPages) expenseTopPage = totalPages - 1;
+  const pageRecords = records.slice(expenseTopPage * perPage, (expenseTopPage + 1) * perPage);
+  const medals = ['🥇','🥈','🥉','4.','5.'];
+  let html = '<div class="expense-kanban-head"><h3 class="expense-kanban-title">🔥 最高支出</h3>';
+  if (totalPages > 1) html += `<div class="expense-grid-nav expense-top-nav"><button class="expense-grid-btn expense-top-prev"${expenseTopPage === 0 ? ' disabled' : ''}>◀</button><span class="expense-grid-page">${expenseTopPage + 1}/${totalPages}</span><button class="expense-grid-btn expense-top-next"${expenseTopPage >= totalPages - 1 ? ' disabled' : ''}>▶</button></div>`;
+  html += '</div><div class="expense-top-list">';
+  for (let i = 0; i < pageRecords.length; i++) {
+    const r = pageRecords[i];
+    const day = new Date(`${r.date}T00:00:00`);
+    const dateStr = `${day.getMonth() + 1}/${day.getDate()}`;
+    const rank = expenseTopPage * perPage + i;
+    html += `<div class="expense-top-item"><span class="expense-top-medal">${medals[rank] || `${rank + 1}.`}</span><div class="expense-top-info"><span class="expense-top-sub">${escape(r.sub)}</span><span class="expense-top-note">${escape(r.note || '')}</span></div><div class="expense-top-right"><span class="expense-top-amount">¥${r.amount.toFixed(2)}</span><span class="expense-top-date">${dateStr}</span></div></div>`;
+  }
+  return html + '</div>';
+}
+
+function membershipSubscriptionsHtml(): string {
+  const records = window.__membershipRecords || [];
+  const today = new Date();
+  today.setHours(0, 0, 0, 0);
+  const todayTime = today.getTime();
+  const parseDate = (value: string) => new Date(`${value}T00:00:00`).getTime();
+  const active = records.filter(record => record.expireDate && parseDate(record.expireDate) >= todayTime).sort((a, b) => parseDate(a.expireDate) - parseDate(b.expireDate));
+  const unknown = records.filter(record => !record.expireDate).sort((a, b) => a.name.localeCompare(b.name, 'zh-CN'));
+  const expired = records.filter(record => record.expireDate && parseDate(record.expireDate) < todayTime).sort((a, b) => parseDate(b.expireDate) - parseDate(a.expireDate));
+  const monthly = active.reduce((sum, record) => record.price == null || !record.cycleMonths ? sum : sum + record.price / record.cycleMonths, 0);
+  const dueSoon = active.filter(record => (parseDate(record.expireDate) - todayTime) / 86400000 <= 30).length;
+  const groups: Record<string, any[]> = { active, unknown, expired };
+  const current = groups[membershipView] || active;
+  const daysLabel = (record: any) => !record.expireDate ? '待补到期日' : (() => { const days = Math.round((parseDate(record.expireDate) - todayTime) / 86400000); return days >= 0 ? `${days} 天后到期` : `已过期 ${-days} 天`; })();
+  let html = '<div class="expense-kanban-head"><h3 class="expense-kanban-title">💳 会员订阅</h3>';
+  html += `<div class="membership-view-nav"><button class="membership-view-btn${membershipView === 'active' ? ' active' : ''}" data-membership-view="active">有效 ${active.length}</button><button class="membership-view-btn${membershipView === 'unknown' ? ' active' : ''}" data-membership-view="unknown">待补 ${unknown.length}</button><button class="membership-view-btn${membershipView === 'expired' ? ' active' : ''}" data-membership-view="expired">过期 ${expired.length}</button></div></div>`;
+  html += `<div class="membership-summary"><div><span>月均订阅</span><strong>¥${Math.round(monthly)}</strong></div><div><span>有效订阅</span><strong>${active.length}</strong></div><div><span>30 天内到期</span><strong class="${dueSoon ? 'membership-warning' : ''}">${dueSoon}</strong></div></div><div class="membership-list">`;
+  for (const record of current) {
+    const price = record.price == null ? '价格待补' : `¥${record.price}${record.cycleMonths ? ` / ${record.cycleMonths}月` : ''}`;
+    html += `<div class="membership-item"><div class="membership-item-main"><div><strong>${escape(record.name)}</strong>${(record.tags || []).map((tag: string) => `<span class="membership-tag">${escape(tag)}</span>`).join('')}</div>${record.note ? `<span class="membership-note">${escape(record.note)}</span>` : ''}</div><div class="membership-item-meta"><strong>${price}</strong><span>${daysLabel(record)}</span></div></div>`;
+  }
+  return html + '</div>';
 }
 
 function setupAccordions(root: ParentNode = document) {
@@ -581,8 +726,17 @@ function refresh() {
     setTitle('[data-tab="daily-tracker"] .cal-title');
   } else if (page === 'expense-records') {
     document.getElementById('expenseContent')!.innerHTML = expenseView();
+    const trendEl = document.getElementById('expenseTrendChart');
+    if (trendEl) trendEl.innerHTML = expenseTrendHtml();
+    const catEl = document.getElementById('expenseCategoryChart');
+    if (catEl) catEl.innerHTML = expenseCategoryChartHtml();
+    const topEl = document.getElementById('expenseTopItems');
+    if (topEl) topEl.innerHTML = expenseTopItemsHtml();
     setTitle('[data-tab="expense-records"] .cal-title', `${monthTitle()} · 支出`);
     setupAccordions(document.getElementById('expenseContent')!);
+  } else if (page === 'membership') {
+    const membershipEl = document.getElementById('membershipSubscriptions');
+    if (membershipEl) membershipEl.innerHTML = membershipSubscriptionsHtml();
   }
 }
 
@@ -629,6 +783,22 @@ document.addEventListener('click', event => {
   if (expenseCatPrev && !expenseCatPrev.disabled) { expenseCatPage--; const el = document.getElementById('dailyExpenseCategory'); if (el) el.innerHTML = dailyExpenseCategoryHtml(); return; }
   const expenseCatNext = target.closest<HTMLButtonElement>('.daily-expense-next');
   if (expenseCatNext && !expenseCatNext.disabled) { expenseCatPage++; const el = document.getElementById('dailyExpenseCategory'); if (el) el.innerHTML = dailyExpenseCategoryHtml(); return; }
+  const catViewBtn = target.closest<HTMLButtonElement>('.expense-cat-view-btn');
+  if (catViewBtn && catViewBtn.dataset.catview) { expenseCatView = catViewBtn.dataset.catview; const el = document.getElementById('expenseCategoryChart'); if (el) el.innerHTML = expenseCategoryChartHtml(); return; }
+  const membershipViewBtn = target.closest<HTMLButtonElement>('.membership-view-btn');
+  if (membershipViewBtn?.dataset.membershipView) { membershipView = membershipViewBtn.dataset.membershipView; const el = document.getElementById('membershipSubscriptions'); if (el) el.innerHTML = membershipSubscriptionsHtml(); return; }
+  const trendNode = target.closest<SVGCircleElement>('.expense-line-node');
+  if (trendNode?.dataset.expenseTrendDay) { expenseTrendSelectedDay = Number(trendNode.dataset.expenseTrendDay); const el = document.getElementById('expenseTrendChart'); if (el) el.innerHTML = expenseTrendHtml(); return; }
+  const tooltipClose = target.closest<HTMLButtonElement>('.expense-line-tooltip-close');
+  if (tooltipClose) { expenseTrendSelectedDay = null; const el = document.getElementById('expenseTrendChart'); if (el) el.innerHTML = expenseTrendHtml(); return; }
+  const topPrev = target.closest<HTMLButtonElement>('.expense-top-prev');
+  if (topPrev && !topPrev.disabled) { expenseTopPage--; const el = document.getElementById('expenseTopItems'); if (el) el.innerHTML = expenseTopItemsHtml(); return; }
+  const topNext = target.closest<HTMLButtonElement>('.expense-top-next');
+  if (topNext && !topNext.disabled) { expenseTopPage++; const el = document.getElementById('expenseTopItems'); if (el) el.innerHTML = expenseTopItemsHtml(); return; }
+  const gridPrev = target.closest<HTMLButtonElement>('.expense-grid-prev');
+  if (gridPrev && gridPrev.dataset.cat && !gridPrev.disabled) { const cat = gridPrev.dataset.cat; expenseCatPages[cat] = Math.max(0, expenseCatPages[cat] - 1); document.getElementById('expenseContent')!.innerHTML = expenseView(); return; }
+  const gridNext = target.closest<HTMLButtonElement>('.expense-grid-next');
+  if (gridNext && gridNext.dataset.cat && !gridNext.disabled) { const cat = gridNext.dataset.cat; expenseCatPages[cat]++; document.getElementById('expenseContent')!.innerHTML = expenseView(); return; }
   const category = target.closest<HTMLButtonElement>('.cook-nav-btn');
   if (category) {
     const root = category.closest('.cookbook');

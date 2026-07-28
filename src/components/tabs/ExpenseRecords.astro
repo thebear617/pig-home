@@ -8,17 +8,24 @@ const calMonth = today.getMonth() + 1;
 ---
 
 <div data-tab="expense-records">
-  <div class="expense-view" id="expenseView">
-    <div class="cal-header">
-      <span class="cal-title">{calYear}年{calMonth}月 · 支出</span>
-      <div class="cal-nav">
-        <button class="cal-nav-btn cal-prev">◀</button>
-        <button class="cal-today-btn cal-today">本月</button>
-        <button class="cal-nav-btn cal-next">▶</button>
+  <div class="expense-layout">
+    <div class="expense-main-col">
+      <div class="cal-header">
+        <span class="cal-title">{calYear}年{calMonth}月 · 支出</span>
+        <div class="cal-nav">
+          <button class="cal-nav-btn cal-prev">◀</button>
+          <button class="cal-today-btn cal-today">本月</button>
+          <button class="cal-nav-btn cal-next">▶</button>
+        </div>
+      </div>
+      <div class="expense-content" id="expenseContent">
+        <div class="empty-state"><p>加载中...</p></div>
       </div>
     </div>
-    <div class="expense-content" id="expenseContent">
-      <div class="empty-state"><p>加载中...</p></div>
+    <div class="expense-side-col">
+      <div class="expense-side-kanban" id="expenseTrendChart"></div>
+      <div class="expense-side-kanban" id="expenseCategoryChart"></div>
+      <div class="expense-side-kanban" id="expenseTopItems"></div>
     </div>
   </div>
 </div>

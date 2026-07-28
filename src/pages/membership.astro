@@ -1,0 +1,15 @@
+---
+import Layout from '../layouts/Layout.astro';
+import MembershipSubscriptions from '../components/tabs/MembershipSubscriptions.astro';
+import { membershipRecords } from '../data/membership-data';
+---
+
+<Layout activeTab="membership" title="会员订阅 · 猪窝">
+  <MembershipSubscriptions />
+  <script define:vars={{ membershipRecords }}>
+    window.__membershipRecords = membershipRecords;
+  </script>
+  <script>
+    import '../scripts/page';
+  </script>
+</Layout>

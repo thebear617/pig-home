@@ -11,6 +11,7 @@ export const TABS: Tab[] = [
   { id: 'todo-board', title: '每日看板', icon: '📋' },
   { id: 'daily-tracker', title: '每日追踪', icon: '📅', months: true },
   { id: 'expense-records', title: '支出记录', icon: '💰', months: true },
+  { id: 'membership', title: '会员订阅', icon: '💳' },
   { id: 'food-map', title: '美食地图', icon: '🗺️' },
   { id: 'relationship-timeline', title: '关系时间线', icon: '💞' },
 ];
