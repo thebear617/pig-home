@@ -12,7 +12,7 @@ declare global {
   }
 }
 
-type CalendarState = { year: number; month: number; selected: string | null; view: 'daily' | 'utility' };
+type CalendarState = { year: number; month: number; selected: string | null };
 
 const page = document.body.dataset.page || '';
 const now = new Date();
@@ -20,7 +20,6 @@ const state: CalendarState = {
   year: now.getFullYear(),
   month: now.getMonth() + 1,
   selected: null,
-  view: 'daily',
 };
 
 function dateKey(year: number, month: number, day: number) {
@@ -29,8 +28,6 @@ function dateKey(year: number, month: number, day: number) {
 
 function readQueryState() {
   const params = new URLSearchParams(window.location.search);
-  const requestedView = params.get('view') || params.get('focus');
-  state.view = requestedView === 'utility' ? 'utility' : 'daily';
   const month = params.get('month');
   if (month && /^\d{4}-\d{2}$/.test(month)) {
     const [year, value] = month.split('-').map(Number);
@@ -102,55 +99,6 @@ function calendarFrame(renderDay: (day: number, today: boolean) => string) {
 function setTitle(selector: string, value = monthTitle()) {
   const element = document.querySelector(selector);
   if (element) element.textContent = value;
-}
-
-function utilityGrid() {
-  const records = window.__utilityRecords || {};
-  return calendarFrame((day, today) => {
-    const key = dateKey(state.year, state.month, day);
-    const record = records[key];
-    const classes = ['cal-cell'];
-    if (today) classes.push('cal-today');
-    if (record) classes.push('cal-has-data');
-    if (state.selected === key) classes.push('cal-selected');
-    return `<div class="${classes.join(' ')}" data-date="${key}">${lunarText(state.year, state.month, day)}<span class="cal-date${today ? ' cal-date-today' : ''}">${day}日</span>${record ? `<span class="cal-balance">¥${record.elecRemaining.toFixed(2)}</span>` : ''}</div>`;
-  });
-}
-
-function utilitySummary() {
-  const prefix = `${state.year}-${pad(state.month)}`;
-  const records = Object.entries(window.__utilityRecords || {})
-    .filter(([key]) => key.startsWith(prefix))
-    .map(([date, value]) => ({ date, ...value }))
-    .sort((a, b) => a.date.localeCompare(b.date));
-  if (records.length < 2) return '';
-  const first = records[0].elecRemaining;
-  const last = records[records.length - 1].elecRemaining;
-  const recharge = records.reduce((sum, record) => sum + (record.recharge || 0), 0);
-  const total = first + recharge - last;
-  const span = Math.max(1, Math.round((new Date(records.at(-1)!.date).getTime() - new Date(records[0].date).getTime()) / 86400000));
-  return `<div class="summary-bar"><div class="summary-item"><span class="summary-label">${state.month}月累计用电</span><span class="summary-value">${total.toFixed(2)} 元</span></div><div class="summary-divider"></div><div class="summary-item"><span class="summary-label">日均</span><span class="summary-value">${(total / span).toFixed(2)} 元</span></div><div class="summary-divider"></div><div class="summary-item"><span class="summary-label">记录</span><span class="summary-value">${records.length} 天</span></div></div>`;
-}
-
-function utilityDetail(key: string | null) {
-  if (!key) return '';
-  const record = window.__utilityRecords?.[key];
-  if (!record) return '';
-  const records = Object.entries(window.__utilityRecords || {})
-    .filter(([date]) => date.startsWith(key.slice(0, 7)))
-    .map(([date, value]) => ({ date, ...value }))
-    .sort((a, b) => a.date.localeCompare(b.date));
-  const index = records.findIndex(item => item.date === key);
-  const next = records[index + 1];
-  const day = new Date(`${key}T00:00:00`);
-  let html = `<div class="detail-panel"><div class="detail-header"><span class="detail-title">${day.getMonth() + 1}月${day.getDate()}日</span><button class="detail-close util-dc">✕</button></div><div class="detail-body"><div class="detail-row"><span class="detail-label">剩余电费</span><span class="detail-val">${record.elecRemaining.toFixed(2)} 元</span></div>`;
-  if (record.recharge) html += `<div class="detail-row"><span class="detail-label">当日充值</span><span class="detail-val" style="color:#047857">+${record.recharge.toFixed(2)} 元</span></div>`;
-  if (next) {
-    const beforeRecharge = next.elecRemaining - (next.recharge || 0);
-    const consumption = record.elecRemaining - beforeRecharge;
-    html += `<div class="detail-row"><span class="detail-label">当日消耗</span><span class="detail-val consumption">${consumption.toFixed(2)} 元</span></div>`;
-  }
-  return `${html}</div></div>`;
 }
 
 function foodGrid() {
@@ -359,19 +307,21 @@ function dailyGrid() {
   const expenses = window.__expenseRecords || [];
   const special = window.__specialEvents || {};
   const hema = window.__hemaDayRecords || {};
+  const utility = window.__utilityRecords || {};
   return calendarFrame((day, today) => {
     const key = dateKey(state.year, state.month, day);
     const record = diary[key];
     const hasExpense = expenses.some(item => item.date === key);
     const monday = new Date(`${key}T00:00:00`).getDay() === 1;
     const event = special[key];
+    const utilRecord = utility[key];
     const classes = ['cal-cell'];
     if (today) classes.push('cal-today');
     if (record || hasExpense || monday) classes.push('cal-has-data');
     if (monday) classes.push('cal-hema-day');
     if (state.selected === key) classes.push('cal-selected');
     if (event) classes.push('cal-special');
-    return `<div class="${classes.join(' ')}" data-date="${key}">${lunarText(state.year, state.month, day)}<span class="cal-date${today ? ' cal-date-today' : ''}">${day}日</span>${hasExpense ? '<span class="cal-expense-dot" title="有支出"></span>' : ''}${monday ? '<span class="cal-hema-badge" title="盒马日">盒马日</span>' : ''}${event ? `<span class="cal-special-icons" title="${escape(event.keywords?.join('、'))}">${event.icons?.join('') || ''}</span>` : ''}</div>`;
+    return `<div class="${classes.join(' ')}" data-date="${key}">${lunarText(state.year, state.month, day)}<span class="cal-date${today ? ' cal-date-today' : ''}">${day}日</span>${hasExpense ? '<span class="cal-expense-dot" title="有支出"></span>' : ''}${monday ? '<span class="cal-hema-badge" title="盒马日">盒马日</span>' : ''}${event ? `<span class="cal-special-icons" title="${escape(event.keywords?.join('、'))}">${event.icons?.join('') || ''}</span>` : ''}${utilRecord ? `<span class="cal-utility-balance">¥${utilRecord.elecRemaining.toFixed(2)}</span>` : ''}</div>`;
   });
 }
 
@@ -380,10 +330,15 @@ function dailyDetail(key: string | null) {
   const record = window.__diaryRecords?.[key];
   const expenses = (window.__expenseRecords || []).filter(item => item.date === key);
   const hema = window.__hemaDayRecords?.[key];
+  const utility = window.__utilityRecords?.[key];
   const monday = new Date(`${key}T00:00:00`).getDay() === 1;
-  if (!record && !expenses.length && !hema && !monday) return '';
+  if (!record && !expenses.length && !hema && !monday && !utility) return '';
   const day = new Date(`${key}T00:00:00`);
   let html = `<div class="detail-panel"><div class="detail-header"><span class="detail-title">${day.getMonth() + 1}月${day.getDate()}日</span><button class="detail-close util-dc">✕</button></div><div class="detail-body">`;
+  if (utility) {
+    html += `<div class="detail-row"><span class="detail-label">电费余额</span><span class="detail-val">¥${utility.elecRemaining.toFixed(2)}</span></div>`;
+    if (utility.recharge) html += `<div class="detail-row"><span class="detail-label">当日充值</span><span class="detail-val" style="color:#047857">+¥${utility.recharge.toFixed(2)}</span></div>`;
+  }
   if (record?.tasks?.length) {
     html += `<div class="detail-row"><span class="detail-label">当日日程</span><span class="detail-val">已完成 ${record.value ?? record.tasks.filter((task: any) => task.status === 'x').length} / 共 ${record.tasks.length}</span></div><div class="detail-tasks">`;
     record.tasks.forEach((task: any, index: number) => { html += `<div class="task-item"><span class="task-num">${index + 1}</span><span class="task-time">${escape(task.time)}</span><span class="task-text">${escape(task.desc)}</span></div>`; });
@@ -452,6 +407,117 @@ function dailySummary() {
   return html.length ? `<div class="summary-bar">${html.join('')}</div>` : '';
 }
 
+function dailyUtilitySummaryHtml(): string {
+  const records = window.__utilityRecords || {};
+  const prefix = `${state.year}-${pad(state.month)}`;
+  const monthRecords = Object.entries(records)
+    .filter(([key]) => key.startsWith(prefix))
+    .map(([date, value]) => ({ date, ...value }))
+    .sort((a, b) => a.date.localeCompare(b.date));
+  if (monthRecords.length < 2) return '';
+  const first = monthRecords[0].elecRemaining;
+  const last = monthRecords[monthRecords.length - 1].elecRemaining;
+  const recharge = monthRecords.reduce((sum, record) => sum + (record.recharge || 0), 0);
+  const total = first + recharge - last;
+  const span = Math.max(1, Math.round((new Date(monthRecords.at(-1)!.date).getTime() - new Date(monthRecords[0].date).getTime()) / 86400000));
+  const currentBalance = monthRecords[monthRecords.length - 1].elecRemaining;
+  return `<div class="daily-utility-bar"><div class="daily-utility-item"><span class="daily-utility-label">当前余额</span><span class="daily-utility-value daily-utility-current">¥${currentBalance.toFixed(2)}</span></div><div class="daily-utility-divider"></div><div class="daily-utility-item"><span class="daily-utility-label">${state.month}月累计用电</span><span class="daily-utility-value">${total.toFixed(2)} 元</span></div><div class="daily-utility-divider"></div><div class="daily-utility-item"><span class="daily-utility-label">日均</span><span class="daily-utility-value">${(total / span).toFixed(2)} 元</span></div><div class="daily-utility-divider"></div><div class="daily-utility-item"><span class="daily-utility-label">充值</span><span class="daily-utility-value">¥${recharge.toFixed(0)}</span></div><div class="daily-utility-divider"></div><div class="daily-utility-item"><span class="daily-utility-label">记录</span><span class="daily-utility-value">${monthRecords.length} 天</span></div></div>`;
+}
+
+function dailyMonthlyOverviewHtml(): string {
+  const prefix = `${state.year}-${pad(state.month)}`;
+  const diary = window.__diaryRecords || {};
+  const expenses = (window.__expenseRecords || []).filter(item => item.date.startsWith(prefix));
+  const totalExpense = expenses.reduce((sum, item) => sum + item.amount, 0);
+  const expenseDays = new Set(expenses.map(item => item.date)).size;
+  const avgExpense = expenseDays ? totalExpense / expenseDays : 0;
+  let recordDays = 0;
+  const sleepDuration: number[] = [];
+  const toMinutes = (value: string) => {
+    const [hour, minute] = value.trim().split(':').map(Number);
+    return hour * 60 + minute;
+  };
+  for (const [date, record] of Object.entries(diary)) {
+    if (!date.startsWith(prefix)) continue;
+    recordDays++;
+    for (const task of record.tasks || []) {
+      if (task.desc !== '睡觉' && task.desc !== '睡懒觉') continue;
+      const parts = String(task.time || '').split('-');
+      if (parts.length !== 2) continue;
+      const start = toMinutes(parts[0]);
+      const end = toMinutes(parts[1]);
+      if (Number.isNaN(start) || Number.isNaN(end)) continue;
+      let e = end;
+      if (e <= start) e += 24 * 60;
+      sleepDuration.push(e - start);
+    }
+  }
+  if (!recordDays) return '<div class="daily-kanban-head"><h3 class="daily-kanban-title">📊 本月概览</h3></div><div class="daily-kanban-empty">本月暂无记录</div>';
+  const avgSleep = sleepDuration.length ? (sleepDuration.reduce((a, b) => a + b, 0) / sleepDuration.length / 60).toFixed(1) : '-';
+  return `<div class="daily-kanban-head"><h3 class="daily-kanban-title"> 本月概览</h3></div>
+<div class="daily-stats-grid">
+  <div class="daily-stat-item"><span class="daily-stat-label">记录</span><span class="daily-stat-value">${recordDays}天</span></div>
+  <div class="daily-stat-item"><span class="daily-stat-label">支出</span><span class="daily-stat-value daily-cost">¥${totalExpense.toFixed(0)}</span></div>
+  <div class="daily-stat-item"><span class="daily-stat-label">日均</span><span class="daily-stat-value">¥${avgExpense.toFixed(0)}</span></div>
+  <div class="daily-stat-item"><span class="daily-stat-label">睡眠</span><span class="daily-stat-value">${avgSleep}h</span></div>
+</div>`;
+}
+
+function dailyExpenseCategoryHtml(): string {
+  const prefix = `${state.year}-${pad(state.month)}`;
+  const expenses = (window.__expenseRecords || []).filter(item => item.date.startsWith(prefix));
+  if (!expenses.length) return '<div class="daily-kanban-head"><h3 class="daily-kanban-title"> 支出分类</h3></div><div class="daily-kanban-empty">本月暂无支出</div>';
+  const catMap = new Map<string, number>();
+  for (const item of expenses) {
+    catMap.set(item.cat, (catMap.get(item.cat) || 0) + item.amount);
+  }
+  const cats = [...catMap.entries()].sort((a, b) => b[1] - a[1]);
+  const total = Math.max(1, Math.ceil(cats.length / EXPENSE_CAT_PER_PAGE));
+  if (expenseCatPage >= total) expenseCatPage = total - 1;
+  if (expenseCatPage < 0) expenseCatPage = 0;
+  const slice = cats.slice(expenseCatPage * EXPENSE_CAT_PER_PAGE, (expenseCatPage + 1) * EXPENSE_CAT_PER_PAGE);
+  let html = '<div class="daily-kanban-head"><h3 class="daily-kanban-title">💰 支出分类</h3>';
+  if (total > 1) {
+    html += `<div class="daily-expense-nav"><button class="daily-expense-btn daily-expense-prev"${expenseCatPage === 0 ? ' disabled' : ''}>◀</button><span class="daily-expense-num">${expenseCatPage + 1}/${total}</span><button class="daily-expense-btn daily-expense-next"${expenseCatPage >= total - 1 ? ' disabled' : ''}>▶</button></div>`;
+  }
+  html += '</div><div class="daily-cat-grid">';
+  for (const [cat, amount] of slice) {
+    html += `<div class="daily-cat-grid-item"><span class="daily-cat-grid-name">${escape(cat)}</span><span class="daily-cat-grid-amount">¥${amount.toFixed(0)}</span></div>`;
+  }
+  return html + '</div>';
+}
+
+const HEMA_PER_PAGE = 1;
+let hemaPage = 0;
+
+const EXPENSE_CAT_PER_PAGE = 6;
+let expenseCatPage = 0;
+
+function dailyHemaDayHtml(): string {
+  const hema = window.__hemaDayRecords || {};
+  const prefix = `${state.year}-${pad(state.month)}`;
+  const records = Object.entries(hema).filter(([date]) => date.startsWith(prefix)).sort((a, b) => b[0].localeCompare(a[0]));
+  if (!records.length) return '<div class="daily-kanban-head"><h3 class="daily-kanban-title">🛒 盒马日</h3></div><div class="daily-kanban-empty">本月暂无记录</div>';
+  const total = Math.max(1, Math.ceil(records.length / HEMA_PER_PAGE));
+  if (hemaPage >= total) hemaPage = total - 1;
+  if (hemaPage < 0) hemaPage = 0;
+  const slice = records.slice(hemaPage * HEMA_PER_PAGE, (hemaPage + 1) * HEMA_PER_PAGE);
+  let html = '<div class="daily-kanban-head"><h3 class="daily-kanban-title">🛒 盒马日</h3>';
+  if (total > 1) {
+    html += `<div class="daily-hema-nav"><button class="daily-hema-btn daily-hema-prev"${hemaPage === 0 ? ' disabled' : ''}>◀</button><span class="daily-hema-num">${hemaPage + 1}/${total}</span><button class="daily-hema-btn daily-hema-next"${hemaPage >= total - 1 ? ' disabled' : ''}>▶</button></div>`;
+  }
+  html += '</div><div class="daily-hema-list">';
+  for (const [date, record] of slice) {
+    const day = new Date(`${date}T00:00:00`);
+    const dateStr = `${day.getMonth() + 1}/${day.getDate()}`;
+    html += `<div class="daily-hema-item"><div class="daily-hema-date">${dateStr}</div>`;
+    if (record.bought) html += `<div class="daily-hema-block"><span class="daily-hema-tag daily-hema-bought">本周购买</span><p class="daily-hema-text">${escape(record.bought)}</p></div>`;
+    if (record.nextPlan) html += `<div class="daily-hema-block"><span class="daily-hema-tag daily-hema-next">下周想买</span><p class="daily-hema-text">${escape(record.nextPlan)}</p></div>`;
+    html += '</div>';
+  }
+  return html + '</div>';
+}
+
 function expenseView() {
   const records = (window.__expenseRecords || []).filter(item => item.date.startsWith(`${state.year}-${pad(state.month)}`)).sort((a, b) => b.date.localeCompare(a.date));
   const categories = window.__expenseCategories || [];
@@ -486,22 +552,8 @@ function setupAccordions(root: ParentNode = document) {
   });
 }
 
-function setTrackerView(view: 'daily' | 'utility') {
-  document.querySelectorAll<HTMLButtonElement>('[data-tracker-view]').forEach(button => {
-    button.classList.toggle('active', button.dataset.trackerView === view);
-  });
-  document.querySelectorAll<HTMLElement>('[data-tracker-panel]').forEach(panel => {
-    panel.hidden = panel.dataset.trackerPanel !== view;
-  });
-}
-
 function refresh() {
-  if (page === 'utility-tracking' || (page === 'daily-tracker' && state.view === 'utility')) {
-    document.getElementById('utilCalendar')!.innerHTML = utilityGrid();
-    document.querySelector('[data-tab="utility-tracking"] .summary-container')!.innerHTML = utilitySummary();
-    document.getElementById('utilDetail')!.innerHTML = utilityDetail(state.selected);
-    setTitle('[data-tab="utility-tracking"] .cal-title');
-  } else if (page === 'food-records') {
+  if (page === 'food-records') {
     document.getElementById('foodCalendar')!.innerHTML = foodGrid();
     document.querySelector('.food-detail-container')!.innerHTML = foodDetail(state.selected);
     const statsEl = document.getElementById('foodMonthlyStats');
@@ -513,10 +565,19 @@ function refresh() {
     const recentEl = document.getElementById('foodRecentKanban');
     if (recentEl) recentEl.innerHTML = recentDishesHtml();
     setTitle('[data-tab="food-records"] .cal-title');
-  } else if (page === 'daily-tracker' && state.view === 'daily') {
+  } else if (page === 'daily-tracker') {
     document.getElementById('dailyCalendar')!.innerHTML = dailyGrid();
     document.getElementById('dailyDetail')!.innerHTML = dailyDetail(state.selected);
-    document.getElementById('dailySummary')!.innerHTML = dailySummary();
+    const summaryEl = document.getElementById('dailySummary');
+    if (summaryEl) summaryEl.innerHTML = dailySummary();
+    const utilityEl = document.getElementById('dailyUtilitySummary');
+    if (utilityEl) utilityEl.innerHTML = dailyUtilitySummaryHtml();
+    const overviewEl = document.getElementById('dailyMonthlyOverview');
+    if (overviewEl) overviewEl.innerHTML = dailyMonthlyOverviewHtml();
+    const catEl = document.getElementById('dailyExpenseCategory');
+    if (catEl) catEl.innerHTML = dailyExpenseCategoryHtml();
+    const hemaEl = document.getElementById('dailyHemaDay');
+    if (hemaEl) hemaEl.innerHTML = dailyHemaDayHtml();
     setTitle('[data-tab="daily-tracker"] .cal-title');
   } else if (page === 'expense-records') {
     document.getElementById('expenseContent')!.innerHTML = expenseView();
@@ -536,15 +597,6 @@ function shiftMonth(delta: number) {
 
 document.addEventListener('click', event => {
   const target = event.target as HTMLElement;
-  const trackerView = target.closest<HTMLButtonElement>('[data-tracker-view]');
-  if (trackerView && (trackerView.dataset.trackerView === 'daily' || trackerView.dataset.trackerView === 'utility')) {
-    state.view = trackerView.dataset.trackerView;
-    state.selected = null;
-    setTrackerView(state.view);
-    writeQueryState();
-    refresh();
-    return;
-  }
   if (target.closest('.cal-prev')) { shiftMonth(-1); return; }
   if (target.closest('.cal-next')) { shiftMonth(1); return; }
   if (target.closest('.cal-today-btn')) {
@@ -569,6 +621,14 @@ document.addEventListener('click', event => {
   if (recentPrev && !recentPrev.disabled) { recentPage--; const el = document.getElementById('foodRecentKanban'); if (el) el.innerHTML = recentDishesHtml(); return; }
   const recentNext = target.closest<HTMLButtonElement>('.food-recent-next');
   if (recentNext && !recentNext.disabled) { recentPage++; const el = document.getElementById('foodRecentKanban'); if (el) el.innerHTML = recentDishesHtml(); return; }
+  const hemaPrev = target.closest<HTMLButtonElement>('.daily-hema-prev');
+  if (hemaPrev && !hemaPrev.disabled) { hemaPage--; const el = document.getElementById('dailyHemaDay'); if (el) el.innerHTML = dailyHemaDayHtml(); return; }
+  const hemaNext = target.closest<HTMLButtonElement>('.daily-hema-next');
+  if (hemaNext && !hemaNext.disabled) { hemaPage++; const el = document.getElementById('dailyHemaDay'); if (el) el.innerHTML = dailyHemaDayHtml(); return; }
+  const expenseCatPrev = target.closest<HTMLButtonElement>('.daily-expense-prev');
+  if (expenseCatPrev && !expenseCatPrev.disabled) { expenseCatPage--; const el = document.getElementById('dailyExpenseCategory'); if (el) el.innerHTML = dailyExpenseCategoryHtml(); return; }
+  const expenseCatNext = target.closest<HTMLButtonElement>('.daily-expense-next');
+  if (expenseCatNext && !expenseCatNext.disabled) { expenseCatPage++; const el = document.getElementById('dailyExpenseCategory'); if (el) el.innerHTML = dailyExpenseCategoryHtml(); return; }
   const category = target.closest<HTMLButtonElement>('.cook-nav-btn');
   if (category) {
     const root = category.closest('.cookbook');
@@ -615,6 +675,5 @@ document.addEventListener('click', event => {
 });
 
 readQueryState();
-setTrackerView(state.view);
 setupAccordions();
 refresh();
