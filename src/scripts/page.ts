@@ -190,6 +190,7 @@ function foodDetail(key: string | null) {
     if (cost != null) html += `<div class="food-meta-item"><span class="food-meta-label">花费</span><span class="food-meta-value food-cost">${cost} 元</span></div>`;
     if (!objectDishes && meal.chef) html += `<div class="food-meta-item"><span class="food-meta-label">主厨</span><span class="food-meta-value">${escape(meal.chef)}</span></div>`;
     if (!objectDishes && meal.helper) html += `<div class="food-meta-item"><span class="food-meta-label">帮手</span><span class="food-meta-value">${escape(meal.helper)}</span></div>`;
+    if (meal.shopping) html += `<div class="food-meta-item"><span class="food-meta-label">买菜</span><span class="food-meta-value">${escape(meal.shopping)} 分钟</span></div>`;
     if (meal.prep) html += `<div class="food-meta-item"><span class="food-meta-label">餐前备菜</span><span class="food-meta-value">${escape(meal.prep)} 分钟</span></div>`;
     if (meal.cleanup) html += `<div class="food-meta-item"><span class="food-meta-label">收拾后厨</span><span class="food-meta-value">${escape(meal.cleanup)} 分钟</span></div>`;
     html += '</div></div>';

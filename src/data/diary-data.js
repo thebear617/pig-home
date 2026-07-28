@@ -4909,7 +4909,7 @@ export const diaryRecords = {
     ]
   },
   "2026-07-28": {
-    "value": 1,
+    "value": 7,
     "tasks": [
       {
         "status": "x",
@@ -4918,6 +4918,54 @@ export const diaryRecords = {
         "isCooking": false,
         "mealType": null,
         "dishGuess": null
+      },
+      {
+        "status": "x",
+        "time": "01:00-05:00",
+        "desc": "打电动 + 玩手机",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      },
+      {
+        "status": "x",
+        "time": "05:00-15:30",
+        "desc": "睡觉",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      },
+      {
+        "status": "x",
+        "time": "15:30-16:00",
+        "desc": "玩手机",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      },
+      {
+        "status": "x",
+        "time": "16:00-16:20",
+        "desc": "做饭：猪肉大葱饺子，收拾后厨 5 分钟（耙耙柑 / 备菜 0 分钟 / 花费 8 元 / 家煮不计入 # 支出）",
+        "isCooking": true,
+        "mealType": "其他",
+        "dishGuess": "猪肉大葱饺子"
+      },
+      {
+        "status": "x",
+        "time": "16:20-18:50",
+        "desc": "简单的学习",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      },
+      {
+        "status": "x",
+        "time": "18:50-20:30",
+        "desc": "做饭：土豆火腿鸡蛋酱汁米饭，收拾后厨 20 分钟（耙耙柑 / 买菜 30 分钟 + 备菜 30 分钟 / 花费 ¥2+¥2+¥0.7+¥1=¥5.7 / 家煮不计入 # 支出）",
+        "isCooking": true,
+        "mealType": "晚饭",
+        "dishGuess": "土豆火腿鸡蛋酱汁米饭"
       }
     ]
   }

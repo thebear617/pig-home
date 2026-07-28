@@ -11,6 +11,7 @@ export interface FoodMeal {
   cost?: number;
   chef?: string;
   helper?: string;
+  shopping?: number | string;
   prep?: number | string;
   cleanup?: number | string;
   image?: string;
@@ -105,6 +106,14 @@ export const foodRecords: Record<string, FoodMeal[]> = {
   '2026-07-25': [
     { meal: '中饭', prep: 0, cleanup: 2, dishes: [
       { name: '汤达人泡面', madeBy: '耙耙柑', cost: 2 }
+    ]}
+  ],
+  '2026-07-28': [
+    { meal: '中饭', prep: 0, cleanup: 5, dishes: [
+      { name: '猪肉大葱饺子', madeBy: '耙耙柑', cost: 8 }
+    ]},
+    { meal: '晚饭', shopping: 30, prep: 30, cleanup: 20, dishes: [
+      { name: '土豆火腿鸡蛋酱汁米饭', madeBy: '耙耙柑', cost: 5.7 }
     ]}
   ]
 };

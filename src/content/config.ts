@@ -35,9 +35,11 @@ const foodPlacesCollection = defineCollection({
   type: 'content',
   schema: z.object({
     name: z.string(),
+    category: z.string().default(''),
     dishes: z.array(z.string()).default([]),
     area: z.string(),
     location: z.string(),
+    address: z.string().default(''),
     date: z.string().default(''),
     note: z.string().default(''),
   }),
