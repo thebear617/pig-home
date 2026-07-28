@@ -198,6 +198,75 @@ function foodDetail(key: string | null) {
   return `${html}</div></div>`;
 }
 
+function parseMin(v: number | string | undefined): number {
+  if (v == null) return 0;
+  if (typeof v === 'number') return v;
+  return parseInt(v, 10) || 0;
+}
+
+function formatMin(min: number): string {
+  if (min <= 0) return '';
+  if (min < 60) return `${min}分钟`;
+  const h = Math.floor(min / 60);
+  const m = min % 60;
+  return m ? `${h}小时${m}分钟` : `${h}小时`;
+}
+
+const RECENT_PER_PAGE = 3;
+let recentPage = 0;
+
+function getRecentDishes() {
+  const records = window.__foodRecords || {};
+  const dates = Object.keys(records).sort().reverse();
+  const list: { date: string; name: string; madeBy: string; min: number; cost: number | null; meal: string }[] = [];
+  for (const date of dates) {
+    for (const meal of records[date]) {
+      const dishes = meal.dishes || [];
+      const obj = dishes.length > 0 && typeof dishes[0] === 'object';
+      const min = parseMin(meal.prep) + parseMin(meal.shopping) + parseMin(meal.cleanup);
+      const cost = meal.cost ?? (obj ? dishes.reduce((sum: number, dish: any) => sum + (dish.cost || 0), 0) : null);
+      for (const d of dishes) {
+        list.push({
+          date,
+          name: obj ? d.name : String(d),
+          madeBy: obj ? (d.madeBy || '') : (meal.chef || ''),
+          min,
+          cost,
+          meal: meal.meal || '餐',
+        });
+      }
+    }
+  }
+  return list;
+}
+
+function recentDishesHtml(): string {
+  const dishes = getRecentDishes();
+  const total = Math.max(1, Math.ceil(dishes.length / RECENT_PER_PAGE));
+  if (recentPage >= total) recentPage = total - 1;
+  if (recentPage < 0) recentPage = 0;
+  const slice = dishes.slice(recentPage * RECENT_PER_PAGE, (recentPage + 1) * RECENT_PER_PAGE);
+  let html = '<div class="food-recent-head"><h3 class="food-recent-title">🍳 最近几道菜</h3>';
+  if (total > 1) {
+    html += `<div class="food-recent-nav"><button class="food-recent-btn food-recent-prev"${recentPage === 0 ? ' disabled' : ''}>◀</button><span class="food-recent-num">${recentPage + 1} / ${total}</span><button class="food-recent-btn food-recent-next"${recentPage >= total - 1 ? ' disabled' : ''}>▶</button></div>`;
+  }
+  html += '</div><div class="food-recent-list">';
+  for (const d of slice) {
+    const day = new Date(`${d.date}T00:00:00`);
+    const dateStr = `${day.getMonth() + 1}/${day.getDate()}`;
+    const timeStr = formatMin(d.min);
+    html += `<div class="food-recent-card"><div class="food-recent-top"><span class="food-recent-name">🥘 ${escape(d.name)}</span><span class="food-recent-date">${dateStr}</span></div><div class="food-recent-bot">`;
+    html += `<span class="food-recent-meal">${escape(d.meal)}</span>`;
+    if (d.madeBy) html += `<span class="food-recent-chef">${escape(d.madeBy)}做</span>`;
+    if (d.cost != null) html += `<span class="food-recent-cost">💵 ${d.cost}元</span>`;
+    if (timeStr) html += `<span class="food-recent-time">⏱ ${timeStr}</span>`;
+    html += '</div></div>';
+  }
+  if (!slice.length) html += '<div class="food-recent-empty">暂无记录</div>';
+  html += '</div>';
+  return html;
+}
+
 function dailyGrid() {
   const diary = window.__diaryRecords || {};
   const expenses = window.__expenseRecords || [];
@@ -348,6 +417,8 @@ function refresh() {
   } else if (page === 'food-records') {
     document.getElementById('foodCalendar')!.innerHTML = foodGrid();
     document.querySelector('.food-detail-container')!.innerHTML = foodDetail(state.selected);
+    const recentEl = document.getElementById('foodRecentKanban');
+    if (recentEl) recentEl.innerHTML = recentDishesHtml();
     setTitle('[data-tab="food-records"] .cal-title');
   } else if (page === 'daily-tracker' && state.view === 'daily') {
     document.getElementById('dailyCalendar')!.innerHTML = dailyGrid();
@@ -401,6 +472,10 @@ document.addEventListener('click', event => {
     root?.querySelectorAll<HTMLElement>('.food-view-panel').forEach(panel => { panel.hidden = panel.dataset.panel !== foodView.dataset.view; });
     return;
   }
+  const recentPrev = target.closest<HTMLButtonElement>('.food-recent-prev');
+  if (recentPrev && !recentPrev.disabled) { recentPage--; const el = document.getElementById('foodRecentKanban'); if (el) el.innerHTML = recentDishesHtml(); return; }
+  const recentNext = target.closest<HTMLButtonElement>('.food-recent-next');
+  if (recentNext && !recentNext.disabled) { recentPage++; const el = document.getElementById('foodRecentKanban'); if (el) el.innerHTML = recentDishesHtml(); return; }
   const category = target.closest<HTMLButtonElement>('.cook-nav-btn');
   if (category) {
     const root = category.closest('.cookbook');

@@ -36,19 +36,26 @@ const weekdays = ['日', '一', '二', '三', '四', '五', '六'];
       <button class="food-view-tab" data-view="tips">💡 做饭心得</button>
     </div>
     <div class="food-view-panel" data-panel="calendar">
-      <div class="calendar-view">
-        <div class="cal-header">
-          <span class="cal-title"></span>
-          <div class="cal-nav">
-            <button class="cal-nav-btn cal-prev">◀</button>
-            <button class="cal-today-btn cal-today">今天</button>
-            <button class="cal-nav-btn cal-next">▶</button>
+      <div class="food-calendar-layout">
+        <div class="food-calendar-col">
+          <div class="calendar-view">
+            <div class="cal-header">
+              <span class="cal-title"></span>
+              <div class="cal-nav">
+                <button class="cal-nav-btn cal-prev">◀</button>
+                <button class="cal-today-btn cal-today">今天</button>
+                <button class="cal-nav-btn cal-next">▶</button>
+              </div>
+            </div>
+            <div class="cal-weekdays">{weekdays.map(w => <span class="cal-weekday">{w}</span>)}</div>
+            <div class="cal-grid" id="foodCalendar"></div>
           </div>
+          <div class="food-detail-container"></div>
         </div>
-        <div class="cal-weekdays">{weekdays.map(w => <span class="cal-weekday">{w}</span>)}</div>
-        <div class="cal-grid" id="foodCalendar"></div>
+        <div class="food-recent-col">
+          <div class="food-recent-kanban" id="foodRecentKanban"></div>
+        </div>
       </div>
-      <div class="food-detail-container"></div>
     </div>
     <div class="food-view-panel" data-panel="tips" hidden>
       <div class="cookbook">

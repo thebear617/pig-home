@@ -1978,6 +1978,186 @@ button {
   color: var(--red);
 }
 
+/* ─── 美食记录：最近几道菜看板 ─── */
+
+body[data-page="food-records"] .app-shell {
+  max-width: 1100px;
+}
+
+.food-calendar-layout {
+  display: flex;
+  gap: 1.25rem;
+  align-items: flex-start;
+}
+
+.food-calendar-col {
+  flex: 1;
+  min-width: 0;
+}
+
+.food-recent-col {
+  width: 280px;
+  flex-shrink: 0;
+}
+
+.food-recent-kanban {
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: var(--surface);
+  padding: .9rem;
+  position: sticky;
+  top: 1rem;
+}
+
+.food-recent-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: .75rem;
+  gap: .5rem;
+}
+
+.food-recent-title {
+  font-size: .95rem;
+  font-weight: 800;
+  color: var(--dark);
+  margin: 0;
+}
+
+.food-recent-nav {
+  display: flex;
+  align-items: center;
+  gap: .35rem;
+}
+
+.food-recent-btn {
+  width: 1.5rem;
+  height: 1.5rem;
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  background: var(--surface);
+  color: var(--muted);
+  font-size: .7rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: border-color .15s, color .15s;
+}
+
+.food-recent-btn:hover:not(:disabled) {
+  border-color: #c08a2f;
+  color: #c08a2f;
+}
+
+.food-recent-btn:disabled {
+  opacity: .3;
+  cursor: default;
+}
+
+.food-recent-num {
+  font-size: .72rem;
+  color: var(--muted);
+  font-weight: 700;
+  min-width: 2.5rem;
+  text-align: center;
+  font-variant-numeric: tabular-nums;
+}
+
+.food-recent-list {
+  display: flex;
+  flex-direction: column;
+  gap: .5rem;
+}
+
+.food-recent-card {
+  padding: .55rem .7rem;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: var(--surface-soft);
+  transition: border-color .15s;
+}
+
+.food-recent-card:hover {
+  border-color: #c08a2f;
+}
+
+.food-recent-top {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: .4rem;
+}
+
+.food-recent-name {
+  font-size: .85rem;
+  font-weight: 700;
+  color: var(--text);
+}
+
+.food-recent-date {
+  font-size: .72rem;
+  color: var(--muted);
+  flex-shrink: 0;
+  font-variant-numeric: tabular-nums;
+}
+
+.food-recent-bot {
+  display: flex;
+  align-items: center;
+  gap: .4rem;
+  margin-top: .2rem;
+  flex-wrap: wrap;
+}
+
+.food-recent-meal {
+  font-size: .68rem;
+  font-weight: 700;
+  color: #fff;
+  background: var(--red, #b5482f);
+  padding: .1rem .4rem;
+  border-radius: 999px;
+  letter-spacing: .03em;
+}
+
+.food-recent-chef {
+  font-size: .72rem;
+  color: var(--muted);
+}
+
+.food-recent-cost {
+  font-size: .72rem;
+  color: var(--red);
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+}
+
+.food-recent-time {
+  font-size: .72rem;
+  color: var(--muted);
+  margin-left: auto;
+  font-variant-numeric: tabular-nums;
+}
+
+.food-recent-empty {
+  color: var(--muted);
+  font-size: .82rem;
+  text-align: center;
+  padding: 1rem 0;
+}
+
+@media (max-width: 719px) {
+  .food-calendar-layout {
+    flex-direction: column;
+  }
+  .food-recent-col {
+    width: 100%;
+  }
+  .food-recent-kanban {
+    position: static;
+  }
+}
+
 /* ─── Food map ─── */
 
 .foodmap-cards {
