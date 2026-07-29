@@ -4970,7 +4970,7 @@ export const diaryRecords = {
       {
         "status": "x",
         "time": "20:30-23:00",
-        "desc": "做开发",
+        "desc": "开发：猪窝美食日历+每日追踪看板化 + 开发笔记 v0.7.0 知识库与文章归档体系重构 - 4 个 commit：home 6beed2d 21:23 feat 美食日历右侧最近几道菜看板（带翻页、消费、用时）（3 文件 +272/-10）、home 3f18b87 21:32 feat 美食日历新增右侧三看板（本月统计/高频菜品/厨师排行）+ 下方最近几道菜全宽布局（3 文件 +270/-30）、home 1307e08 22:44 feat 每日追踪看板化 - 右侧三看板（本月概览/支出分类/盒马日）+ 日历下方水电摘要 + 全宽展开详情（含电费余额）+ 移除水电追踪独立视图（5 文件 +522/-124）、devnotes 2253df9 22:58 feat(v0.7.0) 统一知识库与文章归档体系（42 文件 +1238/-1549）",
         "isCooking": false,
         "mealType": null,
         "dishGuess": null
@@ -4986,7 +4986,7 @@ export const diaryRecords = {
     ]
   },
   "2026-07-29": {
-    "value": 7,
+    "value": 10,
     "tasks": [
       {
         "status": "x",
@@ -5015,7 +5015,7 @@ export const diaryRecords = {
       {
         "status": "x",
         "time": "02:20-04:30",
-        "desc": "进行开发（r1: pdf2html skill）",
+        "desc": "开发：pdf2html skill（r1）持续推进 + 各站点并行改进 - 12 个 commit：personal 896cbd6 02:19 fix 修正熊窝跨页面导航路径、6d95683 02:25 fix 固定路由表主入口地址、958ec5b 02:27 fix 区分熊窝本地与线上导航入口、77666c9 02:29 fix 本地路由表改用 index 页面、bbede3a 02:34 feat 重整无畏契约战术库首页与地图章节（2 文件 +50/-6）、5da55ad 03:51 feat 路由表改版为胶囊按钮布局,精简个人站点并新增 AI 工具分类（3 文件 +126/-55）；devnotes 30c25eb 02:22 docs 补全猪窝 v1.4.0 看板化演进、b79dc0a 02:31 docs 记录本地路由表 404 修复、634bbd7 02:33 docs 统一 Debug 问题标题格式、5b690dc 02:34 docs 修正 Debug 标签加粗范围、b8ad341 03:45 docs 补充常识笔记 v0.9.0 开发时间线；lifenotes 1862aca 03:45 feat v0.9.0 列表分页与筛选重构、板块大重组",
         "isCooking": false,
         "mealType": null,
         "dishGuess": null
@@ -5043,6 +5043,30 @@ export const diaryRecords = {
         "isCooking": false,
         "mealType": null,
         "dishGuess": null
+      },
+      {
+        "status": "x",
+        "time": "15:00-18:00",
+        "desc": "开发：pdf2html skill（r1）+ 熊窝 v0.18.0/v0.19.0 双发版 + 笔记中心排障 + 多项时间线补充 - 5 个 commit：devnotes 09ca30c 15:11 fix(v0.7.1) 笔记中心分页与 MiniMax MCP 排障（5 文件 +111/-16）、6a20251 17:13 docs 补充熊窝 v0.18.0 生活仪表盘与 v0.19.0 路由表改造的开发时间线（2 文件 +50）、3a62770 17:44 docs 补充仪表盘指南与 Astro 图片排障笔记（2 文件 +58/-3）；personal d321927 17:16 feat(v0.18.0) 新增生活仪表盘,整合多引擎搜索、两地天气、日历、番茄钟与 GitHub 主页（8 文件 +654/-7）、40436f9 17:16 feat(v0.19.0) 重构路由表为分组、列表、瀑布流三视图,支持搜索、筛选与时间排序（6 文件 +907/-93）",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      },
+      {
+        "status": "x",
+        "time": "18:00-19:20",
+        "desc": "出门买东西：兴隆社区二区收 8 个二手碗 / 零食超市（12 包辣条 + 一排 AD 钙）/ 超市（酱香饼 + 电动车防雨袋）",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      },
+      {
+        "status": "x",
+        "time": "19:20-19:35",
+        "desc": "做饭：黑胡椒牛排（备菜 10 分钟，收拾后厨 5 分钟，花费 0 元）",
+        "isCooking": true,
+        "mealType": "晚饭",
+        "dishGuess": "黑胡椒牛排（备菜 10 分钟"
       }
     ]
   }
