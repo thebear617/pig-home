@@ -4986,7 +4986,7 @@ export const diaryRecords = {
     ]
   },
   "2026-07-29": {
-    "value": 3,
+    "value": 7,
     "tasks": [
       {
         "status": "x",
@@ -5011,6 +5011,38 @@ export const diaryRecords = {
         "isCooking": true,
         "mealType": "夜宵",
         "dishGuess": "煮了母鸡汤泡面、耙耙柑"
+      },
+      {
+        "status": "x",
+        "time": "02:20-04:30",
+        "desc": "进行开发（r1: pdf2html skill）",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      },
+      {
+        "status": "x",
+        "time": "04:30-13:00",
+        "desc": "睡觉",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      },
+      {
+        "status": "x",
+        "time": "13:00-14:00",
+        "desc": "出门兑换了老母鸡汤面和外星人电解质水（1 元换购 / 花费 1.47 元 / 居家生活 # 支出）",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      },
+      {
+        "status": "x",
+        "time": "14:00-15:00",
+        "desc": "在门口的兰州拉面吃牛肉炒刀削面（花费 15 元 / 市内出行 # 支出）",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
       }
     ]
   }
