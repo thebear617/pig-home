@@ -4986,7 +4986,7 @@ export const diaryRecords = {
     ]
   },
   "2026-07-29": {
-    "value": 13,
+    "value": 14,
     "tasks": [
       {
         "status": "x",
@@ -5071,7 +5071,7 @@ export const diaryRecords = {
       {
         "status": "x",
         "time": "19:35-21:00",
-        "desc": "开发（session 内 chore 整理）：home ad25e57 chore(diary) 续补 7/29 日程 13:00-19:35 + 开发段展开 commit refs（3 文件 +58/-3）、home 1eb191f chore(todo) r1（pdf2html skill）从 doing 退回 todo（1 文件 +1/-1）、home 56c7628 chore(todo) v9（B 站「不玩手机的10分钟，做什么最赚？」）已完成（2 文件 +2/-2）",
+        "desc": "开发（session 内 chore + 多站点并行改进，提交晚）：home 1eb191f 20:00 chore(todo) r1（pdf2html skill）从 doing 退回 todo（1 文件 +1/-1）、home 56c7628 20:18 chore(todo) v9（B 站「不玩手机的10分钟，做什么最赚？」）已完成（2 文件 +2/-2）；21:00 后落地 5 commit：home 47ca0ea 21:32 chore(diary) 续补 7/29 19:35-23:30（1 文件 +25/-1）、personal 3e6abb1 21:37 feat(v0.19.1) 丰富生活仪表盘,新增网易云歌单与三地天气（5 文件 +267/-7）、personal 477a968 21:37 docs 补充熊窝 v0.19.1 开发时间线（1 文件 +24）、cats b339697 21:38 docs 补充猫猫 v0.5.0 开发时间线（1 文件 +26）、lifenotes 673ddb3 21:37 v0.5.0 迁移至 Astro 并重构知识科普（211 文件 +7285/-455）",
         "isCooking": false,
         "mealType": null,
         "dishGuess": null
@@ -5088,6 +5088,14 @@ export const diaryRecords = {
         "status": "x",
         "time": "21:30-23:30",
         "desc": "打电动（英雄联盟）",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      },
+      {
+        "status": "x",
+        "time": "23:30-24:00",
+        "desc": "开发（提交晚）：personal 88607aa 23:02 fix(v0.19.2) 修复移动端网易云歌单白屏（4 文件 +21/-5）、lifenotes bea8c99 00:16 refactor v0.9.1 life 领域内容大幅聚类合并（25→9 篇）（25 文件 +428/-608）",
         "isCooking": false,
         "mealType": null,
         "dishGuess": null
