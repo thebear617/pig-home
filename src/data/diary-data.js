@@ -4986,7 +4986,7 @@ export const diaryRecords = {
     ]
   },
   "2026-07-29": {
-    "value": 10,
+    "value": 13,
     "tasks": [
       {
         "status": "x",
@@ -5067,6 +5067,30 @@ export const diaryRecords = {
         "isCooking": true,
         "mealType": "晚饭",
         "dishGuess": "黑胡椒牛排（备菜 10 分钟"
+      },
+      {
+        "status": "x",
+        "time": "19:35-21:00",
+        "desc": "开发（session 内 chore 整理）：home ad25e57 chore(diary) 续补 7/29 日程 13:00-19:35 + 开发段展开 commit refs（3 文件 +58/-3）、home 1eb191f chore(todo) r1（pdf2html skill）从 doing 退回 todo（1 文件 +1/-1）、home 56c7628 chore(todo) v9（B 站「不玩手机的10分钟，做什么最赚？」）已完成（2 文件 +2/-2）",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      },
+      {
+        "status": "x",
+        "time": "21:00-21:30",
+        "desc": "洗澡",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      },
+      {
+        "status": "x",
+        "time": "21:30-23:30",
+        "desc": "打电动（英雄联盟）",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
       }
     ]
   }
