@@ -31,7 +31,7 @@ export const TODO_BOARDS: TodoBoard[] = [
     name: '科研',
     icon: '🔍',
     items: [
-      { id: 'r1', title: '做好端到端的 pdf2html 的 skill', status: 'doing', date: '2026-07-19', createdAt: '2026-07-19', url: '', note: '' }
+      { id: 'r1', title: '做好端到端的 pdf2html 的 skill', status: 'todo', date: '2026-07-29', createdAt: '2026-07-19', url: '', note: '暂停 7/29，从 doing 退回 todo' }
     ]
   },
   {
