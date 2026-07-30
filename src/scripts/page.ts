@@ -666,28 +666,115 @@ function expenseTopItemsHtml(): string {
   return html + '</div>';
 }
 
+const SERVICE_ICONS: Record<string, string> = {
+  'monica': '', 'ksqnm': '🌐', 'wpsai会员': '📝', 'wink': '🎬', 'csdn': '💻',
+  'chatgpt': '🤖', 'claude': '🤖', 'opencode': '🤖', 'minimax': '🤖',
+  '爱奇艺': '🎬', 'b站': '📺', 'youtube': '▶️',
+  '京东': '🛍️', '88vip': '🛍️', '腾讯': '🛍️',
+  '网易云': '🎵', 'qq音乐': '', '全民k歌': '🎤',
+  '百度云': '☁️', '迅雷': '️', '夸克': '', 'icloud': '☁️',
+  '梯子': '🌐', '鲨鱼记账': '💰', '剪映': '',
+  'microsoft': '📦', 'wps': '📝', 'notion': '📋', 'figma': '🎨',
+};
+
+function getServiceIcon(record: any): string {
+  if (record.icon) return `<img src="${record.icon}" alt="" aria-hidden="true">`;
+  const lower = record.name.toLowerCase();
+  for (const [key, icon] of Object.entries(SERVICE_ICONS)) {
+    if (lower.includes(key)) return icon;
+  }
+  return '📌';
+}
+
+const TAG_COLORS: Record<string, { bg: string; fg: string }> = {
+  'AI': { bg: '#ede9fe', fg: '#6d28d9' },
+  '工具': { bg: '#dcfce7', fg: '#166534' },
+  '视频': { bg: '#ffedd5', fg: '#9a3412' },
+  '购物': { bg: '#fce7f3', fg: '#9d174d' },
+  '音乐': { bg: '#f3e8ff', fg: '#7e22ce' },
+  '网盘': { bg: '#cffafe', fg: '#155e75' },
+  '其他': { bg: '#f1f5f9', fg: '#475569' },
+};
+
+function membershipIcon(name: 'card' | 'calendar' | 'shield' | 'clock'): string {
+  const paths = {
+    card: '<rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 10h18M7 15h3"/>',
+    calendar: '<rect x="3" y="5" width="18" height="16" rx="2"/><path d="M16 3v4M8 3v4M3 10h18M8 14h.01M12 14h.01M16 14h.01M8 18h.01M12 18h.01"/>',
+    shield: '<path d="M12 3 20 7v5c0 5-3.4 8.2-8 9-4.6-.8-8-4-8-9V7l8-4Z"/><path d="m8.5 12 2.2 2.2 4.8-4.8"/>',
+    clock: '<circle cx="12" cy="12" r="9"/><path d="M12 7v5l3.5 2"/>',
+  };
+  return `<svg class="membership-line-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${paths[name]}</svg>`;
+}
+
 function membershipSubscriptionsHtml(): string {
   const records = window.__membershipRecords || [];
   const today = new Date();
   today.setHours(0, 0, 0, 0);
   const todayTime = today.getTime();
   const parseDate = (value: string) => new Date(`${value}T00:00:00`).getTime();
-  const active = records.filter(record => record.expireDate && parseDate(record.expireDate) >= todayTime).sort((a, b) => parseDate(a.expireDate) - parseDate(b.expireDate));
-  const unknown = records.filter(record => !record.expireDate).sort((a, b) => a.name.localeCompare(b.name, 'zh-CN'));
+  const active = records.filter(record => record.expireDate && parseDate(record.expireDate) > todayTime).sort((a, b) => parseDate(a.expireDate) - parseDate(b.expireDate));
   const expired = records.filter(record => record.expireDate && parseDate(record.expireDate) < todayTime).sort((a, b) => parseDate(b.expireDate) - parseDate(a.expireDate));
-  const monthly = active.reduce((sum, record) => record.price == null || !record.cycleMonths ? sum : sum + record.price / record.cycleMonths, 0);
+  const monthly = active.reduce((sum, record) => record.price == null || record.cycleMonths !== 1 ? sum : sum + record.price, 0);
+  const annual = active.reduce((sum, record) => record.price == null || !record.cycleMonths ? sum : sum + record.price / record.cycleMonths * 12, 0);
   const dueSoon = active.filter(record => (parseDate(record.expireDate) - todayTime) / 86400000 <= 30).length;
-  const groups: Record<string, any[]> = { active, unknown, expired };
+  const groups: Record<string, any[]> = { all: records, active, expired };
   const current = groups[membershipView] || active;
-  const daysLabel = (record: any) => !record.expireDate ? '待补到期日' : (() => { const days = Math.round((parseDate(record.expireDate) - todayTime) / 86400000); return days >= 0 ? `${days} 天后到期` : `已过期 ${-days} 天`; })();
-  let html = '<div class="expense-kanban-head"><h3 class="expense-kanban-title">💳 会员订阅</h3>';
-  html += `<div class="membership-view-nav"><button class="membership-view-btn${membershipView === 'active' ? ' active' : ''}" data-membership-view="active">有效 ${active.length}</button><button class="membership-view-btn${membershipView === 'unknown' ? ' active' : ''}" data-membership-view="unknown">待补 ${unknown.length}</button><button class="membership-view-btn${membershipView === 'expired' ? ' active' : ''}" data-membership-view="expired">过期 ${expired.length}</button></div></div>`;
-  html += `<div class="membership-summary"><div><span>月均订阅</span><strong>¥${Math.round(monthly)}</strong></div><div><span>有效订阅</span><strong>${active.length}</strong></div><div><span>30 天内到期</span><strong class="${dueSoon ? 'membership-warning' : ''}">${dueSoon}</strong></div></div><div class="membership-list">`;
-  for (const record of current) {
-    const price = record.price == null ? '价格待补' : `¥${record.price}${record.cycleMonths ? ` / ${record.cycleMonths}月` : ''}`;
-    html += `<div class="membership-item"><div class="membership-item-main"><div><strong>${escape(record.name)}</strong>${(record.tags || []).map((tag: string) => `<span class="membership-tag">${escape(tag)}</span>`).join('')}</div>${record.note ? `<span class="membership-note">${escape(record.note)}</span>` : ''}</div><div class="membership-item-meta"><strong>${price}</strong><span>${daysLabel(record)}</span></div></div>`;
+  const daysLabel = (record: any) => { const days = Math.round((parseDate(record.expireDate) - todayTime) / 86400000); return days > 0 ? `${days} 天后到期` : `已过期 ${-days} 天`; };
+  const isDueSoon = (record: any) => (parseDate(record.expireDate) - todayTime) / 86400000 <= 30;
+  const isExpired = (record: any) => parseDate(record.expireDate) < todayTime;
+
+  let html = `<div class="membership-header"><h2 class="membership-title"><span class="membership-title-icon">${membershipIcon('card')}</span>会员订阅</h2>`;
+  html += `<div class="membership-view-nav"><button class="membership-view-btn${membershipView === 'active' ? ' active' : ''}" data-membership-view="active">有效</button><button class="membership-view-btn${membershipView === 'expired' ? ' active' : ''}" data-membership-view="expired">过期</button><button class="membership-view-btn${membershipView === 'all' ? ' active' : ''}" data-membership-view="all">全部</button></div></div>`;
+
+  html += '<div class="membership-summary">';
+  html += `<div class="membership-stat-card"><span class="membership-stat-icon">${membershipIcon('card')}</span><div class="membership-stat-body"><span class="membership-stat-label">每月订阅</span><span class="membership-stat-value membership-stat-price">¥${Math.round(monthly)}</span></div></div>`;
+  html += `<div class="membership-stat-card"><span class="membership-stat-icon">${membershipIcon('calendar')}</span><div class="membership-stat-body"><span class="membership-stat-label">每年订阅</span><span class="membership-stat-value membership-stat-price">¥${Math.round(annual)}</span></div></div>`;
+  html += `<div class="membership-stat-card"><span class="membership-stat-icon">${membershipIcon('shield')}</span><div class="membership-stat-body"><span class="membership-stat-label">有效订阅</span><span class="membership-stat-value">${active.length} 项</span></div></div>`;
+  html += `<div class="membership-stat-card${dueSoon ? ' membership-stat-warning' : ''}"><span class="membership-stat-icon">${membershipIcon('clock')}</span><div class="membership-stat-body"><span class="membership-stat-label">30天内到期</span><span class="membership-stat-value">${dueSoon} 项</span></div></div>`;
+  html += '</div>';
+
+  const yearGroups = new Map<number, { items: any[]; total: number }>();
+  for (const record of active) {
+    if (!record.expireDate || record.price == null) continue;
+    const year = new Date(`${record.expireDate}T00:00:00`).getFullYear();
+    if (!yearGroups.has(year)) yearGroups.set(year, { items: [], total: 0 });
+    yearGroups.get(year)!.items.push(record);
+    yearGroups.get(year)!.total += record.price;
   }
-  return html + '</div>';
+  const sortedYears = [...yearGroups.keys()].sort();
+  if (sortedYears.length) {
+    html += '<div class="membership-yearly-section"><h3 class="membership-section-title">每年订阅费用</h3><div class="membership-yearly-cards">';
+    for (const year of sortedYears) {
+      const group = yearGroups.get(year)!;
+      html += `<div class="membership-yearly-card"><span class="membership-yearly-icon">${membershipIcon('calendar')}</span><div class="membership-yearly-body"><div class="membership-yearly-info"><strong class="membership-yearly-year">${year}</strong><span class="membership-yearly-count">${group.items.length} 个订阅</span></div><strong class="membership-yearly-total">¥${Math.round(group.total)}</strong></div></div>`;
+    }
+    html += '</div></div>';
+  }
+
+  html += '<div class="membership-list-section"><h3 class="membership-section-title">订阅列表</h3><div class="membership-table">';
+  html += '<div class="membership-table-head"><span class="membership-th-name">订阅服务</span><span class="membership-th-tag">标签</span><span class="membership-th-note">备注</span><span class="membership-th-price">价格</span><span class="membership-th-status">到期状态</span></div>';
+  for (const record of current) {
+    const icon = getServiceIcon(record);
+    const tags = (record.tags || []) as string[];
+    const priceText = record.price == null ? '价格待补' : record.price === 0 ? '免费' : `¥${record.price}${record.cycleMonths ? ` / ${record.cycleMonths}月` : ''}`;
+    const statusText = daysLabel(record);
+    const dueSoonClass = isDueSoon(record) ? ' membership-due-soon' : '';
+    const expiredClass = isExpired(record) ? ' membership-expired' : '';
+    const tagHtml = tags.map(tag => {
+      const colors = TAG_COLORS[tag] || TAG_COLORS['其他'];
+      return `<span class="membership-tag" style="background:${colors.bg};color:${colors.fg}">${escape(tag)}</span>`;
+    }).join('');
+    html += `<div class="membership-row${dueSoonClass}${expiredClass}">`;
+    html += `<div class="membership-row-main"><span class="membership-row-logo">${icon}</span><div class="membership-row-copy"><strong>${escape(record.name)}</strong><span class="membership-row-note-mobile">${record.note ? escape(record.note) : '—'}</span></div></div>`;
+    html += `<div class="membership-row-tags">${tagHtml}</div>`;
+    html += `<div class="membership-row-note">${record.note ? escape(record.note) : '—'}</div>`;
+    html += `<div class="membership-row-price"><strong>${priceText}</strong></div>`;
+    const statusIcon = membershipIcon('clock');
+    html += `<div class="membership-row-status"><span class="membership-status-icon">${statusIcon}</span><span>${statusText}</span></div>`;
+    html += `</div>`;
+  }
+  html += '</div></div>';
+  return html;
 }
 
 function setupAccordions(root: ParentNode = document) {
