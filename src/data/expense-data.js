@@ -748,5 +748,12 @@ export const expenseRecords = [
     "sub": "AI订阅",
     "amount": 33.99,
     "note": "opencode go / thebear 首月"
+  },
+  {
+    "date": "2026-07-30",
+    "cat": "居家生活",
+    "sub": "做饭",
+    "amount": 0.07,
+    "note": "一个小青菜"
   }
 ];
