@@ -745,8 +745,8 @@ export const expenseRecords = [
   {
     "date": "2026-07-30",
     "cat": "通讯订阅",
-    "sub": "opencode go",
+    "sub": "AI订阅",
     "amount": 33.99,
-    "note": "AI 订阅 / thebear 首月"
+    "note": "opencode go / thebear 首月"
   }
 ];
