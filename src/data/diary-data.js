@@ -5103,7 +5103,7 @@ export const diaryRecords = {
     ]
   },
   "2026-07-30": {
-    "value": 2,
+    "value": 4,
     "tasks": [
       {
         "status": "x",
@@ -5117,6 +5117,22 @@ export const diaryRecords = {
         "status": "x",
         "time": "02:00-12:00",
         "desc": "睡觉",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      },
+      {
+        "status": "x",
+        "time": "12:00-12:50",
+        "desc": "开发（猫猫网站 cats）：cats b0ea5c8 12:30 feat 完善猫猫手册首页档案体验（2 文件 +457/-52）；晚提交：cats bef2a89 12:51 feat 统一物资与协作运营档案风格",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      },
+      {
+        "status": "x",
+        "time": "12:50-13:40",
+        "desc": "用餐与充电：门口重庆小面 炸酱面 ¥12 + 顺便给小车充电 ¥2",
         "isCooking": false,
         "mealType": null,
         "dishGuess": null
