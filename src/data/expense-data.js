@@ -738,7 +738,7 @@ export const expenseRecords = [
   {
     "date": "2026-07-30",
     "cat": "市外出行",
-    "sub": "跨省交通",
+    "sub": "大交通",
     "amount": 645.0,
     "note": "2026-08-04 咸阳 → 南宁 机票"
   }
