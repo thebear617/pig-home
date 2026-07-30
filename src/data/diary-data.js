@@ -5103,7 +5103,7 @@ export const diaryRecords = {
     ]
   },
   "2026-07-30": {
-    "value": 9,
+    "value": 10,
     "tasks": [
       {
         "status": "x",
@@ -5173,6 +5173,14 @@ export const diaryRecords = {
         "status": "x",
         "time": "21:00-22:40",
         "desc": "打《英雄联盟》",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      },
+      {
+        "status": "x",
+        "time": "22:40-24:00",
+        "desc": "开发（personal 追踪看板 + devnotes 速查卡片 + session 内 chore）：personal 36e65c5 23:54 feat 完善追踪看板的本地快照与周视图（4 文件 +790/-36）、devnotes 5c43d50 23:54 note MiniMax API Key 更换流程速查卡片（1 文件 +30）；session 内 chore：home 8986cda 22:57 chore(diary) 7/30 续补 20:00-22:40",
         "isCooking": false,
         "mealType": null,
         "dishGuess": null
