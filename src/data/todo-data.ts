@@ -22,7 +22,6 @@ export const TODO_BOARDS: TodoBoard[] = [
     icon: '🎬',
     items: [
       { id: 'v2', title: '中科院研究生如何用 AI 把 idea 一步步变成论文', url: 'https://www.bilibili.com/video/BV1LKjS6gEh4/', status: 'todo', note: '预计归 reanotes/literature', createdAt: '2026-07-18', date: '2026-07-18' },
-      { id: 'v8', title: '常见食材保存时间', url: 'https://www.xiaohongshu.com/discovery/item/6a40c4d1000000001700a5f0?source=webshare&xhsshare=pc_web&xsec_token=ABfByeG9HdtqXyQZ__cmspiXjK4rv6qCQrhOMux0milD4=&xsec_source=pc_share', status: 'todo', note: '来源：小红书；预计归 lifenotes/居家生活', createdAt: '2026-07-28', date: '2026-07-28' },
     ]
   },
   {
