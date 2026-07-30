@@ -5103,7 +5103,7 @@ export const diaryRecords = {
     ]
   },
   "2026-07-30": {
-    "value": 4,
+    "value": 5,
     "tasks": [
       {
         "status": "x",
@@ -5133,6 +5133,14 @@ export const diaryRecords = {
         "status": "x",
         "time": "12:50-13:40",
         "desc": "用餐与充电：门口重庆小面 炸酱面 ¥12 + 顺便给小车充电 ¥2",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      },
+      {
+        "status": "x",
+        "time": "13:40-15:30",
+        "desc": "三件事：(1) 销户与退费 - 校园网宽带 + 手机号，参考 [如何办理和退掉校园网宽带](http://life.thebear617.cn/life/campus-broadband-guide/)；(2) 开发 cats + lifenotes - 10 个 commit：cats 581be93 14:07 v0.7.0 统一西电猫猫档案体验 / 552758c 14:21 fix 将知识科普更名为猫猫知识 / da8d685 14:23 fix 修正猫猫知识页面标题 / 0115302 14:28 feat 优化猫猫手册移动端布局 / 836e58a 14:58 fix 修复移动端侧栏占位（1 文件 +17） / c41d043 15:09 fix 优化猫猫编年史移动端布局（1 文件 +129/-1） / 0860768 15:28 feat 重构猫猫编年史移动端视图（2 文件 +325/-5）；lifenotes 52598df 14:11 feat 筛选和排序改为浮窗式,按钮移至搜索框右侧 / 189f2c2 15:24 diary 新增校园网宽带办理与退网指南 / 9d5ca31 15:29 fix 修正错别字「易讯」→「翼讯」；(3) 订阅 Open Code Go 会员 ¥33.99（通讯订阅-AI订阅-opencode go, thebear 首月）",
         "isCooking": false,
         "mealType": null,
         "dishGuess": null

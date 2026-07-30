@@ -741,5 +741,12 @@ export const expenseRecords = [
     "sub": "大交通",
     "amount": 645.0,
     "note": "2026-08-04 咸阳 → 南宁 机票"
+  },
+  {
+    "date": "2026-07-30",
+    "cat": "通讯订阅",
+    "sub": "opencode go",
+    "amount": 33.99,
+    "note": "AI 订阅 / thebear 首月"
   }
 ];
