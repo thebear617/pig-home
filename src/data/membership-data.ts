@@ -11,6 +11,7 @@ export const membershipRecords = [
   { name: '一生足迹', expireDate: '2025-11-12', price: null, cycleMonths: 12, tags: ['工具'], note: '' },
   { name: 'OpenCode Go 1', expireDate: '2026-07-17', price: 35, cycleMonths: 1, tags: ['AI'], note: '' },
   { name: 'OpenCode Go 2', expireDate: '2026-07-30', price: 35, cycleMonths: 1, tags: ['AI'], note: '' },
+  { name: 'OpenCode Go 3', expireDate: '2026-08-29', price: 35, cycleMonths: 1, tags: ['AI'], note: 'thebear 首月' },
   { name: 'minimax-m3-plus', expireDate: '2026-08-01', price: 49, cycleMonths: 1, tags: ['AI'], note: '' },
   { name: 'ChatGPT Plus', expireDate: '2026-08-12', price: 25, cycleMonths: 1, tags: ['AI'], note: '' },
   { name: '88vip➕网易云➕优酷年会员', expireDate: '2026-09-30', price: null, cycleMonths: 12, tags: ['购物'], note: '' },

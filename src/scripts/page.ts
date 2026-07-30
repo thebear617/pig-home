@@ -53,6 +53,14 @@ function escape(value: unknown) {
   return escapeHtml(value);
 }
 
+function renderDesc(value: unknown) {
+  // 先 escape HTML,再把 [text](url) 转成 <a>,仅支持 http/https
+  return escapeHtml(value).replace(
+    /\[([^\]]+)\]\((https?:\/\/[^)\s]+)\)/g,
+    (_, text, url) => `<a href="${url}" target="_blank" rel="noopener noreferrer" style="color:#2563eb;text-decoration:underline">${text}</a>`
+  );
+}
+
 function assetUrl(value: string) {
   if (/^(?:https?:)?\//.test(value)) return value;
   return `${import.meta.env.BASE_URL}${value}`;
@@ -342,7 +350,7 @@ function dailyDetail(key: string | null) {
   }
   if (record?.tasks?.length) {
     html += `<div class="detail-row"><span class="detail-label">当日日程</span><span class="detail-val">已完成 ${record.value ?? record.tasks.filter((task: any) => task.status === 'x').length} / 共 ${record.tasks.length}</span></div><div class="detail-tasks">`;
-    record.tasks.forEach((task: any, index: number) => { html += `<div class="task-item"><span class="task-num">${index + 1}</span><span class="task-time">${escape(task.time)}</span><span class="task-text">${escape(task.desc)}</span></div>`; });
+    record.tasks.forEach((task: any, index: number) => { html += `<div class="task-item"><span class="task-num">${index + 1}</span><span class="task-time">${escape(task.time)}</span><span class="task-text">${renderDesc(task.desc)}</span></div>`; });
     html += '</div>';
   }
   if (expenses.length) {
