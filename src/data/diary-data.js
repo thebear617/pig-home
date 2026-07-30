@@ -5103,7 +5103,7 @@ export const diaryRecords = {
     ]
   },
   "2026-07-30": {
-    "value": 7,
+    "value": 9,
     "tasks": [
       {
         "status": "x",
@@ -5160,6 +5160,22 @@ export const diaryRecords = {
         "isCooking": true,
         "mealType": "晚饭",
         "dishGuess": "青菜火腿蛋炒饭（耙耙柑 / 花费 4 元 / 买菜 20 分钟 + 备菜 30 分钟 + 收拾后厨 20 分钟 / 总耗时 1 小时 10 分钟）"
+      },
+      {
+        "status": "x",
+        "time": "20:00-21:00",
+        "desc": "开发（个人站点 v0.20.0 + 路由表布局 + session 内 chore）：personal 16890f9 20:39 style 路由表宽度改为90%,分组视图每排最多3个（2 文件 +800/-3）、personal e578de9 20:47 feat 新增娱乐分组(B站),校正所有链接添加时间,README补充日期规范（2 文件 +23/-15）；晚提交：personal f645370 21:04 feat(v0.20.0) 完善个人追踪仪表盘与快照同步（9 文件 +697/-22）、devnotes 5717e22 21:05 docs 同步 personal v0.20.0 开发时间线（1 文件 +9）；session 内 chore 2 commit：home 216e5a1 chore(diary) 7/30 15:30-20:00 续补 / home c24fea4 chore(expense) 7/30 居家生活做饭 ¥0.07",
+        "isCooking": true,
+        "mealType": "晚饭",
+        "dishGuess": null
+      },
+      {
+        "status": "x",
+        "time": "21:00-22:40",
+        "desc": "打《英雄联盟》",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
       }
     ]
   }
