@@ -5103,7 +5103,7 @@ export const diaryRecords = {
     ]
   },
   "2026-07-30": {
-    "value": 5,
+    "value": 7,
     "tasks": [
       {
         "status": "x",
@@ -5144,6 +5144,22 @@ export const diaryRecords = {
         "isCooking": false,
         "mealType": null,
         "dishGuess": null
+      },
+      {
+        "status": "x",
+        "time": "15:30-18:50",
+        "desc": "开发（多站点 v1.5.0/v0.8.0/v0.9.3 发版 + 时间线补充）：home 7e80a9f 17:30 feat(v1.5.0) 会员订阅续费管理与多端视觉升级（19 文件 +715/-109）、home 8d652a3 18:02 docs 补充猪窝 v1.5.0 开发时间线（1 文件 +27）；cats 2c3d5ab 15:50 feat(v0.8.0) 重构移动端档案视图与知识体验（7 文件 +785/-16）、cats 467d4d9 15:50 docs 补充猫猫 v0.8.0 开发时间线（1 文件 +32）；lifenotes f5c4acc chore v0.9.3 对齐 Life Notes 版本号（3 文件 +4/-4）；session 内 chore 3 commit：home ef5324a chore(diary) 7/30 13:40-15:30 续补 / home e3a2c55 chore(expense) 通讯订阅 subs 清理 / home 845aa17 feat(membership) OpenCode Go 3 + 任务描述 markdown 链接渲染",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      },
+      {
+        "status": "x",
+        "time": "18:50-20:00",
+        "desc": "做饭：青菜火腿蛋炒饭（耙耙柑 / 花费 4 元 / 买菜 20 分钟 + 备菜 30 分钟 + 收拾后厨 20 分钟 / 总耗时 1 小时 10 分钟）",
+        "isCooking": true,
+        "mealType": "晚饭",
+        "dishGuess": "青菜火腿蛋炒饭（耙耙柑 / 花费 4 元 / 买菜 20 分钟 + 备菜 30 分钟 + 收拾后厨 20 分钟 / 总耗时 1 小时 10 分钟）"
       }
     ]
   }
