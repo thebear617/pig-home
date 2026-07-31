@@ -762,5 +762,12 @@ export const expenseRecords = [
     "sub": "AI订阅",
     "amount": 47.37,
     "note": "minimax 一个月"
+  },
+  {
+    "date": "2026-07-31",
+    "cat": "市内出行",
+    "sub": "包子糕点",
+    "amount": 3.0,
+    "note": "门口"
   }
 ];

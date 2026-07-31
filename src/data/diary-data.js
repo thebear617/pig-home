@@ -5188,7 +5188,7 @@ export const diaryRecords = {
     ]
   },
   "2026-07-31": {
-    "value": 3,
+    "value": 4,
     "tasks": [
       {
         "status": "x",
@@ -5210,6 +5210,14 @@ export const diaryRecords = {
         "status": "x",
         "time": "13:30-14:30",
         "desc": "处理甲醛 + 洗澡 — 方法：(1) 把窗户打开 (2) 把柜子里的衣服拿出来 (3) 马上买活性炭",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      },
+      {
+        "status": "x",
+        "time": "14:30-16:00",
+        "desc": "研究 Claude Code 的会话怎么分享到 Agent 里面;顺便门口买包子 ¥3",
         "isCooking": false,
         "mealType": null,
         "dishGuess": null
