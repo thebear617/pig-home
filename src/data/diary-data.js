@@ -5188,7 +5188,7 @@ export const diaryRecords = {
     ]
   },
   "2026-07-31": {
-    "value": 4,
+    "value": 5,
     "tasks": [
       {
         "status": "x",
@@ -5218,6 +5218,14 @@ export const diaryRecords = {
         "status": "x",
         "time": "14:30-16:00",
         "desc": "研究 Claude Code 的会话怎么分享到 Agent 里面;顺便门口买包子 ¥3",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      },
+      {
+        "status": "x",
+        "time": "16:00-19:40",
+        "desc": "开发（多站点 v0.20.1/v0.6.0 + 传统 Working 知识分类 + 路由表密度优化）- 13 个 commit：personal bc13849 16:48 feat(v0.20.1) 更新首页路由表（14 文件 +67/-13）、personal 5f365a4 16:54 docs 更新项目说明与路由表宽度（2 文件 +48/-30）、personal 14dff8c 17:54 feat(routes) 优化路由表密度与悬停详情（2 文件 +49/-1）；devnotes fcad50e 17:40 docs 仪表盘搭建指南补充 Notion 小组件来源 / 1034e1b 17:42 docs 补充熊窝 v0.20.1 开发时间线 / 4064210 18:27 feat 新增「传统 Working」知识分类 + PPT 首图技法（5 文件 +76/-5）/ e838a12 18:41 docs 重命名两篇PPT文章,区分传统方法与Agent路线（2 文件 +21/-24）/ 58aaaf3 19:17 docs 传统PPT文章对齐Agent篇案例集合排版结构（1 文件 +41/-20）/ b9dd1be 19:22 docs 记录科研笔记 v0.6.0 开发时间线（1 文件 +22）/ a9dcd6c 19:23 docs 传统PPT首图案例补充效果图（2 文件 +2）/ 9cf15c8 19:24 docs 参考资料链接移入正文,去掉末尾参考资料节（1 文件 +1/-5）/ 227bc31 19:37 style 调整博客标题层级视觉 + 操作步骤改为自然段（2 文件 +12/-19）；reanotes 4e3bd87 19:22 feat(v0.6.0) 迁移 Astro 并重构科研笔记阅读体验（53 文件 +8436/-7085）",
         "isCooking": false,
         "mealType": null,
         "dishGuess": null
