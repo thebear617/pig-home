@@ -5188,7 +5188,7 @@ export const diaryRecords = {
     ]
   },
   "2026-07-31": {
-    "value": 6,
+    "value": 8,
     "tasks": [
       {
         "status": "x",
@@ -5234,6 +5234,35 @@ export const diaryRecords = {
         "status": "x",
         "time": "19:40-20:20",
         "desc": "门口买炒饼丝 ¥11（市内出行-面食泡馍）",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      },
+      {
+        "status": "x",
+        "time": "20:20-23:30",
+        "desc": "打电动（英雄联盟）",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      },
+      {
+        "status": "x",
+        "time": "23:30-24:00",
+        "desc": "开发（PDF to HTML skill / r1 推进，未提交 - 占位符）",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      }
+    ]
+  },
+  "2026-08-01": {
+    "value": 1,
+    "tasks": [
+      {
+        "status": "x",
+        "time": "00:00-00:50",
+        "desc": "开发（PDF to HTML skill / r1 继续，未提交 - 占位符）",
         "isCooking": false,
         "mealType": null,
         "dishGuess": null
