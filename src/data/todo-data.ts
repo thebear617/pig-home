@@ -22,6 +22,7 @@ export const TODO_BOARDS: TodoBoard[] = [
     icon: '🎬',
     items: [
       { id: 'v2', title: '中科院研究生如何用 AI 把 idea 一步步变成论文', url: 'https://www.bilibili.com/video/BV1LKjS6gEh4/', status: 'todo', note: '预计归 reanotes/literature', createdAt: '2026-07-18', date: '2026-07-18' },
+      { id: 'v10', title: '这个 skill，让 AI 做出顶级审美的图表', url: 'https://www.bilibili.com/video/BV14HgY6YEMx/?share_source=copy_web&vd_source=03f4c4c1219f23af84f99d441d39f961', status: 'todo', note: '来源：B站', createdAt: '2026-07-31', date: '2026-07-31' },
     ]
   },
   {
