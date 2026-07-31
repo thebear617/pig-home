@@ -769,5 +769,12 @@ export const expenseRecords = [
     "sub": "包子糕点",
     "amount": 3.0,
     "note": "门口"
+  },
+  {
+    "date": "2026-07-31",
+    "cat": "市内出行",
+    "sub": "面食泡馍",
+    "amount": 11.0,
+    "note": "门口 炒饼丝"
   }
 ];
