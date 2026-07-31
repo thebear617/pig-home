@@ -772,6 +772,13 @@ export const expenseRecords = [
   },
   {
     "date": "2026-07-31",
+    "cat": "居家生活",
+    "sub": "日用品",
+    "amount": 14.9,
+    "note": "2kg 除醛活性炭"
+  },
+  {
+    "date": "2026-07-31",
     "cat": "市内出行",
     "sub": "面食泡馍",
     "amount": 11.0,
