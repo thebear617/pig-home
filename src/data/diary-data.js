@@ -5186,6 +5186,35 @@ export const diaryRecords = {
         "dishGuess": null
       }
     ]
+  },
+  "2026-07-31": {
+    "value": 3,
+    "tasks": [
+      {
+        "status": "x",
+        "time": "00:00-03:00",
+        "desc": "玩手机",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      },
+      {
+        "status": "x",
+        "time": "03:00-13:30",
+        "desc": "睡觉",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      },
+      {
+        "status": "x",
+        "time": "13:30-14:30",
+        "desc": "处理甲醛 + 洗澡 — 方法：(1) 把窗户打开 (2) 把柜子里的衣服拿出来 (3) 马上买活性炭",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      }
+    ]
   }
 };
 export const specialEvents = {
