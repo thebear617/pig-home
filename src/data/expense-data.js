@@ -797,5 +797,12 @@ export const expenseRecords = [
     "sub": "市内交通",
     "amount": 23.3,
     "note": "去博辰打车"
+  },
+  {
+    "date": "2026-08-01",
+    "cat": "市内出行",
+    "sub": "面食泡馍",
+    "amount": 17.6,
+    "note": "魏家凉皮 酸菜肉丝米线"
   }
 ];

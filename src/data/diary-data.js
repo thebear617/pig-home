@@ -5257,7 +5257,7 @@ export const diaryRecords = {
     ]
   },
   "2026-08-01": {
-    "value": 5,
+    "value": 6,
     "tasks": [
       {
         "status": "x",
@@ -5295,6 +5295,14 @@ export const diaryRecords = {
         "status": "x",
         "time": "15:40-16:53",
         "desc": "放回赫兹 + 去钟楼的威士忌排队取号",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      },
+      {
+        "status": "x",
+        "time": "16:53-17:30",
+        "desc": "魏家凉皮 酸菜肉丝米线 ¥17.6（市内出行-面食泡馍;中途商量赫兹口炎用药：441 / 2801 / 法匹）",
         "isCooking": false,
         "mealType": null,
         "dishGuess": null
