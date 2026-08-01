@@ -5257,7 +5257,7 @@ export const diaryRecords = {
     ]
   },
   "2026-08-01": {
-    "value": 6,
+    "value": 9,
     "tasks": [
       {
         "status": "x",
@@ -5302,7 +5302,31 @@ export const diaryRecords = {
       {
         "status": "x",
         "time": "16:53-17:30",
-        "desc": "魏家凉皮 酸菜肉丝米线 ¥17.6（市内出行-面食泡馍;中途商量赫兹口炎用药：441 / 2801 / 法匹）",
+        "desc": "魏家凉皮 酸菜肉丝米线 ¥17.6（市内出行-面食泡馍;中途商量赫兹口炎用药，决定用 441）",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      },
+      {
+        "status": "x",
+        "time": "17:30-20:53",
+        "desc": "魏世纪排队（中间闲聊 + 发现新地点 + 和过马路 / 原子中 / 房小可跳舞;中途买水 ¥4 市内出行-奶茶饮品）",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      },
+      {
+        "status": "x",
+        "time": "20:53-23:20",
+        "desc": "吃魏世纪（酒吧轻食）¥153（市内出行-酒吧轻食）",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      },
+      {
+        "status": "x",
+        "time": "23:20-24:00",
+        "desc": "回家;回家前去兴隆夜市买东北烤肉 ¥15（市内出行-烧烤烤肉）",
         "isCooking": false,
         "mealType": null,
         "dishGuess": null
@@ -5344,6 +5368,14 @@ export const specialEvents = {
     ],
     "keywords": [
       "生日"
+    ]
+  },
+  "2026-08-01": {
+    "icons": [
+      "💃"
+    ],
+    "keywords": [
+      "跳舞"
     ]
   }
 };
