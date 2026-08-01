@@ -47,7 +47,7 @@ export const TODO_BOARDS: TodoBoard[] = [
     icon: '🏠',
     items: [
       { id: 'l1', title: '给宝宝做相册', status: 'doing', date: '2026-07-19', createdAt: '2026-07-19', url: '', note: '' },
-      { id: 'l7', title: '处理甲醛 - 把衣柜里的衣服全部拿出来晾晒冲洗', status: 'todo', date: '2026-07-31', createdAt: '2026-07-31', url: '', note: '7/31 起这几天陆续处理' },
+      { id: 'l7', title: '处理甲醛 - 把衣柜里的衣服全部拿出来晾晒冲洗', status: 'doing', date: '2026-07-31', createdAt: '2026-07-31', url: '', note: '7/31 起这几天陆续处理' },
       { id: 'l8', title: '带赫兹去博辰复诊', status: 'todo', date: '2026-09-02', createdAt: '2026-08-02', url: '', note: '赫兹口炎治疗（441）后续' },
     ]
   }
