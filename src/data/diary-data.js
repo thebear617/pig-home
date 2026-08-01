@@ -5257,12 +5257,44 @@ export const diaryRecords = {
     ]
   },
   "2026-08-01": {
-    "value": 1,
+    "value": 5,
     "tasks": [
       {
         "status": "x",
         "time": "00:00-02:50",
         "desc": "开发（r1 PDF to HTML skill 完成 + 熊窝 v0.21.0 LoL 重构 + devnotes 时间线补充）- 9 个 commit：reanotes b248924 02:49 feat(v0.7.0) 建立 pdf2blog-zh 论文转换工作流（100 文件 +2616/-675）<-- r1 关键 commit、reanotes 237baff 02:49 docs 记录 pdf2blog-zh skill 开发（1 文件 +26）；personal fc265e8 02:22 feat(v0.21.0) 英雄联盟板块重构为 RESG 全英雄数据驱动的英雄速查（187 文件 +4366/-237）、personal e499384 02:33 fix(v0.21.1) 补全 v0.21.0 遗漏的 34 个英雄小写头像（35 文件 +4）、personal c05cb51 02:49 style(lol) 英雄详情抽屉海克斯推荐改 2×2 网格并加宽至 700px（2 文件 +24/-2）；devnotes daa665e 02:26 feat(timeline) 补充英雄联盟 v0.21.0 与技能类时间线条目（3 文件 +76）/ e2fc27b 02:29 style(timeline) skill 类站点标识由「技能」改为 skill（2 文件 +4/-4）/ c82e796 02:34 feat(timeline) 补充熊窝 v0.21.1（1 文件 +9）/ 9299c40 02:38 style(timeline) 重写熊窝 v0.21.0 时间线为凝练摘要而非 commit message 搬运（1 文件 +6/-10）；session 内 chore：home 84c2fd5 00:56 chore(diary) 7/31 续补 + 8/1 占位",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      },
+      {
+        "status": "x",
+        "time": "02:50-12:30",
+        "desc": "睡觉",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      },
+      {
+        "status": "x",
+        "time": "12:30-13:15",
+        "desc": "洗澡",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      },
+      {
+        "status": "x",
+        "time": "13:15-15:40",
+        "desc": "出门：买包子 ¥3（地软粉条包 / 市内出行-包子-地软粉条包）+ 去学校拿航空箱 + 去博辰医院接小猫渣男",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      },
+      {
+        "status": "x",
+        "time": "15:40-16:53",
+        "desc": "放回赫兹 + 去钟楼的威士忌排队取号",
         "isCooking": false,
         "mealType": null,
         "dishGuess": null
