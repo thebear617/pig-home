@@ -5332,6 +5332,19 @@ export const diaryRecords = {
         "dishGuess": null
       }
     ]
+  },
+  "2026-08-02": {
+    "value": 1,
+    "tasks": [
+      {
+        "status": "x",
+        "time": "00:00-02:50",
+        "desc": "开发（多站点 v0.9.0/v0.21.2-v0.21.3/v0.22.0 + 赫兹档案 + 路由表移动端 + 抽屉式导航 + 时间线补充）- 11 个 commit：cats ab4dc3a 01:04 feat(v0.9.0) 补全赫兹档案与移动端体验（6 文件 +49/-20）；personal 9679b82 01:32 fix(v0.21.2) 优化路由表移动端体验（4 文件 +159/-18）、personal db4cb15 01:36 feat(routes) 新增链动小铺 1 链接（2 文件 +35/-9）、personal aede09a 01:36 feat(valorant) 移动端板块侧栏改为抽屉式导航（2 文件 +274/-80）、personal f71aacb 01:59 feat(v0.21.3) 英雄速查搜索支持英雄称号匹配（5 文件 +19/-4）、personal 4b782d3 02:44 feat(v0.22.0) 无畏契约战术库视觉升级（20 文件 +459/-497）；devnotes c4a20ab 01:04 docs 补充猫猫 v0.9.0 开发时间线（1 文件 +26）/ 75ffb3b 01:33 docs 补充熊窝 v0.21.2 时间线（1 文件 +13）/ 635d404 01:37 docs 记录 image-vision skill 开发时间线（1 文件 +30）/ b075454 02:00 feat(timeline) 补充熊窝 v0.21.3（1 文件 +13）/ 54d09ff 02:45 docs 记录 xhs-image-note skill 开发时间线（1 文件 +33）；session 内 chore 6 commit：home 4824f37 chore(todo) l7 处理甲醛 todo -> doing / 5ae9cb6 chore(todo) l8 赫兹复诊 / 6a3343e feat(food-map) 钟楼魏世纪 / bcae517 chore(diary) 8/1 17:30-24:00 / 05ddbac chore(diary) 8/1 16:53-17:30 / afe30a7 chore(diary) 8/1 15:40-16:53",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      }
+    ]
   }
 };
 export const specialEvents = {
