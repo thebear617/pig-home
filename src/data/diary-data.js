@@ -5411,12 +5411,20 @@ export const diaryRecords = {
     ]
   },
   "2026-08-03": {
-    "value": 1,
+    "value": 2,
     "tasks": [
       {
         "status": "x",
         "time": "00:00-01:15",
         "desc": "开发（devnotes 时间线补充）- 1 个 commit：devnotes 67e4749 01:03 docs 补充游戏笔记 v0.3.0 开发时间线（3 文件 +29/-8）",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      },
+      {
+        "status": "x",
+        "time": "01:15-05:00",
+        "desc": "睡觉",
         "isCooking": false,
         "mealType": null,
         "dishGuess": null
