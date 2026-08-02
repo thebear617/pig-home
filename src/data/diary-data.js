@@ -5334,7 +5334,7 @@ export const diaryRecords = {
     ]
   },
   "2026-08-02": {
-    "value": 7,
+    "value": 8,
     "tasks": [
       {
         "status": "x",
@@ -5388,6 +5388,14 @@ export const diaryRecords = {
         "status": "x",
         "time": "19:15-20:25",
         "desc": "吃饭：韭菜炒蛋盖浇饭 ¥13（市内出行-炒饭炒菜）",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      },
+      {
+        "status": "x",
+        "time": "20:25-21:10",
+        "desc": "开发（个人 v0.24.0 追踪看板升级 + devnotes 时间线补充）- 4 个 commit：personal 8c313c4 20:29 fix(v0.24.0) 完善追踪看板数据链路与长期目标视图（8 文件 +2137/-129）；devnotes 783947b 20:28 docs 更新 MiniMax API Key 更换笔记（新增 Claude Code MCP 位置）（1 文件 +6/-4）/ 42ba6c9 20:28 docs 补充熊窝 v0.23.1 时间线（天气弹窗与追踪快照一致性）（1 文件 +24）/ 2c546e1 20:30 docs 补充熊窝 v0.24.0 开发时间线（1 文件 +22）",
         "isCooking": false,
         "mealType": null,
         "dishGuess": null
