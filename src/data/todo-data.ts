@@ -38,7 +38,6 @@ export const TODO_BOARDS: TodoBoard[] = [
     name: '编程',
     icon: '💻',
     items: [
-      { id: 'c7', title: '依据 dash.valorant-api.com API 站点去建立无畏契约的站点', url: 'https://dash.valorant-api.com/endpoints/agents', status: 'todo', date: '2026-07-27', createdAt: '2026-07-27', note: '' }
     ]
   },
   {
@@ -47,7 +46,6 @@ export const TODO_BOARDS: TodoBoard[] = [
     icon: '🏠',
     items: [
       { id: 'l1', title: '给宝宝做相册', status: 'doing', date: '2026-07-19', createdAt: '2026-07-19', url: '', note: '' },
-      { id: 'l7', title: '处理甲醛 - 把衣柜里的衣服全部拿出来晾晒冲洗', status: 'doing', date: '2026-07-31', createdAt: '2026-07-31', url: '', note: '7/31 起这几天陆续处理' },
       { id: 'l8', title: '带赫兹去博辰复诊', status: 'todo', date: '2026-09-02', createdAt: '2026-08-02', url: '', note: '赫兹口炎治疗（441）后续' },
     ]
   }
