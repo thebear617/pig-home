@@ -5378,8 +5378,8 @@ export const diaryRecords = {
       },
       {
         "status": "x",
-        "time": "15:00-17:30",
-        "desc": "开发（个人 v0.23.0/v0.23.1 游戏板块迁移 + devnotes 时间线补充）- 9 个 commit：personal 61070bf 15:36 feat(tracker) 储蓄目标 10000 → 13028（2 文件 +34/-11）、personal c82f9cd 15:57 fix 移除游戏板块导航入口（1 文件 +1/-3）、personal 1f77a2e 16:04 refactor 移除已迁移的游戏板块（416 文件 +2/-4899）、personal 7e6dc49 16:04 fix 路由表切换自有域名并固定端口（3 文件 +6/-5）、personal 1ca8965 16:13 feat(v0.23.0) 暖纸路由视觉与游戏板块迁移（4 文件 +535/-8）、personal fdb2fa3 17:04 fix(v0.23.1) 天气弹窗与追踪快照一致性（14 文件 +681/-129）；devnotes e64e487 15:49 docs 记录本地站点缓存重定向排查（2 文件 +38/-3）/ b90764a 16:13 docs 补充熊窝 v0.22.0 与 v0.23.0 时间线（2 文件 +47）/ 421fd6b 17:06 docs 补充 GameNotes v0.2.0 开发时间线（1 文件 +19）；session 内 chore：home b953f04 16:54 feat(routes) 猪窝激活页 redirect 到每日追踪",
+        "time": "15:00-19:15",
+        "desc": "开发（个人 v0.23.0/v0.23.1 游戏板块迁移 + 追踪快照/数据链路修复 + devnotes 时间线补充 + 计算机网络知识库 + 多个 skill 时间线）- 15 个 commit：personal 61070bf 15:36 feat(tracker) 储蓄目标 10000 → 13028（2 文件 +34/-11）、personal c82f9cd 15:57 fix 移除游戏板块导航入口（1 文件 +1/-3）、personal 1f77a2e 16:04 refactor 移除已迁移的游戏板块（416 文件 +2/-4899）、personal 7e6dc49 16:04 fix 路由表切换自有域名并固定端口（3 文件 +6/-5）、personal 1ca8965 16:13 feat(v0.23.0) 暖纸路由视觉与游戏板块迁移（4 文件 +535/-8）、personal fdb2fa3 17:04 fix(v0.23.1) 天气弹窗与追踪快照一致性（14 文件 +681/-129）、personal ac3214b 17:51 fix 完善追踪看板每日数据链路（2 文件 +87/-33）、personal 0fad048 18:48 fix 修复追踪快照与历史统计（5 文件 +450/-84）；devnotes e64e487 15:49 docs 记录本地站点缓存重定向排查（2 文件 +38/-3）/ b90764a 16:13 docs 补充熊窝 v0.22.0 与 v0.23.0 时间线（2 文件 +47）/ 421fd6b 17:06 docs 补充 GameNotes v0.2.0 开发时间线（1 文件 +19）/ cc8fa96 19:05 docs 补充 GameNotes v0.2.1 开发时间线（1 文件 +19）/ 2358bf5 19:06 docs 完善计算机网络入门知识库内容（1 文件 +288/-9）/ d006775 19:08 docs 时间线记录 wx-article-note skill（微信文章解析）（1 文件 +43）；session 内 chore：home b953f04 16:54 feat(routes) 猪窝激活页 redirect 到每日追踪 / 1a55bcb 17:38 chore(diary) 8/2 续补 15:00-17:30",
         "isCooking": false,
         "mealType": null,
         "dishGuess": null
