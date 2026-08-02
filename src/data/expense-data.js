@@ -832,5 +832,12 @@ export const expenseRecords = [
     "sub": "面食泡馍",
     "amount": 18.0,
     "note": "红烧牛肉面"
+  },
+  {
+    "date": "2026-08-02",
+    "cat": "市内出行",
+    "sub": "炒饭炒菜",
+    "amount": 13.0,
+    "note": "韭菜炒蛋盖浇饭"
   }
 ];
