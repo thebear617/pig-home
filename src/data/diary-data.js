@@ -5334,7 +5334,7 @@ export const diaryRecords = {
     ]
   },
   "2026-08-02": {
-    "value": 4,
+    "value": 5,
     "tasks": [
       {
         "status": "x",
@@ -5364,6 +5364,14 @@ export const diaryRecords = {
         "status": "x",
         "time": "12:30-13:40",
         "desc": "晾晒衣服（期间取了活性炭 + 中途吃饭 + 放置活性炭;中午吃了红烧牛肉面 ¥18 市内出行-面食泡馍）",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      },
+      {
+        "status": "x",
+        "time": "13:40-15:00",
+        "desc": "打电动（《英雄联盟》）",
         "isCooking": false,
         "mealType": null,
         "dishGuess": null
