@@ -5411,7 +5411,7 @@ export const diaryRecords = {
     ]
   },
   "2026-08-03": {
-    "value": 2,
+    "value": 8,
     "tasks": [
       {
         "status": "x",
@@ -5425,6 +5425,54 @@ export const diaryRecords = {
         "status": "x",
         "time": "01:15-05:00",
         "desc": "睡觉",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      },
+      {
+        "status": "x",
+        "time": "05:00-08:00",
+        "desc": "起来玩手机",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      },
+      {
+        "status": "x",
+        "time": "08:00-11:00",
+        "desc": "去开大组会（胡哥讲的域适应）+ 买了第二个域名 xdubear.cn",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      },
+      {
+        "status": "x",
+        "time": "11:00-14:00",
+        "desc": "回家补觉",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      },
+      {
+        "status": "x",
+        "time": "14:00-15:00",
+        "desc": "过马路回家 + 聊天 + 洗澡",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      },
+      {
+        "status": "x",
+        "time": "15:00-16:30",
+        "desc": "回学校看大头 + 放碗 + 找钥匙 + 找充电宝",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      },
+      {
+        "status": "x",
+        "time": "16:30-24:00",
+        "desc": "约会（momo park 尹珍珠烤肉 + 电影《蜘蛛侠 4:崭新之日》）",
         "isCooking": false,
         "mealType": null,
         "dishGuess": null
