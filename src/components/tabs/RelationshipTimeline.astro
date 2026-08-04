@@ -41,21 +41,36 @@ function formatDate(start: string, end: string): string {
 
 <div data-tab="relationship-timeline">
   <div class="rel-wrap">
+    <header class="rel-hero">
+      <div class="rel-hero-title">
+        <span class="rel-hero-kicker">HOME SWEET HOME · 一起走过的日子</span>
+        <h1 class="rel-hero-heading">关系时间线</h1>
+      </div>
+      <div class="rel-hero-stat" title="全部事件">
+        <span class="rel-hero-stat-num">{total}</span>
+        <span class="rel-hero-stat-label">个瞬间</span>
+      </div>
+    </header>
+
     <div class="rel-filter" data-rl-filter>
-      <button class="rel-filter-tab active" data-rl-cat="all">全部<span class="rel-filter-count">{total}</span></button>
-      <button class="rel-filter-tab" data-rl-cat="travel">旅行 ✈️<span class="rel-filter-count">{counts.travel}</span></button>
-      <button class="rel-filter-tab" data-rl-cat="xian">西安 walk 🚶<span class="rel-filter-count">{counts.xian}</span></button>
-      <button class="rel-filter-tab" data-rl-cat="quarrel">吵架复盘 💢<span class="rel-filter-count">{counts.quarrel}</span></button>
+      <button class="rel-filter-tab active" data-rl-cat="all"><span class="rel-filter-ico">✨</span>全部<span class="rel-filter-count">{total}</span></button>
+      <button class="rel-filter-tab" data-rl-cat="travel"><span class="rel-filter-ico">✈️</span>旅行<span class="rel-filter-count">{counts.travel}</span></button>
+      <button class="rel-filter-tab" data-rl-cat="xian"><span class="rel-filter-ico">🚶</span>西安 walk<span class="rel-filter-count">{counts.xian}</span></button>
+      <button class="rel-filter-tab" data-rl-cat="quarrel"><span class="rel-filter-ico">💢</span>吵架复盘<span class="rel-filter-count">{counts.quarrel}</span></button>
     </div>
 
     <div class="timeline">
       {Array.from(months.entries()).map(([monthKey, monthEvents]) => (
         <>
-          <div class="timeline-month">{monthKey}</div>
+          <div class="timeline-month">
+            <span class="timeline-month-dot"></span>
+            <span class="timeline-month-text">{monthKey}</span>
+            <span class="timeline-month-line"></span>
+          </div>
           {monthEvents.map(ev => {
             const isQuarrel = ev.cat === 'quarrel';
-            const dotClass = isQuarrel ? 'tl-dot-quarrel' : 'tl-dot-done';
             const itemClass = `timeline-item tl-cat-${ev.cat}`;
+            const icon = ev.cat === 'quarrel' ? '💢' : ev.cat === 'xian' ? '🚶' : '✈️';
 
             if (isQuarrel) {
               const q = ev.raw as typeof quarrels[0];
@@ -63,30 +78,33 @@ function formatDate(start: string, end: string): string {
               return (
                 <div class={itemClass}>
                   <div class="timeline-marker">
-                    <div class={`timeline-dot ${dotClass}`}></div>
+                    <div class="timeline-dot timeline-dot-quarrel">
+                      <span class="timeline-dot-ico">💢</span>
+                    </div>
                     <div class="timeline-line"></div>
                   </div>
-                  <div class="timeline-card">
+                  <div class="timeline-card tl-card-quarrel">
                     <div class="q-header" data-rl-q-toggle>
                       <div class="q-header-main">
                         <div class="timeline-card-top">
-                          <h3 class="timeline-card-title">{q.data.title}</h3>
+                          <span class="timeline-cat-tag tl-tag-quarrel">吵架复盘</span>
                           <span class="timeline-badge tl-badge-quarrel">{q.data.severity}</span>
                         </div>
+                        <h3 class="timeline-card-title">{q.data.title}</h3>
                         <div class="timeline-card-meta">
                           <span class="tl-meta">📅 {dl}</span>
                           <span class="tl-meta">👤 {q.data.participants.join('、')}</span>
                         </div>
                       </div>
-                      <span class="q-chevron">▸</span>
+                      <span class="q-chevron">▾</span>
                     </div>
                     <div class="q-body collapsed">
-                      {q.data.trigger && <div class="q-field"><span class="q-field-label">起因</span><p class="q-field-text">{q.data.trigger}</p></div>}
-                      {q.data.myView && <div class="q-field"><span class="q-field-label">我的视角</span><p class="q-field-text">{q.data.myView}</p></div>}
-                      {q.data.theirView && <div class="q-field"><span class="q-field-label">过马路视角</span><p class="q-field-text">{q.data.theirView}</p></div>}
-                      {q.data.rootCause && <div class="q-field"><span class="q-field-label">深层原因</span><p class="q-field-text">{q.data.rootCause}</p></div>}
-                      {q.data.resolution && <div class="q-field"><span class="q-field-label">怎么和好</span><p class="q-field-text">{q.data.resolution}</p></div>}
-                      {q.data.lesson && <div class="q-field"><span class="q-field-label">复盘结论</span><p class="q-field-text">{q.data.lesson}</p></div>}
+                      {q.data.trigger && <div class="q-field"><span class="q-field-label">⚡ 起因</span><p class="q-field-text">{q.data.trigger}</p></div>}
+                      {q.data.myView && <div class="q-field"><span class="q-field-label">🙋 我的视角</span><p class="q-field-text">{q.data.myView}</p></div>}
+                      {q.data.theirView && <div class="q-field"><span class="q-field-label">🤝 过马路视角</span><p class="q-field-text">{q.data.theirView}</p></div>}
+                      {q.data.rootCause && <div class="q-field"><span class="q-field-label">🔍 深层原因</span><p class="q-field-text">{q.data.rootCause}</p></div>}
+                      {q.data.resolution && <div class="q-field"><span class="q-field-label">🩹 怎么和好</span><p class="q-field-text">{q.data.resolution}</p></div>}
+                      {q.data.lesson && <div class="q-field"><span class="q-field-label">💡 复盘结论</span><p class="q-field-text">{q.data.lesson}</p></div>}
                     </div>
                   </div>
                 </div>
@@ -95,17 +113,22 @@ function formatDate(start: string, end: string): string {
               const t = ev.raw as typeof trips[0];
               const isUpcoming = t.data.status === 'upcoming';
               const dateStr = formatDate(t.data.startDate, t.data.endDate);
+              const catLabel = ev.cat === 'xian' ? '西安 walk' : '旅行';
+              const catTagClass = ev.cat === 'xian' ? 'tl-tag-xian' : 'tl-tag-travel';
               return (
                 <div class={itemClass}>
                   <div class="timeline-marker">
-                    <div class={`timeline-dot ${isUpcoming ? 'tl-dot-upcoming' : 'tl-dot-done'}`}></div>
+                    <div class={`timeline-dot ${isUpcoming ? 'tl-dot-upcoming' : isQuarrel ? '' : ev.cat === 'xian' ? 'tl-dot-xian' : 'tl-dot-travel'}`}>
+                      <span class="timeline-dot-ico">{icon}</span>
+                    </div>
                     <div class="timeline-line"></div>
                   </div>
                   <div class="timeline-card">
                     <div class="timeline-card-top">
-                      <h3 class="timeline-card-title">{t.data.dest}</h3>
+                      <span class={`timeline-cat-tag ${catTagClass}`}>{catLabel}</span>
                       <span class={`timeline-badge ${isUpcoming ? 'tl-badge-upcoming' : 'tl-badge-done'}`}>{isUpcoming ? '计划中' : '已完成'}</span>
                     </div>
+                    <h3 class="timeline-card-title">{t.data.dest}</h3>
                     <div class="timeline-card-meta">
                       <span class="tl-meta">📅 {dateStr}</span>
                       <span class="tl-meta">🚗 {t.data.transport}</span>

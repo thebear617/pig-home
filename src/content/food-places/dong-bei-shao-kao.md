@@ -1,11 +1,11 @@
 ---
 name: 东北烧烤
 dishes:
-  - 烤土豆
-  - 烤仔肠
-  - 烤面筋
-  - 烤牛肉
-  - 烤羊肉
+  - name: 烤土豆
+  - name: 烤仔肠
+  - name: 烤面筋
+  - name: 烤牛肉
+  - name: 烤羊肉
 area: 校外
 location: 兴隆夜市
 date: '2026-07-09'

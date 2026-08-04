@@ -17,16 +17,56 @@ const areaOrder = ['校内', '校外', ...Array.from(areaMap.keys()).filter(area
 const defaultArea = areaOrder[0] || '';
 const defaultLocation = Array.from(areaMap.get(defaultArea)?.keys() || []).sort()[0] || '';
 const totalPlaces = places.length;
+
+interface PlaceStatus { key: string; label: string; icon: string; }
+function placeStatus(place: typeof places[0]): PlaceStatus {
+  const note = place.data.note || '';
+  if (/下次|想去|评价蛮高/.test(note)) return { key: 'wanna', label: '想去试试', icon: '⭐' };
+  if (/再也不会|不好吃|不推荐|别去/.test(note)) return { key: 'no', label: '不再推荐', icon: '🚫' };
+  if (/很不错|必点|绝了|好吃|推荐/.test(note)) return { key: 'recommend', label: '推荐', icon: '👍' };
+  return { key: 'tried', label: '已吃过', icon: '🍽️' };
+}
+
+// dishes 兼容两种格式：纯字符串 或 {name,note,price}
+type Dish = { name: string; note: string; price: string };
+function dishName(dish: string | Dish): string {
+  return typeof dish === 'string' ? dish : dish.name;
+}
+function dishNote(dish: string | Dish): string {
+  return typeof dish === 'string' ? '' : dish.note || '';
+}
+function dishPrice(dish: string | Dish): string {
+  return typeof dish === 'string' ? '' : dish.price || '';
+}
+function dishNames(place: typeof places[0]): string {
+  return (place.data.dishes || []).map(dishName).join(' ');
+}
+// 把店的数据打包成可序列化的 JSON，供悬浮窗使用
+const placePayload = places.map(p => ({
+  name: p.data.name,
+  category: p.data.category || '',
+  area: p.data.area,
+  location: p.data.location,
+  address: p.data.address || '',
+  date: p.data.date || '',
+  note: p.data.note || '',
+  status: placeStatus(p),
+  dishes: (p.data.dishes || []).map(d => ({ name: dishName(d), note: dishNote(d), price: dishPrice(d) })),
+}));
+const placePayloadJson = JSON.stringify(placePayload);
 ---
 
 <div class="foodmap-page" data-tab="food-map">
-  <header class="foodmap-header">
-    <div>
-      <p class="section-kicker">Food Notes</p>
-      <h1>美食地图</h1>
-      <p>按区域和地点整理去过、想去以及不再推荐的店。</p>
+  <header class="foodmap-hero">
+    <div class="foodmap-hero-copy">
+      <p class="foodmap-hero-kicker">FOOD NOTES · 觅食记录</p>
+      <h1 class="foodmap-hero-title">美食地图</h1>
+      <p class="foodmap-hero-desc">按区域和地点，把去过、想吃和不再推荐的店都记下来。</p>
     </div>
-    <div class="foodmap-total"><strong>{totalPlaces}</strong><span>家记录</span></div>
+    <div class="foodmap-hero-stat" title="共记录的美食店">
+      <strong class="foodmap-hero-num">{totalPlaces}</strong>
+      <span class="foodmap-hero-label">家记录</span>
+    </div>
   </header>
 
   <div class="foodmap-layout">
@@ -75,18 +115,29 @@ const totalPlaces = places.length;
               const hidden = area !== defaultArea || location !== defaultLocation;
               return (
                 <div class="foodmap-location-content" data-fm-location-content={location} hidden={hidden}>
-                  <div class="foodmap-location-heading"><h3>{location}</h3><span>{items.length} 家记录</span></div>
+                  <div class="foodmap-location-heading"><h3>{location}</h3><span>{items.length} 家记录 · 点击卡片看菜品详情</span></div>
                   <div class="foodmap-list">
-                    {items.map(place => (
-                      <article class="foodmap-list-item" data-fm-search-text={`${place.data.name} ${place.data.dishes.join(' ')} ${place.data.note || ''}`}>
-                        <div class="foodmap-list-main">
-                          <h4>{place.data.name}</h4>
-                          {place.data.dishes.length > 0 && <p class="foodmap-dishes">{place.data.dishes.join(' · ')}</p>}
-                          {place.data.note && <p class="foodmap-note">{place.data.note}</p>}
-                        </div>
-                        {place.data.date && <time datetime={place.data.date}>{place.data.date}</time>}
-                      </article>
-                    ))}
+                    {items.map(place => {
+                      const st = placeStatus(place);
+                      const dishList = (place.data.dishes || []).map(dishName).join(' · ');
+                      return (
+                        <article class="foodmap-list-item" data-fm-search-text={`${place.data.name} ${dishNames(place)} ${place.data.note || ''}`} data-fm-place={place.data.name} role="button" tabindex="0">
+                          <div class="foodmap-list-main">
+                            <div class="foodmap-list-top">
+                              <h4 class="foodmap-list-name">{place.data.name}</h4>
+                              {place.data.category && <span class="foodmap-cat-tag">{place.data.category}</span>}
+                              <span class={`foodmap-status foodmap-status-${st.key}`}>{st.icon} {st.label}</span>
+                            </div>
+                            {dishList && <p class="foodmap-dishes">{dishList}</p>}
+                            {place.data.note && <p class="foodmap-note">{place.data.note}</p>}
+                          </div>
+                          <div class="foodmap-list-side">
+                            {place.data.date && <time datetime={place.data.date}>{place.data.date}</time>}
+                            {place.data.address && <span class="foodmap-address">📍 {place.data.address}</span>}
+                          </div>
+                        </article>
+                      );
+                    })}
                   </div>
                   <p class="foodmap-no-results" hidden>没有匹配的记录</p>
                 </div>
@@ -97,7 +148,33 @@ const totalPlaces = places.length;
       })}
     </main>
   </div>
+
+  <div class="foodmap-modal" data-fm-modal hidden>
+    <div class="foodmap-modal-backdrop" data-fm-modal-close></div>
+    <div class="foodmap-modal-panel" role="dialog" aria-modal="true" aria-labelledby="foodmap-modal-name">
+      <div class="foodmap-modal-head">
+        <div class="foodmap-modal-top">
+          <span class="foodmap-modal-status foodmap-status-tried" data-fm-modal-status>🍽️ 已吃过</span>
+          <button class="foodmap-modal-close" data-fm-modal-close type="button" aria-label="关闭">✕</button>
+        </div>
+        <h3 class="foodmap-modal-name" id="foodmap-modal-name"></h3>
+        <div class="foodmap-modal-meta">
+          <span class="foodmap-modal-tag" data-fm-modal-category hidden></span>
+          <span class="foodmap-modal-loc" data-fm-modal-location></span>
+          <span class="foodmap-modal-date" data-fm-modal-date hidden></span>
+        </div>
+        <p class="foodmap-modal-address" data-fm-modal-address hidden></p>
+        <p class="foodmap-modal-note" data-fm-modal-note hidden></p>
+      </div>
+      <div class="foodmap-modal-body">
+        <div class="foodmap-modal-section-title">菜品 & 评价</div>
+        <ul class="foodmap-dish-list" data-fm-modal-dishes></ul>
+      </div>
+    </div>
+  </div>
 </div>
+
+<div class="foodmap-payload" data-fm-places-json={placePayloadJson} hidden></div>
 
 <script>
   const root = document.querySelector<HTMLElement>('[data-tab="food-map"]');
@@ -115,5 +192,74 @@ const totalPlaces = places.length;
       const empty = location.querySelector<HTMLElement>('.foodmap-no-results');
       if (empty) empty.hidden = visible > 0;
     });
+  });
+
+  // 悬浮窗逻辑
+  const PLACES: Record<string, any> = {};
+  try {
+    const el = document.querySelector<HTMLElement>('[data-fm-places-json]');
+    if (el?.dataset.fmPlacesJson) {
+      for (const p of JSON.parse(el.dataset.fmPlacesJson)) PLACES[p.name] = p;
+    }
+  } catch (e) {
+    console.error('美食地图数据解析失败', e);
+  }
+
+  const modal = root?.querySelector<HTMLElement>('[data-fm-modal]');
+  const esc = (s: string) => s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+  const setText = (sel: string, value: string) => {
+    const el = modal?.querySelector<HTMLElement>(sel);
+    if (el) {
+      if (value) { el.textContent = value; el.hidden = false; }
+      else el.hidden = true;
+    }
+  };
+
+  function openModal(name: string) {
+    const p = PLACES[name];
+    if (!p || !modal) return;
+    setText('[data-fm-modal-name]', p.name);
+    setText('[data-fm-modal-location]', p.location ? `📍 ${p.location}` : '');
+    setText('[data-fm-modal-date]', p.date ? `📅 ${p.date}` : '');
+    setText('[data-fm-modal-address]', p.address ? `📍 ${p.address}` : '');
+    setText('[data-fm-modal-note]', p.note);
+    const cat = modal.querySelector<HTMLElement>('[data-fm-modal-category]');
+    if (cat) { cat.textContent = p.category; cat.hidden = !p.category; }
+    const status = modal.querySelector<HTMLElement>('[data-fm-modal-status]');
+    if (status) {
+      status.textContent = `${p.status.icon} ${p.status.label}`;
+      status.className = `foodmap-modal-status foodmap-status-${p.status.key}`;
+    }
+    const dishList = modal.querySelector<HTMLElement>('[data-fm-modal-dishes]');
+    if (dishList) {
+      dishList.innerHTML = p.dishes.length
+        ? p.dishes.map((d: any) => `
+          <li class="foodmap-dish">
+            <div class="foodmap-dish-main">
+              <span class="foodmap-dish-name">${esc(d.name)}</span>
+              ${d.note ? `<p class="foodmap-dish-note">${esc(d.note)}</p>` : ''}
+            </div>
+            ${d.price ? `<span class="foodmap-dish-price">${esc(d.price)}</span>` : ''}
+          </li>`).join('')
+        : '<li class="foodmap-dish foodmap-dish-empty">还没有记录菜品</li>';
+    }
+    modal.hidden = false;
+    document.body.style.overflow = 'hidden';
+  }
+  function closeModal() {
+    if (!modal) return;
+    modal.hidden = true;
+    document.body.style.overflow = '';
+  }
+
+  root?.addEventListener('click', event => {
+    const target = event.target as HTMLElement;
+    const closeBtn = target.closest<HTMLElement>('[data-fm-modal-close]');
+    if (closeBtn) { closeModal(); return; }
+    const card = target.closest<HTMLElement>('[data-fm-place]');
+    if (card) { openModal(card.dataset.fmPlace || ''); return; }
+  });
+  root?.addEventListener('keydown', event => {
+    if ((event as KeyboardEvent).key === 'Escape') closeModal();
   });
 </script>

@@ -31,12 +31,17 @@ const procurementCollection = defineCollection({
   }),
 });
 
+const foodDish = z.object({
+  name: z.string(),
+  note: z.string().default(''),
+  price: z.string().default(''),
+});
 const foodPlacesCollection = defineCollection({
   type: 'content',
   schema: z.object({
     name: z.string(),
     category: z.string().default(''),
-    dishes: z.array(z.string()).default([]),
+    dishes: z.array(z.union([z.string(), foodDish])).default([]),
     area: z.string(),
     location: z.string(),
     address: z.string().default(''),

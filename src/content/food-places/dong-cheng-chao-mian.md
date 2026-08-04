@@ -1,7 +1,9 @@
 ---
-name: 门口的炒饼丝炒河粉
+name: 东成炒面
 dishes:
-  - 炒饼丝
+  - name: 炒饼丝
+    price: '¥11'
+    note: 味道可以
 area: 校外
 location: 隆江城
 date: '2026-07-31'

@@ -1,9 +1,10 @@
 ---
 name: 火烧云傣家菜
 dishes:
-  - 油焖鸡
-  - 黑糖豆花
-  - 蒜香小排
+  - name: 油焖鸡
+    note: 必点，配米饭绝了
+  - name: 黑糖豆花
+  - name: 蒜香小排
 area: 校外
 location: 小寨
 date: '2026-07-01'

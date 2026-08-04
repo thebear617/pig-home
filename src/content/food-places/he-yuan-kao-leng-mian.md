@@ -1,7 +1,8 @@
 ---
 name: 贺园烤冷面
 dishes:
-  - 烤冷面
+  - name: 烤冷面
+    note: 味道很不错
 area: 校外
 location: 长安大学城
 date: '2026-07-28'

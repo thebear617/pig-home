@@ -844,6 +844,23 @@ function shiftMonth(delta: number) {
   refresh();
 }
 
+function applyTimelineFilter(categoryValue: string) {
+  const timeline = document.querySelector('.timeline');
+  if (!timeline) return;
+  timeline.querySelectorAll<HTMLElement>('.tl-cat-travel, .tl-cat-xian, .tl-cat-quarrel')
+    .forEach(item => { item.hidden = categoryValue !== 'all' && !item.classList.contains(`tl-cat-${categoryValue}`); });
+  // 隐藏没有可见条目的月份标题
+  timeline.querySelectorAll<HTMLElement>('.timeline-month').forEach(month => {
+    let node = month.nextElementSibling;
+    let anyVisible = false;
+    while (node && !node.classList.contains('timeline-month')) {
+      if (node.classList.contains('timeline-item') && !node.hidden) { anyVisible = true; break; }
+      node = node.nextElementSibling;
+    }
+    month.hidden = !anyVisible;
+  });
+}
+
 document.addEventListener('click', event => {
   const target = event.target as HTMLElement;
   if (target.closest('.cal-prev')) { shiftMonth(-1); return; }
@@ -926,9 +943,9 @@ document.addEventListener('click', event => {
   }
   const relation = target.closest<HTMLButtonElement>('[data-rl-cat]');
   if (relation) {
-    const categoryValue = relation.dataset.rlCat;
+    const categoryValue = relation.dataset.rlCat!;
     document.querySelectorAll('[data-rl-cat]').forEach(button => button.classList.toggle('active', button === relation));
-    document.querySelectorAll<HTMLElement>('.tl-cat-travel, .tl-cat-xian, .tl-cat-quarrel').forEach(item => { item.hidden = categoryValue !== 'all' && !item.classList.contains(`tl-cat-${categoryValue}`); });
+    applyTimelineFilter(categoryValue);
     return;
   }
   const quarrel = target.closest<HTMLElement>('[data-rl-q-toggle]');
