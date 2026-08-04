@@ -21,4 +21,6 @@ export const membershipRecords = [
   { name: '鲨鱼记账', expireDate: '2027-05-04', price: 118, cycleMonths: 36, tags: ['工具'], note: '' },
   { name: 'b站', expireDate: '2027-12-30', price: 188, cycleMonths: 24, tags: ['视频'], note: '', icon: '../assets/membership/bilibili.ico' },
   { name: '迅雷', expireDate: '2028-05-22', price: 164, cycleMonths: 12, tags: ['网盘'], note: '', icon: '../assets/membership/xunlei.ico' },
+  { name: '腾讯云域名 thebear617.cn', expireDate: '2027-07-05', price: 33, cycleMonths: 12, tags: ['工具'], note: '首年优惠 ¥33（原 ¥38/年）' },
+  { name: '腾讯云域名 xdubear.cn', expireDate: '2027-08-03', price: 33, cycleMonths: 12, tags: ['工具'], note: '首年优惠 ¥33（原 ¥38/年）' },
 ];
