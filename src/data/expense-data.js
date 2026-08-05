@@ -902,5 +902,12 @@ export const expenseRecords = [
     "sub": "门诊挂号",
     "amount": 10.0,
     "note": "南宁补牙挂号"
+  },
+  {
+    "date": "2026-08-05",
+    "cat": "市内出行",
+    "sub": "交通",
+    "amount": 4.0,
+    "note": "骑车"
   }
 ];
