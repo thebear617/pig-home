@@ -31,6 +31,7 @@ export const TODO_BOARDS: TodoBoard[] = [
     name: '科研',
     icon: '🔍',
     items: [
+      { id: 'r2', title: '录制 IGrass 12 分钟 oral 视频', status: 'todo', date: '2026-08-06', createdAt: '2026-08-05', url: '', note: '' }
     ]
   },
   {
@@ -39,7 +40,8 @@ export const TODO_BOARDS: TodoBoard[] = [
     icon: '💻',
     items: [
       { id: 'c8', title: '研究用家里的台式机作为自己的服务器', status: 'todo', date: '2026-08-25', createdAt: '2026-08-05', url: '', note: '' },
-      { id: 'c9', title: '个人仪表盘-逻辑继续完善，加入番茄钟插件联动逻辑', status: 'todo', date: '2026-08-06', createdAt: '2026-08-05', url: '', note: '个人仪表盘 v0.18.0 后续：番茄钟 + 仪表盘数据联动' }
+      { id: 'c9', title: '个人仪表盘-逻辑继续完善，加入番茄钟插件联动逻辑', status: 'todo', date: '2026-08-06', createdAt: '2026-08-05', url: '', note: '个人仪表盘 v0.18.0 后续：番茄钟 + 仪表盘数据联动' },
+      { id: 'c10', title: '进行「猪窝的美食地图」的升级', status: 'todo', date: '2026-08-07', createdAt: '2026-08-05', url: '', note: '' }
     ]
   },
   {
