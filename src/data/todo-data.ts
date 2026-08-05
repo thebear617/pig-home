@@ -38,6 +38,7 @@ export const TODO_BOARDS: TodoBoard[] = [
     name: '编程',
     icon: '💻',
     items: [
+      { id: 'c8', title: '研究用家里的台式机作为自己的服务器', status: 'todo', date: '2026-08-25', createdAt: '2026-08-05', url: '', note: '' }
     ]
   },
   {
