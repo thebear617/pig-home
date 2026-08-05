@@ -5480,7 +5480,7 @@ export const diaryRecords = {
     ]
   },
   "2026-08-04": {
-    "value": 4,
+    "value": 9,
     "tasks": [
       {
         "status": "x",
@@ -5510,6 +5510,46 @@ export const diaryRecords = {
         "status": "x",
         "time": "12:00-13:30",
         "desc": "去吃张亮麻辣烫 + 收拾行李",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      },
+      {
+        "status": "x",
+        "time": "13:30-15:30",
+        "desc": "洗衣服 + 烘衣服（期间做了一些开发 - devnotes 58a6d86 14:57 docs(timeline) 开发时间线记录 v1.6.0（1 文件 +32）；cats 3802f31 14:57 fix 统一照片墙卡片高度（1 文件 +1/-2）；session 内 chore 5 commit：home 2ef47d7 13:49 feat(relationship) momo park / 05f2b97 13:49 chore(todo) l9 / 00e6b48 13:51 feat(membership) 腾讯云域名 / 6b59767 14:56 feat(v1.6.0) 关系时间线与美食地图 UI 重构 / bd14bc7 14:56 chore(diary) 8/4）",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      },
+      {
+        "status": "x",
+        "time": "15:30-16:20",
+        "desc": "回学校看弹头 + 放罐头",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      },
+      {
+        "status": "x",
+        "time": "16:20-18:20",
+        "desc": "德发兴吃饭，和过马路最后一顿",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      },
+      {
+        "status": "x",
+        "time": "18:20-21:00",
+        "desc": "坐地铁去机场",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      },
+      {
+        "status": "x",
+        "time": "21:00-24:00",
+        "desc": "坐飞机从西安回南宁（咸阳→南宁 8/4 航班）",
         "isCooking": false,
         "mealType": null,
         "dishGuess": null
