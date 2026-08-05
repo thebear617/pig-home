@@ -5557,7 +5557,7 @@ export const diaryRecords = {
     ]
   },
   "2026-08-05": {
-    "value": 5,
+    "value": 7,
     "tasks": [
       {
         "status": "x",
@@ -5595,6 +5595,43 @@ export const diaryRecords = {
         "status": "x",
         "time": "13:30-19:30",
         "desc": "开发（devnotes 知识库重建 v0.9.0/v0.10.0/v0.10.1 + 个人路由表图标本地化 + lifenotes 菜谱新增小炒黄牛肉 + 多项 meta 更新）- 11 个 commit：devnotes f799335 15:02 feat 知识库渲染增强与内容更新（15 文件 +890/-200）、devnotes a491d04 15:01 docs(timeline) 补充熊窝 v0.24.1 时间线（1 文件 +21）、devnotes 3093879 15:08 feat(v0.9.0) 知识库渲染增强与写作体验优化（4 文件 +22/-3）、devnotes b44f4ae 17:20 feat(v0.10.0) 重建知识库分类体系（39 文件 +181/-130）、devnotes 6d5c9f6 18:57 docs bili-audio-transcribe skill 修复实录（1 文件 +47）、devnotes ccbb449 19:13 feat(v0.10.1) 统一知识库命名并增加排序（39 文件 +259/-94）；personal 70f7e6b 14:46 feat(v0.24.1) 路由表图标全面本地化，移除 Google favicon API 依赖（21 文件 +150/-21）；lifenotes b0b2ba5 14:15 feat(cooking) 家常菜谱新增第四节（牛肉炒玉米 + 冬阴功）（1 文件 +35）、lifenotes a763bc0 14:18 chore(meta) frontmatter 更新（1 文件 +4/-2）、lifenotes b11a1b2 14:22 feat(meta) 文章页渲染「发布于 X · 更新于 Y」对齐 devnotes（3 文件 +3/-3）、lifenotes 3985c74 19:06 feat 家常菜谱新增小炒黄牛肉与通用技巧章节（1 文件 +43/-4）；session 内 chore 9 commit：home 0c8ddd3 13:42 chore(utility) 8/5 电表 15.52 / fa91ebc 13:54 chore(diary+food-map) 8/4 续补 / 752f35e 14:00 feat(relationship) 西安 walk 德发兴约会 / 90dd0f7 14:04 chore(diary+food) 新建 8/5 / 6fd40a9 14:42 chore(todo) l10 看牙 / ac66edf 14:44 chore(todo) l11 不锈钢碗 / 9fd492f 15:05 chore(expense) 8/5 医疗保健 / ec66097 15:58 chore(todo) c8 服务器 / 84b880c 18:08 chore(todo) c9 番茄钟+仪表盘 / 871e023 18:45 chore(todo) c10 美食地图升级",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      },
+      {
+        "status": "x",
+        "time": "19:30-20:30",
+        "desc": "在家吃饭",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      },
+      {
+        "status": "x",
+        "time": "20:30-24:00",
+        "desc": "打电动（英雄联盟）",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      }
+    ]
+  },
+  "2026-08-06": {
+    "value": 2,
+    "tasks": [
+      {
+        "status": "x",
+        "time": "00:00-01:30",
+        "desc": "打电动（英雄联盟）",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      },
+      {
+        "status": "x",
+        "time": "01:30-02:10",
+        "desc": "骑车回家洗澡",
         "isCooking": false,
         "mealType": null,
         "dishGuess": null
