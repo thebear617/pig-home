@@ -5555,6 +5555,43 @@ export const diaryRecords = {
         "dishGuess": null
       }
     ]
+  },
+  "2026-08-05": {
+    "value": 4,
+    "tasks": [
+      {
+        "status": "x",
+        "time": "00:00-03:00",
+        "desc": "回家吃夜宵 + 和老豆聊天",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      },
+      {
+        "status": "x",
+        "time": "03:00-05:00",
+        "desc": "玩手机",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      },
+      {
+        "status": "x",
+        "time": "05:00-12:00",
+        "desc": "睡觉",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      },
+      {
+        "status": "x",
+        "time": "12:00-13:30",
+        "desc": "吃饭 + 学做菜（冬阴功 + 牛肉炒玉米）",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      }
+    ]
   }
 };
 export const specialEvents = {
