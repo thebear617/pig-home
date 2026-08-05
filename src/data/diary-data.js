@@ -5602,7 +5602,7 @@ export const diaryRecords = {
       {
         "status": "x",
         "time": "19:30-20:30",
-        "desc": "在家吃饭",
+        "desc": "在家吃饭 + 学做菜",
         "isCooking": false,
         "mealType": null,
         "dishGuess": null
