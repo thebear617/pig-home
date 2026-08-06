@@ -5618,7 +5618,7 @@ export const diaryRecords = {
     ]
   },
   "2026-08-06": {
-    "value": 9,
+    "value": 13,
     "tasks": [
       {
         "status": "x",
@@ -5688,6 +5688,38 @@ export const diaryRecords = {
         "status": "x",
         "time": "16:15-16:40",
         "desc": "开发（devnotes 脚注/案例/v0.11.0 知识库重构 + 时间线补充 + lifenotes v0.9.4 schema 迁移 + 菜谱/合集/训练 多篇新内容 + 内容版本号升级）- 14 个 commit：devnotes 9767634 16:22 feat 优化脚注悬浮框与图片预览（2 文件 +245/-13）、devnotes ee011c7 16:22 fix 修复两格缩进脚注列表边界（1 文件 +57/-3）、devnotes 6f35ecd 16:22 refactor 重组随想文章分类（8 文件 +8/-69）、devnotes 45a5e82 16:24 refactor 合并开发资源合集（8 文件 +79/-146）、devnotes 17dcc70 16:24 docs 更新开发案例与视频字幕图像工作流（4 文件 +172/-11）、devnotes ddabeff 16:25 docs 补充游戏笔记 v0.3.1 开发时间线（1 文件 +24）、devnotes 8a44dc8 16:26 feat(v0.11.0) 重构知识库内容体系并增强 Markdown 阅读体验（4 文件 +43/-7）、devnotes 825757c 16:38 docs 常识笔记 v0.9.4 开发时间线 + OpenCode 模型路由配置（2 文件 +34/-3）；lifenotes eb44aa4 16:29 chore(meta) 内容 schema 迁移 date/updated 必填并补齐全量 frontmatter（35 文件 +67/-1）、lifenotes 8ca5272 16:30 feat(cooking) 家常菜谱新增爆炒鱿鱼/肉末茄子/煎牛排/腐乳炒空心菜（1 文件 +60/-1）、lifenotes c12798e 16:30 feat 新增西安地铁直达商场合集（2 文件 +170）、lifenotes 12258f0 16:30 feat 新增引体向上速成训练方法（1 文件 +28）、lifenotes fd7d569 16:30 feat 南宁美食探店链接暂存（1 文件 +15）、lifenotes 9ac5f76 16:32 chore v0.9.4 内容 schema 迁移（1 文件 +1/-1）；session 内 chore：home 43e14e1 16:20 chore(diary) 8/6 续补 15:00-16:15",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      },
+      {
+        "status": "x",
+        "time": "16:40-19:30",
+        "desc": "开发（cats 渣男改名赫兹 + 个人路由表链接更新 + devnotes 资源合集补充）- 4 个 commit：cats 9e17ff2 16:49 feat 水手/大头/漂亮橘各加 1 张新照片（7 文件 +3/-3）、cats 352ea8e 18:17 feat 渣男改名赫兹并加新照 + 漂亮橘加第 7 张照（12 文件 +5/-5）、personal 8592107 18:08 feat 路由表链动小铺站点链接更新指向开发资源合集（1 文件 +1/-2）、devnotes d2c1bf6 18:08 docs 开发资源合集补充 AI 订阅渠道链接（1 文件 +7）；session 内 chore 3 commit：home 537ad94 16:48 chore(diary) 8/6 续补 16:15-16:40 / b7392b1 18:03 chore(todo) l12 让大贝果取猫粮 / 88a9073 18:07 chore(expense) 8/6 通讯订阅/AI订阅 ¥24",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      },
+      {
+        "status": "x",
+        "time": "19:30-20:30",
+        "desc": "吃饭（中途学做菜）",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      },
+      {
+        "status": "x",
+        "time": "20:30-22:30",
+        "desc": "录制 IGrass 视频",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      },
+      {
+        "status": "x",
+        "time": "22:30-23:00",
+        "desc": "和过马路聊天",
         "isCooking": false,
         "mealType": null,
         "dishGuess": null
