@@ -28,7 +28,9 @@ export const ARCHIVED_TODO_BOARDS: TodoBoard[] = [
     items: [
       { id: 'r1', title: '做好端到端的 pdf2html 的 skill', status: 'done', date: '2026-08-01', createdAt: '2026-07-19', url: '', note: 'pdf2blog-zh skill 开发完成；产物：reanotes v0.7.0（b248924 02:49 feat + 237baff 02:49 docs）' },
       { id: 'r2', title: '录制 IGrass 12 分钟 oral 视频', status: 'done', date: '2026-08-06', createdAt: '2026-08-05', url: '', note: '8/6 20:30-22:30 录制完成' },
-      { id: 'v10', title: '这个 skill，让 AI 做出顶级审美的图表', url: 'https://www.bilibili.com/video/BV14HgY6YEMx/?share_source=copy_web&vd_source=03f4c4c1219f23af84f99d441d39f961', status: 'done', note: '来源：B站；已完成 8/7', createdAt: '2026-07-31', date: '2026-08-07' }
+      { id: 'v10', title: '这个 skill，让 AI 做出顶级审美的图表', url: 'https://www.bilibili.com/video/BV14HgY6YEMx/?share_source=copy_web&vd_source=03f4c4c1219f23af84f99d441d39f961', status: 'done', note: '来源：B站；已完成 8/7', createdAt: '2026-07-31', date: '2026-08-07' },
+      { id: 'v2', title: '中科院研究生如何用 AI 把 idea 一步步变成论文', url: 'https://www.bilibili.com/video/BV1LKjS6gEh4/', status: 'done', note: '预计归 reanotes/literature；已完成 8/7', createdAt: '2026-07-18', date: '2026-08-07' },
+      { id: 'v11', title: 'Cloud code 负责人的 1 小时播客，讲述他对 Vibe Coding 的看法', url: 'http://xhslink.cn/o/5mYU5BrF8KZ', status: 'done', note: '来源：小红书；已完成 8/7', createdAt: '2026-07-31', date: '2026-08-07' }
     ]
   },
   {
