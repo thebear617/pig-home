@@ -5993,6 +5993,20 @@ body[data-page="todo-board"] .app-shell {
   margin-top: 2px;
 }
 
+.todo-card-badge {
+  align-self: flex-start;
+  display: inline-block;
+  font-size: 11px;
+  font-weight: 600;
+  color: #5a4f44;
+  background: #f7f3ee;
+  border: 1px solid #e7dfd3;
+  padding: 2px 8px;
+  border-radius: 10px;
+  letter-spacing: 0;
+  line-height: 1.5;
+}
+
 .todo-board-history {
   background: #ffffff;
   border: 1px solid #e7dfd3;

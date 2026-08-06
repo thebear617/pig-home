@@ -9,21 +9,6 @@ import type { TodoBoard } from './todo-data';
  */
 export const ARCHIVED_TODO_BOARDS: TodoBoard[] = [
   {
-    id: 'video',
-    name: '视频',
-    icon: '🎬',
-    items: [
-      { id: 'v1', title: '世界模型：在 AI 里抛硬币，概率是 50% 吗？', url: 'https://b23.tv/1RotOy9', status: 'done', note: '预计归 lifenotes/AI产业', createdAt: '2026-07-18', date: '2026-07-27' },
-      { id: 'v3', title: 'GPT-5.6 + image2 三步法输出高质量学术 PPT', url: 'https://www.bilibili.com/video/BV1mgNj6MEuX/', status: 'done', note: '预计归 reanotes/dlproject（产物：devnotes/src/content/prompts/lit-to-ppt.md）', createdAt: '2026-07-18', date: '2026-07-26' },
-      { id: 'v4', title: '如何学习AI全栈 - 数据、算法、模型、硬件、架构', url: 'https://github.com/lvy010/AI-wiki', status: 'done', note: '来源：@lvyneko 小红书笔记，含 AI-wiki 思维导图（原科研看板 r2）', createdAt: '2026-07-22', date: '2026-07-26' },
-      { id: 'v5', title: '5.9K Star 神器 drawio-skill 版本大升级 更专业 更全面 更优秀', url: 'https://www.bilibili.com/video/BV1bcNZ6xEK3/', status: 'done', note: '预计归 devnotes/提示词库', createdAt: '2026-07-26', date: '2026-07-27' },
-      { id: 'v6', title: '从夯到拉锐评中美七大桌面办公AI agent', url: 'https://www.bilibili.com/video/BV15f336QETT/', status: 'done', note: '', createdAt: '2026-07-26', date: '2026-07-27' },
-      { id: 'v7', title: '猫乱尿的知识点都给你们咯！- 孙文-猫行为学', url: 'https://www.xiaohongshu.com/discovery/item/6544c3260000000025017af3?source=webshare&xhsshare=pc_web&xsec_token=CB0CMzuCfT2-fiNEBL1BMfUMrEJEnCQxkcgcIM0ESxumY=&xsec_source=pc_share', status: 'done', note: '来源：小红书 @孙文-猫行为学；预计归 lifenotes/猫协', createdAt: '2026-07-27', date: '2026-07-27' },
-      { id: 'v9', title: '不玩手机的10分钟，做什么最赚？', url: 'https://www.bilibili.com/video/BV1YbgC6zEvq/?share_source=copy_web&vd_source=03f4c4c1219f23af84f99d441d39f961', status: 'done', note: '来源：B站；已观看 7/29', createdAt: '2026-07-29', date: '2026-07-29' },
-      { id: 'v8', title: '常见食材保存时间', url: 'https://www.xiaohongshu.com/discovery/item/6a40c4d1000000001700a5f0?source=webshare&xhsshare=pc_web&xsec_token=ABfByeG9HdtqXyQZ__cmspiXjK4rv6qCQrhOMux0milD4=&xsec_source=pc_share', status: 'done', note: '来源：小红书；预计归 lifenotes/居家生活；已完成 7/30', createdAt: '2026-07-28', date: '2026-07-30' }
-    ]
-  },
-  {
     id: 'coding',
     name: '编程',
     icon: '💻',

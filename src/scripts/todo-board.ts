@@ -15,7 +15,18 @@ interface HeatmapItem {
   boardIcon: string;
 }
 
-let activeTabId = 'video';
+/**
+ * 汇总视图的条目扩展：附带来源板块信息，用于渲染「来源板块角标」。
+ * 仅客户端聚合时生成，不改动 todo-data.ts 里的 TodoItem 接口。
+ */
+type BoardItem = TodoItem & {
+  sourceBoard?: { id: string; name: string; icon: string };
+};
+
+/** 汇总视图聚合的板块（life / coding / research，不含 video 与 summary 自身） */
+const SUMMARY_BOARD_IDS = ['life', 'coding', 'research'];
+
+let activeTabId = 'summary';
 let historyOpen = false;
 let selectedHeatmapDate: string | null = null;
 const boardPages: Record<string, number> = {};
@@ -72,11 +83,23 @@ function activeBoard(): TodoBoard | undefined {
   return boards().find(b => b.id === activeTabId);
 }
 
-function allItems(): TodoItem[] {
+function allItems(): BoardItem[] {
+  if (activeTabId === 'summary') {
+    // 汇总：合并 life / coding / research 三个活跃板块的条目，并附带来源板块信息
+    const merged: BoardItem[] = [];
+    boards()
+      .filter(b => SUMMARY_BOARD_IDS.includes(b.id))
+      .forEach(board => {
+        board.items.forEach(it => {
+          merged.push({ ...it, sourceBoard: { id: board.id, name: board.name, icon: board.icon } });
+        });
+      });
+    return merged;
+  }
   return activeBoard()?.items || [];
 }
 
-function todoItems(): TodoItem[] {
+function todoItems(): BoardItem[] {
   const today = todayStr();
   return allItems()
     .filter(it => {
@@ -90,14 +113,29 @@ function todoItems(): TodoItem[] {
     });
 }
 
-function doingItems(): TodoItem[] {
+function doingItems(): BoardItem[] {
   return allItems().filter(it => (it.status || 'todo') === 'doing');
 }
 
-function doneItems(): TodoItem[] {
+function doneItems(): BoardItem[] {
+  const today = todayStr();
+  if (activeTabId === 'summary') {
+    // 汇总：合并 life / coding / research 三个板块归档中 date===今天 的条目
+    const merged: BoardItem[] = [];
+    archivedBoards()
+      .filter(b => SUMMARY_BOARD_IDS.includes(b.id))
+      .forEach(board => {
+        board.items.forEach(it => {
+          const date = it.date || today;
+          if (date === today) {
+            merged.push({ ...it, sourceBoard: { id: board.id, name: board.name, icon: board.icon } });
+          }
+        });
+      });
+    return merged;
+  }
   const board = archivedBoards().find(b => b.id === activeTabId);
   if (!board) return [];
-  const today = todayStr();
   return board.items.filter(it => {
     const date = it.date || today;
     return date === today;
@@ -284,7 +322,10 @@ function renderDrawer(data: Map<string, HeatmapItem[]>): string {
 
 /** ─── 卡片渲染 ─── */
 
-function renderCard(item: TodoItem): string {
+function renderCard(item: BoardItem): string {
+  const badgeHtml = activeTabId === 'summary' && item.sourceBoard
+    ? `<span class="todo-card-badge">${escape(item.sourceBoard.icon)} ${escape(item.sourceBoard.name)}</span>`
+    : '';
   const titleHtml = item.url
     ? `<a href="${escape(item.url)}" target="_blank" rel="noopener" class="todo-card-link"><h3 class="todo-card-title">${escape(item.title)}</h3></a>`
     : `<h3 class="todo-card-title">${escape(item.title)}</h3>`;
@@ -302,7 +343,7 @@ function renderCard(item: TodoItem): string {
   if (item.status === 'doing') cls += ' todo-card-doing';
   if (item.status === 'done') cls += ' todo-card-done';
 
-  return `<article class="${cls}">${titleHtml}${noteHtml}${metaHtml}</article>`;
+  return `<article class="${cls}">${badgeHtml}${titleHtml}${noteHtml}${metaHtml}</article>`;
 }
 
 function renderTabs(): string {
@@ -374,7 +415,7 @@ document.addEventListener('click', event => {
   const tabBtn = target.closest<HTMLButtonElement>('[data-tb-tab]');
   if (tabBtn) {
     if (selectedHeatmapDate) selectedHeatmapDate = null;
-    activeTabId = tabBtn.dataset.tbTab || 'video';
+    activeTabId = tabBtn.dataset.tbTab || 'summary';
     Object.keys(boardPages).forEach(key => delete boardPages[key]);
     refresh();
     return;
