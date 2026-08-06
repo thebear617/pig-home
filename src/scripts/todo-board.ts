@@ -23,7 +23,7 @@ type BoardItem = TodoItem & {
   sourceBoard?: { id: string; name: string; icon: string };
 };
 
-/** 汇总视图聚合的板块（life / coding / research，不含 video 与 summary 自身） */
+/** 汇总视图聚合的板块（life / coding / research，不含 summary 自身） */
 const SUMMARY_BOARD_IDS = ['life', 'coding', 'research'];
 
 let activeTabId = 'summary';
