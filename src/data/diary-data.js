@@ -5618,7 +5618,7 @@ export const diaryRecords = {
     ]
   },
   "2026-08-06": {
-    "value": 8,
+    "value": 9,
     "tasks": [
       {
         "status": "x",
@@ -5680,6 +5680,14 @@ export const diaryRecords = {
         "status": "x",
         "time": "15:00-16:15",
         "desc": "处理碎片信息 + 清理干净",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      },
+      {
+        "status": "x",
+        "time": "16:15-16:40",
+        "desc": "开发（devnotes 脚注/案例/v0.11.0 知识库重构 + 时间线补充 + lifenotes v0.9.4 schema 迁移 + 菜谱/合集/训练 多篇新内容 + 内容版本号升级）- 14 个 commit：devnotes 9767634 16:22 feat 优化脚注悬浮框与图片预览（2 文件 +245/-13）、devnotes ee011c7 16:22 fix 修复两格缩进脚注列表边界（1 文件 +57/-3）、devnotes 6f35ecd 16:22 refactor 重组随想文章分类（8 文件 +8/-69）、devnotes 45a5e82 16:24 refactor 合并开发资源合集（8 文件 +79/-146）、devnotes 17dcc70 16:24 docs 更新开发案例与视频字幕图像工作流（4 文件 +172/-11）、devnotes ddabeff 16:25 docs 补充游戏笔记 v0.3.1 开发时间线（1 文件 +24）、devnotes 8a44dc8 16:26 feat(v0.11.0) 重构知识库内容体系并增强 Markdown 阅读体验（4 文件 +43/-7）、devnotes 825757c 16:38 docs 常识笔记 v0.9.4 开发时间线 + OpenCode 模型路由配置（2 文件 +34/-3）；lifenotes eb44aa4 16:29 chore(meta) 内容 schema 迁移 date/updated 必填并补齐全量 frontmatter（35 文件 +67/-1）、lifenotes 8ca5272 16:30 feat(cooking) 家常菜谱新增爆炒鱿鱼/肉末茄子/煎牛排/腐乳炒空心菜（1 文件 +60/-1）、lifenotes c12798e 16:30 feat 新增西安地铁直达商场合集（2 文件 +170）、lifenotes 12258f0 16:30 feat 新增引体向上速成训练方法（1 文件 +28）、lifenotes fd7d569 16:30 feat 南宁美食探店链接暂存（1 文件 +15）、lifenotes 9ac5f76 16:32 chore v0.9.4 内容 schema 迁移（1 文件 +1/-1）；session 内 chore：home 43e14e1 16:20 chore(diary) 8/6 续补 15:00-16:15",
         "isCooking": false,
         "mealType": null,
         "dishGuess": null
