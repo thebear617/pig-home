@@ -923,5 +923,12 @@ export const expenseRecords = [
     "sub": "交通",
     "amount": 7.96,
     "note": "骑车"
+  },
+  {
+    "date": "2026-08-06",
+    "cat": "通讯订阅",
+    "sub": "AI订阅",
+    "amount": 24.0,
+    "note": "给过马路报销 ChatGPT Plus"
   }
 ];
