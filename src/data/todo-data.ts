@@ -55,6 +55,7 @@ export const TODO_BOARDS: TodoBoard[] = [
       { id: 'l9', title: '晾晒活性炭', status: 'todo', date: '2026-09-02', createdAt: '2026-08-03', url: '', note: '甲醛处理后续：活性炭需定期晾晒保持吸附能力' },
       { id: 'l10', title: '去民主路看牙', status: 'todo', date: '2026-08-11', createdAt: '2026-08-05', url: '', note: '下午 13:00' },
       { id: 'l11', title: '购买不锈钢碗、大菜篮子、检查燃气热水器 CO', status: 'todo', date: '2026-08-25', createdAt: '2026-08-05', url: '', note: '3 件事：① 买不锈钢碗 ② 买大菜篮子 ③ 检查燃气热水器一氧化碳问题' },
+      { id: 'l12', title: '让大贝果去取赫兹的猫粮', status: 'todo', date: '2026-08-09', createdAt: '2026-08-06', url: '', note: '代取猫粮' },
     ]
   }
 ];
