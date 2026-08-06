@@ -41,7 +41,8 @@ export const ARCHIVED_TODO_BOARDS: TodoBoard[] = [
     name: '科研',
     icon: '🔍',
     items: [
-      { id: 'r1', title: '做好端到端的 pdf2html 的 skill', status: 'done', date: '2026-08-01', createdAt: '2026-07-19', url: '', note: 'pdf2blog-zh skill 开发完成；产物：reanotes v0.7.0（b248924 02:49 feat + 237baff 02:49 docs）' }
+      { id: 'r1', title: '做好端到端的 pdf2html 的 skill', status: 'done', date: '2026-08-01', createdAt: '2026-07-19', url: '', note: 'pdf2blog-zh skill 开发完成；产物：reanotes v0.7.0（b248924 02:49 feat + 237baff 02:49 docs）' },
+      { id: 'r2', title: '录制 IGrass 12 分钟 oral 视频', status: 'done', date: '2026-08-06', createdAt: '2026-08-05', url: '', note: '8/6 20:30-22:30 录制完成' }
     ]
   },
   {

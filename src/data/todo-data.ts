@@ -31,7 +31,6 @@ export const TODO_BOARDS: TodoBoard[] = [
     name: '科研',
     icon: '🔍',
     items: [
-      { id: 'r2', title: '录制 IGrass 12 分钟 oral 视频', status: 'todo', date: '2026-08-06', createdAt: '2026-08-05', url: '', note: '' }
     ]
   },
   {
