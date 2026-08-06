@@ -5618,7 +5618,7 @@ export const diaryRecords = {
     ]
   },
   "2026-08-06": {
-    "value": 7,
+    "value": 8,
     "tasks": [
       {
         "status": "x",
@@ -5672,6 +5672,14 @@ export const diaryRecords = {
         "status": "x",
         "time": "14:00-15:00",
         "desc": "去吃螺蛳粉",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      },
+      {
+        "status": "x",
+        "time": "15:00-16:15",
+        "desc": "处理碎片信息 + 清理干净",
         "isCooking": false,
         "mealType": null,
         "dishGuess": null
