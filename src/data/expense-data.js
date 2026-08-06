@@ -909,5 +909,19 @@ export const expenseRecords = [
     "sub": "交通",
     "amount": 4.0,
     "note": "骑车"
+  },
+  {
+    "date": "2026-08-06",
+    "cat": "市内出行",
+    "sub": "米粉米线",
+    "amount": 20.5,
+    "note": "螺遇牛螺蛳粉"
+  },
+  {
+    "date": "2026-08-06",
+    "cat": "市内出行",
+    "sub": "交通",
+    "amount": 7.96,
+    "note": "骑车"
   }
 ];
