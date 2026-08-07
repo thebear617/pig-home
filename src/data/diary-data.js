@@ -5618,7 +5618,7 @@ export const diaryRecords = {
     ]
   },
   "2026-08-06": {
-    "value": 13,
+    "value": 14,
     "tasks": [
       {
         "status": "x",
@@ -5720,6 +5720,51 @@ export const diaryRecords = {
         "status": "x",
         "time": "22:30-23:00",
         "desc": "和过马路聊天",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      },
+      {
+        "status": "x",
+        "time": "23:00-24:00",
+        "desc": "开发（home 视频视图改造为汇总视图 + 删除看板视频板块 + 归档 v10/devnotes 个人时间线 vCaptions 字幕插件）- 5 个 commit：home 4c5eeed 23:51 feat(todo) 每日看板视频视图改造为汇总视图（4 文件 +89/-44）、home f877ddf 23:53 chore(todo) 删除看板视频板块（2 文件 +1/-7）、home 84eefc3 23:54 chore(todo) 归档 v10 图表 skill 任务（2 文件 +2/-2）、devnotes c2317af 23:29 feat 个人开发时间线新增 vCaptions 字幕插件条目（1 文件 +25）、devnotes eca6fc8 00:02 docs 开发时间线记录 v1.6.1（1 文件 +30）；session 内 chore 3 commit：home 608fa6e 23:22 r2 归档 / 1fbe8a7 23:01 续补 16:40-23:00 / c54a080 00:05 归档 v2 v11 视频任务",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      }
+    ]
+  },
+  "2026-08-07": {
+    "value": 4,
+    "tasks": [
+      {
+        "status": "x",
+        "time": "00:00-01:00",
+        "desc": "开发",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      },
+      {
+        "status": "x",
+        "time": "01:00-04:00",
+        "desc": "玩手机",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      },
+      {
+        "status": "x",
+        "time": "04:00-11:00",
+        "desc": "睡觉",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      },
+      {
+        "status": "x",
+        "time": "11:00-12:30",
+        "desc": "尝试 Bartender 插件",
         "isCooking": false,
         "mealType": null,
         "dishGuess": null
