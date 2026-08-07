@@ -1,5 +1,7 @@
 ---
 name: 火烧云傣家菜
+city: 西安
+region: 小寨
 dishes:
   - name: 油焖鸡
     note: 必点，配米饭绝了

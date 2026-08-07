@@ -1,5 +1,7 @@
 ---
 name: 刘能行鲜货地摊火锅
+city: 西安
+region: 兴隆夜市
 dishes:
   - name: 吊龙牛肉
     note: 有点亏

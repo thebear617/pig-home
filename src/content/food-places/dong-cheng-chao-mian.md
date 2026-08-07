@@ -1,5 +1,7 @@
 ---
 name: 东成炒面
+city: 西安
+region: 隆江城
 dishes:
   - name: 炒饼丝
     price: '¥11'

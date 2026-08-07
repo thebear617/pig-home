@@ -1,5 +1,7 @@
 ---
 name: 川味盖浇饭
+city: 西安
+region: 兴隆夜市
 dishes:
   - name: 小炒肉盖浇饭
     note: 味道一般

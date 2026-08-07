@@ -1,5 +1,7 @@
 ---
 name: 兰州拉面
+city: 西安
+region: 隆江城
 dishes:
   - name: 牛肉炒刀削面
     price: '¥15'

@@ -925,12 +925,31 @@ document.addEventListener('click', event => {
     recipe.classList.toggle('open', body ? !body.hidden : false);
     return;
   }
+  const city = target.closest<HTMLButtonElement>('[data-fm-city]');
+  if (city) {
+    const value = city.dataset.fmCity;
+    const root = city.closest<HTMLElement>('[data-tab="food-map"]');
+    if (!value || !root) return;
+    root.querySelectorAll('[data-fm-city]').forEach(button => {
+      const active = button === city;
+      button.classList.toggle('active', active);
+      button.setAttribute('aria-selected', String(active));
+    });
+    root.querySelectorAll<HTMLElement>('[data-fm-city-content]').forEach(content => {
+      content.hidden = content.dataset.fmCityContent !== value;
+    });
+    const cityContent = root.querySelector<HTMLElement>(`[data-fm-city-content="${CSS.escape(value)}"]`);
+    const first = cityContent?.querySelector<HTMLButtonElement>('[data-fm-area]');
+    first?.click();
+    return;
+  }
   const area = target.closest<HTMLButtonElement>('[data-fm-area]');
   if (area) {
     const value = area.dataset.fmArea;
-    document.querySelectorAll('[data-fm-area]').forEach(button => button.classList.toggle('active', button === area));
-    document.querySelectorAll<HTMLElement>('[data-fm-area-content]').forEach(content => { content.hidden = content.dataset.fmAreaContent !== value; });
-    const first = document.querySelector<HTMLButtonElement>(`[data-fm-area-content="${CSS.escape(value || '')}"] [data-fm-location]`);
+    const cityContent = area.closest<HTMLElement>('[data-fm-city-content]');
+    cityContent?.querySelectorAll('[data-fm-area]').forEach(button => button.classList.toggle('active', button === area));
+    cityContent?.querySelectorAll<HTMLElement>('[data-fm-area-content]').forEach(content => { content.hidden = content.dataset.fmAreaContent !== value; });
+    const first = cityContent?.querySelector<HTMLButtonElement>(`[data-fm-area-content="${CSS.escape(value || '')}"] [data-fm-location]`);
     first?.click();
     return;
   }

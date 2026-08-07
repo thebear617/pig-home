@@ -1,5 +1,7 @@
 ---
 name: 麻六烤肉
+city: 西安
+region: 创汇
 dishes: []
 area: 校外
 location: 创汇

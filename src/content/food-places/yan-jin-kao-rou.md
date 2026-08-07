@@ -1,5 +1,7 @@
 ---
 name: 盐津烤肉
+city: 西安
+region: 兴隆夜市
 dishes: []
 area: 校外
 location: 兴隆夜市

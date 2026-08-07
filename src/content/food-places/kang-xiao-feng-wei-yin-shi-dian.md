@@ -1,0 +1,15 @@
+---
+name: 康小风味饮食店
+city: 南宁
+region: 蒲庙
+category: 小吃
+area: 校外
+location: 蒲庙
+tags:
+  - 南宁
+  - 蒲庙
+  - 待定位
+status: wanna
+coordinateStatus: pending
+note: 原始美食清单推荐，待补充准确地址与坐标。
+---

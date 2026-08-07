@@ -1,5 +1,12 @@
 ---
 name: 德发兴
+city: 西安
+region: 高新区
+address: 高新区52号高科大厦1层102号
+lng: 108.904647
+lat: 34.232681
+coordinateStatus: confirmed
+coordinateSource: amap
 dishes:
   - 榴莲菠萝包
   - 四宝烧卤饭

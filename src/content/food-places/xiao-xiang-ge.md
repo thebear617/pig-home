@@ -1,5 +1,7 @@
 ---
 name: 潇湘阁
+city: 西安
+region: 益田假日
 dishes:
   - name: 金钱蛋
     note: 不错，价格实惠

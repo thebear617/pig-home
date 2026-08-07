@@ -40,13 +40,22 @@ const foodPlacesCollection = defineCollection({
   type: 'content',
   schema: z.object({
     name: z.string(),
+    city: z.string(),
+    region: z.string(),
     category: z.string().default(''),
     dishes: z.array(z.union([z.string(), foodDish])).default([]),
+    // 保留现有 area 字段：当前表示校内/校外，暂不把它当作城市或地图区域。
     area: z.string(),
     location: z.string(),
     address: z.string().default(''),
     date: z.string().default(''),
     note: z.string().default(''),
+    tags: z.array(z.string()).default([]),
+    status: z.enum(['tried', 'recommend', 'wanna', 'no']).optional(),
+    lng: z.number().optional(),
+    lat: z.number().optional(),
+    coordinateStatus: z.enum(['confirmed', 'pending', 'unavailable']).default('pending'),
+    coordinateSource: z.enum(['amap', 'manual']).optional(),
   }),
 });
 

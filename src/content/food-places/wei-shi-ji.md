@@ -1,5 +1,12 @@
 ---
 name: 魏世纪
+city: 西安
+region: 钟楼
+address: 粉巷18号
+lng: 108.945903
+lat: 34.255286
+coordinateStatus: confirmed
+coordinateSource: amap
 dishes:
   - name: 鱼子酱口蘑
   - name: 黑松露披萨

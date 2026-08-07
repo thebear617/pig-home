@@ -1,5 +1,7 @@
 ---
 name: 东北烧烤
+city: 西安
+region: 兴隆夜市
 dishes:
   - name: 烤土豆
   - name: 烤仔肠
