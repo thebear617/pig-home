@@ -226,7 +226,13 @@ const placePayloadJson = JSON.stringify(placePayload);
                               const st = placeStatus(place);
                               const dishList = (place.data.dishes || []).map(dishName).join(' · ');
                               return (
-                                <article class="foodmap-list-item" data-fm-search-text={`${place.data.city} ${place.data.region} ${place.data.name} ${dishNames(place)} ${place.data.note || ''}`} data-fm-place={place.id} role="button" tabindex="0">
+                                <article
+                                  class="foodmap-list-item"
+                                  data-fm-search-text={`${place.data.city} ${place.data.region} ${place.data.location} ${place.data.name} ${place.data.category || ''} ${dishNames(place)} ${place.data.address || ''} ${place.data.note || ''} ${(place.data.tags || []).join(' ')}`}
+                                  data-fm-place={place.id}
+                                  role="button"
+                                  tabindex="0"
+                                >
                                   <div class="foodmap-list-main">
                                     <div class="foodmap-list-top">
                                       <h4 class="foodmap-list-name">{place.data.name}</h4>
@@ -291,21 +297,56 @@ const placePayloadJson = JSON.stringify(placePayload);
 
 <script>
   const root = document.querySelector<HTMLElement>('[data-tab="food-map"]');
+
+  function resetSearchResults(cityContent: HTMLElement) {
+    cityContent.querySelectorAll<HTMLElement>('[data-fm-location-content]').forEach(location => {
+      location.querySelectorAll<HTMLElement>('[data-fm-search-text]').forEach(item => { item.hidden = false; });
+      const empty = location.querySelector<HTMLElement>('.foodmap-no-results');
+      if (empty) empty.hidden = true;
+    });
+  }
+
   root?.querySelectorAll<HTMLInputElement>('[data-fm-search]').forEach(search => {
     search.addEventListener('input', () => {
       const query = search.value.trim().toLocaleLowerCase();
       const cityContent = search.closest<HTMLElement>('[data-fm-city-content]');
-      cityContent?.querySelectorAll<HTMLElement>('[data-fm-location-content]').forEach(location => {
-      const items = location.querySelectorAll<HTMLElement>('[data-fm-search-text]');
-      let visible = 0;
-      items.forEach(item => {
-        const match = !query || (item.dataset.fmSearchText || '').toLocaleLowerCase().includes(query);
-        item.hidden = !match;
-        if (match) visible += 1;
+      if (!cityContent) return;
+
+      if (!query) {
+        resetSearchResults(cityContent);
+        return;
+      }
+
+      let firstMatch: HTMLElement | null = null;
+      cityContent.querySelectorAll<HTMLElement>('[data-fm-location-content]').forEach(location => {
+        const items = location.querySelectorAll<HTMLElement>('[data-fm-search-text]');
+        let visible = 0;
+        items.forEach(item => {
+          const match = (item.dataset.fmSearchText || '').toLocaleLowerCase().includes(query);
+          item.hidden = !match;
+          if (match) visible += 1;
+        });
+
+        const empty = location.querySelector<HTMLElement>('.foodmap-no-results');
+        if (empty) empty.hidden = visible > 0;
+        if (visible > 0 && !firstMatch) firstMatch = location;
       });
-      const empty = location.querySelector<HTMLElement>('.foodmap-no-results');
-      if (empty) empty.hidden = visible > 0;
-      });
+
+      // 搜索结果可能位于当前选中的地点之外，自动切换到第一个匹配地点。
+      if (firstMatch) {
+        const areaContent = firstMatch.closest<HTMLElement>('[data-fm-area-content]');
+        const areaValue = areaContent?.dataset.fmAreaContent || '';
+        const areaButton = cityContent.querySelector<HTMLButtonElement>(
+          `[data-fm-area="${CSS.escape(areaValue)}"]`
+        );
+        areaButton?.click();
+
+        const locationValue = firstMatch.dataset.fmLocationContent || '';
+        const locationButton = areaContent?.querySelector<HTMLButtonElement>(
+          `[data-fm-location="${CSS.escape(locationValue)}"]`
+        );
+        locationButton?.click();
+      }
     });
   });
 
