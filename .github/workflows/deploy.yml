@@ -32,6 +32,8 @@ jobs:
       - run: npm run build
         env:
           SITE_BASE: '/pig-home/'
+          PUBLIC_AMAP_JS_KEY: ${{ secrets.PUBLIC_AMAP_JS_KEY }}
+          PUBLIC_AMAP_JS_SECURITY_CODE: ${{ secrets.PUBLIC_AMAP_JS_SECURITY_CODE }}
 
       - uses: actions/upload-pages-artifact@v5
         with:
