@@ -42,7 +42,6 @@ export const TODO_BOARDS: TodoBoard[] = [
     icon: '💻',
     items: [
       { id: 'c8', title: '研究用家里的台式机作为自己的服务器', status: 'todo', date: '2026-08-25', createdAt: '2026-08-05', url: '', note: '' },
-      { id: 'c10', title: '进行「猪窝的美食地图」的升级 + 整理南宁美食', status: 'todo', date: '2026-08-07', createdAt: '2026-08-05', url: '', note: '两件事合并：① 美食地图升级 ② 整理南宁美食（刚回南宁，把当地吃的店补进地图）' }
     ]
   },
   {
