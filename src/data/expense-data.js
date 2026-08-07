@@ -930,5 +930,12 @@ export const expenseRecords = [
     "sub": "AI订阅",
     "amount": 24.0,
     "note": "给过马路报销 ChatGPT Plus"
+  },
+  {
+    "date": "2026-08-07",
+    "cat": "市内出行",
+    "sub": "米粉米线",
+    "amount": 18.0,
+    "note": "老友粉 / 门口"
   }
 ];

@@ -5735,7 +5735,7 @@ export const diaryRecords = {
     ]
   },
   "2026-08-07": {
-    "value": 4,
+    "value": 7,
     "tasks": [
       {
         "status": "x",
@@ -5765,6 +5765,30 @@ export const diaryRecords = {
         "status": "x",
         "time": "11:00-12:30",
         "desc": "尝试 Bartender 插件",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      },
+      {
+        "status": "x",
+        "time": "12:30-14:00",
+        "desc": "开发",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      },
+      {
+        "status": "x",
+        "time": "14:00-14:40",
+        "desc": "吃老友粉 ¥18（市内出行-米粉米线;门口;不进美食记录/美食地图）",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      },
+      {
+        "status": "x",
+        "time": "14:40-16:00",
+        "desc": "睡觉",
         "isCooking": false,
         "mealType": null,
         "dishGuess": null
