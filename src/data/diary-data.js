@@ -5735,7 +5735,7 @@ export const diaryRecords = {
     ]
   },
   "2026-08-07": {
-    "value": 7,
+    "value": 11,
     "tasks": [
       {
         "status": "x",
@@ -5789,6 +5789,38 @@ export const diaryRecords = {
         "status": "x",
         "time": "14:40-16:00",
         "desc": "睡觉",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      },
+      {
+        "status": "x",
+        "time": "16:00-19:30",
+        "desc": "开发",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      },
+      {
+        "status": "x",
+        "time": "19:30-20:30",
+        "desc": "吃饭",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      },
+      {
+        "status": "x",
+        "time": "20:30-21:00",
+        "desc": "去看外婆",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      },
+      {
+        "status": "x",
+        "time": "21:00-23:30",
+        "desc": "南铁夜市 + 欧宗儒覃科 吃夜宵",
         "isCooking": false,
         "mealType": null,
         "dishGuess": null
