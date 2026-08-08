@@ -5834,6 +5834,51 @@ export const diaryRecords = {
         "dishGuess": null
       }
     ]
+  },
+  "2026-08-08": {
+    "value": 5,
+    "tasks": [
+      {
+        "status": "x",
+        "time": "00:00-02:30",
+        "desc": "玩手机",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      },
+      {
+        "status": "x",
+        "time": "02:30-12:00",
+        "desc": "睡觉",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      },
+      {
+        "status": "x",
+        "time": "12:00-13:30",
+        "desc": "吃饭",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      },
+      {
+        "status": "x",
+        "time": "15:00-21:20",
+        "desc": "和老豆老妈回横县看爷爷奶奶，晚上吃馄饨",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      },
+      {
+        "status": "x",
+        "time": "21:20-23:00",
+        "desc": "逛水街夜市：覃叔牛杂 + 老水街芝麻糊（椰奶黑凉粉）",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      }
+    ]
   }
 };
 export const specialEvents = {
