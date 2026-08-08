@@ -5836,7 +5836,7 @@ export const diaryRecords = {
     ]
   },
   "2026-08-08": {
-    "value": 5,
+    "value": 7,
     "tasks": [
       {
         "status": "x",
@@ -5864,6 +5864,14 @@ export const diaryRecords = {
       },
       {
         "status": "x",
+        "time": "13:30-15:00",
+        "desc": "开发 + 学习（3 个 commit：home f8bb7a4 13:46 chore(utility) 8/8 电费剩余 13.03 元（1 文件 +1）；devnotes fd9d947 13:45 diary 补充爱情随想与故事悬浮框（1 文件 +64/-1）；personal a8d9fdd 14:03 feat 路由表娱乐分组更名购物娱乐，新增京东商城入口（3 文件 +11/-2））+ session 内学习）",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      },
+      {
+        "status": "x",
         "time": "15:00-21:20",
         "desc": "和老豆老妈回横县看爷爷奶奶，晚上吃馄饨",
         "isCooking": false,
@@ -5874,6 +5882,27 @@ export const diaryRecords = {
         "status": "x",
         "time": "21:20-23:00",
         "desc": "逛水街夜市：覃叔牛杂 + 老水街芝麻糊（椰奶黑凉粉）",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      },
+      {
+        "status": "x",
+        "time": "23:15-24:00",
+        "desc": "开发（8 个 commit：home e07b0bb 23:19 chore(food-places) 删掉没去过的店只保留雷记/南铁/水街夜市 + 新增水街夜市（69 文件 +28/-1140）；home aa8bc70 23:49 fix(food-map) 恢复西安美食记录（18 文件 +284）；home e262f2e 23:57 feat(todo) 每日看板新增组会/京东 PLUS 积分/浏览器连接器研究三项待办（1 文件 +4/-1）；devnotes 3e0d250 23:40 feat 初稿新增编程语言综述（1 文件 +60）；devnotes c6bcffd 23:40 diary 随想随笔更新至 2026-08-09 初稿（1 文件 +9）；devnotes 1a78966 23:49 docs(debug) 记录猪窝美食地图排障（1 文件 +24）；cats 7a78c86 23:49 feat 赫兹加水手各加新照片（7 文件 +2/-2）；cats f96eb55 23:53 fix 水手4与赫兹5替换为新照片（4 文件 +0/-0））",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      }
+    ]
+  },
+  "2026-08-09": {
+    "value": 1,
+    "tasks": [
+      {
+        "status": "x",
+        "time": "00:00-01:15",
+        "desc": "开发（8 个 commit：lifenotes d1e9c79 00:06 feat 新增猫咪价格速查表（金吉拉询价，南宁水街，含售后信息）（1 文件 +21）；home cd82449 00:07 chore(diary) 8/8 横县看爷爷奶奶 + 水街夜市（1 文件 +45）；home c3a8b41 00:07 chore(expense) 8/8 水街夜市 3 笔 ¥28（1 文件 +21）；home 2b06c24 00:48 feat(todo) 新增 B 站视频项目复现任务（BV11mNA6vEJX，8/10）（1 文件 +1）；home 45e8490 01:15 chore(todo) 细化 l1 做相册步骤（1 文件 +1/-1）；personal be696ba 00:12 feat 完善生活仪表盘追踪看板（2 文件 +363/-225）；personal 0c3d9f8 00:21 feat 调整生活仪表盘每日习惯（1 文件 +7/-8）；personal 8ed04e8 00:36 chore 升级生活仪表盘版本至 0.24.2（2 文件 +3/-3））",
         "isCooking": false,
         "mealType": null,
         "dishGuess": null
