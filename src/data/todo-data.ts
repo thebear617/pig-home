@@ -45,6 +45,7 @@ export const TODO_BOARDS: TodoBoard[] = [
     items: [
       { id: 'c8', title: '研究用家里的台式机作为自己的服务器', status: 'todo', date: '2026-08-25', createdAt: '2026-08-05', url: '', note: '' },
       { id: 'c9', title: '研究浏览器的连接器具体有哪几种', status: 'todo', date: '2026-08-10', createdAt: '2026-08-08', url: '', note: '参考 devnotes「学习资源：开发资源合集」里的四款浏览器连接器对比（Cua Driver / ego / Kimi WebBridge 等）' },
+      { id: 'c10', title: '仔细去研究这个项目，并且尝试去复现这个项目', status: 'todo', date: '2026-08-10', createdAt: '2026-08-08', url: 'https://www.bilibili.com/video/BV11mNA6vEJX', note: 'B 站视频项目复现' },
     ]
   },
   {
