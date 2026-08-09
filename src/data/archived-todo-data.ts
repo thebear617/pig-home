@@ -45,7 +45,9 @@ export const ARCHIVED_TODO_BOARDS: TodoBoard[] = [
       { id: 'l4', title: '把床板搬走', status: 'done', date: '2026-07-24', createdAt: '2026-07-24', url: '', note: '' },
       { id: 'l5', title: '7 月 26 日回学校放游泳装备、拿电脑、拿身份证、收拾宿舍', status: 'done', date: '2026-07-25', createdAt: '2026-07-24', url: '', note: '提前 7/25 完成' },
       { id: 'l6', title: '带行李箱回去学校把衣服收拾好，把泳衣泳帽拿回去', status: 'done', date: '2026-07-26', createdAt: '2026-07-25', url: '', note: '' },
-      { id: 'l7', title: '处理甲醛 - 把衣柜里的衣服全部拿出来晾晒冲洗', status: 'done', date: '2026-08-02', createdAt: '2026-07-31', url: '', note: '活性炭 + 晾晒冲洗全流程完成' }
+      { id: 'l7', title: '处理甲醛 - 把衣柜里的衣服全部拿出来晾晒冲洗', status: 'done', date: '2026-08-02', createdAt: '2026-07-31', url: '', note: '活性炭 + 晾晒冲洗全流程完成' },
+      { id: 'l12', title: '让大贝果去取赫兹的猫粮', status: 'done', date: '2026-08-09', createdAt: '2026-08-06', url: '', note: '代取猫粮' },
+      { id: 'l14', title: '8 月 9 号下午 3 点开大组会：Camouflage-aware Image-Text Retrieval via Expert Collaboration', status: 'done', date: '2026-08-09', createdAt: '2026-08-08', url: '', note: '下午 3 点' }
     ]
   }
 ];
