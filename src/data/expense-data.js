@@ -993,5 +993,26 @@ export const expenseRecords = [
     "sub": "交通",
     "amount": 5.0,
     "note": "骑车"
+  },
+  {
+    "date": "2026-08-09",
+    "cat": "市内出行",
+    "sub": "奶茶饮品",
+    "amount": 3.0,
+    "note": "可乐"
+  },
+  {
+    "date": "2026-08-09",
+    "cat": "人情社交",
+    "sub": "宝宝礼物",
+    "amount": 22.8,
+    "note": "宝宝纸质相册"
+  },
+  {
+    "date": "2026-08-09",
+    "cat": "通讯订阅",
+    "sub": "AI 订阅",
+    "amount": 35.0,
+    "note": "explore.poker-plus - 1个月"
   }
 ];

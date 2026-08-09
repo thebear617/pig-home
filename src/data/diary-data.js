@@ -5897,12 +5897,76 @@ export const diaryRecords = {
     ]
   },
   "2026-08-09": {
-    "value": 1,
+    "value": 9,
     "tasks": [
       {
         "status": "x",
         "time": "00:00-01:15",
         "desc": "开发（8 个 commit：lifenotes d1e9c79 00:06 feat 新增猫咪价格速查表（金吉拉询价，南宁水街，含售后信息）（1 文件 +21）；home cd82449 00:07 chore(diary) 8/8 横县看爷爷奶奶 + 水街夜市（1 文件 +45）；home c3a8b41 00:07 chore(expense) 8/8 水街夜市 3 笔 ¥28（1 文件 +21）；home 2b06c24 00:48 feat(todo) 新增 B 站视频项目复现任务（BV11mNA6vEJX，8/10）（1 文件 +1）；home 45e8490 01:15 chore(todo) 细化 l1 做相册步骤（1 文件 +1/-1）；personal be696ba 00:12 feat 完善生活仪表盘追踪看板（2 文件 +363/-225）；personal 0c3d9f8 00:21 feat 调整生活仪表盘每日习惯（1 文件 +7/-8）；personal 8ed04e8 00:36 chore 升级生活仪表盘版本至 0.24.2（2 文件 +3/-3））",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      },
+      {
+        "status": "x",
+        "time": "01:15-05:00",
+        "desc": "玩手机",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      },
+      {
+        "status": "x",
+        "time": "05:00-12:00",
+        "desc": "睡觉",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      },
+      {
+        "status": "x",
+        "time": "12:00-13:30",
+        "desc": "去吃老三篇",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      },
+      {
+        "status": "x",
+        "time": "13:30-15:00",
+        "desc": "午睡",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      },
+      {
+        "status": "x",
+        "time": "15:00-19:00",
+        "desc": "研究别人的网站架构",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      },
+      {
+        "status": "x",
+        "time": "19:00-20:00",
+        "desc": "吃饭",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      },
+      {
+        "status": "x",
+        "time": "20:00-22:00",
+        "desc": "逛奥特莱斯，老豆老妈给我买了一双鞋、一个篮球和一件衣服",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      },
+      {
+        "status": "x",
+        "time": "22:00-23:00",
+        "desc": "回家洗澡",
         "isCooking": false,
         "mealType": null,
         "dishGuess": null
