@@ -1,7 +1,9 @@
-import { defineCollection, z } from 'astro:content';
+import { defineCollection } from 'astro:content';
+import { z } from 'astro/zod';
+import { glob } from 'astro/loaders';
 
 const cookingTipsCollection = defineCollection({
-  type: 'content',
+  loader: glob({ pattern: '**/*.md', base: './src/content/cooking-tips' }),
   schema: z.object({
     title: z.string(),
     category: z.string(),
@@ -11,7 +13,7 @@ const cookingTipsCollection = defineCollection({
 });
 
 const memosCollection = defineCollection({
-  type: 'content',
+  loader: glob({ pattern: '**/*.md', base: './src/content/memos' }),
   schema: z.object({
     region: z.string(),
     icon: z.string().default(''),
@@ -21,7 +23,7 @@ const memosCollection = defineCollection({
 });
 
 const procurementCollection = defineCollection({
-  type: 'content',
+  loader: glob({ pattern: '**/*.md', base: './src/content/procurement' }),
   schema: z.object({
     region: z.string(),
     icon: z.string().default(''),
@@ -36,8 +38,9 @@ const foodDish = z.object({
   note: z.string().default(''),
   price: z.string().default(''),
 });
+
 const foodPlacesCollection = defineCollection({
-  type: 'content',
+  loader: glob({ pattern: '**/*.md', base: './src/content/food-places' }),
   schema: z.object({
     name: z.string(),
     city: z.string(),
@@ -60,7 +63,7 @@ const foodPlacesCollection = defineCollection({
 });
 
 const tripsCollection = defineCollection({
-  type: 'content',
+  loader: glob({ pattern: '**/*.md', base: './src/content/trips' }),
   schema: z.object({
     dest: z.string(),
     startDate: z.string(),
@@ -72,7 +75,7 @@ const tripsCollection = defineCollection({
 });
 
 const xianTripsCollection = defineCollection({
-  type: 'content',
+  loader: glob({ pattern: '**/*.md', base: './src/content/xian-trips' }),
   schema: z.object({
     dest: z.string(),
     startDate: z.string(),
@@ -84,7 +87,7 @@ const xianTripsCollection = defineCollection({
 });
 
 const quarrelsCollection = defineCollection({
-  type: 'content',
+  loader: glob({ pattern: '**/*.md', base: './src/content/quarrels' }),
   schema: z.object({
     date: z.string(),
     title: z.string(),

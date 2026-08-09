@@ -6,7 +6,7 @@
 
 ## 技术栈
 
-- **Astro 5** — 静态站点生成，内容集合驱动
+- **Astro 7** — 静态站点生成，基于 Content Layer 的内容集合驱动
 - **纯 CSS + 原生 JS** — 无框架，客户端交互通过事件委托 + DOM 操作
 - **marked** — Markdown 渲染（服务端）
 
@@ -34,6 +34,7 @@
 
 ```
 ├── src/
+│   ├── content.config.ts         # Content Layer 内容集合配置
 │   ├── pages/
 │   │   ├── home-archive.astro   # 家居档案四视图
 │   │   ├── daily-tracker.astro  # 每日追踪 / 水电追踪双视图

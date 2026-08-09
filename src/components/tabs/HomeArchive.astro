@@ -31,7 +31,7 @@ const events = [...homeEvents].sort((a, b) => b.date.localeCompare(a.date));
       </div>
       <div class="follow-up-link-list">
         {memos.map(memo => (
-          <a class="follow-up-link" href={`${base}follow-up/memos/${memo.slug}/`}>
+          <a class="follow-up-link" href={`${base}follow-up/memos/${memo.id}/`}>
             <span class="follow-up-link-icon">{memo.data.icon || '📋'}</span>
             <span class="follow-up-link-main"><strong>{memo.data.region}</strong><small>{memo.data.category}</small></span>
             <span class="follow-up-link-arrow">→</span>
@@ -82,7 +82,7 @@ const events = [...homeEvents].sort((a, b) => b.date.localeCompare(a.date));
       </div>
       <div class="follow-up-link-list">
         {procurement.map(item => (
-          <a class="follow-up-link" href={`${base}follow-up/procurement/${item.slug}/`}>
+          <a class="follow-up-link" href={`${base}follow-up/procurement/${item.id}/`}>
             <span class="follow-up-link-icon">{item.data.icon || '📦'}</span>
             <span class="follow-up-link-main"><strong>{item.data.region}</strong><small>{item.data.category}{item.data.note ? ` · ${item.data.note}` : ''}</small></span>
             <span class="follow-up-link-arrow">→</span>
