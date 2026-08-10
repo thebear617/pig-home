@@ -3,8 +3,6 @@ name: 雷记雪花牛烧烤（长兴店）
 city: 南宁
 region: 长兴路
 category: 烧烤
-area: 校外
-location: 长兴路
 address: 长兴路8号同和华彩美地B13号铺面
 lng: 108.340499
 lat: 22.833503

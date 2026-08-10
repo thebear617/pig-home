@@ -7,8 +7,6 @@ dishes:
     note: 必点，配米饭绝了
   - name: 黑糖豆花
   - name: 蒜香小排
-area: 校外
-location: 小寨
 date: '2026-07-01'
 note: 油焖鸡必点，配米饭绝了
 ---

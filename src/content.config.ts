@@ -47,9 +47,6 @@ const foodPlacesCollection = defineCollection({
     region: z.string(),
     category: z.string().default(''),
     dishes: z.array(z.union([z.string(), foodDish])).default([]),
-    // 保留现有 area 字段：当前表示校内/校外，暂不把它当作城市或地图区域。
-    area: z.string(),
-    location: z.string(),
     address: z.string().default(''),
     date: z.string().default(''),
     note: z.string().default(''),

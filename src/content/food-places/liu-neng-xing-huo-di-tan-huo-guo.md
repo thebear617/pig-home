@@ -11,8 +11,6 @@ dishes:
     note: 还可以
   - name: 鞭炮笋
     note: 还可以
-area: 校外
-location: 兴隆夜市
 date: '2026-07-22'
 note: 下次点餐建议：尽量点 12.8 元以下的菜
 ---

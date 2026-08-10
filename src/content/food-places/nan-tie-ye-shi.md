@@ -1,7 +1,7 @@
 ---
 name: 南铁夜市
 city: 南宁
-region: 南铁夜市
+region: 南铁夜市火车站
 category: 夜市
 dishes:
   - name: 罗森果酱牛肉
@@ -14,8 +14,6 @@ dishes:
     note: 凉茶非常好喝，生地罗汉果比较推荐。
   - name: 好心覃烧烤
     note: 看起来人蛮多的，下次如果去的话，可以再去试一下。
-area: 校外
-location: 火车站
 address: 南铁一街9号（白苍岭地铁站A口步行约140米）
 lng: 108.306178
 lat: 22.831833

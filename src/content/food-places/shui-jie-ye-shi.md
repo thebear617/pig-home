@@ -1,7 +1,7 @@
 ---
 name: 水街夜市
 city: 南宁
-region: 水街夜市
+region: 水街夜市百货大楼
 category: 夜市
 dishes:
   - name: 覃叔牛杂（中兴街店）
@@ -10,8 +10,6 @@ dishes:
   - name: 老水街芝麻糊
     price: '5~8 元'
     note: 价格很实惠，所有的饮品不管是大份还是小份都在 5~8 元，小份也很大，味道还可以，去的人也还蛮多。
-area: 校外
-location: 百货大楼
 address: ''
 date: '2026-08-08'
 tags:
