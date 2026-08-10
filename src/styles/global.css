@@ -5578,13 +5578,12 @@ body[data-page="home-archive"] .follow-up-link-icon {
   box-shadow: 0 0 0 3px rgba(180, 83, 9, .12);
 }
 
-.foodmap-area-list {
+.foodmap-region-list {
   display: grid;
   gap: .25rem;
 }
 
-.foodmap-area-button,
-.foodmap-location-button {
+.foodmap-region-button {
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -5594,7 +5593,7 @@ body[data-page="home-archive"] .follow-up-link-icon {
   text-align: left;
 }
 
-.foodmap-area-button {
+.foodmap-region-button {
   gap: .5rem;
   padding: .72rem .8rem;
   border: 1px solid transparent;
@@ -5605,12 +5604,12 @@ body[data-page="home-archive"] .follow-up-link-icon {
   transition: background .16s, border-color .16s, transform .16s;
 }
 
-.foodmap-area-button:hover {
+.foodmap-region-button:hover {
   background: var(--surface-soft);
   border-color: var(--line);
 }
 
-.foodmap-area-button.active {
+.foodmap-region-button.active {
   border-left-color: var(--amber);
   border-color: var(--line);
   background: linear-gradient(180deg, #fdf6ea, #f9ecd5);
@@ -5618,22 +5617,21 @@ body[data-page="home-archive"] .follow-up-link-icon {
   box-shadow: 0 2px 8px rgba(39, 32, 26, .06);
 }
 
-.foodmap-area-button span:first-child {
+.foodmap-region-button span:first-child {
   display: grid;
   gap: .15rem;
 }
 
-.foodmap-area-button b {
+.foodmap-region-button b {
   font-size: .92rem;
 }
 
-.foodmap-area-button small,
-.foodmap-location-button small {
+.foodmap-region-button small {
   color: var(--muted);
   font-size: .72rem;
 }
 
-.foodmap-area-button > span:last-child {
+.foodmap-region-button > span:last-child {
   color: var(--muted);
   font-size: 1.25rem;
 }
@@ -5645,8 +5643,7 @@ body[data-page="home-archive"] .follow-up-link-icon {
   border-left: 1px solid var(--line);
 }
 
-.foodmap-results-heading,
-.foodmap-location-heading {
+.foodmap-results-heading {
   display: flex;
   align-items: end;
   justify-content: space-between;
@@ -5657,66 +5654,20 @@ body[data-page="home-archive"] .follow-up-link-icon {
   margin-bottom: .8rem;
 }
 
-.foodmap-results-heading h2,
-.foodmap-location-heading h3 {
+.foodmap-results-heading h2 {
   margin-top: .15rem;
   color: var(--dark);
 }
 
-.foodmap-results-heading > span,
-.foodmap-location-heading > span {
+.foodmap-results-heading > span {
   color: var(--muted);
   font-size: .78rem;
 }
 
-.foodmap-location-list {
-  display: flex;
-  flex-wrap: wrap;
-  gap: .35rem;
-  margin-bottom: 1.15rem;
-  padding-bottom: .75rem;
-  border-bottom: 1px solid var(--line);
-}
-
-.foodmap-location-button {
-  width: auto;
-  gap: .5rem;
-  padding: .45rem .78rem;
-  border: 1px solid var(--line);
-  border-radius: 999px;
-  background: var(--surface);
-  color: var(--muted);
-  font-size: .82rem;
-  font-weight: 700;
-  transition: all .16s ease;
-}
-
-.foodmap-location-button:hover {
-  border-color: var(--amber);
-  color: var(--amber);
-  transform: translateY(-1px);
-}
-
-.foodmap-location-button.active {
-  border-color: var(--amber);
-  background: linear-gradient(180deg, #fdf6ea, #f9ecd5);
-  color: var(--dark);
-  box-shadow: 0 2px 6px rgba(180, 83, 9, .12);
-}
-
-.foodmap-location-content[hidden],
-.foodmap-area-content[hidden],
+.foodmap-region-content[hidden],
 .foodmap-list-item[hidden],
 .foodmap-no-results[hidden] {
   display: none;
-}
-
-.foodmap-location-heading {
-  margin-bottom: .55rem;
-}
-
-.foodmap-location-heading h3 {
-  font-size: 1.12rem;
 }
 
 .foodmap-list {
@@ -6148,13 +6099,13 @@ body[data-page="home-archive"] .follow-up-link-icon {
     position: static;
   }
 
-  .foodmap-area-list {
+  .foodmap-region-list {
     display: flex;
     overflow-x: auto;
     gap: .35rem;
   }
 
-  .foodmap-area-button {
+  .foodmap-region-button {
     flex: 0 0 auto;
     min-width: 7.5rem;
     border-left: none;
@@ -6162,7 +6113,7 @@ body[data-page="home-archive"] .follow-up-link-icon {
     border-radius: 7px;
   }
 
-  .foodmap-area-button.active {
+  .foodmap-region-button.active {
     border-bottom-color: var(--amber);
     border-left: none;
   }

@@ -177,7 +177,7 @@ const placePayloadJson = JSON.stringify(placePayload);
                 {regionOrder.map(region => {
                   const items = regionMap.get(region) || [];
                   return (
-                    <button class={`foodmap-region-button${region === defaultRegion ? ' active' : ''}`} data-fm-region={region} type="button">
+                    <button class={`foodmap-region-button${region === defaultRegion ? ' active' : ''}`} data-fm-region={region} aria-pressed={region === defaultRegion ? 'true' : 'false'} type="button">
                       <span><b>{region}</b><small>{items.length} 家</small></span>
                       <span aria-hidden="true">›</span>
                     </button>
@@ -275,6 +275,17 @@ const placePayloadJson = JSON.stringify(placePayload);
       region.querySelectorAll<HTMLElement>('[data-fm-search-text]').forEach(item => { item.hidden = false; });
       const empty = region.querySelector<HTMLElement>('.foodmap-no-results');
       if (empty) empty.hidden = true;
+    });
+  }
+
+  function selectRegion(cityContent: HTMLElement, regionValue: string) {
+    cityContent.querySelectorAll<HTMLButtonElement>('[data-fm-region]').forEach(button => {
+      const active = button.dataset.fmRegion === regionValue;
+      button.classList.toggle('active', active);
+      button.setAttribute('aria-pressed', String(active));
+    });
+    cityContent.querySelectorAll<HTMLElement>('[data-fm-region-content]').forEach(content => {
+      content.hidden = content.dataset.fmRegionContent !== regionValue;
     });
   }
 
@@ -377,6 +388,14 @@ const placePayloadJson = JSON.stringify(placePayload);
 
   root?.addEventListener('click', event => {
     const target = event.target as HTMLElement;
+    const regionButton = target.closest<HTMLButtonElement>('[data-fm-region]');
+    if (regionButton) {
+      const cityContent = regionButton.closest<HTMLElement>('[data-fm-city-content]');
+      if (cityContent) {
+        selectRegion(cityContent, regionButton.dataset.fmRegion || '');
+        return;
+      }
+    }
     const closeBtn = target.closest<HTMLElement>('[data-fm-modal-close]');
     if (closeBtn) { closeModal(); return; }
     const card = target.closest<HTMLElement>('[data-fm-place]');
