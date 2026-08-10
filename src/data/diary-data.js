@@ -5897,7 +5897,7 @@ export const diaryRecords = {
     ]
   },
   "2026-08-09": {
-    "value": 9,
+    "value": 10,
     "tasks": [
       {
         "status": "x",
@@ -5967,6 +5967,67 @@ export const diaryRecords = {
         "status": "x",
         "time": "22:00-23:00",
         "desc": "回家洗澡",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      },
+      {
+        "status": "x",
+        "time": "23:00-24:00",
+        "desc": "开发",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      }
+    ]
+  },
+  "2026-08-10": {
+    "value": 6,
+    "tasks": [
+      {
+        "status": "x",
+        "time": "00:00-01:15",
+        "desc": "开发（14 个 commit：Astro 7 全站点升级批次——devnotes 52e2026 22:50 docs: 补充 Astro 7 版本时间线；devnotes 418c13b 22:46 feat(v0.12.0): 升级 Astro 7 并提交第32周随笔；home 7fdbb88 22:24 chore(diary): 8/9 记录开发/睡觉/吃饭/逛街 + 奶茶/宝宝礼物/AI 订阅 + 电费 12.04 + 新增 explore.poker-plus 会员；home 7e2ad21 22:31 feat(v1.8.0): 升级 Astro 7 并迁移内容集合；home a6014f5 22:40 chore(todo): l12/l14 完成归档（取猫粮 + 大组会）；reanotes 3196bdd 22:58 feat(v0.8.0): 升级 Astro 7 并迁移内容集合；devnotes 5b48af6 22:59 docs: 补充 ReaNotes v0.8.0 时间线；lifenotes 2fe753b 23:05 feat(v0.10.0): 升级 Astro 7 并迁移内容集合；devnotes 83d96df 23:06 docs: 补充常识笔记 v0.10.0 时间线；cats b02dd41 23:07 feat(v0.10.0): 升级 Astro 7 内容集合；devnotes 9c9a82b 23:08 docs: 补充猫猫 v0.10.0 时间线；personal c116cd0 23:09 feat(v0.25.0): 升级 Astro 7 运行环境；devnotes 3f6ab6e 23:10 docs: 补充熊窝 v0.25.0 时间线；devnotes 43839ad 23:12 docs: 补充游戏笔记 v0.4.0 时间线）",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      },
+      {
+        "status": "x",
+        "time": "01:15-02:00",
+        "desc": "玩手机",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      },
+      {
+        "status": "x",
+        "time": "02:00-11:30",
+        "desc": "睡觉",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      },
+      {
+        "status": "x",
+        "time": "11:30-12:10",
+        "desc": "洗漱",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      },
+      {
+        "status": "x",
+        "time": "12:10-13:00",
+        "desc": "去吃三品王",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      },
+      {
+        "status": "x",
+        "time": "13:00-19:00",
+        "desc": "打麻将",
         "isCooking": false,
         "mealType": null,
         "dishGuess": null
