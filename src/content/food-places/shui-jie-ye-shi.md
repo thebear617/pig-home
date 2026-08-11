@@ -2,6 +2,7 @@
 name: 水街夜市
 city: 南宁
 region: 水街夜市
+category: 夜市商圈
 address: 南宁市解放路与高峰路交叉口东南40米（百年水街）
 lng: 108.316729
 lat: 22.815068

@@ -5072,6 +5072,10 @@ body[data-page="home-archive"] .follow-up-link-icon {
   font-size: .86rem;
 }
 
+.foodmap-mobile-break {
+  display: none;
+}
+
 .foodmap-hero-chips {
   display: flex;
   flex-wrap: wrap;
@@ -5145,6 +5149,24 @@ body[data-page="home-archive"] .follow-up-link-icon {
   justify-content: space-between;
   gap: 1rem;
   padding: .15rem .1rem .25rem;
+}
+
+.foodmap-map-context {
+  display: flex;
+  align-items: center;
+  min-width: 0;
+  gap: .65rem;
+}
+
+.foodmap-map-title {
+  flex: 0 0 auto;
+  color: var(--amber);
+  font-size: .68rem;
+  font-weight: 900;
+  letter-spacing: .12em;
+  line-height: 1;
+  text-transform: uppercase;
+  white-space: nowrap;
 }
 
 .foodmap-city-switcher {
@@ -5448,6 +5470,11 @@ body[data-page="home-archive"] .follow-up-link-icon {
   pointer-events: none;
 }
 
+.foodmap-map-heading > .foodmap-map-reset {
+  margin-left: auto;
+  pointer-events: auto;
+}
+
 .foodmap-map-heading > div,
 .foodmap-map-heading > span {
   padding: .45rem .65rem;
@@ -5511,6 +5538,10 @@ body[data-page="home-archive"] .follow-up-link-icon {
 
 /* 地图标记：默认只保留轻量定位点，点击后才展开名称，避免地图被文字铺满。 */
 .foodmap-poi-marker {
+  --foodmap-marker-color: #3b82f6;
+  --foodmap-marker-hover: #2563eb;
+  --foodmap-marker-ring: rgba(59, 130, 246, .12);
+  --foodmap-marker-shadow: rgba(30, 64, 175, .28);
   position: relative;
   display: grid;
   place-items: center;
@@ -5519,10 +5550,10 @@ body[data-page="home-archive"] .follow-up-link-icon {
   padding: 0;
   border: 2px solid rgba(255, 255, 255, .96);
   border-radius: 50%;
-  background: #3b82f6;
+  background: var(--foodmap-marker-color);
   color: #fff;
   cursor: pointer;
-  box-shadow: 0 3px 10px rgba(30, 64, 175, .28), 0 0 0 3px rgba(59, 130, 246, .12);
+  box-shadow: 0 3px 10px var(--foodmap-marker-shadow), 0 0 0 3px var(--foodmap-marker-ring);
   transition: transform .16s ease, background .16s ease, box-shadow .16s ease;
 }
 
@@ -5536,21 +5567,21 @@ body[data-page="home-archive"] .follow-up-link-icon {
   height: .56rem;
   border-right: 2px solid rgba(255, 255, 255, .96);
   border-bottom: 2px solid rgba(255, 255, 255, .96);
-  background: #3b82f6;
+  background: var(--foodmap-marker-color);
   transform: translateX(-50%) rotate(45deg);
 }
 
 .foodmap-poi-marker:hover,
 .foodmap-poi-marker:focus-visible {
   outline: none;
-  background: #2563eb;
-  box-shadow: 0 4px 12px rgba(30, 64, 175, .36), 0 0 0 4px rgba(59, 130, 246, .18);
+  background: var(--foodmap-marker-hover);
+  box-shadow: 0 4px 12px var(--foodmap-marker-shadow), 0 0 0 4px var(--foodmap-marker-ring);
   transform: translateY(-2px) scale(1.08);
 }
 
 .foodmap-poi-marker:hover::after,
 .foodmap-poi-marker:focus-visible::after {
-  background: #2563eb;
+  background: var(--foodmap-marker-hover);
 }
 
 .foodmap-poi-marker.is-active {
@@ -5567,9 +5598,19 @@ body[data-page="home-archive"] .follow-up-link-icon {
 .foodmap-poi-marker-dot {
   position: relative;
   z-index: 1;
+  display: grid;
+  place-items: center;
+  width: 1rem;
+  height: 1rem;
   font-size: .78rem;
   line-height: 1;
   filter: saturate(.8) brightness(1.15);
+}
+
+.foodmap-poi-marker-icon {
+  display: block;
+  width: .92rem;
+  height: .92rem;
 }
 
 .foodmap-poi-marker-label {
@@ -5934,6 +5975,10 @@ body[data-page="home-archive"] .follow-up-link-icon {
   font-weight: 800;
   padding: .1rem .5rem;
   border-radius: 999px;
+}
+
+.foodmap-status-label-short {
+  display: none;
 }
 
 .foodmap-status-recommend {
@@ -6879,6 +6924,10 @@ body[data-page="food-map"] .foodmap-map-toolbar {
   border-bottom: 1px solid var(--line);
 }
 
+body[data-page="food-map"] .foodmap-map-title {
+  color: var(--amber);
+}
+
 body[data-page="food-map"] .foodmap-city-label,
 body[data-page="food-map"] .foodmap-map-legend {
   color: var(--muted);
@@ -6953,22 +7002,28 @@ body[data-page="food-map"] .foodmap-map-reset {
 
 body[data-page="food-map"] .foodmap-poi-marker {
   border-color: #fffdf9;
-  background: #c47b2e;
-  box-shadow: 0 3px 10px rgba(159, 92, 24, .25), 0 0 0 3px rgba(196, 123, 46, .15);
+  background: var(--foodmap-marker-color, #c47b2e);
+  box-shadow: 0 3px 10px var(--foodmap-marker-shadow, rgba(159, 92, 24, .25)), 0 0 0 3px var(--foodmap-marker-ring, rgba(196, 123, 46, .15));
 }
 
 body[data-page="food-map"] .foodmap-poi-marker::after {
-  background: #c47b2e;
+  background: var(--foodmap-marker-color, #c47b2e);
 }
 
 body[data-page="food-map"] .foodmap-poi-marker:hover,
-body[data-page="food-map"] .foodmap-poi-marker:focus-visible,
+body[data-page="food-map"] .foodmap-poi-marker:focus-visible {
+  background: var(--foodmap-marker-hover, var(--amber));
+}
+
+body[data-page="food-map"] .foodmap-poi-marker:hover::after,
+body[data-page="food-map"] .foodmap-poi-marker:focus-visible::after {
+  background: var(--foodmap-marker-hover, var(--amber));
+}
+
 body[data-page="food-map"] .foodmap-poi-marker.is-active {
   background: var(--amber);
 }
 
-body[data-page="food-map"] .foodmap-poi-marker:hover::after,
-body[data-page="food-map"] .foodmap-poi-marker:focus-visible::after,
 body[data-page="food-map"] .foodmap-poi-marker.is-active::after {
   background: var(--amber);
 }
@@ -7169,7 +7224,20 @@ body[data-page="food-map"] .foodmap-detail-scrim {
     overflow: hidden;
   }
 
+  body[data-page="food-map"] .foodmap-map-context {
+    flex: 1 1 auto;
+    min-width: 0;
+    gap: .45rem;
+    overflow: hidden;
+  }
+
+  body[data-page="food-map"] .foodmap-map-title {
+    font-size: .6rem;
+    letter-spacing: .08em;
+  }
+
   body[data-page="food-map"] .foodmap-city-switcher {
+    flex: 1 1 auto;
     min-width: 0;
     flex-wrap: nowrap;
     overflow-x: auto;
@@ -7498,6 +7566,10 @@ body[data-page="food-map"] .foodmap-detail-empty-copy strong {
   }
 
   body[data-page="food-map"] .foodmap-hero-title-row {
+    display: block;
+  }
+
+  body[data-page="food-map"] .foodmap-mobile-break {
     display: block;
   }
 
@@ -7953,6 +8025,41 @@ body[data-page="food-map"] .foodmap-list-item.is-directory-hidden {
   display: none !important;
 }
 
+/* ─── FoodMap：卡片标题行保持完整 ─── */
+body[data-page="food-map"] .foodmap-list-top {
+  display: flex;
+  flex-wrap: nowrap;
+  align-items: center;
+  min-width: 0;
+  gap: .5rem;
+}
+
+body[data-page="food-map"] .foodmap-list-title {
+  display: flex;
+  flex: 1 1 auto;
+  align-items: center;
+  flex-wrap: nowrap;
+  min-width: 0;
+  gap: .35rem;
+  overflow: hidden;
+}
+
+body[data-page="food-map"] .foodmap-list-title .foodmap-list-name {
+  flex: 1 1 auto;
+  min-width: 0;
+  max-width: 12em;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+body[data-page="food-map"] .foodmap-list-title .foodmap-cat-tag,
+body[data-page="food-map"] .foodmap-list-title .foodmap-status,
+body[data-page="food-map"] .foodmap-list-top > .foodmap-coordinate-state {
+  flex: 0 0 auto;
+  white-space: nowrap;
+}
+
 @media (max-width: 719px) {
   body[data-page="food-map"] .foodmap-results {
     display: block;
@@ -7972,6 +8079,158 @@ body[data-page="food-map"] .foodmap-list-item.is-directory-hidden {
   body[data-page="food-map"] .foodmap-filters-popover {
     right: 0;
     width: min(360px, calc(100vw - 2rem));
+  }
+}
+
+/* ─── FoodMap 移动端：卡片宽度与信息行防溢出 ─── */
+@media (max-width: 719px) {
+  body[data-page="food-map"] .foodmap-city-panels,
+  body[data-page="food-map"] .foodmap-city-content,
+  body[data-page="food-map"] .foodmap-results,
+  body[data-page="food-map"] .foodmap-list {
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+  }
+
+  body[data-page="food-map"] .foodmap-list-item {
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+    overflow: hidden;
+  }
+
+  body[data-page="food-map"] .foodmap-list-top {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    align-items: start;
+    gap: .35rem .45rem;
+  }
+
+  body[data-page="food-map"] .foodmap-list-title {
+    grid-column: 1 / -1;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto auto;
+    align-items: center;
+    flex: none;
+    min-width: 0;
+    max-width: 100%;
+    overflow: visible;
+    gap: .3rem;
+  }
+
+  body[data-page="food-map"] .foodmap-list-title .foodmap-list-name {
+    min-width: 0;
+    max-width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  body[data-page="food-map"] .foodmap-list-title .foodmap-cat-tag,
+  body[data-page="food-map"] .foodmap-list-title .foodmap-status {
+    white-space: nowrap;
+  }
+
+  body[data-page="food-map"] .foodmap-status-label-full {
+    display: none;
+  }
+
+  body[data-page="food-map"] .foodmap-status-label-short {
+    display: inline;
+  }
+
+  body[data-page="food-map"] .foodmap-list-top > .foodmap-coordinate-state {
+    display: none;
+  }
+
+  body[data-page="food-map"] .foodmap-dishes {
+    max-width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  body[data-page="food-map"] .foodmap-list-meta {
+    grid-template-columns: minmax(0, 1fr) auto;
+    gap: .25rem .5rem;
+  }
+
+  body[data-page="food-map"] .foodmap-list-meta .foodmap-address {
+    grid-column: 1 / -1;
+    max-width: 100%;
+  }
+
+  body[data-page="food-map"] .foodmap-list-meta time {
+    grid-column: 1;
+    grid-row: 2;
+    min-width: 0;
+  }
+
+  body[data-page="food-map"] .foodmap-list-detail-hint {
+    grid-column: 2;
+    grid-row: 2;
+  }
+}
+
+/* ─── FoodMap：目录摘要改为圆角标题卡片 ─── */
+body[data-page="food-map"] .foodmap-city-summary {
+  display: block;
+  padding: .75rem .8rem;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  background: #fffaf1;
+  box-shadow: 0 2px 8px rgba(74, 48, 28, .05);
+}
+
+body[data-page="food-map"] .foodmap-city-summary > div {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: baseline;
+  gap: .35rem 1rem;
+  width: 100%;
+}
+
+body[data-page="food-map"] .foodmap-city-summary .section-kicker {
+  grid-column: 1;
+  margin: 0;
+}
+
+body[data-page="food-map"] .foodmap-city-summary h2 {
+  grid-column: 2;
+  margin: 0;
+  text-align: right;
+  white-space: nowrap;
+}
+
+body[data-page="food-map"] .foodmap-city-summary .foodmap-directory-usage {
+  grid-column: 1 / -1;
+  margin-top: .25rem;
+}
+
+@media (max-width: 719px) {
+  body[data-page="food-map"] .foodmap-city-panels {
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    background: var(--surface);
+    box-shadow: var(--shadow);
+  }
+
+  body[data-page="food-map"] .foodmap-city-content {
+    border-radius: 12px;
+  }
+
+  body[data-page="food-map"] .foodmap-city-summary > div {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    align-items: baseline;
+    gap: .3rem .65rem;
+  }
+
+  body[data-page="food-map"] .foodmap-city-summary h2 {
+    margin-top: 0;
+    text-align: right;
+    white-space: nowrap;
   }
 }
 

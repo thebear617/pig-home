@@ -2,6 +2,7 @@
 name: 南铁夜市
 city: 南宁
 region: 南铁夜市
+category: 夜市商圈
 dishes:
   - name: 罗森果酱牛肉
     note: 非常好吃，果酱味非常浓，价钱也比较实惠。

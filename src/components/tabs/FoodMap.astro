@@ -20,19 +20,14 @@ const cityConfig = {
   西安: { center: [108.939645, 34.343207], zoom: 11 },
 };
 const totalPlaces = places.length;
-const mappedPlaces = places.filter(place =>
-  place.data.coordinateStatus === 'confirmed' &&
-  Number.isFinite(place.data.lng) &&
-  Number.isFinite(place.data.lat)
-).length;
-const pendingPlaces = totalPlaces - mappedPlaces;
+const LIST_NAME_MAX_LENGTH = 12;
 
-interface PlaceStatus { key: string; label: string; icon: string; }
+interface PlaceStatus { key: string; label: string; shortLabel: string; icon: string; }
 const explicitStatus: Record<string, PlaceStatus> = {
-  recommend: { key: 'recommend', label: '推荐', icon: '👍' },
-  tried: { key: 'tried', label: '一般', icon: '🍽️' },
-  no: { key: 'no', label: '不推荐', icon: '🚫' },
-  wanna: { key: 'wanna', label: '还没去吃过', icon: '⭐' },
+  recommend: { key: 'recommend', label: '推荐', shortLabel: '推荐', icon: '👍' },
+  tried: { key: 'tried', label: '一般', shortLabel: '一般', icon: '🍽️' },
+  no: { key: 'no', label: '不推荐', shortLabel: '不推', icon: '🚫' },
+  wanna: { key: 'wanna', label: '还没去吃过', shortLabel: '待吃', icon: '⭐' },
 };
 // 状态完全由 frontmatter 的 status 字段驱动，不再从 note 推断
 function placeStatus(place: typeof places[0]): PlaceStatus {
@@ -88,26 +83,22 @@ const cityFiltersJson = JSON.stringify(cityFilters);
       <p class="foodmap-hero-kicker">FOOD NOTES · 觅食记录</p>
       <div class="foodmap-hero-title-row">
         <h1 class="foodmap-hero-title">美食地图</h1>
-        <p class="foodmap-hero-desc">把走过的街、记住的味道，慢慢收进这张地图里。</p>
-      </div>
-      <div class="foodmap-hero-chips" aria-label="美食地图数据概览">
-        <span><b>{cityOrder.length}</b> 座城市</span>
-        <span><b>{mappedPlaces}</b> 个已定位</span>
-        <span><b>{pendingPlaces}</b> 个待补全</span>
+        <p class="foodmap-hero-desc">把走过的街、记住的味道，<br class="foodmap-mobile-break" />慢慢收进这张地图里。</p>
       </div>
     </div>
     <div class="foodmap-hero-stat" title="共记录的美食店">
       <strong class="foodmap-hero-num">{totalPlaces}</strong>
       <span class="foodmap-hero-label">家记录</span>
-      <small>持续收集中</small>
+      <small>{cityOrder.length} 座城市 · 持续收集中</small>
     </div>
   </header>
 
   <div class="foodmap-workspace" aria-label="美食地图工作台">
     <div class="foodmap-map-section">
     <div class="foodmap-map-toolbar">
+      <div class="foodmap-map-context">
+        <span class="foodmap-map-title">CITY MAP · 城市地图</span>
       <div class="foodmap-city-switcher" role="tablist" aria-label="选择城市">
-        <span class="foodmap-city-label">选择城市</span>
         {cityOrder.map(city => {
           const count = places.filter(place => place.data.city === city).length;
           return (
@@ -123,6 +114,7 @@ const cityFiltersJson = JSON.stringify(cityFilters);
           );
         })}
       </div>
+      </div>
       <div class="foodmap-map-legend" aria-label="地图状态图例">
         <span><i class="foodmap-legend-dot is-mapped"></i>已定位</span>
         <span><i class="foodmap-legend-dot is-pending"></i>待补全</span>
@@ -130,17 +122,9 @@ const cityFiltersJson = JSON.stringify(cityFilters);
     </div>
     <div class="foodmap-map-panel">
       <div class="foodmap-map-heading">
-        <div>
-          <p class="section-kicker">CITY MAP · 城市地图</p>
-          <h2><span data-fm-map-city-label>{defaultCity}</span> 的味觉坐标</h2>
-        </div>
-        <span class="foodmap-map-count-wrap">
-          <span data-fm-map-count>仅显示已确认坐标</span>
-          <button type="button" class="foodmap-map-reset" data-fm-reset-map aria-label="恢复当前城市默认地图视图">↺ 恢复默认视图</button>
-        </span>
+        <button type="button" class="foodmap-map-reset" data-fm-reset-map aria-label="恢复当前城市默认地图视图">↺ 恢复默认视图</button>
       </div>
       <div class="foodmap-map" data-fm-map aria-label="美食地图"></div>
-      <div class="foodmap-map-status" data-fm-map-status role="status">正在准备地图……</div>
     </div>
     <div class="foodmap-map-config" data-fm-city-config={JSON.stringify(cityConfig)} hidden></div>
     <div class="foodmap-map-filters-config" data-fm-city-filters={cityFiltersJson} hidden></div>
@@ -168,7 +152,7 @@ const cityFiltersJson = JSON.stringify(cityFilters);
             <form class="foodmap-directory-search-row" data-fm-search-form>
               <label class="foodmap-search">
                 <span class="foodmap-directory-search-icon" aria-hidden="true">⌕</span>
-                <input type="search" data-fm-search aria-label="搜索餐厅、菜品或评价" placeholder="搜索餐厅、菜品或评价" />
+                <input type="search" data-fm-search aria-label="搜索餐厅、菜品或评价" placeholder="食品、菜品或评价" />
               </label>
               <button type="submit" class="foodmap-search-submit" data-fm-search-submit aria-label="确认搜索" title="确认搜索">🍜</button>
               <button type="button" class="foodmap-filters-toggle" data-fm-filters-toggle aria-haspopup="dialog" aria-expanded="false">
@@ -211,6 +195,9 @@ const cityFiltersJson = JSON.stringify(cityFilters);
             <div class="foodmap-list" data-fm-list>
                       {cityPlaces.map(place => {
                         const st = placeStatus(place);
+                        const displayName = place.data.name.length > LIST_NAME_MAX_LENGTH
+                          ? `${place.data.name.slice(0, LIST_NAME_MAX_LENGTH)}…`
+                          : place.data.name;
                         const dishes = place.data.dishes || [];
                         const dishList = dishes.slice(0, 3).map(dishName).join(' · ');
                         const extraDishCount = Math.max(dishes.length - 3, 0);
@@ -226,9 +213,13 @@ const cityFiltersJson = JSON.stringify(cityFilters);
                           >
                             <div class="foodmap-list-top">
                               <div class="foodmap-list-title">
-                                <h4 class="foodmap-list-name">{place.data.name}</h4>
+                                <h4 class="foodmap-list-name" title={place.data.name}>{displayName}</h4>
                                 {place.data.category && <span class="foodmap-cat-tag">{place.data.category}</span>}
-                                <span class={`foodmap-status foodmap-status-${st.key}`}>{st.icon} {st.label}</span>
+                                <span class={`foodmap-status foodmap-status-${st.key}`} aria-label={st.label}>
+                                  <span class="foodmap-status-icon" aria-hidden="true">{st.icon}</span>
+                                  <span class="foodmap-status-label-full">{st.label}</span>
+                                  <span class="foodmap-status-label-short">{st.shortLabel}</span>
+                                </span>
                               </div>
                               <span class={`foodmap-coordinate-state${place.data.coordinateStatus === 'confirmed' ? ' is-mapped' : ' is-pending'}`}>
                                 {place.data.coordinateStatus === 'confirmed' ? '⌖ 已标注' : '＋ 待补坐标'}
@@ -457,9 +448,6 @@ const cityFiltersJson = JSON.stringify(cityFilters);
 <script>
   const mapRoot = document.querySelector<HTMLElement>('[data-tab="food-map"]');
   const mapElement = mapRoot?.querySelector<HTMLElement>('[data-fm-map]');
-  const mapStatus = mapRoot?.querySelector<HTMLElement>('[data-fm-map-status]');
-  const mapCityLabel = mapRoot?.querySelector<HTMLElement>('[data-fm-map-city-label]');
-  const mapCount = mapRoot?.querySelector<HTMLElement>('[data-fm-map-count]');
   const mapConfigElement = mapRoot?.querySelector<HTMLElement>('[data-fm-city-config]');
   // 坐标数据 payload 位于 foodmap-page 外层，不能从地图容器内部查询。
   const mapPlacesElement = document.querySelector<HTMLElement>('[data-fm-places-json]');
@@ -504,16 +492,75 @@ const cityFiltersJson = JSON.stringify(cityFilters);
   let activeMarkerId = '';
   let selectedMapPlaceId = '';
   const DIRECTORY_PAGE_SIZE = 4;
+  const PLACE_FOCUS_ZOOM = 16;
   const directoryPages: Record<string, number> = {};
+  const LOCAL_ICON_BASE = `${import.meta.env.BASE_URL}icons/foodmap`;
+
+  type MarkerVisual = {
+    icon: string;
+    color: string;
+    hover: string;
+    ring: string;
+    shadow: string;
+  };
+
+  // 图标已从 Iconify/MDI 下载并随站点发布，避免地图标记依赖外部域名。
+  const markerVisuals: Record<string, MarkerVisual> = {
+    grilled: {
+      icon: 'grill-outline.svg',
+      color: '#c1602d',
+      hover: '#9c4520',
+      ring: 'rgba(193, 96, 45, .18)',
+      shadow: 'rgba(156, 69, 32, .28)',
+    },
+    hotpot: {
+      icon: 'pot-steam.svg',
+      color: '#c34b3f',
+      hover: '#9e352f',
+      ring: 'rgba(195, 75, 63, .18)',
+      shadow: 'rgba(158, 53, 47, .28)',
+    },
+    noodles: {
+      icon: 'noodles.svg',
+      color: '#2c8a87',
+      hover: '#1f6f6d',
+      ring: 'rgba(44, 138, 135, .18)',
+      shadow: 'rgba(31, 111, 109, .26)',
+    },
+    night: {
+      icon: 'store.svg',
+      color: '#79569a',
+      hover: '#5e3f7e',
+      ring: 'rgba(121, 86, 154, .18)',
+      shadow: 'rgba(94, 63, 126, .28)',
+    },
+    bar: {
+      icon: 'glass-cocktail.svg',
+      color: '#8b5683',
+      hover: '#6f3e67',
+      ring: 'rgba(139, 86, 131, .18)',
+      shadow: 'rgba(111, 62, 103, .28)',
+    },
+    homestyle: {
+      icon: 'food-variant.svg',
+      color: '#b47735',
+      hover: '#945a20',
+      ring: 'rgba(180, 119, 53, .18)',
+      shadow: 'rgba(148, 90, 32, .28)',
+    },
+  };
+
+  function markerVisual(category: string): MarkerVisual {
+    if (/烧烤|烤肉/.test(category)) return markerVisuals.grilled;
+    if (/火锅/.test(category)) return markerVisuals.hotpot;
+    if (/粉面|米线/.test(category)) return markerVisuals.noodles;
+    if (/夜市/.test(category)) return markerVisuals.night;
+    if (/酒吧|轻食/.test(category)) return markerVisuals.bar;
+    return markerVisuals.homestyle;
+  }
 
   function activeCityContent(city = activeCity) {
     return mapRoot?.querySelector<HTMLElement>(`[data-fm-city-content="${CSS.escape(city)}"]`);
-  }
-
-  function setMapStatus(message: string, type = '') {
-    if (!mapStatus) return;
-    mapStatus.textContent = message;
-    mapStatus.className = `foodmap-map-status${type ? ` is-${type}` : ''}`;
   }
 
   function placeSearchText(place: MapPlace) {
@@ -624,14 +671,18 @@ const cityFiltersJson = JSON.stringify(cityFilters);
     renderMarkers(activeCity);
   }
 
+  function centerMapOnPlace(id: string) {
+    const place = mapPlaces.find(item => item.id === id);
+    if (!place || !mapInstance || !Number.isFinite(place.lng) || !Number.isFinite(place.lat)) return;
+    selectedMapPlaceId = id;
+    setActiveMarker(id);
+    mapInstance.setZoomAndCenter(PLACE_FOCUS_ZOOM, [place.lng, place.lat]);
+  }
+
   function focusPlace(id: string) {
     const place = mapPlaces.find(item => item.id === id);
     if (!place) return;
-    selectedMapPlaceId = id;
-    setActiveMarker(id);
-    if (mapInstance && Number.isFinite(place.lng) && Number.isFinite(place.lat)) {
-      mapInstance.setZoomAndCenter(16, [place.lng, place.lat]);
-    }
+    centerMapOnPlace(id);
     mapRoot?.dispatchEvent(new CustomEvent('foodmap:select-place', {
       detail: { id, recenter: false },
     }));
@@ -683,12 +734,29 @@ const cityFiltersJson = JSON.stringify(cityFilters);
       content.type = 'button';
       content.className = 'foodmap-poi-marker';
       content.setAttribute('aria-label', `查看${place.name}`);
+      content.title = `${place.name}${place.category ? ` · ${place.category}` : ''}`;
       content.dataset.fmMarker = place.id;
+      content.dataset.fmCategory = place.category || '其他';
+
+      const visual = markerVisual(place.category || '');
+      content.style.setProperty('--foodmap-marker-color', visual.color);
+      content.style.setProperty('--foodmap-marker-hover', visual.hover);
+      content.style.setProperty('--foodmap-marker-ring', visual.ring);
+      content.style.setProperty('--foodmap-marker-shadow', visual.shadow);
 
       const dot = document.createElement('span');
       dot.className = 'foodmap-poi-marker-dot';
       dot.setAttribute('aria-hidden', 'true');
-      dot.textContent = '✦';
+      const icon = document.createElement('img');
+      icon.className = 'foodmap-poi-marker-icon';
+      icon.src = `${LOCAL_ICON_BASE}/${visual.icon}`;
+      icon.alt = '';
+      icon.setAttribute('aria-hidden', 'true');
+      icon.addEventListener('error', () => {
+        icon.remove();
+        dot.textContent = '✦';
+      }, { once: true });
+      dot.appendChild(icon);
 
       const label = document.createElement('span');
       label.className = 'foodmap-poi-marker-label';
@@ -710,13 +778,13 @@ const cityFiltersJson = JSON.stringify(cityFilters);
     if (nextMarkers.length > 0) {
       mapInstance.add(nextMarkers);
       resetMapView(city);
+      // 搜索只命中一家时，和点击卡片/地图标记一样聚焦到这家店。
+      if (mapSearchQuery.trim() && places.length === 1) {
+        centerMapOnPlace(places[0].id);
+      }
       if (selectedMapPlaceId && markers.has(selectedMapPlaceId)) setActiveMarker(selectedMapPlaceId);
-      setMapStatus(`${city} 当前有 ${nextMarkers.length} 个已确认坐标的地点`);
-    } else {
-      resetMapView(city);
-      setMapStatus(`${city} 暂时没有已确认坐标的美食点，列表仍可浏览`, 'empty');
     }
-    if (mapCount) mapCount.textContent = `${places.length} 个已定位 · 其余待确认`;
+    else resetMapView(city);
     renderDirectoryRows(city);
   }
 
@@ -794,7 +862,6 @@ const cityFiltersJson = JSON.stringify(cityFilters);
     activeRegion = '';
     activeStatus = '';
     directoryPages[city] = 1;
-    if (mapCityLabel) mapCityLabel.textContent = city;
     mapRoot?.querySelectorAll<HTMLElement>('[data-fm-city]').forEach(button => {
       const active = button.dataset.fmCity === city;
       button.classList.toggle('active', active);
@@ -852,7 +919,6 @@ const cityFiltersJson = JSON.stringify(cityFilters);
       renderFilters(activeCity);
       renderMarkers(activeCity);
     } catch (error) {
-      setMapStatus('地图暂未加载：请配置前端 JS API Key', 'error');
       console.warn('[food-map] AMap 初始化跳过:', error);
     }
   }
@@ -866,7 +932,7 @@ const cityFiltersJson = JSON.stringify(cityFilters);
     selectedMapPlaceId = id;
     setActiveMarker(id);
     if (detail?.recenter && mapInstance && Number.isFinite(place.lng) && Number.isFinite(place.lat)) {
-      mapInstance.setZoomAndCenter(16, [place.lng, place.lat]);
+      centerMapOnPlace(id);
     }
   });
 
