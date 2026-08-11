@@ -6356,6 +6356,1468 @@ body[data-page="home-archive"] .follow-up-link-icon {
   }
 }
 
+/* ─── FoodMap 阶段 1：地图 / 目录 / 详情工作台骨架 ─── */
+body[data-page="food-map"] .app-shell {
+  max-width: min(1440px, calc(100vw - var(--sidebar-w) - 2rem));
+}
+
+.foodmap-workspace {
+  display: grid;
+  grid-template-columns: minmax(0, 1.1fr) minmax(360px, 1.25fr) minmax(250px, .8fr);
+  align-items: stretch;
+  gap: .85rem;
+}
+
+.foodmap-map-section,
+.foodmap-city-panels,
+.foodmap-detail-panel {
+  min-width: 0;
+  min-height: 0;
+}
+
+.foodmap-map-section {
+  align-content: start;
+}
+
+.foodmap-map-panel,
+.foodmap-city-content,
+.foodmap-detail-panel {
+  height: clamp(560px, calc(100vh - 12.5rem), 760px);
+}
+
+.foodmap-map-panel {
+  min-height: 0;
+}
+
+.foodmap-map {
+  height: 100%;
+  min-height: 0;
+}
+
+.foodmap-city-panels {
+  display: grid;
+}
+
+.foodmap-city-content {
+  grid-template-rows: auto auto minmax(0, 1fr);
+  min-height: 0;
+  overflow: hidden;
+}
+
+.foodmap-directory-toolbar {
+  display: grid;
+  gap: .6rem;
+  min-width: 0;
+}
+
+.foodmap-directory-toolbar .foodmap-search {
+  display: flex;
+  align-items: center;
+  gap: .55rem;
+}
+
+.foodmap-directory-toolbar .foodmap-search span {
+  flex: 0 0 auto;
+}
+
+.foodmap-directory-toolbar .foodmap-search input {
+  min-width: 0;
+}
+
+.foodmap-directory-toolbar .foodmap-region-list {
+  display: flex;
+  gap: .2rem;
+  overflow-x: auto;
+  padding-bottom: .35rem;
+  border-bottom: 1px solid var(--line);
+  scrollbar-width: thin;
+}
+
+.foodmap-directory-toolbar .foodmap-region-button {
+  flex: 0 0 auto;
+  width: auto;
+  padding: .42rem .62rem;
+  border-color: transparent;
+  border-left: none;
+  border-bottom: 2px solid transparent;
+  border-radius: 7px 7px 0 0;
+  background: transparent;
+}
+
+.foodmap-directory-toolbar .foodmap-region-button:hover {
+  border-color: transparent;
+  border-bottom-color: var(--line);
+}
+
+.foodmap-directory-toolbar .foodmap-region-button.active {
+  border-color: transparent;
+  border-bottom-color: var(--amber);
+  background: var(--surface-soft);
+  box-shadow: none;
+}
+
+.foodmap-directory-toolbar .foodmap-region-button span:first-child {
+  display: flex;
+  align-items: baseline;
+  gap: .3rem;
+}
+
+.foodmap-directory-toolbar .foodmap-region-button > span:last-child {
+  display: none;
+}
+
+.foodmap-results {
+  min-height: 0;
+  padding-left: 0;
+  border-left: none;
+  overflow-y: auto;
+}
+
+.foodmap-results-heading {
+  position: sticky;
+  top: 0;
+  z-index: 1;
+  padding: .2rem 0 .55rem;
+  background: var(--surface);
+}
+
+.foodmap-list {
+  margin-top: .35rem;
+}
+
+.foodmap-detail-panel {
+  display: grid;
+  align-content: start;
+  padding: 1rem;
+  overflow-y: auto;
+  border: 1px solid var(--line);
+  border-radius: calc(var(--radius) + 4px);
+  background: var(--surface);
+  box-shadow: var(--shadow);
+}
+
+.foodmap-detail-empty {
+  display: grid;
+  align-content: start;
+  gap: .55rem;
+  min-height: 100%;
+  padding: 1rem .85rem;
+  border: 1px dashed rgba(180, 83, 9, .24);
+  border-radius: 10px;
+  background: #fffaf1;
+}
+
+.foodmap-detail-empty-icon {
+  display: inline-grid;
+  place-items: center;
+  width: 2.2rem;
+  height: 2.2rem;
+  border-radius: 50%;
+  background: var(--amber-bg);
+  color: var(--amber);
+  font-size: 1.3rem;
+}
+
+.foodmap-detail-empty h2 {
+  color: var(--dark);
+  font-size: 1.12rem;
+}
+
+.foodmap-detail-empty > p:not(.section-kicker) {
+  color: var(--muted);
+  font-size: .8rem;
+  line-height: 1.65;
+}
+
+.foodmap-detail-empty-hint {
+  display: flex;
+  align-items: center;
+  gap: .35rem;
+  margin-top: auto;
+  padding-top: .85rem;
+  border-top: 1px solid rgba(180, 83, 9, .14);
+  color: var(--muted);
+  font-size: .72rem;
+}
+
+.foodmap-detail-empty-hint b {
+  color: var(--amber);
+}
+
+.foodmap-detail-content[hidden] {
+  display: none;
+}
+
+.foodmap-detail-content {
+  display: grid;
+  align-content: start;
+  gap: .65rem;
+}
+
+.foodmap-detail-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: .6rem;
+}
+
+.foodmap-detail-status {
+  display: inline-flex;
+  align-items: center;
+  gap: .25rem;
+  padding: .22rem .55rem;
+  border-radius: 999px;
+  font-size: .72rem;
+  font-weight: 800;
+}
+
+.foodmap-detail-clear {
+  display: inline-grid;
+  place-items: center;
+  width: 1.8rem;
+  height: 1.8rem;
+  border: 1px solid var(--line);
+  border-radius: 50%;
+  background: var(--surface);
+  color: var(--muted);
+  cursor: pointer;
+  font-size: .78rem;
+}
+
+.foodmap-detail-clear:hover,
+.foodmap-detail-clear:focus-visible {
+  border-color: var(--amber);
+  color: var(--amber);
+  outline: none;
+}
+
+.foodmap-detail-name {
+  color: var(--dark);
+  font-size: 1.25rem;
+  line-height: 1.3;
+}
+
+.foodmap-detail-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: .35rem .55rem;
+  color: var(--muted);
+  font-size: .74rem;
+}
+
+.foodmap-detail-tag {
+  padding: .12rem .5rem;
+  border-radius: 999px;
+  background: var(--amber-bg);
+  color: var(--amber);
+  font-weight: 800;
+}
+
+.foodmap-detail-meta [data-fm-detail-map-state] {
+  color: var(--blue);
+}
+
+.foodmap-detail-address,
+.foodmap-detail-note {
+  color: var(--muted);
+  font-size: .8rem;
+  line-height: 1.6;
+}
+
+.foodmap-detail-note {
+  padding-top: .6rem;
+  border-top: 1px dashed rgba(180, 83, 9, .2);
+}
+
+.foodmap-detail-section-title {
+  padding-top: .75rem;
+  border-top: 1px solid var(--line);
+  color: var(--dark);
+  font-size: .78rem;
+  font-weight: 900;
+  letter-spacing: .06em;
+}
+
+.foodmap-list-item.is-active {
+  border-color: rgba(180, 83, 9, .48);
+  border-left-color: var(--amber);
+  background: #fffaf1;
+  box-shadow: 0 4px 14px rgba(180, 83, 9, .1);
+}
+
+@media (max-width: 1180px) and (min-width: 720px) {
+  .foodmap-workspace {
+    grid-template-columns: minmax(0, 1.2fr) minmax(320px, .9fr);
+  }
+
+  .foodmap-detail-panel {
+    grid-column: 1 / -1;
+    height: auto;
+    min-height: 220px;
+  }
+
+  .foodmap-detail-empty {
+    min-height: 180px;
+  }
+}
+
+@media (max-width: 719px) {
+  body[data-page="food-map"] .app-shell {
+    max-width: none;
+  }
+
+  .foodmap-workspace {
+    display: block;
+  }
+
+  .foodmap-map-section {
+    margin-bottom: .85rem;
+  }
+
+  .foodmap-map-panel {
+    height: auto;
+  }
+
+  .foodmap-map {
+    height: 330px;
+  }
+
+  .foodmap-city-panels {
+    display: block;
+  }
+
+  .foodmap-city-content {
+    height: auto;
+    overflow: visible;
+  }
+
+  .foodmap-directory-toolbar .foodmap-search {
+    display: grid;
+  }
+
+  .foodmap-results {
+    overflow: visible;
+  }
+
+  .foodmap-detail-panel {
+    height: auto;
+    min-height: 220px;
+    margin-top: .85rem;
+  }
+
+  .foodmap-detail-empty {
+    min-height: 180px;
+  }
+}
+
+/* ─── FoodMap 阶段 3：方案一温暖编辑型视觉系统 ─── */
+body[data-page="food-map"] {
+  --bg: #f7f2ea;
+  --surface: #fffdf9;
+  --surface-soft: #fbf7f0;
+  --text: #3a2a1f;
+  --muted: #806f62;
+  --line: #e8ddd1;
+  --dark: #3a2a1f;
+  --green: #34764f;
+  --green-bg: #e8f2e8;
+  --blue: #557b8a;
+  --blue-bg: #e5eff1;
+  --amber: #9f5c18;
+  --amber-bg: #f7e8cf;
+  --red: #a84b3d;
+  --red-bg: #f7e1dc;
+  --shadow: 0 8px 24px rgba(74, 48, 28, .08);
+  --radius: 9px;
+}
+
+body[data-page="food-map"] .app-shell {
+  color: var(--text);
+  font-family: -apple-system, BlinkMacSystemFont, "Noto Sans SC", "PingFang SC", "Microsoft YaHei", sans-serif;
+}
+
+body[data-page="food-map"] .foodmap-hero {
+  align-items: center;
+  padding: .25rem .15rem .85rem;
+  margin-bottom: .45rem;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
+}
+
+body[data-page="food-map"] .foodmap-hero::after {
+  top: -.35rem;
+  right: 1rem;
+  opacity: .09;
+}
+
+body[data-page="food-map"] .foodmap-hero-title,
+body[data-page="food-map"] .foodmap-city-summary h2,
+body[data-page="food-map"] .foodmap-results-heading h2,
+body[data-page="food-map"] .foodmap-detail-name,
+body[data-page="food-map"] .foodmap-detail-empty h2 {
+  font-family: "Songti SC", "STSong", "Noto Serif SC", serif;
+  letter-spacing: .015em;
+}
+
+body[data-page="food-map"] .foodmap-hero-title {
+  color: var(--dark);
+  font-size: clamp(1.8rem, 3vw, 2.3rem);
+  letter-spacing: .02em;
+}
+
+body[data-page="food-map"] .foodmap-hero-desc {
+  color: var(--muted);
+}
+
+body[data-page="food-map"] .foodmap-hero-kicker,
+body[data-page="food-map"] .section-kicker {
+  color: var(--amber);
+}
+
+body[data-page="food-map"] .foodmap-hero-chips {
+  gap: .8rem;
+  margin-top: .65rem;
+}
+
+body[data-page="food-map"] .foodmap-hero-chips span {
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  color: var(--muted);
+}
+
+body[data-page="food-map"] .foodmap-hero-chips span + span::before {
+  content: '·';
+  margin-right: .8rem;
+  color: #c5ad98;
+}
+
+body[data-page="food-map"] .foodmap-hero-chips b,
+body[data-page="food-map"] .foodmap-hero-num {
+  color: var(--dark);
+}
+
+body[data-page="food-map"] .foodmap-hero-stat {
+  padding: .25rem .5rem;
+  border: 0;
+  border-left: 1px solid var(--line);
+  border-radius: 0;
+  background: transparent;
+}
+
+body[data-page="food-map"] .foodmap-workspace {
+  gap: 0;
+  overflow: hidden;
+  border: 1.5px solid #4a3324;
+  border-radius: 15px;
+  background: var(--surface);
+  box-shadow: 0 12px 30px rgba(74, 48, 28, .1);
+}
+
+body[data-page="food-map"] .foodmap-map-section {
+  padding: .75rem;
+  border: 0;
+  border-right: 1px solid var(--line);
+  border-radius: 0;
+  background: #fcf8f1;
+  box-shadow: none;
+}
+
+body[data-page="food-map"] .foodmap-city-panels {
+  border-right: 1px solid var(--line);
+  background: var(--surface);
+}
+
+body[data-page="food-map"] .foodmap-city-content {
+  padding: .8rem .85rem .9rem;
+  border: 0;
+  border-radius: 0;
+  background: var(--surface);
+  box-shadow: none;
+}
+
+body[data-page="food-map"] .foodmap-city-summary {
+  padding: .1rem 0 .65rem;
+  border: 0;
+  border-bottom: 1px solid var(--line);
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
+}
+
+body[data-page="food-map"] .foodmap-city-summary h2 {
+  color: var(--dark);
+  font-size: 1.12rem;
+}
+
+body[data-page="food-map"] .foodmap-city-summary p:last-child {
+  display: none;
+}
+
+body[data-page="food-map"] .foodmap-city-summary-stats {
+  gap: .65rem;
+}
+
+body[data-page="food-map"] .foodmap-city-summary-stats span {
+  min-width: 2.7rem;
+}
+
+body[data-page="food-map"] .foodmap-city-summary-stats b {
+  color: var(--dark);
+  font-size: .95rem;
+}
+
+body[data-page="food-map"] .foodmap-city-summary-stats small {
+  color: var(--muted);
+}
+
+body[data-page="food-map"] .foodmap-map-toolbar {
+  padding: .05rem .05rem .65rem;
+  border-bottom: 1px solid var(--line);
+}
+
+body[data-page="food-map"] .foodmap-city-label,
+body[data-page="food-map"] .foodmap-map-legend {
+  color: var(--muted);
+}
+
+body[data-page="food-map"] .foodmap-city-button {
+  padding: .38rem .65rem;
+  border-radius: 7px;
+  background: var(--surface);
+  color: var(--muted);
+}
+
+body[data-page="food-map"] .foodmap-city-button.active {
+  border-color: var(--amber);
+  background: var(--amber);
+  color: #fffaf1;
+  box-shadow: 0 3px 8px rgba(159, 92, 24, .18);
+}
+
+body[data-page="food-map"] .foodmap-city-button.active small {
+  color: inherit;
+}
+
+body[data-page="food-map"] .foodmap-map-filters {
+  padding: .55rem 0 .65rem;
+}
+
+body[data-page="food-map"] .foodmap-map-search-input,
+body[data-page="food-map"] .foodmap-search input {
+  border-color: var(--line);
+  border-radius: 7px;
+  background: var(--surface);
+  color: var(--text);
+}
+
+body[data-page="food-map"] .foodmap-map-search-input:focus,
+body[data-page="food-map"] .foodmap-search input:focus {
+  border-color: var(--amber);
+  box-shadow: 0 0 0 3px rgba(159, 92, 24, .12);
+}
+
+body[data-page="food-map"] .foodmap-filters-toggle {
+  border-radius: 7px;
+  background: var(--surface);
+  color: var(--text);
+}
+
+body[data-page="food-map"] .foodmap-filters-toggle[aria-expanded="true"] {
+  background: var(--amber-bg);
+}
+
+body[data-page="food-map"] .foodmap-map-panel {
+  border-color: #d8c6b4;
+  border-radius: 10px;
+  background: #f0f3ef;
+}
+
+body[data-page="food-map"] .foodmap-map-heading > div,
+body[data-page="food-map"] .foodmap-map-heading > span {
+  border-color: rgba(217, 199, 179, .8);
+  border-radius: 7px;
+  background: rgba(255, 253, 249, .9);
+  box-shadow: 0 3px 10px rgba(74, 48, 28, .08);
+}
+
+body[data-page="food-map"] .foodmap-map-reset {
+  border-color: rgba(159, 92, 24, .25);
+  border-radius: 6px;
+  background: var(--amber-bg);
+  color: var(--amber);
+}
+
+body[data-page="food-map"] .foodmap-poi-marker {
+  border-color: #fffdf9;
+  background: #c47b2e;
+  box-shadow: 0 3px 10px rgba(159, 92, 24, .25), 0 0 0 3px rgba(196, 123, 46, .15);
+}
+
+body[data-page="food-map"] .foodmap-poi-marker::after {
+  background: #c47b2e;
+}
+
+body[data-page="food-map"] .foodmap-poi-marker:hover,
+body[data-page="food-map"] .foodmap-poi-marker:focus-visible,
+body[data-page="food-map"] .foodmap-poi-marker.is-active {
+  background: var(--amber);
+}
+
+body[data-page="food-map"] .foodmap-poi-marker:hover::after,
+body[data-page="food-map"] .foodmap-poi-marker:focus-visible::after,
+body[data-page="food-map"] .foodmap-poi-marker.is-active::after {
+  background: var(--amber);
+}
+
+body[data-page="food-map"] .foodmap-map-helper {
+  border-color: #dfcbb6;
+  border-radius: 7px;
+  background: #fffaf1;
+}
+
+body[data-page="food-map"] .foodmap-directory-toolbar {
+  gap: .5rem;
+}
+
+body[data-page="food-map"] .foodmap-directory-toolbar .foodmap-search span {
+  color: var(--muted);
+  font-size: .7rem;
+}
+
+body[data-page="food-map"] .foodmap-directory-toolbar .foodmap-region-list {
+  border-bottom-color: #dfcbb6;
+}
+
+body[data-page="food-map"] .foodmap-directory-toolbar .foodmap-region-button {
+  color: var(--muted);
+  border-radius: 6px 6px 0 0;
+}
+
+body[data-page="food-map"] .foodmap-directory-toolbar .foodmap-region-button.active {
+  color: var(--dark);
+  background: var(--amber-bg);
+}
+
+body[data-page="food-map"] .foodmap-directory-toolbar .foodmap-region-button b {
+  font-size: .82rem;
+}
+
+body[data-page="food-map"] .foodmap-directory-toolbar .foodmap-region-button small {
+  color: var(--muted);
+  font-size: .66rem;
+}
+
+body[data-page="food-map"] .foodmap-results-heading {
+  padding: .25rem 0 .5rem;
+  background: var(--surface);
+}
+
+body[data-page="food-map"] .foodmap-results-heading h2 {
+  color: var(--dark);
+  font-size: 1.05rem;
+}
+
+body[data-page="food-map"] .foodmap-list {
+  gap: .45rem;
+}
+
+body[data-page="food-map"] .foodmap-list-item {
+  padding: .62rem .65rem .62rem .75rem;
+  border-color: var(--line);
+  border-left: 3px solid transparent;
+  border-radius: 7px;
+  background: #fffefa;
+  box-shadow: none;
+}
+
+body[data-page="food-map"] .foodmap-list-item:hover {
+  border-color: #d9b992;
+  border-left-color: var(--amber);
+  background: #fffaf1;
+  box-shadow: 0 4px 12px rgba(74, 48, 28, .07);
+}
+
+body[data-page="food-map"] .foodmap-list-item.is-active {
+  border-color: #d9b992;
+  border-left-color: var(--amber);
+  background: #fff5e5;
+  box-shadow: 0 4px 12px rgba(159, 92, 24, .1);
+}
+
+body[data-page="food-map"] .foodmap-list-name {
+  color: var(--dark);
+  font-size: .9rem;
+}
+
+body[data-page="food-map"] .foodmap-cat-tag {
+  padding: .08rem .38rem;
+  border: 1px solid #e7caa4;
+  border-radius: 4px;
+  background: #fff8eb;
+  color: var(--amber);
+}
+
+body[data-page="food-map"] .foodmap-status,
+body[data-page="food-map"] .foodmap-detail-status {
+  border-radius: 4px;
+  font-size: .64rem;
+}
+
+body[data-page="food-map"] .foodmap-dishes {
+  color: #9b6b37;
+}
+
+body[data-page="food-map"] .foodmap-note,
+body[data-page="food-map"] .foodmap-address,
+body[data-page="food-map"] .foodmap-list-item time {
+  color: var(--muted);
+}
+
+body[data-page="food-map"] .foodmap-coordinate-state {
+  border-radius: 4px;
+  font-size: .64rem;
+}
+
+body[data-page="food-map"] .foodmap-detail-panel {
+  padding: .85rem;
+  border: 0;
+  border-radius: 0;
+  background: #fffaf2;
+  box-shadow: none;
+}
+
+body[data-page="food-map"] .foodmap-detail-empty {
+  padding: .75rem .65rem;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+}
+
+body[data-page="food-map"] .foodmap-detail-empty-icon {
+  width: 2rem;
+  height: 2rem;
+  border-radius: 7px;
+  background: var(--amber-bg);
+}
+
+body[data-page="food-map"] .foodmap-detail-content {
+  padding: .2rem .05rem;
+}
+
+body[data-page="food-map"] .foodmap-detail-name {
+  color: var(--dark);
+  font-size: 1.2rem;
+}
+
+body[data-page="food-map"] .foodmap-detail-section-title {
+  color: var(--dark);
+}
+
+body[data-page="food-map"] .foodmap-detail-clear {
+  border-radius: 6px;
+  background: transparent;
+}
+
+body[data-page="food-map"] .foodmap-dish {
+  border-color: var(--line);
+  border-radius: 6px;
+  background: #fffefa;
+}
+
+body[data-page="food-map"] .foodmap-detail-scrim {
+  display: none;
+}
+
+@media (max-width: 719px) {
+  body[data-page="food-map"] .foodmap-workspace {
+    gap: .75rem;
+    overflow: visible;
+    border: 0;
+    border-radius: 0;
+    background: transparent;
+    box-shadow: none;
+  }
+
+  body[data-page="food-map"] .foodmap-map-section,
+  body[data-page="food-map"] .foodmap-city-panels,
+  body[data-page="food-map"] .foodmap-detail-panel {
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    box-shadow: var(--shadow);
+  }
+
+  body[data-page="food-map"] .foodmap-map-section {
+    padding: .65rem;
+  }
+
+  body[data-page="food-map"] .foodmap-city-panels {
+    background: var(--surface);
+  }
+
+  body[data-page="food-map"] .foodmap-detail-panel {
+    padding: .75rem;
+  }
+
+  body[data-page="food-map"] .foodmap-map-toolbar {
+    align-items: center;
+    flex-direction: row;
+    gap: .45rem;
+    overflow: hidden;
+  }
+
+  body[data-page="food-map"] .foodmap-city-switcher {
+    min-width: 0;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+
+  body[data-page="food-map"] .foodmap-city-switcher::-webkit-scrollbar {
+    display: none;
+  }
+
+  body[data-page="food-map"] .foodmap-city-label,
+  body[data-page="food-map"] .foodmap-map-legend {
+    display: none;
+  }
+
+  body[data-page="food-map"] .foodmap-city-button {
+    flex: 0 0 auto;
+    padding: .35rem .6rem;
+  }
+
+  body[data-page="food-map"] .foodmap-map-filters {
+    padding: .45rem 0 .55rem;
+  }
+
+  body[data-page="food-map"] .foodmap-map-searchbar {
+    gap: .4rem;
+  }
+
+  body[data-page="food-map"] .foodmap-map-search-input {
+    min-width: 0;
+    min-height: 2.35rem;
+    padding-left: 2rem;
+    padding-right: .6rem;
+  }
+
+  body[data-page="food-map"] .foodmap-filters-toggle {
+    flex: 0 0 auto;
+    min-height: 2.35rem;
+    padding: .35rem .62rem;
+  }
+
+  body[data-page="food-map"] .foodmap-filters-toggle-label {
+    display: none;
+  }
+
+  body[data-page="food-map"] .foodmap-map-heading h2 {
+    font-size: .92rem;
+  }
+
+  body[data-page="food-map"] .foodmap-map-heading > div,
+  body[data-page="food-map"] .foodmap-map-heading > span {
+    padding: .35rem .5rem;
+  }
+
+  body[data-page="food-map"] .foodmap-map {
+    height: clamp(290px, 42vh, 420px);
+  }
+
+  body[data-page="food-map"] .foodmap-map-helper {
+    font-size: .68rem;
+  }
+
+  body[data-page="food-map"] .foodmap-city-summary {
+    gap: .65rem;
+  }
+
+  body[data-page="food-map"] .foodmap-city-summary h2 {
+    font-size: 1rem;
+  }
+
+  body[data-page="food-map"] .foodmap-city-summary-stats {
+    width: 100%;
+    justify-content: space-between;
+    padding-top: .55rem;
+    border-top: 1px solid var(--line);
+  }
+
+  body[data-page="food-map"] .foodmap-directory-toolbar .foodmap-region-list {
+    margin-inline: -.2rem;
+    padding-inline: .2rem;
+  }
+
+  body[data-page="food-map"] .foodmap-directory-toolbar .foodmap-region-button {
+    min-width: 6.5rem;
+    padding: .48rem .55rem;
+  }
+
+  body[data-page="food-map"] .foodmap-results-heading {
+    padding-top: .15rem;
+  }
+
+  body[data-page="food-map"] .foodmap-list-item {
+    padding: .62rem .58rem .62rem .68rem;
+  }
+
+  body[data-page="food-map"] .foodmap-list-name {
+    font-size: .88rem;
+  }
+
+  body[data-page="food-map"] .foodmap-detail-scrim {
+    position: fixed;
+    inset: 0;
+    z-index: 50;
+    background: rgba(43, 29, 20, .36);
+  }
+
+  body[data-page="food-map"] .foodmap-detail-scrim[hidden] {
+    display: none;
+  }
+
+  body[data-page="food-map"] .foodmap-detail-panel {
+    position: fixed;
+    z-index: 51;
+    right: .65rem;
+    bottom: .65rem;
+    left: .65rem;
+    display: none;
+    max-height: min(72vh, 560px);
+    margin-top: 0;
+    overflow-y: auto;
+    border: 1px solid #d8c6b4;
+    border-radius: 14px;
+    background: #fffaf2;
+    box-shadow: 0 18px 50px rgba(43, 29, 20, .24);
+  }
+
+  body[data-page="food-map"] .foodmap-detail-panel.has-selection {
+    display: block;
+  }
+
+  body[data-page="food-map"] .foodmap-detail-content {
+    gap: .55rem;
+  }
+
+  body[data-page="food-map"] .foodmap-detail-name {
+    font-size: 1.12rem;
+  }
+
+  body[data-page="food-map"] .foodmap-detail-section-title {
+    padding-top: .65rem;
+  }
+}
+
+/* ─── FoodMap 阶段 6：桌面端二分工作台 ─── */
+@media (min-width: 720px) {
+  body[data-page="food-map"] .foodmap-workspace {
+    grid-template-columns: minmax(0, 2fr) minmax(360px, 1fr);
+    grid-template-rows: minmax(0, auto);
+    gap: 0;
+    align-items: stretch;
+  }
+
+  body[data-page="food-map"] .foodmap-map-section {
+    height: 100%;
+    min-height: 0;
+    align-self: stretch;
+  }
+
+  body[data-page="food-map"] .foodmap-right-column {
+    display: grid;
+    grid-template-rows: auto minmax(0, 1fr);
+    min-width: 0;
+    min-height: 0;
+    height: 100%;
+    align-self: stretch;
+    overflow: hidden;
+    background: var(--surface);
+  }
+
+  body[data-page="food-map"] .foodmap-detail-panel {
+    grid-column: auto;
+    grid-row: 1;
+    height: auto;
+    min-height: 0;
+    padding: .85rem;
+    overflow-y: auto;
+    border: 0;
+    border-bottom: 1px solid var(--line);
+    border-radius: 0;
+  }
+
+  body[data-page="food-map"] .foodmap-detail-empty {
+    min-height: 0;
+  }
+
+  body[data-page="food-map"] .foodmap-city-panels {
+    grid-row: 2;
+    height: 100%;
+    min-height: 0;
+    overflow: hidden;
+    border-right: 0;
+  }
+
+  body[data-page="food-map"] .foodmap-city-content {
+    height: 100%;
+    min-height: 0;
+    border-radius: 0;
+  }
+}
+
+@media (max-width: 719px) {
+  body[data-page="food-map"] .foodmap-right-column {
+    display: block;
+    height: auto;
+    min-height: 0;
+    overflow: visible;
+    background: transparent;
+  }
+
+  body[data-page="food-map"] .foodmap-map-section {
+    height: auto;
+  }
+
+  body[data-page="food-map"] .foodmap-city-panels {
+    height: auto;
+    border-right: 1px solid var(--line);
+    overflow: visible;
+  }
+
+  body[data-page="food-map"] .foodmap-city-content {
+    height: auto;
+  }
+}
+
+/* ─── FoodMap 阶段 7：摘要卡片与完整信息浮层 ─── */
+body[data-page="food-map"] .foodmap-hero {
+  padding: 1.15rem 1.25rem 1rem;
+  margin-bottom: .9rem;
+  border: 1.5px solid #4a3324;
+  border-radius: 15px;
+  background: linear-gradient(135deg, #f6efe5, #eee2d2);
+  box-shadow: 0 10px 24px rgba(74, 48, 28, .08);
+}
+
+body[data-page="food-map"] .foodmap-hero-title-row {
+  display: flex;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+body[data-page="food-map"] .foodmap-hero-desc {
+  margin-top: 0;
+}
+
+body[data-page="food-map"] .foodmap-dishes-more {
+  color: var(--muted);
+  font-size: .72rem;
+  white-space: nowrap;
+}
+
+body[data-page="food-map"] .foodmap-list-detail-hint {
+  color: var(--amber);
+  font-size: .62rem;
+  font-weight: 800;
+  white-space: nowrap;
+}
+
+body[data-page="food-map"] .foodmap-modal-panel {
+  border: 1px solid #d8c6b4;
+}
+
+body[data-page="food-map"] .foodmap-detail-usage {
+  display: grid;
+  grid-template-columns: 2rem minmax(0, 1fr);
+  align-items: start;
+  gap: .55rem;
+  padding: .7rem;
+  border: 1px dashed #dfcbb6;
+  border-radius: 8px;
+  background: #fffaf1;
+}
+
+body[data-page="food-map"] .foodmap-detail-usage-icon {
+  display: inline-grid;
+  place-items: center;
+  width: 2rem;
+  height: 2rem;
+  border-radius: 50%;
+  background: var(--amber-bg);
+  color: var(--amber);
+  font-size: 1.15rem;
+}
+
+body[data-page="food-map"] .foodmap-detail-usage div {
+  display: grid;
+  gap: .15rem;
+}
+
+body[data-page="food-map"] .foodmap-detail-usage strong {
+  color: var(--dark);
+  font-size: .75rem;
+}
+
+body[data-page="food-map"] .foodmap-detail-usage span:not(.foodmap-detail-usage-icon) {
+  color: var(--muted);
+  font-size: .7rem;
+  line-height: 1.55;
+}
+
+body[data-page="food-map"] .foodmap-detail-empty-copy {
+  display: block;
+  color: var(--muted);
+  font-size: .8rem;
+  line-height: 1.6;
+}
+
+body[data-page="food-map"] .foodmap-detail-empty-copy strong {
+  margin-right: .35em;
+  color: var(--dark);
+  font-size: inherit;
+  font-weight: 800;
+}
+
+@media (min-width: 720px) {
+  body[data-page="food-map"] .foodmap-map-panel {
+    height: clamp(620px, calc(100vh - 9rem), 820px);
+  }
+}
+
+@media (max-width: 719px) {
+  body[data-page="food-map"] .foodmap-hero {
+    padding: 1rem;
+    margin-bottom: .75rem;
+    border-radius: 12px;
+  }
+
+  body[data-page="food-map"] .foodmap-hero-title-row {
+    display: block;
+  }
+
+  body[data-page="food-map"] .foodmap-hero-desc {
+    margin-top: .3rem;
+  }
+
+  body[data-page="food-map"] .foodmap-list-detail-hint {
+    font-size: .6rem;
+  }
+}
+
+/* ─── FoodMap P0：收敛详情与目录的信息层级 ─── */
+body[data-page="food-map"] .foodmap-detail-empty {
+  gap: .35rem;
+  padding: .7rem .6rem;
+}
+
+body[data-page="food-map"] .foodmap-detail-empty-copy {
+  margin: 0;
+  line-height: 1.45;
+}
+
+body[data-page="food-map"] .foodmap-detail-empty-hint {
+  margin-top: .1rem;
+  padding-top: .45rem;
+  font-size: .68rem;
+}
+
+body[data-page="food-map"] .foodmap-detail-usage-copy {
+  margin: 0;
+  color: var(--muted);
+  font-size: .7rem;
+  line-height: 1.5;
+}
+
+body[data-page="food-map"] .foodmap-directory-toolbar .foodmap-search {
+  display: block;
+}
+
+body[data-page="food-map"] .foodmap-list-item {
+  display: block;
+  border-left-color: var(--amber);
+}
+
+body[data-page="food-map"] .foodmap-list-top {
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: .65rem;
+  margin-bottom: 0;
+}
+
+body[data-page="food-map"] .foodmap-list-title {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: .35rem;
+  min-width: 0;
+}
+
+body[data-page="food-map"] .foodmap-list-title .foodmap-list-name {
+  flex: 0 1 auto;
+}
+
+body[data-page="food-map"] .foodmap-list-top > .foodmap-coordinate-state {
+  flex: 0 0 auto;
+}
+
+body[data-page="food-map"] .foodmap-dishes {
+  margin-top: .4rem;
+  line-height: 1.45;
+}
+
+body[data-page="food-map"] .foodmap-list-meta {
+  display: flex;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  gap: .3rem .75rem;
+  margin-top: .6rem;
+  padding-top: .5rem;
+  border-top: 1px dashed var(--line);
+}
+
+body[data-page="food-map"] .foodmap-list-meta .foodmap-address {
+  flex: 1 1 12rem;
+  min-width: 0;
+  text-align: left;
+}
+
+body[data-page="food-map"] .foodmap-list-meta time,
+body[data-page="food-map"] .foodmap-list-detail-hint {
+  flex: 0 0 auto;
+}
+
+body[data-page="food-map"] .foodmap-list-detail-hint {
+  margin-left: auto;
+  color: var(--amber);
+  font-size: .66rem;
+  font-weight: 800;
+  white-space: nowrap;
+}
+
+@media (max-width: 719px) {
+  body[data-page="food-map"] .foodmap-list-meta {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+  }
+
+  body[data-page="food-map"] .foodmap-list-meta .foodmap-address {
+    grid-column: 1 / -1;
+  }
+
+  body[data-page="food-map"] .foodmap-list-meta time {
+    grid-column: 2;
+  }
+
+  body[data-page="food-map"] .foodmap-list-detail-hint {
+    grid-column: 2;
+    grid-row: 2;
+  }
+}
+
+/* ─── FoodMap P1：减轻目录标题与筛选控件 ─── */
+body[data-page="food-map"] .foodmap-city-summary-stats {
+  gap: .55rem;
+}
+
+body[data-page="food-map"] .foodmap-city-summary-stats b {
+  font-size: .84rem;
+}
+
+body[data-page="food-map"] .foodmap-city-summary-stats small {
+  font-size: .62rem;
+}
+
+body[data-page="food-map"] .foodmap-directory-toolbar .foodmap-search {
+  position: relative;
+}
+
+body[data-page="food-map"] .foodmap-directory-search-icon {
+  position: absolute;
+  z-index: 1;
+  top: 50%;
+  left: .7rem;
+  color: var(--muted);
+  font-size: 1rem;
+  line-height: 1;
+  transform: translateY(-50%);
+  pointer-events: none;
+}
+
+body[data-page="food-map"] .foodmap-directory-toolbar .foodmap-search input {
+  min-height: 2.35rem;
+  padding: .45rem .6rem .45rem 2rem;
+  font-size: .84rem;
+}
+
+body[data-page="food-map"] .foodmap-directory-toolbar .foodmap-region-list {
+  gap: .1rem;
+  padding-bottom: .2rem;
+}
+
+body[data-page="food-map"] .foodmap-directory-toolbar .foodmap-region-button {
+  min-height: 2.75rem;
+  padding: .34rem .6rem;
+}
+
+body[data-page="food-map"] .foodmap-directory-toolbar .foodmap-region-button b {
+  font-size: .76rem;
+}
+
+body[data-page="food-map"] .foodmap-directory-toolbar .foodmap-region-button small {
+  font-size: .62rem;
+}
+
+body[data-page="food-map"] .foodmap-results-heading h2 {
+  font-size: .98rem;
+}
+
+body[data-page="food-map"] .foodmap-results-heading > span {
+  font-size: .7rem;
+}
+
+@media (max-width: 719px) {
+  body[data-page="food-map"] .foodmap-directory-toolbar .foodmap-region-button {
+    min-width: 6.5rem;
+  }
+}
+
+/* ─── FoodMap P2：交互反馈与键盘可达性 ─── */
+body[data-page="food-map"] .foodmap-list-item {
+  transition: border-color .16s, background .16s, box-shadow .16s, transform .16s;
+}
+
+body[data-page="food-map"] .foodmap-list-item:focus-visible {
+  outline: 2px solid var(--amber);
+  outline-offset: 3px;
+  border-color: #d9b992;
+  border-left-color: var(--amber);
+  background: #fffaf1;
+  box-shadow: 0 4px 12px rgba(159, 92, 24, .12);
+  transform: translateY(-1px);
+}
+
+body[data-page="food-map"] .foodmap-list-item:active {
+  transform: translateY(0);
+  box-shadow: 0 1px 4px rgba(74, 48, 28, .08);
+}
+
+body[data-page="food-map"] .foodmap-list-item:hover .foodmap-list-detail-hint,
+body[data-page="food-map"] .foodmap-list-item:focus-visible .foodmap-list-detail-hint {
+  color: var(--dark);
+  transform: translateX(2px);
+}
+
+body[data-page="food-map"] .foodmap-list-detail-hint {
+  display: inline-flex;
+  transition: color .16s, transform .16s;
+}
+
+body[data-page="food-map"] .foodmap-directory-toolbar .foodmap-region-button:focus-visible,
+body[data-page="food-map"] .foodmap-city-button:focus-visible,
+body[data-page="food-map"] .foodmap-filters-toggle:focus-visible,
+body[data-page="food-map"] .foodmap-map-reset:focus-visible {
+  outline: 2px solid var(--amber);
+  outline-offset: 2px;
+}
+
+body[data-page="food-map"] .foodmap-directory-toolbar .foodmap-region-button:active,
+body[data-page="food-map"] .foodmap-city-button:active,
+body[data-page="food-map"] .foodmap-filters-toggle:active {
+  transform: translateY(1px);
+}
+
+body[data-page="food-map"] .foodmap-detail-clear:focus-visible,
+body[data-page="food-map"] .foodmap-modal-close:focus-visible {
+  outline: 2px solid var(--amber);
+  outline-offset: 2px;
+}
+
+/* ─── FoodMap：目录承担默认使用说明，详情改为点击后的浮层 ─── */
+body[data-page="food-map"] .foodmap-directory-usage {
+  display: flex;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: .3rem .45rem;
+  margin-top: .35rem;
+  color: var(--muted);
+  font-size: .72rem;
+  line-height: 1.5;
+}
+
+body[data-page="food-map"] .foodmap-directory-usage strong {
+  color: var(--dark);
+  font-size: .76rem;
+  font-weight: 800;
+}
+
+@media (min-width: 720px) {
+  body[data-page="food-map"] .foodmap-right-column {
+    display: block;
+    height: 100%;
+    overflow: hidden;
+  }
+
+  body[data-page="food-map"] .foodmap-city-panels {
+    height: 100%;
+    min-height: 0;
+    overflow: hidden;
+  }
+}
+
+@media (max-width: 719px) {
+  body[data-page="food-map"] .foodmap-directory-usage {
+    display: block;
+  }
+
+  body[data-page="food-map"] .foodmap-directory-usage strong {
+    margin-right: .35em;
+  }
+}
+
+/* ─── FoodMap：卡片底部元信息保持单行 ─── */
+body[data-page="food-map"] .foodmap-list-meta {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto auto;
+  align-items: center;
+  flex-wrap: nowrap;
+  gap: .45rem;
+}
+
+body[data-page="food-map"] .foodmap-list-meta .foodmap-address {
+  min-width: 0;
+  overflow: hidden;
+  text-align: left;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+body[data-page="food-map"] .foodmap-list-meta time,
+body[data-page="food-map"] .foodmap-list-detail-hint {
+  white-space: nowrap;
+}
+
+body[data-page="food-map"] .foodmap-list-detail-hint {
+  margin-left: 0;
+}
+
+@media (max-width: 719px) {
+  body[data-page="food-map"] .foodmap-list-meta {
+    grid-template-columns: minmax(0, 1fr) auto auto;
+    gap: .25rem;
+  }
+
+  body[data-page="food-map"] .foodmap-list-meta time,
+  body[data-page="food-map"] .foodmap-list-detail-hint {
+    font-size: .62rem;
+  }
+}
+
 /* ─── TodoBoard 看板 ─── */
 
 body[data-page="todo-board"] .app-shell {
