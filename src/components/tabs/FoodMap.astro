@@ -67,9 +67,19 @@ const placePayload = places.map(p => ({
   lat: p.data.lat ?? null,
   coordinateStatus: p.data.coordinateStatus,
   status: placeStatus(p),
+  statusKey: p.data.status,
   dishes: (p.data.dishes || []).map(d => ({ name: dishName(d), note: dishNote(d), price: dishPrice(d) })),
 }));
 const placePayloadJson = JSON.stringify(placePayload);
+
+// 每个城市的菜系/地区可选值，供地图筛选按钮动态渲染
+const cityFilters = Object.fromEntries(cityOrder.map(city => {
+  const cityPlaces = places.filter(p => p.data.city === city);
+  const categories = [...new Set(cityPlaces.map(p => p.data.category).filter(Boolean))];
+  const regions = [...new Set(cityPlaces.map(p => p.data.region))];
+  return [city, { categories, regions }];
+}));
+const cityFiltersJson = JSON.stringify(cityFilters);
 ---
 
 <div class="foodmap-page" data-tab="food-map">
@@ -115,6 +125,41 @@ const placePayloadJson = JSON.stringify(placePayload);
         <span><i class="foodmap-legend-dot is-pending"></i>待补全</span>
       </div>
     </div>
+    <div class="foodmap-map-filters">
+      <div class="foodmap-map-searchbar">
+        <span class="foodmap-map-search-icon" aria-hidden="true">🔍</span>
+        <input type="search" data-fm-map-search placeholder="搜索店名、地点或备注" class="foodmap-map-search-input" />
+        <button type="button" class="foodmap-filters-toggle" data-fm-filters-toggle aria-haspopup="dialog" aria-expanded="false">
+          <span class="foodmap-filters-toggle-icon" aria-hidden="true">≡</span>
+          <span class="foodmap-filters-toggle-label">筛选</span>
+          <span class="foodmap-filters-badge" data-fm-filters-badge hidden>0</span>
+        </button>
+      </div>
+      <div class="foodmap-filters-popover" data-fm-filters-popover role="dialog" aria-label="筛选" hidden>
+        <div class="foodmap-filters-popover-head">
+          <span class="foodmap-filters-popover-title">筛选</span>
+          <button type="button" class="foodmap-filters-popover-close" data-fm-filters-close aria-label="关闭">✕</button>
+        </div>
+        <div class="foodmap-filters-popover-body">
+          <div class="foodmap-filters-group">
+            <div class="foodmap-filters-group-label">菜系</div>
+            <div class="foodmap-filters-group-options" data-fm-filter-options="category"></div>
+          </div>
+          <div class="foodmap-filters-group">
+            <div class="foodmap-filters-group-label">地区</div>
+            <div class="foodmap-filters-group-options" data-fm-filter-options="region"></div>
+          </div>
+          <div class="foodmap-filters-group">
+            <div class="foodmap-filters-group-label">状态</div>
+            <div class="foodmap-filters-group-options" data-fm-filter-options="status"></div>
+          </div>
+        </div>
+        <div class="foodmap-filters-popover-foot">
+          <button type="button" class="foodmap-filters-clear" data-fm-filters-clear>清除筛选</button>
+          <button type="button" class="foodmap-filters-done" data-fm-filters-done>完成</button>
+        </div>
+      </div>
+    </div>
     <div class="foodmap-map-panel">
       <div class="foodmap-map-heading">
         <div>
@@ -134,6 +179,7 @@ const placePayloadJson = JSON.stringify(placePayload);
       <div><strong>地图和目录已经联动</strong><span>地图默认保持清爽，点击标记查看名称，再点卡片查看菜品与评价。</span></div>
     </div>
     <div class="foodmap-map-config" data-fm-city-config={JSON.stringify(cityConfig)} hidden></div>
+    <div class="foodmap-map-filters-config" data-fm-city-filters={cityFiltersJson} hidden></div>
   </div>
 
   <div class="foodmap-city-panels">
@@ -417,21 +463,33 @@ const placePayloadJson = JSON.stringify(placePayload);
     name: string;
     city: string;
     region: string;
+    category: string;
+    address: string;
+    note: string;
+    dishes: { name: string }[];
     lng: number | null;
     lat: number | null;
     coordinateStatus: string;
+    statusKey: string;
   };
 
   let mapPlaces: MapPlace[] = [];
   let cityConfig: Record<string, { center: [number, number]; zoom: number }> = {};
+  let cityFilters: Record<string, { categories: string[]; regions: string[] }> = {};
   try {
     if (mapPlacesElement?.dataset.fmPlacesJson) mapPlaces = JSON.parse(mapPlacesElement.dataset.fmPlacesJson);
     if (mapConfigElement?.dataset.fmCityConfig) cityConfig = JSON.parse(mapConfigElement.dataset.fmCityConfig);
+    const filtersEl = mapRoot?.querySelector<HTMLElement>('[data-fm-city-filters]');
+    if (filtersEl?.dataset.fmCityFilters) cityFilters = JSON.parse(filtersEl.dataset.fmCityFilters);
   } catch (error) {
     console.error('美食地图地图数据解析失败', error);
   }
 
   let activeCity = mapRoot?.querySelector<HTMLElement>('[data-fm-city].active')?.dataset.fmCity || '';
+  let activeCategory = '';
+  let activeRegion = '';
+  let activeStatus = '';
+  let mapSearchQuery = '';
   let amap: any = null;
   let mapInstance: any = null;
   const markers = new Map<string, { instance: any; element: HTMLElement }>();
@@ -443,12 +501,19 @@ const placePayloadJson = JSON.stringify(placePayload);
     mapStatus.className = `foodmap-map-status${type ? ` is-${type}` : ''}`;
   }
 
-  function confirmedPlaces(city: string) {
+  // 综合过滤：城市 + 菜系 + 地区 + 搜索词
+  function filteredPlaces(city: string) {
+    const query = mapSearchQuery.trim().toLocaleLowerCase();
     return mapPlaces.filter(place =>
       place.city === city &&
       place.coordinateStatus === 'confirmed' &&
       Number.isFinite(place.lng) &&
-      Number.isFinite(place.lat)
+      Number.isFinite(place.lat) &&
+      (!activeCategory || place.category === activeCategory) &&
+      (!activeRegion || place.region === activeRegion) &&
+      (!activeStatus || place.statusKey === activeStatus) &&
+      (!query || [place.name, place.region, place.category, place.address, place.note, ...(place.dishes || []).map(d => d.name)]
+        .filter(Boolean).join(' ').toLocaleLowerCase().includes(query))
     );
   }
 
@@ -473,7 +538,7 @@ const placePayloadJson = JSON.stringify(placePayload);
     setActiveMarker('');
 
     const config = cityConfig[city];
-    const cityMarkers = confirmedPlaces(city)
+    const cityMarkers = filteredPlaces(city)
       .map(place => markers.get(place.id)?.instance)
       .filter(Boolean);
 
@@ -490,7 +555,7 @@ const placePayloadJson = JSON.stringify(placePayload);
     markers.clear();
     activeMarkerId = '';
 
-    const places = confirmedPlaces(city);
+    const places = filteredPlaces(city);
 
     const nextMarkers = places.map(place => {
       const content = document.createElement('button');
@@ -532,9 +597,82 @@ const placePayloadJson = JSON.stringify(placePayload);
     if (mapCount) mapCount.textContent = `${places.length} 个已定位 · 其余待确认`;
   }
 
+  // 筛选状态选项（4 档）
+  const statusOptions = [
+    { value: 'recommend', label: '推荐' },
+    { value: 'tried', label: '一般' },
+    { value: 'no', label: '不推荐' },
+    { value: 'wanna', label: '还没去吃过' },
+  ];
+
+  function renderOptionsGroup(kind: 'category' | 'region' | 'status', values: string[], current: string, labelMap: Record<string, string> = {}) {
+    const wrap = mapRoot?.querySelector<HTMLElement>(`[data-fm-filter-options="${kind}"]`);
+    if (!wrap) return;
+    wrap.innerHTML = '';
+    const mkBtn = (value: string, label: string) => {
+      const b = document.createElement('button');
+      b.type = 'button';
+      b.className = `foodmap-chip${current === value ? ' active' : ''}`;
+      b.dataset.fmFilter = kind;
+      b.dataset.fmFilterValue = value;
+      b.textContent = label;
+      return b;
+    };
+    wrap.appendChild(mkBtn('', '全部'));
+    for (const v of values) wrap.appendChild(mkBtn(v, labelMap[v] || v));
+  }
+
+  // 状态选项的 value → 中文 label 映射
+  const statusLabelMap = Object.fromEntries(statusOptions.map(s => [s.value, s.label]));
+
+  // 渲染菜系/地区/状态筛选按钮
+  function renderFilters(city: string) {
+    const data = cityFilters[city] || { categories: [], regions: [] };
+    renderOptionsGroup('category', data.categories, activeCategory);
+    renderOptionsGroup('region', data.regions, activeRegion);
+    renderOptionsGroup('status', statusOptions.map(s => s.value), activeStatus, statusLabelMap);
+    updateFiltersBadge();
+  }
+
+  function updateFiltersBadge() {
+    const badge = mapRoot?.querySelector<HTMLElement>('[data-fm-filters-badge]');
+    if (!badge) return;
+    const count = (activeCategory ? 1 : 0) + (activeRegion ? 1 : 0) + (activeStatus ? 1 : 0);
+    if (count > 0) {
+      badge.textContent = String(count);
+      badge.hidden = false;
+    } else {
+      badge.hidden = true;
+    }
+  }
+
+  function toggleFiltersPopover(show: boolean) {
+    const popover = mapRoot?.querySelector<HTMLElement>('[data-fm-filters-popover]');
+    const toggle = mapRoot?.querySelector<HTMLElement>('[data-fm-filters-toggle]');
+    if (!popover || !toggle) return;
+    popover.hidden = !show;
+    toggle.setAttribute('aria-expanded', String(show));
+  }
+
+  function clearAllFilters() {
+    activeCategory = '';
+    activeRegion = '';
+    activeStatus = '';
+    renderFilters(activeCity);
+    renderMarkers(activeCity);
+  }
+
   function setMapCity(city: string) {
     activeCity = city;
+    activeCategory = '';
+    activeRegion = '';
+    activeStatus = '';
     if (mapCityLabel) mapCityLabel.textContent = city;
+    // 同步切换侧边栏城市内容面板
+    mapRoot?.querySelectorAll<HTMLElement>('[data-fm-city-content]').forEach(content => {
+      content.hidden = content.dataset.fmCityContent !== city;
+    });
+    renderFilters(city);
     renderMarkers(city);
   }
 
@@ -576,6 +714,7 @@ const placePayloadJson = JSON.stringify(placePayload);
         center: config.center,
         resizeEnable: true,
       });
+      renderFilters(activeCity);
       renderMarkers(activeCity);
     } catch (error) {
       setMapStatus('地图暂未加载：请配置前端 JS API Key', 'error');
@@ -591,11 +730,74 @@ const placePayloadJson = JSON.stringify(placePayload);
       return;
     }
 
+    // 筛选按钮（打开/关闭弹窗）
+    const filterToggle = target.closest<HTMLElement>('[data-fm-filters-toggle]');
+    if (filterToggle) {
+      const popover = mapRoot?.querySelector<HTMLElement>('[data-fm-filters-popover]');
+      toggleFiltersPopover(!!popover && popover.hidden);
+      return;
+    }
+
+    // 关闭弹窗
+    if (target.closest('[data-fm-filters-close]')) {
+      toggleFiltersPopover(false);
+      return;
+    }
+
+    // 清除筛选
+    if (target.closest('[data-fm-filters-clear]')) {
+      clearAllFilters();
+      return;
+    }
+
+    // 完成（关闭弹窗）
+    if (target.closest('[data-fm-filters-done]')) {
+      toggleFiltersPopover(false);
+      return;
+    }
+
     const cityButton = target.closest<HTMLElement>('[data-fm-city]');
     if (cityButton?.dataset.fmCity) setMapCity(cityButton.dataset.fmCity);
 
+    // 弹窗内筛选按钮（菜系 / 地区 / 状态）
+    const filterBtn = target.closest<HTMLElement>('[data-fm-filter]');
+    if (filterBtn && mapRoot) {
+      const kind = filterBtn.dataset.fmFilter;
+      const value = filterBtn.dataset.fmFilterValue || '';
+      if (kind === 'category') activeCategory = value;
+      else if (kind === 'region') activeRegion = value;
+      else if (kind === 'status') activeStatus = value;
+      mapRoot.querySelectorAll<HTMLElement>(`[data-fm-filter="${kind}"]`).forEach(b => {
+        b.classList.toggle('active', (b.dataset.fmFilterValue || '') === value);
+      });
+      updateFiltersBadge();
+      renderMarkers(activeCity);
+      return;
+    }
+
     const placeCard = target.closest<HTMLElement>('[data-fm-place]');
     if (placeCard?.dataset.fmPlace) setActiveMarker(placeCard.dataset.fmPlace);
+  });
+
+  // 点击 popover 外部关闭
+  document.addEventListener('click', event => {
+    const popover = mapRoot?.querySelector<HTMLElement>('[data-fm-filters-popover]');
+    if (!popover || popover.hidden) return;
+    const target = event.target as HTMLElement;
+    if (target.closest('[data-fm-filters-popover]') || target.closest('[data-fm-filters-toggle]')) return;
+    toggleFiltersPopover(false);
+  });
+
+  // Esc 关闭弹窗
+  document.addEventListener('keydown', event => {
+    if ((event as KeyboardEvent).key === 'Escape') toggleFiltersPopover(false);
+  });
+
+  // 地图搜索框
+  const mapSearch = mapRoot?.querySelector<HTMLInputElement>('[data-fm-map-search]');
+  mapSearch?.addEventListener('input', () => {
+    mapSearchQuery = mapSearch.value;
+    renderMarkers(activeCity);
   });
 
   initMap();
