@@ -46,16 +46,18 @@ const foodPlacesCollection = defineCollection({
     city: z.string(),
     region: z.string(),
     category: z.string().default(''),
-    dishes: z.array(z.union([z.string(), foodDish])).default([]),
-    address: z.string().default(''),
-    date: z.string().default(''),
+    // 菜品统一为对象数组 {name, note?, price?}
+    dishes: z.array(foodDish).default([]),
+    // 地址、日期必填（新增店时地址用高德吸附，日期默认当天）
+    address: z.string(),
+    date: z.string(),
     note: z.string().default(''),
-    tags: z.array(z.string()).default([]),
-    status: z.enum(['tried', 'recommend', 'wanna', 'no']).optional(),
+    // 状态必填，4 档：recommend推荐 / tried一般 / no不推荐 / wanna还没去吃过（不再靠 note 推断）
+    status: z.enum(['recommend', 'tried', 'no', 'wanna']).default('wanna'),
     lng: z.number().optional(),
     lat: z.number().optional(),
+    // 坐标状态默认 pending（待补全），confirmed/unavailable 显式标注
     coordinateStatus: z.enum(['confirmed', 'pending', 'unavailable']).default('pending'),
-    coordinateSource: z.enum(['amap', 'manual']).optional(),
   }),
 });
 

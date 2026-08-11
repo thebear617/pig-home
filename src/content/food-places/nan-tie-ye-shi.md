@@ -1,8 +1,7 @@
 ---
 name: 南铁夜市
 city: 南宁
-region: 南铁夜市火车站
-category: 夜市
+region: 南铁夜市
 dishes:
   - name: 罗森果酱牛肉
     note: 非常好吃，果酱味非常浓，价钱也比较实惠。
@@ -15,18 +14,12 @@ dishes:
   - name: 好心覃烧烤
     note: 看起来人蛮多的，下次如果去的话，可以再去试一下。
 address: 南铁一街9号（白苍岭地铁站A口步行约140米）
+date: '2026-08-07'
 lng: 108.306178
 lat: 22.831833
-tags:
-  - 南宁
-  - 南铁夜市
-  - 火车站
-  - 夜市
-status: tried
-coordinateStatus: confirmed
-coordinateSource: amap
 note: |-
   整体规模：整体来说不算长，相比于其他夜市比较短，大概有 100 米。
   饮食特色：主要吃的是炒螺、果酱烤肉、蜂蜜紫苏烤肉，以及一些凉茶甜品，菜品还算是比较少的。
-  高德地图 POI 搜索确认，地图位置按火车站归类。
+status: tried
+coordinateStatus: confirmed
 ---

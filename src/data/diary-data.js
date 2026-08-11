@@ -5982,7 +5982,7 @@ export const diaryRecords = {
     ]
   },
   "2026-08-10": {
-    "value": 6,
+    "value": 9,
     "tasks": [
       {
         "status": "x",
@@ -6019,7 +6019,7 @@ export const diaryRecords = {
       {
         "status": "x",
         "time": "12:10-13:00",
-        "desc": "去吃三品王",
+        "desc": "去吃生榨米粉",
         "isCooking": false,
         "mealType": null,
         "dishGuess": null
@@ -6028,6 +6028,30 @@ export const diaryRecords = {
         "status": "x",
         "time": "13:00-19:00",
         "desc": "打麻将",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      },
+      {
+        "status": "x",
+        "time": "19:00-20:00",
+        "desc": "在家吃饭（糖醋排骨 + 三文鱼）",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      },
+      {
+        "status": "x",
+        "time": "20:00-23:30",
+        "desc": "去看电影《欢迎来到龙餐馆》（沈腾、蒋奇明，很好看）",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      },
+      {
+        "status": "x",
+        "time": "23:30-24:00",
+        "desc": "记录今天的支出和日程",
         "isCooking": false,
         "mealType": null,
         "dishGuess": null

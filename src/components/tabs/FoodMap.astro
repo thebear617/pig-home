@@ -29,30 +29,26 @@ const pendingPlaces = totalPlaces - mappedPlaces;
 
 interface PlaceStatus { key: string; label: string; icon: string; }
 const explicitStatus: Record<string, PlaceStatus> = {
-  tried: { key: 'tried', label: '已吃过', icon: '🍽️' },
   recommend: { key: 'recommend', label: '推荐', icon: '👍' },
-  wanna: { key: 'wanna', label: '想去试试', icon: '⭐' },
-  no: { key: 'no', label: '不再推荐', icon: '🚫' },
+  tried: { key: 'tried', label: '一般', icon: '🍽️' },
+  no: { key: 'no', label: '不推荐', icon: '🚫' },
+  wanna: { key: 'wanna', label: '还没去吃过', icon: '⭐' },
 };
+// 状态完全由 frontmatter 的 status 字段驱动，不再从 note 推断
 function placeStatus(place: typeof places[0]): PlaceStatus {
-  if (place.data.status) return explicitStatus[place.data.status];
-  const note = place.data.note || '';
-  if (/下次|想去|评价蛮高/.test(note)) return { key: 'wanna', label: '想去试试', icon: '⭐' };
-  if (/再也不会|不好吃|不推荐|别去/.test(note)) return { key: 'no', label: '不再推荐', icon: '🚫' };
-  if (/很不错|必点|绝了|好吃|推荐/.test(note)) return { key: 'recommend', label: '推荐', icon: '👍' };
-  return { key: 'tried', label: '已吃过', icon: '🍽️' };
+  return explicitStatus[place.data.status] ?? explicitStatus.wanna;
 }
 
-// dishes 兼容两种格式：纯字符串 或 {name,note,price}
+// dishes 统一为对象格式 {name, note?, price?}
 type Dish = { name: string; note: string; price: string };
-function dishName(dish: string | Dish): string {
-  return typeof dish === 'string' ? dish : dish.name;
+function dishName(dish: Dish): string {
+  return dish.name;
 }
-function dishNote(dish: string | Dish): string {
-  return typeof dish === 'string' ? '' : dish.note || '';
+function dishNote(dish: Dish): string {
+  return dish.note || '';
 }
-function dishPrice(dish: string | Dish): string {
-  return typeof dish === 'string' ? '' : dish.price || '';
+function dishPrice(dish: Dish): string {
+  return dish.price || '';
 }
 function dishNames(place: typeof places[0]): string {
   return (place.data.dishes || []).map(dishName).join(' ');
@@ -67,11 +63,9 @@ const placePayload = places.map(p => ({
   address: p.data.address || '',
   date: p.data.date || '',
   note: p.data.note || '',
-  tags: p.data.tags,
   lng: p.data.lng ?? null,
   lat: p.data.lat ?? null,
   coordinateStatus: p.data.coordinateStatus,
-  coordinateSource: p.data.coordinateSource || '',
   status: placeStatus(p),
   dishes: (p.data.dishes || []).map(d => ({ name: dishName(d), note: dishNote(d), price: dishPrice(d) })),
 }));
@@ -203,7 +197,7 @@ const placePayloadJson = JSON.stringify(placePayload);
                         return (
                           <article
                             class="foodmap-list-item"
-                            data-fm-search-text={`${place.data.city} ${place.data.region} ${place.data.name} ${place.data.category || ''} ${dishNames(place)} ${place.data.address || ''} ${place.data.note || ''} ${(place.data.tags || []).join(' ')}`}
+                            data-fm-search-text={`${place.data.city} ${place.data.region} ${place.data.name} ${place.data.category || ''} ${dishNames(place)} ${place.data.address || ''} ${place.data.note || ''}`}
                             data-fm-place={place.id}
                             role="button"
                             tabindex="0"

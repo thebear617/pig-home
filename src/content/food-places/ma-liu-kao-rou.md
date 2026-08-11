@@ -2,9 +2,13 @@
 name: 麻六烤肉
 city: 西安
 region: 创汇
+category: 烧烤烤肉
+address: 西安市长安区定昆池二路1号-创汇社区 E 区南门
 dishes: []
 date: '2026-07-24'
 note: 和过马路爸爸妈妈爷爷奶奶弟弟们一起吃；味道还行，中规中矩，就是价格偏贵，味道没有很出彩
+status: tried
+lng: 108.826678
+lat: 34.180339
+coordinateStatus: confirmed
 ---
-
-和过马路爸爸妈妈爷爷奶奶弟弟们一起吃；味道还行，中规中矩，就是价格偏贵，味道没有很出彩
