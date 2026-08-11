@@ -1,7 +1,7 @@
 ---
 name: 魏世纪
 city: 西安
-region: 钟楼
+region: 南院门街道
 category: 酒吧轻食
 dishes:
   - name: 鱼子酱口蘑

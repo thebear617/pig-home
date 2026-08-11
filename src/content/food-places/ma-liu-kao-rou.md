@@ -1,7 +1,7 @@
 ---
 name: 麻六烤肉
 city: 西安
-region: 创汇
+region: 郭杜街道
 category: 烧烤烤肉
 address: 西安市长安区定昆池二路1号-创汇社区 E 区南门
 dishes: []

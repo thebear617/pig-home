@@ -1,7 +1,7 @@
 ---
 name: 德发兴
 city: 西安
-region: 高新区
+region: 丈八街道
 category: 粤菜早茶
 dishes:
   - name: 榴莲菠萝包

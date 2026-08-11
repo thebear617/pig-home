@@ -7818,6 +7818,163 @@ body[data-page="food-map"] .foodmap-list-detail-hint {
   }
 }
 
+/* ─── FoodMap：全部目录与固定高度分页 ─── */
+body[data-page="food-map"] .foodmap-directory-toolbar {
+  position: relative;
+}
+
+body[data-page="food-map"] .foodmap-directory-search-row {
+  display: flex;
+  align-items: center;
+  gap: .45rem;
+}
+
+body[data-page="food-map"] .foodmap-directory-search-row .foodmap-search {
+  flex: 1 1 auto;
+  min-width: 0;
+}
+
+body[data-page="food-map"] .foodmap-directory-search-row .foodmap-filters-toggle {
+  flex: 0 0 auto;
+  min-height: 2.35rem;
+  padding: .35rem .7rem;
+  border-radius: 8px;
+}
+
+body[data-page="food-map"] .foodmap-search-submit {
+  display: inline-grid;
+  flex: 0 0 auto;
+  place-items: center;
+  width: 2.35rem;
+  height: 2.35rem;
+  padding: 0;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: var(--surface-soft);
+  color: var(--text);
+  cursor: pointer;
+  font-size: 1rem;
+  line-height: 1;
+  transition: border-color .16s, background .16s, transform .16s;
+}
+
+body[data-page="food-map"] .foodmap-search-submit:hover,
+body[data-page="food-map"] .foodmap-search-submit:focus-visible {
+  border-color: var(--amber);
+  background: var(--amber-bg);
+  outline: none;
+}
+
+body[data-page="food-map"] .foodmap-search-submit:active {
+  transform: translateY(1px);
+}
+
+body[data-page="food-map"] .foodmap-results {
+  display: grid;
+  grid-template-rows: auto minmax(0, 1fr) auto;
+  min-height: 0;
+  overflow: hidden;
+}
+
+body[data-page="food-map"] .foodmap-results-meta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: .75rem;
+  min-height: 1.8rem;
+  padding: .35rem 0;
+  border-bottom: 1px solid var(--line);
+  color: var(--muted);
+  font-size: .68rem;
+}
+
+body[data-page="food-map"] .foodmap-results-meta [data-fm-results-count] {
+  color: var(--amber);
+  font-weight: 800;
+}
+
+body[data-page="food-map"] .foodmap-list {
+  min-height: 0;
+  margin-top: .45rem;
+  padding: 0 .2rem .1rem 0;
+  overflow-y: auto;
+  align-content: start;
+}
+
+body[data-page="food-map"] .foodmap-no-results {
+  align-self: center;
+  justify-self: center;
+  margin: 1rem 0;
+  color: var(--muted);
+  font-size: .78rem;
+}
+
+body[data-page="food-map"] .foodmap-pagination {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: .3rem;
+  min-height: 2.35rem;
+  padding-top: .5rem;
+  border-top: 1px solid var(--line);
+  background: var(--surface);
+}
+
+body[data-page="food-map"] .foodmap-page-button {
+  min-width: 1.8rem;
+  min-height: 1.8rem;
+  padding: .2rem .45rem;
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  background: var(--surface);
+  color: var(--muted);
+  cursor: pointer;
+  font-size: .68rem;
+  line-height: 1;
+}
+
+body[data-page="food-map"] .foodmap-page-button:hover:not(:disabled),
+body[data-page="food-map"] .foodmap-page-button.is-current {
+  border-color: var(--amber);
+  background: #fdf1dd;
+  color: var(--amber);
+}
+
+body[data-page="food-map"] .foodmap-page-button.is-current {
+  font-weight: 800;
+}
+
+body[data-page="food-map"] .foodmap-page-button:disabled {
+  cursor: not-allowed;
+  opacity: .42;
+}
+
+body[data-page="food-map"] .foodmap-list-item.is-directory-hidden {
+  display: none !important;
+}
+
+@media (max-width: 719px) {
+  body[data-page="food-map"] .foodmap-results {
+    display: block;
+    overflow: visible;
+  }
+
+  body[data-page="food-map"] .foodmap-list {
+    overflow: visible;
+    padding-right: 0;
+  }
+
+  body[data-page="food-map"] .foodmap-pagination {
+    margin-top: .75rem;
+    padding-bottom: .2rem;
+  }
+
+  body[data-page="food-map"] .foodmap-filters-popover {
+    right: 0;
+    width: min(360px, calc(100vw - 2rem));
+  }
+}
+
 /* ─── TodoBoard 看板 ─── */
 
 body[data-page="todo-board"] .app-shell {
