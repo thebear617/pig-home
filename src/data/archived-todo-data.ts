@@ -20,7 +20,8 @@ export const ARCHIVED_TODO_BOARDS: TodoBoard[] = [
       { id: 'c6', title: '写一篇博客叫 Vibe Working——how to make a picture', status: 'done', date: '2026-07-27', createdAt: '2026-07-26', url: '', note: '' },
       { id: 'c7', title: '依据 dash.valorant-api.com API 站点去建立无畏契约的站点', url: 'https://dash.valorant-api.com/endpoints/agents', status: 'done', date: '2026-08-02', createdAt: '2026-07-27', note: '' },
       { id: 'c9', title: '个人仪表盘-逻辑继续完善，加入番茄钟插件联动逻辑', status: 'done', date: '2026-08-07', createdAt: '2026-08-05', note: '个人仪表盘 v0.18.0 后续：番茄钟 + 仪表盘数据联动' },
-      { id: 'c10', title: '进行「猪窝的美食地图」的升级 + 整理南宁美食', status: 'done', date: '2026-08-07', createdAt: '2026-08-05', note: '两件事合并：① 美食地图升级 ② 整理南宁美食' }
+      { id: 'c10', title: '进行「猪窝的美食地图」的升级 + 整理南宁美食', status: 'done', date: '2026-08-07', createdAt: '2026-08-05', note: '两件事合并：① 美食地图升级 ② 整理南宁美食' },
+      { id: 'c12', title: '研究浏览器的连接器具体有哪几种', status: 'done', date: '2026-08-10', createdAt: '2026-08-08', url: '', note: '参考 devnotes「学习资源：开发资源合集」里的四款浏览器连接器对比（Cua Driver / ego / Kimi WebBridge 等）' }
     ]
   },
   {

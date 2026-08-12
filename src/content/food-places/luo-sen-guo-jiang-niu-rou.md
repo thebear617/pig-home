@@ -1,0 +1,13 @@
+---
+name: 罗森果酱牛肉
+city: 南宁
+region: 南铁夜市
+category: 烧烤烤肉
+address: 南铁一街9号（白苍岭地铁站A口步行约140米）
+date: '2026-08-07'
+note: 非常好吃，果酱味非常浓，价钱也比较实惠。
+status: recommend
+lng: 108.306178
+lat: 22.831833
+coordinateStatus: confirmed
+---

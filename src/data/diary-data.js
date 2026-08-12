@@ -6059,7 +6059,7 @@ export const diaryRecords = {
     ]
   },
   "2026-08-11": {
-    "value": 10,
+    "value": 11,
     "tasks": [
       {
         "status": "x",
@@ -6137,6 +6137,112 @@ export const diaryRecords = {
         "status": "x",
         "time": "23:00-23:30",
         "desc": "回家和洗澡",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      },
+      {
+        "status": "x",
+        "time": "23:30-24:00",
+        "desc": "开发",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      }
+    ]
+  },
+  "2026-08-12": {
+    "value": 9,
+    "tasks": [
+      {
+        "status": "x",
+        "time": "00:00-01:30",
+        "desc": "开发（lifenotes 7e28157 00:23 沟通笔记；home 34f5b9d 00:46 看板更新）",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      },
+      {
+        "status": "x",
+        "time": "01:30-10:00",
+        "desc": "睡觉",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      },
+      {
+        "status": "x",
+        "time": "10:00-10:40",
+        "desc": "玩手机",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      },
+      {
+        "status": "x",
+        "time": "10:40-13:20",
+        "desc": "开发（chatnotes 60a562f 11:14 v0.3.0 UI 收束；devnotes efecf5d 11:15 UI 时间线、71062a0 13:20 浏览器连接器实测）",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      },
+      {
+        "status": "x",
+        "time": "13:20-14:10",
+        "desc": "出门吃周记鲜牛吊龙米粉",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      },
+      {
+        "status": "x",
+        "time": "14:10-19:30",
+        "desc": "开发（devnotes a621a3f 15:41 ChatNotes 双栏滚动）",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      },
+      {
+        "status": "x",
+        "time": "19:30-20:00",
+        "desc": "吃饭",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      },
+      {
+        "status": "x",
+        "time": "20:00-21:30",
+        "desc": "开发",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      },
+      {
+        "status": "x",
+        "time": "21:30-24:00",
+        "desc": "和张语轩看电影《功夫女足》，逛中山路，吃肥英豆浆油条",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      }
+    ]
+  },
+  "2026-08-13": {
+    "value": 2,
+    "tasks": [
+      {
+        "status": "x",
+        "time": "00:00-00:30",
+        "desc": "继续逛中山路",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      },
+      {
+        "status": "x",
+        "time": "00:30-02:20",
+        "desc": "骑车去平西夜市逛",
         "isCooking": false,
         "mealType": null,
         "dishGuess": null
