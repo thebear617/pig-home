@@ -49,7 +49,12 @@ export const ARCHIVED_TODO_BOARDS: TodoBoard[] = [
       { id: 'l7', title: '处理甲醛 - 把衣柜里的衣服全部拿出来晾晒冲洗', status: 'done', date: '2026-08-02', createdAt: '2026-07-31', url: '', note: '活性炭 + 晾晒冲洗全流程完成' },
       { id: 'l12', title: '让大贝果去取赫兹的猫粮', status: 'done', date: '2026-08-09', createdAt: '2026-08-06', url: '', note: '代取猫粮' },
       { id: 'l14', title: '8 月 9 号下午 3 点开大组会：Camouflage-aware Image-Text Retrieval via Expert Collaboration', status: 'done', date: '2026-08-09', createdAt: '2026-08-08', url: '', note: '下午 3 点' },
-      { id: 'l10', title: '去民主路看牙', status: 'done', date: '2026-08-11', createdAt: '2026-08-05', url: '', note: '下午 13:00，补了 3 颗牙' }
+      { id: 'l10', title: '去民主路看牙', status: 'done', date: '2026-08-11', createdAt: '2026-08-05', url: '', note: '下午 13:00，补了 3 颗牙' },
+      { id: 'l20', title: '逛南宁夜市·水街', status: 'done', date: '2026-08-13', createdAt: '2026-08-08', url: '', note: '水街夜市' },
+      { id: 'l21', title: '逛南宁夜市·平西', status: 'done', date: '2026-08-13', createdAt: '2026-08-08', url: '', note: '平西夜市' },
+      { id: 'l22', title: '逛南宁夜市·中山', status: 'done', date: '2026-08-13', createdAt: '2026-08-08', url: '', note: '中山夜市' },
+      { id: 'l23', title: '逛南宁夜市·南铁', status: 'done', date: '2026-08-09', createdAt: '2026-08-08', url: '', note: '南铁夜市' },
+      { id: 'l24', title: '参加27届求职面试通关指南腾讯会议', status: 'done', date: '2026-08-12', createdAt: '2026-08-12', url: '', note: '15:00 腾讯会议，会议号 216543013' }
     ]
   }
 ];

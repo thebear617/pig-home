@@ -6229,7 +6229,7 @@ export const diaryRecords = {
     ]
   },
   "2026-08-13": {
-    "value": 2,
+    "value": 8,
     "tasks": [
       {
         "status": "x",
@@ -6243,6 +6243,54 @@ export const diaryRecords = {
         "status": "x",
         "time": "00:30-02:20",
         "desc": "骑车去平西夜市逛",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      },
+      {
+        "status": "x",
+        "time": "02:20-03:00",
+        "desc": "进行日常支出和日常记录",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      },
+      {
+        "status": "x",
+        "time": "03:00-05:00",
+        "desc": "玩手机",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      },
+      {
+        "status": "x",
+        "time": "05:00-13:00",
+        "desc": "睡觉",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      },
+      {
+        "status": "x",
+        "time": "13:00-14:00",
+        "desc": "玩手机",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      },
+      {
+        "status": "x",
+        "time": "14:00-14:50",
+        "desc": "洗澡",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      },
+      {
+        "status": "x",
+        "time": "14:50-15:20",
+        "desc": "去吃门口的邹家宾阳酸粉",
         "isCooking": false,
         "mealType": null,
         "dishGuess": null

@@ -1151,6 +1151,13 @@ export const expenseRecords = [
   {
     "date": "2026-08-13",
     "cat": "市内出行",
+    "sub": "米粉米线",
+    "amount": 13.0,
+    "note": "邹家宾阳酸粉"
+  },
+  {
+    "date": "2026-08-13",
+    "cat": "市内出行",
     "sub": "包子早餐",
     "amount": 6.0,
     "note": "肥英豆浆油条"
