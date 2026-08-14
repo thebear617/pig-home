@@ -44,7 +44,7 @@ export const TODO_BOARDS: TodoBoard[] = [
     icon: '💻',
     items: [
       { id: 'c8', title: '研究用家里的台式机作为自己的服务器', status: 'todo', date: '2026-08-25', createdAt: '2026-08-05', url: '', note: '' },
-      { id: 'c10', title: '仔细去研究这个项目，并且尝试去复现这个项目', status: 'doing', date: '2026-08-10', createdAt: '2026-08-08', url: 'https://www.bilibili.com/video/BV11mNA6vEJX', note: 'B 站视频项目复现' },
+      { id: 'c10', title: '复现 chatnotes：顺序学习的时候， 一颗节点树（N 个节点=N 个卡片画布），逆序总结收敛的时候，一篇markdown（N 个悬浮窗=经过内容总结后的 N 个节点）', status: 'doing', date: '2026-08-10', createdAt: '2026-08-08', url: 'https://www.bilibili.com/video/BV11mNA6vEJX', note: 'B 站视频项目复现' },
       { id: 'c11', title: 'MiniMax 的 2000 积分到期', status: 'todo', date: '2026-11-11', createdAt: '2026-08-12', url: '', note: '到期前用掉，别浪费' },
     ]
   },

@@ -6229,7 +6229,7 @@ export const diaryRecords = {
     ]
   },
   "2026-08-13": {
-    "value": 8,
+    "value": 13,
     "tasks": [
       {
         "status": "x",
@@ -6291,6 +6291,75 @@ export const diaryRecords = {
         "status": "x",
         "time": "14:50-15:20",
         "desc": "去吃门口的邹家宾阳酸粉",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      },
+      {
+        "status": "x",
+        "time": "15:20-17:20",
+        "desc": "开发",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      },
+      {
+        "status": "x",
+        "time": "17:20-17:30",
+        "desc": "洗澡",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      },
+      {
+        "status": "x",
+        "time": "17:30-23:00",
+        "desc": "去吃琅西村的啫啫煲，看电影《欢迎来到龙餐馆》二刷（和张语轩），逛万象城",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      },
+      {
+        "status": "x",
+        "time": "23:00-23:30",
+        "desc": "回家",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      },
+      {
+        "status": "x",
+        "time": "23:30-24:00",
+        "desc": "洗澡",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      }
+    ]
+  },
+  "2026-08-14": {
+    "value": 3,
+    "tasks": [
+      {
+        "status": "x",
+        "time": "00:00-01:00",
+        "desc": "玩手机",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      },
+      {
+        "status": "x",
+        "time": "01:00-10:00",
+        "desc": "睡觉",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      },
+      {
+        "status": "x",
+        "time": "10:00-10:30",
+        "desc": "去吃桂林米粉",
         "isCooking": false,
         "mealType": null,
         "dishGuess": null
