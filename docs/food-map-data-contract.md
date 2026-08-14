@@ -87,7 +87,8 @@ JS API Key 会出现在浏览器请求中，因此需要在高德控制台配置
 | `category` | string | ✅ | **具体场所类型枚举**（非菜系）：`夜市地摊` / `商业街`，遇到新的再补充 |
 | `address` | string | ✅ | 详细地址（用于定位） |
 | `note` | string | ✅ | 区域整体评价（值得去的点、避坑、人气等） |
-| `score` | number | ✅ | **10 分制评分**（0-10），直接表达评价，取代 status |
+| `status` | enum | ✅ | 必填状态：`recommend` / `tried` / `no` / `wanna` |
+| `score` | number | — | **10 分制评分**（0-10），可选；与 `status` 一起用于渲染 |
 | `lng`/`lat` | number | ✅ | 区域中心点坐标（必填） |
 
 ### 示例
@@ -99,13 +100,14 @@ city: 南宁
 category: 夜市地摊
 address: 青秀区中山路美食街
 note: 最干净的一条夜市，但没那么多烟火气……
+status: recommend
 score: 7
 lng: 108.323482
 lat: 22.809688
 ---
 ```
 
-> 区域记录用 `score`（10 分制）表达评价，不使用 `status`；展示层由 `score` 驱动视觉档位（≥7 推荐 / 4-6 一般 / ≤3 不推荐）。
+> 区域记录的 `status` 必填，`score` 可选；展示层同时使用两者：`status` 表达状态，`score` 驱动评分视觉档位（≥7 推荐 / 4-6 一般 / ≤3 不推荐）。
 
 ### 与 food-places 的关系
 
