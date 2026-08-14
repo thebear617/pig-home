@@ -55,7 +55,9 @@ export const ARCHIVED_TODO_BOARDS: TodoBoard[] = [
       { id: 'l22', title: '逛南宁夜市·中山', status: 'done', date: '2026-08-13', createdAt: '2026-08-08', url: '', note: '中山夜市' },
       { id: 'l23', title: '逛南宁夜市·南铁', status: 'done', date: '2026-08-09', createdAt: '2026-08-08', url: '', note: '南铁夜市' },
       { id: 'l24', title: '参加27届求职面试通关指南腾讯会议', status: 'done', date: '2026-08-12', createdAt: '2026-08-12', url: '', note: '15:00 腾讯会议，会议号 216543013' },
-      { id: 'l25', title: '逛南宁夜市·琅西', status: 'done', date: '2026-08-13', createdAt: '2026-08-08', url: '', note: '琅西夜市（琅西村啫啫煲一带）' }
+      { id: 'l25', title: '逛南宁夜市·琅西', status: 'done', date: '2026-08-13', createdAt: '2026-08-08', url: '', note: '琅西夜市（琅西村啫啫煲一带）' },
+      { id: 'l26', title: '逛南宁夜市·西关', status: 'done', date: '2026-08-14', createdAt: '2026-08-08', url: '', note: '西关夜市' },
+      { id: 'l27', title: '逛南宁夜市·百货大楼', status: 'done', date: '2026-08-14', createdAt: '2026-08-08', url: '', note: '百货大楼夜市' }
     ]
   }
 ];

@@ -6338,7 +6338,7 @@ export const diaryRecords = {
     ]
   },
   "2026-08-14": {
-    "value": 3,
+    "value": 9,
     "tasks": [
       {
         "status": "x",
@@ -6360,6 +6360,67 @@ export const diaryRecords = {
         "status": "x",
         "time": "10:00-10:30",
         "desc": "去吃桂林米粉",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      },
+      {
+        "status": "x",
+        "time": "10:30-12:30",
+        "desc": "开发（home 69c8329 10:46 扇贝会员+8/14记录、175f2ed 11:07 琅西归档+美食；chatnotes cc62130 12:48 节点交互；lifenotes 9475220 11:47 博客目录布局；devnotes 16f71b9 11:36 博客宽度调试）",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      },
+      {
+        "status": "x",
+        "time": "12:30-14:00",
+        "desc": "去吃邕味老友",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      },
+      {
+        "status": "x",
+        "time": "14:00-19:30",
+        "desc": "开发（chatnotes c629e69 15:09 联网核查卡片；lifenotes 95bb161 16:58 v1.0.0、13b6969 19:39 v1.1.0 CMS 升级；devnotes 9d37d68 16:23 设计笔记、ce5690f/ba5cbc9/67a4fc8/db84a78/ae757df/caf1ca4/fcc4f29 17:02-18:32 时间线 UI、f4c4296 19:40 LifeNotes v1.1.0）",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      },
+      {
+        "status": "x",
+        "time": "19:30-20:30",
+        "desc": "吃饭",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      },
+      {
+        "status": "x",
+        "time": "20:30-21:30",
+        "desc": "睡觉",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      },
+      {
+        "status": "x",
+        "time": "21:30-24:00",
+        "desc": "去吃烧烤（和欧宗儒、覃可吃小杜果酱烧烤），逛西关夜市",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      }
+    ]
+  },
+  "2026-08-15": {
+    "value": 1,
+    "tasks": [
+      {
+        "status": "x",
+        "time": "00:00-00:40",
+        "desc": "洗澡",
         "isCooking": false,
         "mealType": null,
         "dishGuess": null
