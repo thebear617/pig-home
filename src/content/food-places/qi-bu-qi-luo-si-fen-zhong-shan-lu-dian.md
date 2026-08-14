@@ -2,7 +2,7 @@
 name: 柒不柒螺蛳粉（中山路店）
 city: 南宁
 region: 中山街道
-category: 粉面简餐
+category: 粉面米线
 dishes: []
 address: 中山路347号
 date: '2026-08-12'

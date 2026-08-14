@@ -61,6 +61,30 @@ const foodPlacesCollection = defineCollection({
   }),
 });
 
+// 区域/街区评价集合：夜市、商业街等一条街/一个集中区域本身作为可评价对象，独立于具体店铺。
+const foodRegion = z.object({
+  name: z.string(),
+  city: z.string(),
+  // 具体场所类型（非菜系）：夜市地摊 / 商业街 等，遇到新的再补充
+  category: z.enum(['夜市地摊', '商业街']),
+  // 详细地址（必填，用于定位）
+  address: z.string(),
+  // 评价正文（整体感受、值得去的点、避坑提示等）
+  note: z.string(),
+  // 状态（必填）：recommend 推荐 / tried 一般 / no 不推荐 / wanna 想去
+  status: z.enum(['recommend', 'tried', 'no', 'wanna']),
+  // 10 分制评分（可选）：去过打分；wanna 未去可不填
+  score: z.number().min(0).max(10).optional(),
+  // 区域中心点坐标（必填）
+  lng: z.number(),
+  lat: z.number(),
+});
+
+const foodRegionsCollection = defineCollection({
+  loader: glob({ pattern: '**/*.md', base: './src/content/food-regions' }),
+  schema: foodRegion,
+});
+
 const tripsCollection = defineCollection({
   loader: glob({ pattern: '**/*.md', base: './src/content/trips' }),
   schema: z.object({
@@ -107,6 +131,7 @@ export const collections = {
   memos: memosCollection,
   procurement: procurementCollection,
   'food-places': foodPlacesCollection,
+  'food-regions': foodRegionsCollection,
   trips: tripsCollection,
   'xian-trips': xianTripsCollection,
   quarrels: quarrelsCollection,

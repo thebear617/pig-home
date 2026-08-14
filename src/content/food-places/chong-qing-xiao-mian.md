@@ -2,7 +2,7 @@
 name: 重庆小面
 city: 西安
 region: 隆江城
-category: 粉面简餐
+category: 粉面米线
 dishes:
   - name: 炸酱面
     price: '¥11'

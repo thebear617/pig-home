@@ -73,3 +73,42 @@ PUBLIC_AMAP_JS_SECURITY_CODE=你的安全配置（如当前高德方案要求）
 ```
 
 JS API Key 会出现在浏览器请求中，因此需要在高德控制台配置网站域名白名单。不要把 Web Service Key 填入这里，也不要提交 `.env.local`。
+
+## 区域评价（food-regions）
+
+夜市 / 一条街 / 集中区域**本身**也可以作为评价对象，独立于具体店铺。这类记录放在 `src/content/food-regions/`（一个文件一个区域），schema 见 `content.config.ts` 的 `foodRegion`。
+
+### 字段
+
+| 字段 | 类型 | 必填 | 说明 |
+|---|---|---|---|
+| `name` | string | ✅ | 区域名（如「中山路夜市」） |
+| `city` | string | ✅ | 南宁 / 西安 |
+| `category` | string | ✅ | **具体场所类型枚举**（非菜系）：`夜市地摊` / `商业街`，遇到新的再补充 |
+| `address` | string | ✅ | 详细地址（用于定位） |
+| `note` | string | ✅ | 区域整体评价（值得去的点、避坑、人气等） |
+| `score` | number | ✅ | **10 分制评分**（0-10），直接表达评价，取代 status |
+| `lng`/`lat` | number | ✅ | 区域中心点坐标（必填） |
+
+### 示例
+
+```yaml
+---
+name: 中山路夜市
+city: 南宁
+category: 夜市地摊
+address: 青秀区中山路美食街
+note: 最干净的一条夜市，但没那么多烟火气……
+score: 7
+lng: 108.323482
+lat: 22.809688
+---
+```
+
+> 区域记录用 `score`（10 分制）表达评价，不使用 `status`；展示层由 `score` 驱动视觉档位（≥7 推荐 / 4-6 一般 / ≤3 不推荐）。
+
+### 与 food-places 的关系
+
+- **food-places**：具体店铺（甘家界柠檬鸭、小杜果酱烧烤……），`region` 字段指向它所属片区。
+- **food-regions**：夜市 / 商业街等**整条街或集中区域**本身的评价，用 `address` 定位。
+- 关联方式：food-place 的 `region` 名对应某个 food-region 的 `name`（如「中山路夜市」下聚合同为中山路片区的店）。

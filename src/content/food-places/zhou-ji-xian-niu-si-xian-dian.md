@@ -2,7 +2,7 @@
 name: 周记鲜牛思贤店
 city: 南宁
 region: 新竹街道
-category: 米粉米线
+category: 粉面米线
 dishes:
   - name: 上汤吊龙加牛肉扁粉
     note: 准备两碟酱碟（柠檬咸辣酱 / 沙茶酱）蘸牛肉，一口牛肉一口粉。

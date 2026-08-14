@@ -2,6 +2,7 @@
 import { getCollection } from 'astro:content';
 
 const places = await getCollection('food-places');
+const regions = await getCollection('food-regions');
 const cityMap = new Map<string, Map<string, typeof places>>();
 for (const place of places) {
   const city = place.data.city;
@@ -30,8 +31,21 @@ const explicitStatus: Record<string, PlaceStatus> = {
   wanna: { key: 'wanna', label: '还没去吃过', shortLabel: '待吃', icon: '⭐' },
 };
 // 状态完全由 frontmatter 的 status 字段驱动，不再从 note 推断
+function statusForKey(key: string): PlaceStatus {
+  return explicitStatus[key] ?? explicitStatus.wanna;
+}
 function placeStatus(place: typeof places[0]): PlaceStatus {
-  return explicitStatus[place.data.status] ?? explicitStatus.wanna;
+  return statusForKey(place.data.status);
+}
+function regionStatus(region: typeof regions[0]): PlaceStatus {
+  return statusForKey(region.data.status);
+}
+// 区域评分（可选）→ 展示视觉，无分数时不参与
+function scoreVisual(score: number | undefined): PlaceStatus | null {
+  if (typeof score !== 'number') return null;
+  if (score >= 7) return explicitStatus.recommend;
+  if (score >= 4) return explicitStatus.tried;
+  return explicitStatus.no;
 }
 
 // dishes 统一为对象格式 {name, note?, price?}
@@ -48,8 +62,9 @@ function dishPrice(dish: Dish): string {
 function dishNames(place: typeof places[0]): string {
   return (place.data.dishes || []).map(dishName).join(' ');
 }
-// 把店的数据打包成可序列化的 JSON，供悬浮窗使用
+// 把店的数据打包成可序列化的 JSON，供悬浮窗使用；区域记录作为 type=region 追加进去
 const placePayload = places.map(p => ({
+  type: 'place' as const,
   id: p.id,
   name: p.data.name,
   city: p.data.city,
@@ -65,7 +80,26 @@ const placePayload = places.map(p => ({
   statusKey: p.data.status,
   dishes: (p.data.dishes || []).map(d => ({ name: dishName(d), note: dishNote(d), price: dishPrice(d) })),
 }));
-const placePayloadJson = JSON.stringify(placePayload);
+const regionPayload = regions.map(r => ({
+  type: 'region' as const,
+  id: r.id,
+  name: r.data.name,
+  city: r.data.city,
+  region: r.data.category,
+  category: r.data.category,
+  address: r.data.address,
+  date: '',
+  note: r.data.note,
+  lng: r.data.lng,
+  lat: r.data.lat,
+  coordinateStatus: 'confirmed',
+  score: typeof r.data.score === 'number' ? r.data.score : null,
+  status: regionStatus(r),
+  statusKey: r.data.status,
+  dishes: [],
+}));
+const allPayload = [...placePayload, ...regionPayload];
+const placePayloadJson = JSON.stringify(allPayload);
 
 // 每个城市的菜系/地区可选值，供地图筛选按钮动态渲染
 const cityFilters = Object.fromEntries(cityOrder.map(city => {
@@ -149,6 +183,10 @@ const cityFiltersJson = JSON.stringify(cityFilters);
             </div>
           </div>
           <div class="foodmap-directory-toolbar">
+            <div class="foodmap-view-switcher" role="tablist" aria-label="切换浏览视图">
+              <button type="button" class="foodmap-view-button is-active" data-fm-view="places" role="tab" aria-selected="true">店铺</button>
+              <button type="button" class="foodmap-view-button" data-fm-view="regions" role="tab" aria-selected="false">区域</button>
+            </div>
             <form class="foodmap-directory-search-row" data-fm-search-form>
               <label class="foodmap-search">
                 <span class="foodmap-directory-search-icon" aria-hidden="true">⌕</span>
@@ -192,7 +230,45 @@ const cityFiltersJson = JSON.stringify(cityFilters);
               <span data-fm-results-count>全部 · {cityPlaces.length} 家</span>
               <span data-fm-results-page>第 1 / 1 页</span>
             </div>
-            <div class="foodmap-list" data-fm-list>
+            <div class="foodmap-regions" data-fm-region-list data-fm-view-panel="regions" hidden>
+              {regions.filter(region => region.data.city === city).map(region => {
+                const st = regionStatus(region);
+                const sv = scoreVisual(region.data.score);
+                return (
+                  <article
+                    class="foodmap-list-item foodmap-region-item"
+                    data-fm-region={region.id}
+                    role="button"
+                    tabindex="0"
+                  >
+                    <div class="foodmap-list-top">
+                      <div class="foodmap-list-title">
+                        <h4 class="foodmap-list-name">{region.data.name}</h4>
+                        <span class="foodmap-cat-tag">{region.data.category || '区域'}</span>
+                        <span class={`foodmap-status foodmap-status-${st.key}`} aria-label={st.label}>
+                          <span class="foodmap-status-icon" aria-hidden="true">{st.icon}</span>
+                          <span class="foodmap-status-label-full">{st.label}</span>
+                          <span class="foodmap-status-label-short">{st.shortLabel}</span>
+                        </span>
+                        {sv && (
+                          <span class={`foodmap-score foodmap-score-${sv.key}`} aria-label={`${region.data.score} 分`}>
+                            <span class="foodmap-score-num">{region.data.score}</span>
+                            <span class="foodmap-score-label">分</span>
+                          </span>
+                        )}
+                      </div>
+                      <span class="foodmap-coordinate-state is-mapped">⌖ 区域</span>
+                    </div>
+                    {region.data.note && <p class="foodmap-dishes">{region.data.note}</p>}
+                    <div class="foodmap-list-meta">
+                      <span class="foodmap-address">📍 {region.data.address}</span>
+                      <span class="foodmap-list-detail-hint">查看区域评价 →</span>
+                    </div>
+                  </article>
+                );
+              })}
+            </div>
+            <div class="foodmap-list" data-fm-list data-fm-view-panel="places">
                       {cityPlaces.map(place => {
                         const st = placeStatus(place);
                         const displayName = place.data.name.length > LIST_NAME_MAX_LENGTH
@@ -364,7 +440,11 @@ const cityFiltersJson = JSON.stringify(cityFilters);
     if (cat) { cat.textContent = p.category; cat.hidden = !p.category; }
     const status = modal.querySelector<HTMLElement>('[data-fm-modal-status]');
     if (status) {
-      status.textContent = `${p.status.icon} ${p.status.label}`;
+      if (p.type === 'region' && typeof p.score === 'number') {
+        status.textContent = `${p.status.icon} ${p.score} 分 · ${p.status.label}`;
+      } else {
+        status.textContent = `${p.status.icon} ${p.status.label}`;
+      }
       status.className = `foodmap-modal-status foodmap-status-${p.status.key}`;
     }
     const dishList = modal.querySelector<HTMLElement>('[data-fm-modal-dishes]');
@@ -378,7 +458,9 @@ const cityFiltersJson = JSON.stringify(cityFilters);
             </div>
             ${d.price ? `<span class="foodmap-dish-price">${esc(d.price)}</span>` : ''}
           </li>`).join('')
-        : '<li class="foodmap-dish foodmap-dish-empty">还没有记录菜品</li>';
+        : p.type === 'region'
+          ? '<li class="foodmap-dish foodmap-dish-empty">区域/夜市整体评价，见上方评价</li>'
+          : '<li class="foodmap-dish foodmap-dish-empty">还没有记录菜品</li>';
     }
     modal.hidden = false;
     document.body.style.overflow = 'hidden';
@@ -408,6 +490,11 @@ const cityFiltersJson = JSON.stringify(cityFilters);
     }
     const closeBtn = target.closest<HTMLElement>('[data-fm-modal-close]');
     if (closeBtn) { closeModal(); return; }
+    const regionCard = target.closest<HTMLElement>('[data-fm-region]');
+    if (regionCard?.dataset.fmRegion) {
+      openModal(regionCard.dataset.fmRegion);
+      return;
+    }
     const card = target.closest<HTMLElement>('[data-fm-place]');
     if (card) {
       requestPlaceSelection(card.dataset.fmPlace || '', true);
@@ -437,6 +524,12 @@ const cityFiltersJson = JSON.stringify(cityFilters);
         }
       }
     }
+    const regionCard = (event.target as HTMLElement).closest<HTMLElement>('[data-fm-region]');
+    if (regionCard && (keyboardEvent.key === 'Enter' || keyboardEvent.key === ' ')) {
+      keyboardEvent.preventDefault();
+      openModal(regionCard.dataset.fmRegion || '');
+      return;
+    }
     const card = (event.target as HTMLElement).closest<HTMLElement>('[data-fm-place]');
     if (card && (keyboardEvent.key === 'Enter' || keyboardEvent.key === ' ')) {
       keyboardEvent.preventDefault();
@@ -455,6 +548,7 @@ const cityFiltersJson = JSON.stringify(cityFilters);
   const mapSecurityCode = import.meta.env.PUBLIC_AMAP_JS_SECURITY_CODE || '';
 
   type MapPlace = {
+    type: 'place' | 'region';
     id: string;
     name: string;
     city: string;
@@ -470,10 +564,15 @@ const cityFiltersJson = JSON.stringify(cityFilters);
   };
 
   let mapPlaces: MapPlace[] = [];
+  let mapRegions: MapPlace[] = [];
   let cityConfig: Record<string, { center: [number, number]; zoom: number }> = {};
   let cityFilters: Record<string, { categories: string[]; regions: string[] }> = {};
   try {
-    if (mapPlacesElement?.dataset.fmPlacesJson) mapPlaces = JSON.parse(mapPlacesElement.dataset.fmPlacesJson);
+    if (mapPlacesElement?.dataset.fmPlacesJson) {
+      const parsed = JSON.parse(mapPlacesElement.dataset.fmPlacesJson) as MapPlace[];
+      mapPlaces = parsed.filter(item => item.type === 'place');
+      mapRegions = parsed.filter(item => item.type === 'region');
+    }
     if (mapConfigElement?.dataset.fmCityConfig) cityConfig = JSON.parse(mapConfigElement.dataset.fmCityConfig);
     const filtersEl = mapRoot?.querySelector<HTMLElement>('[data-fm-city-filters]');
     if (filtersEl?.dataset.fmCityFilters) cityFilters = JSON.parse(filtersEl.dataset.fmCityFilters);
@@ -482,6 +581,7 @@ const cityFiltersJson = JSON.stringify(cityFilters);
   }
 
   let activeCity = mapRoot?.querySelector<HTMLElement>('[data-fm-city].active')?.dataset.fmCity || '';
+  let activeView: 'places' | 'regions' = 'places';
   let activeCategory = '';
   let activeRegion = '';
   let activeStatus = '';
@@ -489,6 +589,7 @@ const cityFiltersJson = JSON.stringify(cityFilters);
   let amap: any = null;
   let mapInstance: any = null;
   const markers = new Map<string, { instance: any; element: HTMLElement }>();
+  const regionMarkers = new Map<string, { instance: any; element: HTMLElement }>();
   let activeMarkerId = '';
   let selectedMapPlaceId = '';
   const DIRECTORY_PAGE_SIZE = 4;
@@ -601,14 +702,14 @@ const cityFiltersJson = JSON.stringify(cityFilters);
     });
   }
 
-  function renderDirectoryPagination(city: string, page: number, pageCount: number) {
+  function renderDirectoryPagination(city: string, page: number, pageCount: number, forceShow = false) {
     const cityContent = mapRoot?.querySelector<HTMLElement>(`[data-fm-city-content="${CSS.escape(city)}"]`);
     const pagination = cityContent?.querySelector<HTMLElement>('[data-fm-pagination]');
     if (!pagination) return;
 
     pagination.innerHTML = '';
-    pagination.hidden = pageCount <= 1;
-    if (pageCount <= 1) return;
+    pagination.hidden = forceShow ? false : pageCount <= 1;
+    if (pageCount <= 1 && !forceShow) return;
 
     const addButton = (label: string, pageNumber: number, disabled = false, current = false) => {
       const button = document.createElement('button');
@@ -627,6 +728,31 @@ const cityFiltersJson = JSON.stringify(cityFilters);
       addButton(String(pageNumber), pageNumber, false, pageNumber === page);
     }
     addButton('下一页', page + 1, page >= pageCount);
+  }
+
+  // 区域视图：区域卡片分页（区域数量较少，但分页控件始终显示）
+  function renderRegionDirectory(city = activeCity) {
+    const cityContent = mapRoot?.querySelector<HTMLElement>(`[data-fm-city-content="${CSS.escape(city)}"]`);
+    if (!cityContent) return;
+
+    const cards = Array.from(cityContent.querySelectorAll<HTMLElement>('[data-fm-region]'));
+    const pageCount = Math.max(1, Math.ceil(cards.length / DIRECTORY_PAGE_SIZE));
+    const requestedPage = directoryPages[city] || 1;
+    const page = Math.min(Math.max(requestedPage, 1), pageCount);
+    directoryPages[city] = page;
+    const visible = new Set(cards.slice((page - 1) * DIRECTORY_PAGE_SIZE, page * DIRECTORY_PAGE_SIZE));
+    cards.forEach(card => {
+      const isVisible = visible.has(card);
+      card.hidden = !isVisible;
+      card.classList.toggle('is-directory-hidden', !isVisible);
+      card.setAttribute('aria-hidden', String(!isVisible));
+    });
+
+    const count = cityContent.querySelector<HTMLElement>('[data-fm-results-count]');
+    if (count) count.textContent = `区域 · ${cards.length} 个`;
+    const pageLabel = cityContent.querySelector<HTMLElement>('[data-fm-results-page]');
+    if (pageLabel) pageLabel.textContent = pageCount > 1 ? `第 ${page} / ${pageCount} 页` : '';
+    renderDirectoryPagination(city, page, pageCount, true);
   }
 
   function renderDirectoryRows(city = activeCity) {
@@ -702,7 +828,8 @@ const cityFiltersJson = JSON.stringify(cityFilters);
     const config = cityConfig[city];
     const cityMarkers = filteredPlaces(city)
       .map(place => markers.get(place.id)?.instance)
-      .filter(Boolean);
+      .filter(Boolean)
+      .concat(Array.from(regionMarkers.values()).map(rm => rm.instance));
 
     if (cityMarkers.length > 1) {
       mapInstance.setFitView(cityMarkers, false, [60, 60, 60, 60]);
@@ -711,14 +838,91 @@ const cityFiltersJson = JSON.stringify(cityFilters);
     }
   }
 
+  function focusRegion(id: string) {
+    const region = mapRegions.find(item => item.id === id);
+    if (!region) return;
+    mapRoot?.dispatchEvent(new CustomEvent('foodmap:select-place', {
+      detail: { id: region.id },
+    }));
+  }
+
+  // 区域（夜市/街区）marker：仅在「区域」视图下渲染当前城市已确认的区域。
+  function renderRegionMarkers(city: string) {
+    regionMarkers.forEach(marker => marker.instance.setMap(null));
+    regionMarkers.clear();
+    if (!mapInstance || !amap || activeView !== 'regions') return;
+
+    const regions = mapRegions.filter(region =>
+      region.city === city &&
+      region.coordinateStatus === 'confirmed' &&
+      Number.isFinite(region.lng) &&
+      Number.isFinite(region.lat)
+    );
+
+    const visual = markerVisuals.night;
+    for (const region of regions) {
+      const content = document.createElement('button');
+      content.type = 'button';
+      content.className = 'foodmap-poi-marker is-region';
+      content.setAttribute('aria-label', `查看区域评价${region.name}`);
+      content.title = `${region.name}${region.category ? ` · ${region.category}` : ''}`;
+      content.dataset.fmRegionMarker = region.id;
+      content.style.setProperty('--foodmap-marker-color', visual.color);
+      content.style.setProperty('--foodmap-marker-hover', visual.hover);
+      content.style.setProperty('--foodmap-marker-ring', visual.ring);
+      content.style.setProperty('--foodmap-marker-shadow', visual.shadow);
+
+      const dot = document.createElement('span');
+      dot.className = 'foodmap-poi-marker-dot';
+      dot.setAttribute('aria-hidden', 'true');
+      const icon = document.createElement('img');
+      icon.className = 'foodmap-poi-marker-icon';
+      icon.src = `${LOCAL_ICON_BASE}/${visual.icon}`;
+      icon.alt = '';
+      icon.setAttribute('aria-hidden', 'true');
+      icon.addEventListener('error', () => {
+        icon.remove();
+        dot.textContent = '✦';
+      }, { once: true });
+      dot.appendChild(icon);
+
+      const label = document.createElement('span');
+      label.className = 'foodmap-poi-marker-label';
+      label.textContent = region.name;
+
+      content.append(dot, label);
+      const marker = new amap.Marker({
+        position: [region.lng!, region.lat!],
+        title: region.name,
+        content,
+        anchor: 'bottom-center',
+        extData: { id: region.id },
+      });
+      marker.on('click', () => focusRegion(region.id));
+      regionMarkers.set(region.id, { instance: marker, element: content });
+      mapInstance.add(marker);
+    }
+  }
+
   function renderMarkers(city: string) {
     if (!mapInstance || !amap) {
-      renderDirectoryRows(city);
+      if (activeView === 'regions') {
+        renderRegionDirectory(city);
+      } else {
+        renderDirectoryRows(city);
+      }
       return;
     }
+    renderRegionMarkers(city);
     markers.forEach(marker => marker.instance.setMap(null));
     markers.clear();
     activeMarkerId = '';
+    // 区域视图：地图只标区域，不标店铺
+    if (activeView === 'regions') {
+      resetMapView(city);
+      renderRegionDirectory(city);
+      return;
+    }
 
     const places = filteredPlaces(city);
     const selectedStillVisible = selectedMapPlaceId && mapPlaces.some(place =>
@@ -856,6 +1060,35 @@ const cityFiltersJson = JSON.stringify(cityFilters);
     renderMarkers(activeCity);
   }
 
+  function setActiveView(view: 'places' | 'regions') {
+    activeView = view;
+    mapRoot?.querySelectorAll<HTMLElement>('[data-fm-view]').forEach(btn => {
+      const active = btn.dataset.fmView === view;
+      btn.classList.toggle('is-active', active);
+      btn.setAttribute('aria-selected', String(active));
+    });
+    mapRoot?.querySelectorAll<HTMLElement>('[data-fm-view-panel]').forEach(panel => {
+      panel.hidden = panel.dataset.fmViewPanel !== view;
+    });
+    selectedMapPlaceId = '';
+    setActiveMarker('');
+    mapRoot?.dispatchEvent(new CustomEvent('foodmap:clear-place'));
+    directoryPages[activeCity] = 1;
+    if (view === 'regions') {
+      // 区域视图：清除店铺 marker，只渲染区域 marker
+      renderRegionDirectory(activeCity);
+      if (mapInstance && amap) {
+        markers.forEach(marker => marker.instance.setMap(null));
+        markers.clear();
+        activeMarkerId = '';
+      }
+      renderRegionMarkers(activeCity);
+      if (mapInstance) resetMapView(activeCity);
+    } else {
+      renderMarkers(activeCity);
+    }
+  }
+
   function setMapCity(city: string) {
     activeCity = city;
     activeCategory = '';
@@ -980,6 +1213,12 @@ const cityFiltersJson = JSON.stringify(cityFilters);
       return;
     }
 
+    const viewButton = target.closest<HTMLElement>('[data-fm-view]');
+    if (viewButton?.dataset.fmView) {
+      setActiveView(viewButton.dataset.fmView === 'regions' ? 'regions' : 'places');
+      return;
+    }
+
     const cityButton = target.closest<HTMLElement>('[data-fm-city]');
     if (cityButton?.dataset.fmCity) setMapCity(cityButton.dataset.fmCity);
 
@@ -1005,7 +1244,12 @@ const cityFiltersJson = JSON.stringify(cityFilters);
       const page = Number(pageButton.dataset.fmPage);
       if (Number.isFinite(page)) {
         directoryPages[activeCity] = page;
-        renderDirectoryRows(activeCity);
+        // 根据当前视图调用对应的分页渲染
+        if (activeView === 'regions') {
+          renderRegionDirectory(activeCity);
+        } else {
+          renderDirectoryRows(activeCity);
+        }
       }
       return;
     }

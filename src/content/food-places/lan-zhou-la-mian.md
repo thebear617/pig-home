@@ -2,7 +2,7 @@
 name: 兰州拉面
 city: 西安
 region: 隆江城
-category: 粉面简餐
+category: 粉面米线
 address: 西安市长安区西户路与兴昌二路交叉口西南180米，喜客来生活超市旁
 dishes:
   - name: 牛肉炒刀削面
