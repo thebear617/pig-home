@@ -28,6 +28,7 @@ export const TODO_BOARDS: TodoBoard[] = [
     icon: '🏠',
     items: [
       { id: 'l1', title: '给宝宝做相册', status: 'doing', date: '2026-07-19', createdAt: '2026-07-19', url: '', note: '' },
+      { id: 'l28', title: '下午 3 点开大组会：VGGT: Visual Geometry Grounded Transformer', status: 'todo', date: '2026-08-15', createdAt: '2026-08-15', url: '', note: '下午 3 点' },
       { id: 'l8', title: '带赫兹去博辰复诊', status: 'todo', date: '2026-09-02', createdAt: '2026-08-02', url: '', note: '赫兹口炎治疗（441）后续' },
       { id: 'l9', title: '晾晒活性炭', status: 'todo', date: '2026-09-02', createdAt: '2026-08-03', url: '', note: '甲醛处理后续：活性炭需定期晾晒保持吸附能力' },
       { id: 'l16', title: '继续去民主路补牙', status: 'todo', date: '2026-08-19', createdAt: '2026-08-11', url: '', note: '补第 4 颗牙' },

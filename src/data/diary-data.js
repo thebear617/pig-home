@@ -6415,12 +6415,44 @@ export const diaryRecords = {
     ]
   },
   "2026-08-15": {
-    "value": 1,
+    "value": 5,
     "tasks": [
       {
         "status": "x",
         "time": "00:00-00:40",
         "desc": "洗澡",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      },
+      {
+        "status": "x",
+        "time": "00:40-01:30",
+        "desc": "进行了一些开发",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      },
+      {
+        "status": "x",
+        "time": "01:30-03:00",
+        "desc": "玩手机",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      },
+      {
+        "status": "x",
+        "time": "03:00-12:00",
+        "desc": "睡觉",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      },
+      {
+        "status": "x",
+        "time": "12:00-13:30",
+        "desc": "吃午饭",
         "isCooking": false,
         "mealType": null,
         "dishGuess": null
