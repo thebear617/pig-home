@@ -6415,7 +6415,7 @@ export const diaryRecords = {
     ]
   },
   "2026-08-15": {
-    "value": 5,
+    "value": 11,
     "tasks": [
       {
         "status": "x",
@@ -6453,6 +6453,83 @@ export const diaryRecords = {
         "status": "x",
         "time": "12:00-13:30",
         "desc": "吃午饭",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      },
+      {
+        "status": "x",
+        "time": "13:30-15:00",
+        "desc": "开发",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      },
+      {
+        "status": "x",
+        "time": "15:00-16:30",
+        "desc": "开大组会",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      },
+      {
+        "status": "x",
+        "time": "16:30-19:00",
+        "desc": "开发",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      },
+      {
+        "status": "x",
+        "time": "19:00-20:00",
+        "desc": "吃重庆牛肉火锅（在家吃）",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      },
+      {
+        "status": "x",
+        "time": "20:00-22:00",
+        "desc": "去王府井买衣服",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      },
+      {
+        "status": "x",
+        "time": "22:00-24:00",
+        "desc": "去看电影《痴迷》（恐怖片）",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      }
+    ]
+  },
+  "2026-08-16": {
+    "value": 3,
+    "tasks": [
+      {
+        "status": "x",
+        "time": "00:00-01:00",
+        "desc": "去吃天桥底下的晶隆烧烤",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      },
+      {
+        "status": "x",
+        "time": "01:00-02:00",
+        "desc": "回家洗澡、收拾、玩手机",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      },
+      {
+        "status": "x",
+        "time": "02:00-12:00",
+        "desc": "睡觉",
         "isCooking": false,
         "mealType": null,
         "dishGuess": null
