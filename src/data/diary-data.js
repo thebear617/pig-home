@@ -6508,7 +6508,7 @@ export const diaryRecords = {
     ]
   },
   "2026-08-16": {
-    "value": 5,
+    "value": 8,
     "tasks": [
       {
         "status": "x",
@@ -6544,8 +6544,32 @@ export const diaryRecords = {
       },
       {
         "status": "x",
-        "time": "13:00-17:50",
+        "time": "13:00-18:30",
         "desc": "开发（重度开发：chatnotes 重构阅读区与卡片视觉、完善工作区与卡片交互、接入 AI 网关与模型路由（新增 MiniMax/deepseek 接口与本地 agent bridge）；lifenotes 新增 AI 灰产术语笔记并调整 CMS 排序；home 设置浏览器标签图标、美食地图新增晶隆烧烤；devnotes 补充 ChatNotes 与猫猫站 v0.12 开发时间线、统一内容库字段与命名体系、新增本地内容管理后台）",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      },
+      {
+        "status": "x",
+        "time": "18:30-22:00",
+        "desc": "和爸爸妈妈一起去外婆家吃饭",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      },
+      {
+        "status": "x",
+        "time": "22:00-22:40",
+        "desc": "回家洗澡",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      },
+      {
+        "status": "x",
+        "time": "22:40-24:00",
+        "desc": "进行开发（devnotes 新增配置记录「Harness-本地任务分配路由」并重构开发资源合集为领域分组、新增霸王茶姬全栈 demo、优化 Markdown 编辑器光标留白；lifenotes 同步优化 Markdown 编辑器光标留白、更新南宁美食集合描述）",
         "isCooking": false,
         "mealType": null,
         "dishGuess": null
