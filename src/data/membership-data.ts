@@ -12,7 +12,7 @@ export const membershipRecords = [
   { name: 'OpenCode Go 3', expireDate: '2026-08-29', price: 35, cycleMonths: 1, tags: ['AI'], note: 'thebear 首月', icon: '../assets/membership/opencode.svg' },
   { name: 'minimax-m3-plus', expireDate: '2026-08-30', price: 49, cycleMonths: 1, tags: ['AI'], note: '', icon: '../assets/membership/minimax.ico' },
   { name: 'explore.poker-plus', expireDate: '2026-09-08', price: 35, cycleMonths: 1, tags: ['AI'], note: '', icon: '../assets/membership/minimax.ico' },
-  { name: 'ChatGPT Plus', expireDate: '2026-08-12', price: 25, cycleMonths: 1, tags: ['AI'], note: '', icon: '../assets/membership/chatgpt.png' },
+  { name: 'ChatGPT Plus 会员 3', expireDate: '2026-08-12', price: 25, cycleMonths: 1, tags: ['AI'], note: '号过期的第 4 天，ChatGPT 网页端才失效，但是 Codex 端仍可以使用。', icon: '../assets/membership/chatgpt.png' },
   { name: '88vip➕网易云➕优酷年会员', expireDate: '2026-09-30', price: 0, cycleMonths: 12, tags: ['购物'], note: '' },
   { name: '百度云', expireDate: '2026-09-13', price: 158, cycleMonths: 12, tags: ['网盘'], note: '学生优惠158一年', icon: '../assets/membership/baidu-netdisk.svg' },
   { name: 'wps超级会员', expireDate: '2026-11-30', price: 79, cycleMonths: 12, tags: ['工具'], note: '2年158元，折合79/年', icon: '../assets/membership/wps.ico' },

@@ -6508,7 +6508,7 @@ export const diaryRecords = {
     ]
   },
   "2026-08-16": {
-    "value": 3,
+    "value": 5,
     "tasks": [
       {
         "status": "x",
@@ -6530,6 +6530,22 @@ export const diaryRecords = {
         "status": "x",
         "time": "02:00-12:00",
         "desc": "睡觉",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      },
+      {
+        "status": "x",
+        "time": "12:00-13:00",
+        "desc": "吃重庆牛肉火锅",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      },
+      {
+        "status": "x",
+        "time": "13:00-17:50",
+        "desc": "开发（重度开发：chatnotes 重构阅读区与卡片视觉、完善工作区与卡片交互、接入 AI 网关与模型路由（新增 MiniMax/deepseek 接口与本地 agent bridge）；lifenotes 新增 AI 灰产术语笔记并调整 CMS 排序；home 设置浏览器标签图标、美食地图新增晶隆烧烤；devnotes 补充 ChatNotes 与猫猫站 v0.12 开发时间线、统一内容库字段与命名体系、新增本地内容管理后台）",
         "isCooking": false,
         "mealType": null,
         "dishGuess": null
