@@ -6,7 +6,7 @@
 ## 站点架构
 
 - 这是 Astro 7 静态站点，使用 `src/layouts/Layout.astro` 提供共享侧边栏和页面骨架。
-- 侧边栏页面配置在 `src/lib/tabs.ts`；当前入口包括：家居档案、每日追踪、美食记录、支出记录、美食地图、关系时间线。
+- 侧边栏页面配置在 `src/lib/tabs.ts`；当前入口包括：家居档案、美食记录与做饭心得、每日看板、每日追踪、收支记录、会员订阅、美食地图、关系时间线。默认跳转入口由 `DEFAULT_TAB` 定义，`src/pages/index.astro` 重定向到该入口。
 - `src/pages/home-archive.astro` 是家居档案页面，包含生活备忘录、猪窝地图、家居变动、入住清单四个视图。
 - `src/pages/daily-tracker.astro` 是每日追踪页面，包含每日追踪和水电追踪两个视图。两套日历、统计和详情逻辑保持独立，通过 URL 的 `view=daily` 或 `view=utility` 切换。
 - 备忘录和入住清单条目使用 `src/pages/follow-up/memos/[slug].astro` 与 `src/pages/follow-up/procurement/[slug].astro` 独立路由渲染。

@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Parse _diary/*.md → js/diary-data.js + js/expense-data.js"""
+"""Parse _diary/*.md → js/diary-data.js + js/expense-data.js + js/income-data.js"""
 import re, os, json
 from pathlib import Path
 
@@ -7,9 +7,11 @@ ROOT = Path(__file__).parent.parent
 DIARY_DIR = ROOT / '_diary'
 DIARY_OUT = ROOT / 'src' / 'data' / 'diary-data.js'
 EXPENSE_OUT = ROOT / 'src' / 'data' / 'expense-data.js'
+INCOME_OUT = ROOT / 'src' / 'data' / 'income-data.js'
 
 records = {}
 expenses = []
+incomes = []
 seen = set()
 
 # 从配置文件加载特殊纪念关键词→图标映射
@@ -96,28 +98,27 @@ for fname in sorted(os.listdir(DIARY_DIR)):
                     'keywords': list(date_icons.keys()),
                 }
 
-    # ---- # 支出 table → expenseRecords ----
-    me = re.search(r'# 支出\n(.*?)(?=\n# |\Z)', content, re.DOTALL)
-    if me:
-        table = me.group(1)
-        for line in table.strip().split('\n'):
+    # ---- # 支出 / # 收入 table → expenseRecords / incomeRecords ----
+    # 表格结构：| 时间 | 分类 | 子项 | 金额(¥) | 备注 |；跳过表头/分隔行/当日合计/空分类
+    def parse_table_section(header, out):
+        m = re.search(r'# %s\n(.*?)(?=\n# |\Z)' % re.escape(header), content, re.DOTALL)
+        if not m:
+            return
+        for line in m.group(1).strip().split('\n'):
             line = line.strip()
             if not line.startswith('|'):
                 continue
             cells = [c.strip() for c in line.strip('|').split('|')]
             if len(cells) < 5:
                 continue
-            # skip header row
             if cells[0] == '时间':
                 continue
-            # skip separator row (|---|---|...)
             if set(cells[1]) <= set('-: '):
                 continue
             cat = cells[1]
             sub = cells[2]
             amt_raw = cells[3].replace('*', '').replace('¥', '').replace(',', '').strip()
             note = cells[4].replace('*', '').strip()
-            # skip 当日合计 / empty category
             if not cat or '合计' in cat:
                 continue
             try:
@@ -128,13 +129,16 @@ for fname in sorted(os.listdir(DIARY_DIR)):
             if key in seen:
                 continue
             seen.add(key)
-            expenses.append({
+            out.append({
                 'date': date,
                 'cat': cat,
                 'sub': sub,
                 'amount': amount,
                 'note': note,
             })
+
+    parse_table_section('支出', expenses)
+    parse_table_section('收入', incomes)
 
 with open(DIARY_OUT, 'w', encoding='utf-8') as f:
     f.write('// Auto-generated from _diary/*.md by scripts/build-diary.py\n')
@@ -151,7 +155,13 @@ with open(EXPENSE_OUT, 'w', encoding='utf-8') as f:
     json.dump(expenses, f, ensure_ascii=False, indent=2)
     f.write(';\n')
 
-print(f'Wrote {len(records)} days and {len(expenses)} expenses to {DIARY_OUT} / {EXPENSE_OUT}')
+with open(INCOME_OUT, 'w', encoding='utf-8') as f:
+    f.write('// Auto-generated from _diary/*.md by scripts/build-diary.py\n')
+    f.write('export const incomeRecords = ')
+    json.dump(incomes, f, ensure_ascii=False, indent=2)
+    f.write(';\n')
+
+print(f'Wrote {len(records)} days, {len(expenses)} expenses, {len(incomes)} incomes to {DIARY_OUT} / {EXPENSE_OUT} / {INCOME_OUT}')
 
 # ---- cooking detection summary (for agent to sync home foodRecords) ----
 cooking = [(d, t) for d, rec in records.items() for t in rec['tasks'] if t.get('isCooking')]

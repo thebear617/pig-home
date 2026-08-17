@@ -6575,6 +6575,35 @@ export const diaryRecords = {
         "dishGuess": null
       }
     ]
+  },
+  "2026-08-17": {
+    "value": 3,
+    "tasks": [
+      {
+        "status": "x",
+        "time": "00:00-02:00",
+        "desc": "玩手机",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      },
+      {
+        "status": "x",
+        "time": "02:00-09:40",
+        "desc": "睡觉",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      },
+      {
+        "status": "x",
+        "time": "09:40-11:00",
+        "desc": "去电信营业厅办理新的电话卡 + 去吃蒙记老友粉",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      }
+    ]
   }
 };
 export const specialEvents = {

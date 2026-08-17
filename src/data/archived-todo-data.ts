@@ -21,7 +21,8 @@ export const ARCHIVED_TODO_BOARDS: TodoBoard[] = [
       { id: 'c7', title: '依据 dash.valorant-api.com API 站点去建立无畏契约的站点', url: 'https://dash.valorant-api.com/endpoints/agents', status: 'done', date: '2026-08-02', createdAt: '2026-07-27', note: '' },
       { id: 'c9', title: '个人仪表盘-逻辑继续完善，加入番茄钟插件联动逻辑', status: 'done', date: '2026-08-07', createdAt: '2026-08-05', note: '个人仪表盘 v0.18.0 后续：番茄钟 + 仪表盘数据联动' },
       { id: 'c10', title: '进行「猪窝的美食地图」的升级 + 整理南宁美食', status: 'done', date: '2026-08-07', createdAt: '2026-08-05', note: '两件事合并：① 美食地图升级 ② 整理南宁美食' },
-      { id: 'c12', title: '研究浏览器的连接器具体有哪几种', status: 'done', date: '2026-08-10', createdAt: '2026-08-08', url: '', note: '参考 devnotes「学习资源：开发资源合集」里的四款浏览器连接器对比（Cua Driver / ego / Kimi WebBridge 等）' }
+      { id: 'c12', title: '研究浏览器的连接器具体有哪几种', status: 'done', date: '2026-08-10', createdAt: '2026-08-08', url: '', note: '参考 devnotes「学习资源：开发资源合集」里的四款浏览器连接器对比（Cua Driver / ego / Kimi WebBridge 等）' },
+      { id: 'c13', title: '猪窝加上收入的逻辑', status: 'done', date: '2026-08-17', createdAt: '2026-08-16', url: '', note: '' }
     ]
   },
   {
@@ -58,7 +59,8 @@ export const ARCHIVED_TODO_BOARDS: TodoBoard[] = [
       { id: 'l25', title: '逛南宁夜市·琅西', status: 'done', date: '2026-08-13', createdAt: '2026-08-08', url: '', note: '琅西夜市（琅西村啫啫煲一带）' },
       { id: 'l26', title: '逛南宁夜市·西关', status: 'done', date: '2026-08-14', createdAt: '2026-08-08', url: '', note: '西关夜市' },
       { id: 'l27', title: '逛南宁夜市·百货大楼', status: 'done', date: '2026-08-14', createdAt: '2026-08-08', url: '', note: '百货大楼夜市' },
-      { id: 'l29', title: '下午 3 点开大组会：VGGT: Visual Geometry Grounded Transformer', status: 'done', date: '2026-08-15', createdAt: '2026-08-15', url: '', note: '下午 3 点' }
+      { id: 'l29', title: '下午 3 点开大组会：VGGT: Visual Geometry Grounded Transformer', status: 'done', date: '2026-08-15', createdAt: '2026-08-15', url: '', note: '下午 3 点' },
+      { id: 'l30', title: '去电信营业厅办理新的电话卡', status: 'done', date: '2026-08-17', createdAt: '2026-08-16', url: '', note: '' }
     ]
   }
 ];

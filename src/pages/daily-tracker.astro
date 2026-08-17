@@ -4,6 +4,7 @@ import DailyTracker from '../components/tabs/DailyTracker.astro';
 import { hemaDayRecords } from '../data/hema-records';
 import { diaryRecords, specialEvents } from '../data/diary-data';
 import { expenseRecords } from '../data/expense-data';
+import { incomeRecords } from '../data/income-data';
 import { utilityRecords } from '../data/utility-records';
 ---
 
@@ -13,11 +14,12 @@ import { utilityRecords } from '../data/utility-records';
       <DailyTracker />
     </section>
   </div>
-  <script define:vars={{ hemaDayRecords, diaryRecords, specialEvents, expenseRecords, utilityRecords }}>
+  <script define:vars={{ hemaDayRecords, diaryRecords, specialEvents, expenseRecords, incomeRecords, utilityRecords }}>
     window.__hemaDayRecords = hemaDayRecords;
     window.__diaryRecords = diaryRecords;
     window.__specialEvents = specialEvents;
     window.__expenseRecords = expenseRecords;
+    window.__incomeRecords = incomeRecords;
     window.__utilityRecords = utilityRecords;
   </script>
   <script>

@@ -3,13 +3,19 @@ import Layout from '../layouts/Layout.astro';
 import ExpenseRecords from '../components/tabs/ExpenseRecords.astro';
 import { expenseCategories } from '../data/expense-categories';
 import { expenseRecords } from '../data/expense-data';
+import { incomeRecords } from '../data/income-data';
+import { incomeCategories } from '../data/income-categories';
+import { balanceBase } from '../data/balance-base';
 ---
 
-<Layout activeTab="expense-records" title="支出记录 · 猪窝">
+<Layout activeTab="expense-records" title="收支记录 · 猪窝">
   <ExpenseRecords />
-  <script define:vars={{ expenseCategories, expenseRecords }}>
+  <script define:vars={{ expenseCategories, expenseRecords, incomeRecords, incomeCategories, balanceBase }}>
     window.__expenseCategories = expenseCategories;
     window.__expenseRecords = expenseRecords;
+    window.__incomeRecords = incomeRecords;
+    window.__incomeCategories = incomeCategories;
+    window.__balanceBase = balanceBase;
   </script>
   <script>
     import '../scripts/page';

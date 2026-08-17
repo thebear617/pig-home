@@ -1087,13 +1087,20 @@ button {
   color: #c9c1b7;
 }
 
-/* 每日追踪：支出(红)/日程(蓝) 标记点 —— 沿用原 personal 风格（红点右下、蓝点左下） */
+/* 每日追踪：支出(红)/收入(绿)/日程(蓝) 标记点 —— 沿用原 personal 风格（红点右下、绿点左下） */
 .cal-expense-dot {
   position: absolute;
   bottom: .4rem; right: .4rem;
   width: 6px; height: 6px;
   border-radius: 50%;
   background: var(--red);
+}
+.cal-income-dot {
+  position: absolute;
+  bottom: .4rem; left: .4rem;
+  width: 6px; height: 6px;
+  border-radius: 50%;
+  background: var(--green);
 }
 
 /* 当日日程任务列表 */
@@ -1226,6 +1233,7 @@ button {
 
 .expense-view { animation: fadeIn .2s ease; }
 .expense-amount { color: var(--red); }
+.income-amount { color: var(--green); }
 
 .expense-cat-icon {
   font-size: 1.1rem;
@@ -1311,6 +1319,8 @@ button {
   font-weight: 800;
   color: var(--dark);
 }
+.summary-value.income-amount { color: var(--green); }
+.summary-value.expense-amount { color: var(--red); }
 
 .summary-divider {
   width: 1px;
@@ -2139,6 +2149,9 @@ body[data-page="daily-tracker"] .app-shell {
 .daily-cost {
   color: var(--red);
 }
+.daily-income {
+  color: var(--green);
+}
 
 /* ─── 支出分类（宫格） ── */
 
@@ -2314,13 +2327,20 @@ body[data-page="daily-tracker"] .app-shell {
   }
 }
 
-/* ─── 支出分类宫格 ─── */
+/* ─── 支出/收入分类宫格 ─── */
+
+.expense-section-title {
+  margin: 1.4rem 0 0;
+  font-size: 1.05rem;
+  font-weight: 600;
+  color: var(--text);
+}
 
 .expense-grid {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: .8rem;
-  margin-top: 1rem;
+  margin-top: .7rem;
 }
 
 .expense-grid-card {

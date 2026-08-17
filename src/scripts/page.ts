@@ -9,6 +9,9 @@ declare global {
     __specialEvents?: Record<string, any>;
     __expenseRecords?: any[];
     __expenseCategories?: any[];
+    __incomeRecords?: any[];
+    __incomeCategories?: any[];
+    __balanceBase?: { amount: number; date: string };
     __membershipRecords?: any[];
   }
 }
@@ -314,6 +317,7 @@ function recentDishesHtml(): string {
 function dailyGrid() {
   const diary = window.__diaryRecords || {};
   const expenses = window.__expenseRecords || [];
+  const incomes = window.__incomeRecords || [];
   const special = window.__specialEvents || {};
   const hema = window.__hemaDayRecords || {};
   const utility = window.__utilityRecords || {};
@@ -321,16 +325,17 @@ function dailyGrid() {
     const key = dateKey(state.year, state.month, day);
     const record = diary[key];
     const hasExpense = expenses.some(item => item.date === key);
+    const hasIncome = incomes.some(item => item.date === key);
     const monday = new Date(`${key}T00:00:00`).getDay() === 1;
     const event = special[key];
     const utilRecord = utility[key];
     const classes = ['cal-cell'];
     if (today) classes.push('cal-today');
-    if (record || hasExpense || monday) classes.push('cal-has-data');
+    if (record || hasExpense || hasIncome || monday) classes.push('cal-has-data');
     if (monday) classes.push('cal-hema-day');
     if (state.selected === key) classes.push('cal-selected');
     if (event) classes.push('cal-special');
-    return `<div class="${classes.join(' ')}" data-date="${key}">${lunarText(state.year, state.month, day)}<span class="cal-date${today ? ' cal-date-today' : ''}">${day}日</span>${hasExpense ? '<span class="cal-expense-dot" title="有支出"></span>' : ''}${monday ? '<span class="cal-hema-badge" title="盒马日">盒马日</span>' : ''}${event ? `<span class="cal-special-icons" title="${escape(event.keywords?.join('、'))}">${event.icons?.join('') || ''}</span>` : ''}${utilRecord ? `<span class="cal-utility-balance">¥${utilRecord.elecRemaining.toFixed(2)}</span>` : ''}</div>`;
+    return `<div class="${classes.join(' ')}" data-date="${key}">${lunarText(state.year, state.month, day)}<span class="cal-date${today ? ' cal-date-today' : ''}">${day}日</span>${hasExpense ? '<span class="cal-expense-dot" title="有支出"></span>' : ''}${hasIncome ? '<span class="cal-income-dot" title="有收入"></span>' : ''}${monday ? '<span class="cal-hema-badge" title="盒马日">盒马日</span>' : ''}${event ? `<span class="cal-special-icons" title="${escape(event.keywords?.join('、'))}">${event.icons?.join('') || ''}</span>` : ''}${utilRecord ? `<span class="cal-utility-balance">¥${utilRecord.elecRemaining.toFixed(2)}</span>` : ''}</div>`;
   });
 }
 
@@ -338,10 +343,11 @@ function dailyDetail(key: string | null) {
   if (!key) return '';
   const record = window.__diaryRecords?.[key];
   const expenses = (window.__expenseRecords || []).filter(item => item.date === key);
+  const incomes = (window.__incomeRecords || []).filter(item => item.date === key);
   const hema = window.__hemaDayRecords?.[key];
   const utility = window.__utilityRecords?.[key];
   const monday = new Date(`${key}T00:00:00`).getDay() === 1;
-  if (!record && !expenses.length && !hema && !monday && !utility) return '';
+  if (!record && !expenses.length && !incomes.length && !hema && !monday && !utility) return '';
   const day = new Date(`${key}T00:00:00`);
   let html = `<div class="detail-panel"><div class="detail-header"><span class="detail-title">${day.getMonth() + 1}月${day.getDate()}日</span><button class="detail-close util-dc">✕</button></div><div class="detail-body">`;
   if (utility) {
@@ -357,6 +363,12 @@ function dailyDetail(key: string | null) {
     const total = expenses.reduce((sum, item) => sum + item.amount, 0);
     html += `<div class="detail-row"><span class="detail-label">当日支出</span><span class="detail-val expense-amount">¥${total.toFixed(2)}</span></div><div class="detail-expenses">`;
     expenses.forEach(item => { html += `<div class="expense-detail-item"><span class="expense-detail-sub">${escape(item.sub)}</span>${item.note ? `<span class="expense-detail-note">${escape(item.note)}</span>` : ''}<span class="expense-detail-amount">¥${item.amount.toFixed(2)}</span></div>`; });
+    html += '</div>';
+  }
+  if (incomes.length) {
+    const total = incomes.reduce((sum, item) => sum + item.amount, 0);
+    html += `<div class="detail-row"><span class="detail-label">当日收入</span><span class="detail-val income-amount">¥${total.toFixed(2)}</span></div><div class="detail-expenses">`;
+    incomes.forEach(item => { html += `<div class="expense-detail-item"><span class="expense-detail-sub">${escape(item.sub)}</span>${item.note ? `<span class="expense-detail-note">${escape(item.note)}</span>` : ''}<span class="expense-detail-amount income-amount">¥${item.amount.toFixed(2)}</span></div>`; });
     html += '</div>';
   }
   if (hema || monday) {
@@ -437,7 +449,9 @@ function dailyMonthlyOverviewHtml(): string {
   const prefix = `${state.year}-${pad(state.month)}`;
   const diary = window.__diaryRecords || {};
   const expenses = (window.__expenseRecords || []).filter(item => item.date.startsWith(prefix));
+  const incomes = (window.__incomeRecords || []).filter(item => item.date.startsWith(prefix));
   const totalExpense = expenses.reduce((sum, item) => sum + item.amount, 0);
+  const totalIncome = incomes.reduce((sum, item) => sum + item.amount, 0);
   const expenseDays = new Set(expenses.map(item => item.date)).size;
   const avgExpense = expenseDays ? totalExpense / expenseDays : 0;
   let recordDays = 0;
@@ -467,6 +481,7 @@ function dailyMonthlyOverviewHtml(): string {
 <div class="daily-stats-grid">
   <div class="daily-stat-item"><span class="daily-stat-label">记录</span><span class="daily-stat-value">${recordDays}天</span></div>
   <div class="daily-stat-item"><span class="daily-stat-label">支出</span><span class="daily-stat-value daily-cost">¥${totalExpense.toFixed(0)}</span></div>
+  <div class="daily-stat-item"><span class="daily-stat-label">收入</span><span class="daily-stat-value daily-income">¥${totalIncome.toFixed(0)}</span></div>
   <div class="daily-stat-item"><span class="daily-stat-label">日均</span><span class="daily-stat-value">¥${avgExpense.toFixed(0)}</span></div>
   <div class="daily-stat-item"><span class="daily-stat-label">睡眠</span><span class="daily-stat-value">${avgSleep}h</span></div>
 </div>`;
@@ -536,13 +551,41 @@ let membershipView = 'active';
 function expenseView() {
   const records = (window.__expenseRecords || []).filter(item => item.date.startsWith(`${state.year}-${pad(state.month)}`)).sort((a, b) => b.date.localeCompare(a.date));
   const categories = window.__expenseCategories || [];
+  const incomeRecords = (window.__incomeRecords || []).filter(item => item.date.startsWith(`${state.year}-${pad(state.month)}`));
   const total = records.reduce((sum, item) => sum + item.amount, 0);
+  const totalIncome = incomeRecords.reduce((sum, item) => sum + item.amount, 0);
+  const balance = totalIncome - total;
   const days = new Set(records.map(item => item.date)).size;
-  let html = total ? `<div class="summary-bar"><div class="summary-item"><span class="summary-label">本月支出</span><span class="summary-value expense-amount">¥${total.toFixed(2)}</span></div><div class="summary-divider"></div><div class="summary-item"><span class="summary-label">记录笔数</span><span class="summary-value">${records.length}</span></div><div class="summary-divider"></div><div class="summary-item"><span class="summary-label">日均</span><span class="summary-value expense-amount">¥${(total / days).toFixed(2)}</span></div></div>` : '<div class="empty-state"><p>本月暂无支出记录</p></div>';
+  // 当前余额 = 基准余额 + 基准日及之后(全年)的累计收入 - 累计支出
+  const base = window.__balanceBase;
+  let currentBalance = 0;
+  if (base) {
+    const sinceIncome = (window.__incomeRecords || []).filter(item => item.date >= base.date).reduce((s, i) => s + i.amount, 0);
+    const sinceExpense = (window.__expenseRecords || []).filter(item => item.date >= base.date).reduce((s, i) => s + i.amount, 0);
+    currentBalance = base.amount + sinceIncome - sinceExpense;
+  }
+  let html = base ? `<div class="summary-bar"><div class="summary-item"><span class="summary-label">当前余额</span><span class="summary-value ${currentBalance >= 0 ? 'income-amount' : 'expense-amount'}">¥${currentBalance.toFixed(2)}</span></div><div class="summary-divider"></div><div class="summary-item"><span class="summary-label">本月支出</span><span class="summary-value expense-amount">¥${total.toFixed(2)}</span></div><div class="summary-divider"></div><div class="summary-item"><span class="summary-label">本月收入</span><span class="summary-value income-amount">¥${totalIncome.toFixed(2)}</span></div><div class="summary-divider"></div><div class="summary-item"><span class="summary-label">本月结余</span><span class="summary-value ${balance >= 0 ? 'income-amount' : 'expense-amount'}">¥${Math.abs(balance).toFixed(2)}</span></div><div class="summary-divider"></div><div class="summary-item"><span class="summary-label">记录笔数</span><span class="summary-value">${records.length}</span></div><div class="summary-divider"></div><div class="summary-item"><span class="summary-label">日均支出</span><span class="summary-value expense-amount">¥${days ? (total / days).toFixed(2) : '0.00'}</span></div></div>` : (total || totalIncome ? `<div class="summary-bar"><div class="summary-item"><span class="summary-label">本月支出</span><span class="summary-value expense-amount">¥${total.toFixed(2)}</span></div><div class="summary-divider"></div><div class="summary-item"><span class="summary-label">本月收入</span><span class="summary-value income-amount">¥${totalIncome.toFixed(2)}</span></div><div class="summary-divider"></div><div class="summary-item"><span class="summary-label">本月结余</span><span class="summary-value ${balance >= 0 ? 'income-amount' : 'expense-amount'}">¥${Math.abs(balance).toFixed(2)}</span></div><div class="summary-divider"></div><div class="summary-item"><span class="summary-label">记录笔数</span><span class="summary-value">${records.length}</span></div><div class="summary-divider"></div><div class="summary-item"><span class="summary-label">日均支出</span><span class="summary-value expense-amount">¥${days ? (total / days).toFixed(2) : '0.00'}</span></div></div>` : '<div class="empty-state"><p>本月暂无支出/收入记录</p></div>');
+
+  // ─── 本月收入（按一级分类分组，二级为自由文字）───
+  if (totalIncome) {
+    const incomeCats = window.__incomeCategories || [];
+    const incomeGroups = incomeCats.map(category => ({ ...category, items: incomeRecords.filter(item => item.cat === category.name) })).filter(group => group.items.length).sort((a, b) => b.items.reduce((s, item) => s + item.amount, 0) - a.items.reduce((s, item) => s + item.amount, 0));
+    html += '<div class="expense-section-title">📥 本月收入</div><div class="expense-grid">';
+    for (const group of incomeGroups) {
+      const groupTotal = group.items.reduce((sum, item) => sum + item.amount, 0);
+      html += `<div class="expense-grid-card"><div class="expense-grid-header"><div class="expense-grid-header-left"><span class="expense-cat-icon">${group.icon}</span><h3>${escape(group.name)}</h3></div><div class="expense-grid-header-right"><span class="expense-cat-amount income-amount">¥${groupTotal.toFixed(2)}</span></div></div><div class="expense-grid-body">`;
+      for (const item of group.items) {
+        const date = new Date(`${item.date}T00:00:00`);
+        html += `<div class="expense-item"><div class="expense-item-left"><span class="expense-item-sub">${escape(item.sub)}</span>${item.note ? `<span class="expense-item-note">${escape(item.note)}</span>` : ''}</div><div class="expense-item-right"><span class="expense-item-amount income-amount">¥${item.amount.toFixed(2)}</span><span class="expense-item-date">${date.getMonth() + 1}/${date.getDate()}</span></div></div>`;
+      }
+      html += '</div></div>';
+    }
+    html += '</div>';
+  }
 
   const groups = categories.map(category => ({ ...category, items: records.filter(item => item.cat === category.name) })).filter(group => group.items.length).sort((a, b) => b.items.reduce((s, item) => s + item.amount, 0) - a.items.reduce((s, item) => s + item.amount, 0));
 
-  html += '<div class="expense-grid">';
+  html += '<div class="expense-section-title">📤 本月支出</div><div class="expense-grid">';
   for (const group of groups) {
     const groupTotal = group.items.reduce((sum, item) => sum + item.amount, 0);
     const catKey = group.name;
@@ -827,7 +870,7 @@ function refresh() {
     if (catEl) catEl.innerHTML = expenseCategoryChartHtml();
     const topEl = document.getElementById('expenseTopItems');
     if (topEl) topEl.innerHTML = expenseTopItemsHtml();
-    setTitle('[data-tab="expense-records"] .cal-title', `${monthTitle()} · 支出`);
+    setTitle('[data-tab="expense-records"] .cal-title', `${monthTitle()} · 收支`);
     setupAccordions(document.getElementById('expenseContent')!);
   } else if (page === 'membership') {
     const membershipEl = document.getElementById('membershipSubscriptions');
