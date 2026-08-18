@@ -45,7 +45,8 @@ const foodPlacesCollection = defineCollection({
     name: z.string(),
     city: z.string(),
     region: z.string(),
-    category: z.string().default(''),
+    // 菜系/场所分类（枚举）：新增分类需在此补充
+    category: z.enum(['烧烤烤肉', '粉面米线', '特色小吃', '特色火锅', '家常炒菜', '粤菜早茶', '酒吧轻食', '湘菜小炒', '家常便饭', '外卖', '棋牌娱乐']).default(''),
     // 菜品统一为对象数组 {name, note?, price?}
     dishes: z.array(foodDish).default([]),
     // 地址、日期必填（新增店时地址用高德吸附，日期默认当天）
