@@ -6614,7 +6614,7 @@ export const diaryRecords = {
     ]
   },
   "2026-08-18": {
-    "value": 9,
+    "value": 14,
     "tasks": [
       {
         "status": "x",
@@ -6684,6 +6684,46 @@ export const diaryRecords = {
         "status": "x",
         "time": "15:30-17:50",
         "desc": "开发（devnotes：补全个人开发时间线视觉档案，为猫猫/猪窝/GameNotes/常识/科研/熊窝/ChatNotes/开发笔记各站点补全历史 UI 时间线、持久化开发时间线分页状态，发布 v0.15.0，补写第 33/34 周随笔）",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      },
+      {
+        "status": "x",
+        "time": "17:50-19:30",
+        "desc": "开发（home：美食地图新增布拉王（七星直营店·中山街道·推荐，含韭菜虾肉肠粉），整理 c14 归档、c10 备注细化、相册重构为 AlbumPage；devnotes：合并月度随笔并统一列表样式，完善后台编辑体验并发布 v0.15.1，补充个人开发时间线与 UI 设计与审美基础知识）",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      },
+      {
+        "status": "x",
+        "time": "19:30-20:20",
+        "desc": "吃饭",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      },
+      {
+        "status": "x",
+        "time": "20:20-20:40",
+        "desc": "开发收尾（devnotes：清理脚注悬浮窗回链；lifenotes：对齐常识笔记 Markdown 预览）",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      },
+      {
+        "status": "x",
+        "time": "20:40-21:00",
+        "desc": "洗澡",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      },
+      {
+        "status": "x",
+        "time": "21:00-24:00",
+        "desc": "去华星城网鱼打电动",
         "isCooking": false,
         "mealType": null,
         "dishGuess": null

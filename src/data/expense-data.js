@@ -1385,5 +1385,12 @@ export const expenseRecords = [
     "sub": "骑车",
     "amount": 3.0,
     "note": ""
+  },
+  {
+    "date": "2026-08-18",
+    "cat": "市内出行/交通",
+    "sub": "骑车",
+    "amount": 2.0,
+    "note": ""
   }
 ];
