@@ -6577,7 +6577,7 @@ export const diaryRecords = {
     ]
   },
   "2026-08-17": {
-    "value": 3,
+    "value": 4,
     "tasks": [
       {
         "status": "x",
@@ -6599,6 +6599,14 @@ export const diaryRecords = {
         "status": "x",
         "time": "09:40-11:00",
         "desc": "去电信营业厅办理新的电话卡 + 去吃蒙记老友粉",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      },
+      {
+        "status": "x",
+        "time": "11:00-24:00",
+        "desc": "和方世杰、欧中如去江南万达打麻将（设施好且便宜），然后去城市英雄电玩城玩、吃姜胖胖烤肉，再去华星城网鱼打电动",
         "isCooking": false,
         "mealType": null,
         "dishGuess": null

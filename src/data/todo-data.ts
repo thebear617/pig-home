@@ -51,6 +51,7 @@ export const TODO_BOARDS: TodoBoard[] = [
       { id: 'c15', title: '参考 B 站视频美化自己的个人仪表盘，学习他的记笔记方式', status: 'todo', date: '2026-08-22', createdAt: '2026-08-16', url: 'https://www.bilibili.com/video/BV1bkPYzqET3', note: '' },
       { id: 'c16', title: 'idea：平时吵架/演讲前录音，丢给 AI 分析，做成网页接口', status: 'todo', date: '2026-08-22', createdAt: '2026-08-16', url: '', note: '' },
       { id: 'c17', title: '研究 Agent 路由：创建多个 Agent，一个 Agent 负责一个具体任务（如一个 Agent 负责搜索豆瓣上的评分、评论）', status: 'todo', date: '2026-08-22', createdAt: '2026-08-17', url: '', note: '' },
+      { id: 'c18', title: '研究如何增强 codex 的生图', status: 'todo', date: '2026-08-22', createdAt: '2026-08-18', url: 'https://github.com/blackdm666/88API-image-gen', note: '' },
     ]
   },
   {

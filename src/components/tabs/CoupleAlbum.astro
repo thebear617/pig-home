@@ -1,0 +1,239 @@
+---
+import {
+  albumChapters,
+  albumEntries,
+  ALBUM_PLACEHOLDER_SRC,
+  ALBUM_CHAPTER_NUMERAL,
+} from '../../data/album-data';
+import type { AlbumEntry, AlbumChapter } from '../../data/album-data';
+
+const base = import.meta.env.BASE_URL;
+
+/** 把 chapter 内 entry 按 date 升序（无 date 的排到最后），并按奇偶分栏。 */
+function buildChapterSections(chapter: AlbumChapter, entries: AlbumEntry[]) {
+  const inChapter = entries.filter(e => e.chapterId === chapter.id);
+  // 排序：有 date 的升序排前，无 date 的按 id 升序跟随其后
+  const sorted = [...inChapter].sort((a, b) => {
+    if (a.date && b.date) return a.date.localeCompare(b.date);
+    if (a.date) return -1;
+    if (b.date) return 1;
+    return a.id - b.id;
+  });
+  // 计数
+  const filled = inChapter.filter(e => e.status === 'filled').length;
+  // 装到双栏：每行一左一右，按 index 奇偶
+  const rows: Array<{ left: AlbumEntry | null; right: AlbumEntry | null; side: 'left' | 'right' }> = [];
+  for (let i = 0; i < sorted.length; i += 2) {
+    const left = sorted[i] ?? null;
+    const right = sorted[i + 1] ?? null;
+    // 视觉上左右交替：第一组左=第 1 条，第二组右=第 3 条... 用 rows index 决定 side
+    const side = (rows.length % 2 === 0) ? 'left' : 'right';
+    rows.push({ left, right, side });
+  }
+  return { chapter, entries: inChapter, sorted, filled, rows };
+}
+
+const sections = albumChapters.map(c => buildChapterSections(c, albumEntries));
+
+const totalEntries = albumEntries.length;
+const filledEntries = albumEntries.filter(e => e.status === 'filled').length;
+const pendingEntries = totalEntries - filledEntries;
+---
+
+<div data-tab="couple-album">
+  <div class="album-wrap">
+    {/* 顶部封面 */}
+    <header class="album-cover">
+      <p class="album-cover-kicker">A PHOTO ALBUM OF ME AND TA</p>
+      <h1 class="album-cover-title">从第一次见面，到还会继续</h1>
+      <p class="album-cover-kicker">— 我和 ta · 第 80 页 —</p>
+      <div class="album-cover-stats">
+        <div class="album-cover-stat">
+          <span class="album-cover-stat-num">{totalEntries}</span>
+          <span class="album-cover-stat-label">个瞬间</span>
+        </div>
+        <div class="album-cover-stat">
+          <span class="album-cover-stat-num">{filledEntries}</span>
+          <span class="album-cover-stat-label">已记录</span>
+        </div>
+        <div class="album-cover-stat">
+          <span class="album-cover-stat-num">{pendingEntries}</span>
+          <span class="album-cover-stat-label">待拍</span>
+        </div>
+      </div>
+    </header>
+
+    {/* 章节筛选 tab */}
+    <nav class="album-chapters" aria-label="章节">
+      <button class="album-chapter-tab active" type="button" data-album-chapter="all">
+        <span class="album-chapter-tab-num">✦</span>
+        <span class="album-chapter-tab-title">全部</span>
+        <span class="album-chapter-tab-count">{totalEntries} 条</span>
+      </button>
+      {sections.map(({ chapter, entries, filled }) => (
+        <button class="album-chapter-tab" type="button" data-album-chapter={chapter.id}>
+          <span class="album-chapter-tab-num">{ALBUM_CHAPTER_NUMERAL[chapter.id]}</span>
+          <span class="album-chapter-tab-title">{chapter.title}</span>
+          <span class="album-chapter-tab-count">{filled}/{entries.length} 已填</span>
+        </button>
+      ))}
+    </nav>
+
+    {/* 时间线主体 */}
+    <div class="album-timeline" data-album-timeline>
+      {sections.map(({ chapter, sorted, filled, rows }) => (
+        <section class="album-section" data-album-section={chapter.id}>
+          {/* 章节卷首 */}
+          <div class="album-section-card">
+            <p class="album-section-num">{ALBUM_CHAPTER_NUMERAL[chapter.id]}</p>
+            <h2 class="album-section-title">{chapter.title}</h2>
+            <p class="album-section-kicker">{chapter.kicker}</p>
+          </div>
+
+          {/* 双栏拍立得 */}
+          {rows.map(({ left, right, side }) => (
+            <div class={`album-row ${side}`} data-album-row>
+              <div class="album-cell">
+                {left && (
+                  <Fragment>
+                    <article class={`album-polaroid ${left.status}`} data-album-entry={left.id}>
+                      {left.status === 'pending' && <span class="album-polaroid-badge">PENDING</span>}
+                      <button
+                        class="album-polaroid-image-wrap"
+                        type="button"
+                        data-image-src={`${base}${(left.media?.[0]?.src || ALBUM_PLACEHOLDER_SRC)}`}
+                        data-image-alt={`${left.title}${left.media?.[0]?.caption ? ' · ' + left.media[0].caption : ''}`}
+                        title="点击查看大图"
+                        aria-label="放大图片"
+                      >
+                        <img
+                          class="album-polaroid-img"
+                          src={`${base}${(left.media?.[0]?.src || ALBUM_PLACEHOLDER_SRC)}`}
+                          alt={left.title}
+                          loading="lazy"
+                        />
+                      </button>
+                      <div class="album-meta">
+                        <p class="album-meta-num">№ {String(left.id).padStart(2, '0')}</p>
+                        <h3 class="album-meta-title">{left.title}</h3>
+                        {left.date && <span class="album-meta-date">📅 {left.date}</span>}
+                        {left.note && <p class="album-meta-note">{left.note}</p>}
+                      </div>
+                    </article>
+                  </Fragment>
+                )}
+              </div>
+              <div class="album-cell">
+                {right && (
+                  <Fragment>
+                    <article class={`album-polaroid ${right.status}`} data-album-entry={right.id}>
+                      {right.status === 'pending' && <span class="album-polaroid-badge">PENDING</span>}
+                      <button
+                        class="album-polaroid-image-wrap"
+                        type="button"
+                        data-image-src={`${base}${(right.media?.[0]?.src || ALBUM_PLACEHOLDER_SRC)}`}
+                        data-image-alt={`${right.title}${right.media?.[0]?.caption ? ' · ' + right.media[0].caption : ''}`}
+                        title="点击查看大图"
+                        aria-label="放大图片"
+                      >
+                        <img
+                          class="album-polaroid-img"
+                          src={`${base}${(right.media?.[0]?.src || ALBUM_PLACEHOLDER_SRC)}`}
+                          alt={right.title}
+                          loading="lazy"
+                        />
+                      </button>
+                      <div class="album-meta">
+                        <p class="album-meta-num">№ {String(right.id).padStart(2, '0')}</p>
+                        <h3 class="album-meta-title">{right.title}</h3>
+                        {right.date && <span class="album-meta-date">📅 {right.date}</span>}
+                        {right.note && <p class="album-meta-note">{right.note}</p>}
+                      </div>
+                    </article>
+                  </Fragment>
+                )}
+              </div>
+            </div>
+          ))}
+
+          {filled === 0 && (
+            <div class="album-empty">
+              本章节还没拍到第一张照片。等你遇到那一瞬间，把它补上吧。
+            </div>
+          )}
+        </section>
+      ))}
+
+      {/* 章节末尾 · 「未完待续」 */}
+      <footer class="album-foot">
+        <h2 class="album-foot-title">未完待续</h2>
+        <p class="album-foot-note">第 81 页，留给明天的我们。</p>
+      </footer>
+    </div>
+  </div>
+</div>
+
+<script>
+  // ── 章节筛选 ──
+  const chapterTabs = document.querySelectorAll<HTMLButtonElement>('[data-album-chapter]');
+  const sections = document.querySelectorAll<HTMLElement>('[data-album-section]');
+  const foot = document.querySelector<HTMLElement>('.album-foot');
+
+  function applyChapterFilter(value: string) {
+    sections.forEach(section => {
+      const match = value === 'all' || section.dataset.albumSection === value;
+      section.hidden = !match;
+    });
+    if (foot) foot.hidden = !(value === 'all');
+  }
+
+  chapterTabs.forEach(tab => {
+    tab.addEventListener('click', () => {
+      chapterTabs.forEach(t => t.classList.toggle('active', t === tab));
+      const value = tab.dataset.albumChapter || 'all';
+      applyChapterFilter(value);
+      const url = new URL(window.location.href);
+      if (value === 'all') url.searchParams.delete('ch');
+      else url.searchParams.set('ch', value);
+      window.history.replaceState({}, '', url);
+    });
+  });
+
+  // 初始：尊重 URL 上的 ?ch= 参数
+  const initialCh = new URLSearchParams(window.location.search).get('ch');
+  if (initialCh) {
+    const target = Array.from(chapterTabs).find(t => t.dataset.albumChapter === initialCh);
+    if (target) {
+      target.click();
+    }
+  }
+
+  // ── 图片灯箱（复用 home-image-modal 模式，独立不污染全局） ──
+  const modal = document.querySelector<HTMLElement>('#albumImageModal');
+  const modalImg = modal?.querySelector<HTMLImageElement>('[data-modal-image]');
+  const close = () => {
+    if (modal) modal.hidden = true;
+    document.body.style.overflow = '';
+  };
+  document.querySelectorAll<HTMLButtonElement>('[data-image-src]').forEach(trigger => {
+    trigger.addEventListener('click', () => {
+      if (!modal || !modalImg) return;
+      modalImg.src = trigger.dataset.imageSrc || '';
+      modalImg.alt = trigger.dataset.imageAlt || '';
+      modal.hidden = false;
+      document.body.style.overflow = 'hidden';
+    });
+  });
+  modal?.querySelectorAll<HTMLElement>('[data-modal-close]').forEach(el => el.addEventListener('click', close));
+  document.addEventListener('keydown', event => {
+    if (event.key === 'Escape' && modal && !modal.hidden) close();
+  });
+</script>
+
+<div class="home-image-modal" id="albumImageModal" role="dialog" aria-modal="true" aria-label="相册图片预览" hidden>
+  <div class="home-image-modal-backdrop" data-modal-close></div>
+  <div class="home-image-modal-content">
+    <button class="home-image-modal-close" type="button" data-modal-close aria-label="关闭图片预览">✕</button>
+    <img data-modal-image src="" alt="" />
+  </div>
+</div>

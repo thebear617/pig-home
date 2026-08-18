@@ -14,6 +14,7 @@ export const TABS: Tab[] = [
   { id: 'membership', title: '会员订阅', icon: '💳' },
   { id: 'food-map', title: '美食地图', icon: '🗺️' },
   { id: 'relationship-timeline', title: '关系时间线', icon: '💞' },
+  { id: 'couple-album', title: '情侣相册', icon: '📸' },
 ];
 
 export const DEFAULT_TAB = 'daily-tracker';

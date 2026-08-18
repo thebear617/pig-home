@@ -53,4 +53,5 @@ export const utilityRecords: Record<string, { elecRemaining: number; recharge?: 
   '2026-08-15': { elecRemaining: 7.05 },
   '2026-08-16': { elecRemaining: 6.06 },
   '2026-08-17': { elecRemaining: 5.06 },
+  '2026-08-18': { elecRemaining: 4.06 },
 };
