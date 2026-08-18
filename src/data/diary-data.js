@@ -6612,6 +6612,83 @@ export const diaryRecords = {
         "dishGuess": null
       }
     ]
+  },
+  "2026-08-18": {
+    "value": 9,
+    "tasks": [
+      {
+        "status": "x",
+        "time": "00:00-01:00",
+        "desc": "在华星城网鱼打电动",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      },
+      {
+        "status": "x",
+        "time": "01:00-02:00",
+        "desc": "回家洗澡、玩手机",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      },
+      {
+        "status": "x",
+        "time": "02:00-06:00",
+        "desc": "睡觉",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      },
+      {
+        "status": "x",
+        "time": "06:00-08:00",
+        "desc": "玩手机",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      },
+      {
+        "status": "x",
+        "time": "08:00-12:00",
+        "desc": "睡觉",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      },
+      {
+        "status": "x",
+        "time": "12:00-13:00",
+        "desc": "玩手机",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      },
+      {
+        "status": "x",
+        "time": "13:00-14:00",
+        "desc": "开发（home：美食地图新增姜胖胖自助烤肉、久雀棋牌（江南万达），category 枚举扩充含棋牌娱乐）",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      },
+      {
+        "status": "x",
+        "time": "14:00-15:30",
+        "desc": "出去吃布拉王的肠粉和猪霸王的鲜肉粉",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      },
+      {
+        "status": "x",
+        "time": "15:30-17:50",
+        "desc": "开发（devnotes：补全个人开发时间线视觉档案，为猫猫/猪窝/GameNotes/常识/科研/熊窝/ChatNotes/开发笔记各站点补全历史 UI 时间线、持久化开发时间线分页状态，发布 v0.15.0，补写第 33/34 周随笔）",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      }
+    ]
   }
 };
 export const specialEvents = {

@@ -2,213 +2,194 @@
 import {
   albumChapters,
   albumEntries,
-  ALBUM_PLACEHOLDER_SRC,
   ALBUM_CHAPTER_NUMERAL,
+  TOTAL_PAGES,
 } from '../../data/album-data';
-import type { AlbumEntry, AlbumChapter } from '../../data/album-data';
+import type { AlbumEntry } from '../../data/album-data';
+import AlbumPage from './AlbumPage.astro';
 
 const base = import.meta.env.BASE_URL;
 
-/** 把 chapter 内 entry 按 date 升序（无 date 的排到最后），并按奇偶分栏。 */
-function buildChapterSections(chapter: AlbumChapter, entries: AlbumEntry[]) {
-  const inChapter = entries.filter(e => e.chapterId === chapter.id);
-  // 排序：有 date 的升序排前，无 date 的按 id 升序跟随其后
-  const sorted = [...inChapter].sort((a, b) => {
-    if (a.date && b.date) return a.date.localeCompare(b.date);
-    if (a.date) return -1;
-    if (b.date) return 1;
-    return a.id - b.id;
-  });
-  // 计数
-  const filled = inChapter.filter(e => e.status === 'filled').length;
-  // 装到双栏：每行一左一右，按 index 奇偶
-  const rows: Array<{ left: AlbumEntry | null; right: AlbumEntry | null; side: 'left' | 'right' }> = [];
-  for (let i = 0; i < sorted.length; i += 2) {
-    const left = sorted[i] ?? null;
-    const right = sorted[i + 1] ?? null;
-    // 视觉上左右交替：第一组左=第 1 条，第二组右=第 3 条... 用 rows index 决定 side
-    const side = (rows.length % 2 === 0) ? 'left' : 'right';
-    rows.push({ left, right, side });
+/** 把 80 条 entry 按对开页(page) 分组，每组含 { page, left, right } */
+function buildPages() {
+  const pages: Array<{ page: number; left: AlbumEntry | null; right: AlbumEntry | null }> = [];
+  const byPage = new Map<number, AlbumEntry[]>();
+  for (const e of albumEntries) {
+    if (!byPage.has(e.page)) byPage.set(e.page, []);
+    byPage.get(e.page)!.push(e);
   }
-  return { chapter, entries: inChapter, sorted, filled, rows };
+  for (let p = 1; p <= TOTAL_PAGES; p++) {
+    const list = byPage.get(p) || [];
+    pages.push({
+      page: p,
+      left: list.find(e => e.side === 'left') || null,
+      right: list.find(e => e.side === 'right') || null,
+    });
+  }
+  return pages;
 }
 
-const sections = albumChapters.map(c => buildChapterSections(c, albumEntries));
+const pages = buildPages();
 
-const totalEntries = albumEntries.length;
-const filledEntries = albumEntries.filter(e => e.status === 'filled').length;
-const pendingEntries = totalEntries - filledEntries;
+// 章节 → 起始对开页：从实际条目推导，避免章节内容变更后跳转失效。
+const chapterStartPage = albumChapters.map((chapter) => {
+  const firstEntry = albumEntries
+    .filter(entry => entry.chapterId === chapter.id)
+    .sort((a, b) => a.page - b.page)[0];
+  return firstEntry?.page ?? 0;
+});
+
+const filledCount = albumEntries.filter(e => e.status === 'filled').length;
+const pendingCount = albumEntries.length - filledCount;
+
 ---
 
-<div data-tab="couple-album">
-  <div class="album-wrap">
-    {/* 顶部封面 */}
-    <header class="album-cover">
-      <p class="album-cover-kicker">A PHOTO ALBUM OF ME AND TA</p>
-      <h1 class="album-cover-title">从第一次见面，到还会继续</h1>
-      <p class="album-cover-kicker">— 我和 ta · 第 80 页 —</p>
-      <div class="album-cover-stats">
-        <div class="album-cover-stat">
-          <span class="album-cover-stat-num">{totalEntries}</span>
-          <span class="album-cover-stat-label">个瞬间</span>
-        </div>
-        <div class="album-cover-stat">
-          <span class="album-cover-stat-num">{filledEntries}</span>
-          <span class="album-cover-stat-label">已记录</span>
-        </div>
-        <div class="album-cover-stat">
-          <span class="album-cover-stat-num">{pendingEntries}</span>
-          <span class="album-cover-stat-label">待拍</span>
-        </div>
-      </div>
-    </header>
+<div data-tab="couple-album" data-album-root tabindex="-1">
+  <div class="album-flip">
 
-    {/* 章节筛选 tab */}
-    <nav class="album-chapters" aria-label="章节">
-      <button class="album-chapter-tab active" type="button" data-album-chapter="all">
-        <span class="album-chapter-tab-num">✦</span>
-        <span class="album-chapter-tab-title">全部</span>
-        <span class="album-chapter-tab-count">{totalEntries} 条</span>
+    {/* ── 封面页（page 0）── */}
+    <section class="album-sheet" data-album-sheet="0">
+      <div class="album-masthead"><span>THE TWO OF US</span><span>VOL. 01 · 2026</span></div>
+      <div class="album-cover2">
+        <p class="album-cover2-kicker">A PHOTO ALBUM OF ME AND TA</p>
+        <h1 class="album-cover2-title">从第一次见面<br />到还会继续</h1>
+        <p class="album-cover2-sub">我和 ta · 第 80 页 · 未完待续</p>
+        <div class="album-cover2-stats">
+          <div class="album-cover2-stat">
+            <span class="album-cover2-stat-num">{albumEntries.length}</span>
+            <span class="album-cover2-stat-label">个瞬间</span>
+          </div>
+          <div class="album-cover2-stat">
+            <span class="album-cover2-stat-num">{filledCount}</span>
+            <span class="album-cover2-stat-label">已记录</span>
+          </div>
+          <div class="album-cover2-stat">
+            <span class="album-cover2-stat-num">{pendingCount}</span>
+            <span class="album-cover2-stat-label">待填</span>
+          </div>
+        </div>
+        <button class="album-cover2-open" type="button" data-album-goto="1">翻开相册 →</button>
+      </div>
+    </section>
+
+    {/* ── 40 个对开页 ── */}
+    {pages.map(({ page, left, right }) => (
+      <section class="album-sheet" data-album-sheet={page} hidden>
+        <div class="album-masthead"><span>THE TWO OF US</span><span>{String(page).padStart(2, '0')} — {String(TOTAL_PAGES).padStart(2, '0')}</span></div>
+        <div class="album-open">
+          {/* 左页 */}
+          <div class="album-page album-page-left">
+            {left && (
+              <AlbumPage entry={left} base={base} pageNum={page * 2 - 1} isLeft={true} />
+            )}
+          </div>
+          {/* 中央折线 */}
+          <div class="album-spine"></div>
+          {/* 右页 */}
+          <div class="album-page album-page-right">
+            {right && (
+              <AlbumPage entry={right} base={base} pageNum={page * 2} isLeft={false} />
+            )}
+          </div>
+        </div>
+      </section>
+    ))}
+
+  </div>
+
+  {/* ── 底部翻页控制器 ── */}
+  <div class="album-flipbar">
+    <button class="album-flip-btn" type="button" data-album-prev aria-label="上一页">◀ 上一页</button>
+    <div class="album-flip-nav">
+      <span class="album-flip-page-label">第</span>
+      <select class="album-flip-select" data-album-select aria-label="跳转页码">
+        <option value="0">封面</option>
+        {pages.map(({ page }) => (
+          <option value={page}>{page} / {TOTAL_PAGES}</option>
+        ))}
+      </select>
+      <span class="album-flip-page-label">页</span>
+    </div>
+    <button class="album-flip-btn" type="button" data-album-next aria-label="下一页">下一页 ▶</button>
+  </div>
+
+  {/* ── 章节快捷跳转（可选收起）── */}
+  <details class="album-chapters2" open>
+    <summary class="album-chapters2-summary">跳转章节</summary>
+    <div class="album-chapters2-grid">
+       <button class="album-chapters2-tab" type="button" data-album-goto="0">
+        <span class="album-chapters2-num">✦</span><span>封面</span>
       </button>
-      {sections.map(({ chapter, entries, filled }) => (
-        <button class="album-chapter-tab" type="button" data-album-chapter={chapter.id}>
-          <span class="album-chapter-tab-num">{ALBUM_CHAPTER_NUMERAL[chapter.id]}</span>
-          <span class="album-chapter-tab-title">{chapter.title}</span>
-          <span class="album-chapter-tab-count">{filled}/{entries.length} 已填</span>
+      {albumChapters.map((c, i) => (
+        <button class="album-chapters2-tab" type="button" data-album-goto={chapterStartPage[i]}>
+          <span class="album-chapters2-num">{ALBUM_CHAPTER_NUMERAL[c.id]}</span><span>{c.title}</span>
         </button>
       ))}
-    </nav>
-
-    {/* 时间线主体 */}
-    <div class="album-timeline" data-album-timeline>
-      {sections.map(({ chapter, sorted, filled, rows }) => (
-        <section class="album-section" data-album-section={chapter.id}>
-          {/* 章节卷首 */}
-          <div class="album-section-card">
-            <p class="album-section-num">{ALBUM_CHAPTER_NUMERAL[chapter.id]}</p>
-            <h2 class="album-section-title">{chapter.title}</h2>
-            <p class="album-section-kicker">{chapter.kicker}</p>
-          </div>
-
-          {/* 双栏拍立得 */}
-          {rows.map(({ left, right, side }) => (
-            <div class={`album-row ${side}`} data-album-row>
-              <div class="album-cell">
-                {left && (
-                  <Fragment>
-                    <article class={`album-polaroid ${left.status}`} data-album-entry={left.id}>
-                      {left.status === 'pending' && <span class="album-polaroid-badge">PENDING</span>}
-                      <button
-                        class="album-polaroid-image-wrap"
-                        type="button"
-                        data-image-src={`${base}${(left.media?.[0]?.src || ALBUM_PLACEHOLDER_SRC)}`}
-                        data-image-alt={`${left.title}${left.media?.[0]?.caption ? ' · ' + left.media[0].caption : ''}`}
-                        title="点击查看大图"
-                        aria-label="放大图片"
-                      >
-                        <img
-                          class="album-polaroid-img"
-                          src={`${base}${(left.media?.[0]?.src || ALBUM_PLACEHOLDER_SRC)}`}
-                          alt={left.title}
-                          loading="lazy"
-                        />
-                      </button>
-                      <div class="album-meta">
-                        <p class="album-meta-num">№ {String(left.id).padStart(2, '0')}</p>
-                        <h3 class="album-meta-title">{left.title}</h3>
-                        {left.date && <span class="album-meta-date">📅 {left.date}</span>}
-                        {left.note && <p class="album-meta-note">{left.note}</p>}
-                      </div>
-                    </article>
-                  </Fragment>
-                )}
-              </div>
-              <div class="album-cell">
-                {right && (
-                  <Fragment>
-                    <article class={`album-polaroid ${right.status}`} data-album-entry={right.id}>
-                      {right.status === 'pending' && <span class="album-polaroid-badge">PENDING</span>}
-                      <button
-                        class="album-polaroid-image-wrap"
-                        type="button"
-                        data-image-src={`${base}${(right.media?.[0]?.src || ALBUM_PLACEHOLDER_SRC)}`}
-                        data-image-alt={`${right.title}${right.media?.[0]?.caption ? ' · ' + right.media[0].caption : ''}`}
-                        title="点击查看大图"
-                        aria-label="放大图片"
-                      >
-                        <img
-                          class="album-polaroid-img"
-                          src={`${base}${(right.media?.[0]?.src || ALBUM_PLACEHOLDER_SRC)}`}
-                          alt={right.title}
-                          loading="lazy"
-                        />
-                      </button>
-                      <div class="album-meta">
-                        <p class="album-meta-num">№ {String(right.id).padStart(2, '0')}</p>
-                        <h3 class="album-meta-title">{right.title}</h3>
-                        {right.date && <span class="album-meta-date">📅 {right.date}</span>}
-                        {right.note && <p class="album-meta-note">{right.note}</p>}
-                      </div>
-                    </article>
-                  </Fragment>
-                )}
-              </div>
-            </div>
-          ))}
-
-          {filled === 0 && (
-            <div class="album-empty">
-              本章节还没拍到第一张照片。等你遇到那一瞬间，把它补上吧。
-            </div>
-          )}
-        </section>
-      ))}
-
-      {/* 章节末尾 · 「未完待续」 */}
-      <footer class="album-foot">
-        <h2 class="album-foot-title">未完待续</h2>
-        <p class="album-foot-note">第 81 页，留给明天的我们。</p>
-      </footer>
     </div>
-  </div>
+  </details>
 </div>
 
 <script>
-  // ── 章节筛选 ──
-  const chapterTabs = document.querySelectorAll<HTMLButtonElement>('[data-album-chapter]');
-  const sections = document.querySelectorAll<HTMLElement>('[data-album-section]');
-  const foot = document.querySelector<HTMLElement>('.album-foot');
+  const root = document.querySelector<HTMLElement>('[data-album-root]');
+  if (root) {
+    const sheets = Array.from(root.querySelectorAll<HTMLElement>('[data-album-sheet]'));
+    const select = root.querySelector<HTMLSelectElement>('[data-album-select]');
+    const mainArea = root.closest<HTMLElement>('.main-area');
+    const totalPages = sheets.reduce((max, sheet) => {
+      const page = Number(sheet.dataset.albumSheet);
+      return page > max ? page : max;
+    }, 0);
+    let current = 0;
 
-  function applyChapterFilter(value: string) {
-    sections.forEach(section => {
-      const match = value === 'all' || section.dataset.albumSection === value;
-      section.hidden = !match;
-    });
-    if (foot) foot.hidden = !(value === 'all');
-  }
-
-  chapterTabs.forEach(tab => {
-    tab.addEventListener('click', () => {
-      chapterTabs.forEach(t => t.classList.toggle('active', t === tab));
-      const value = tab.dataset.albumChapter || 'all';
-      applyChapterFilter(value);
-      const url = new URL(window.location.href);
-      if (value === 'all') url.searchParams.delete('ch');
-      else url.searchParams.set('ch', value);
-      window.history.replaceState({}, '', url);
-    });
-  });
-
-  // 初始：尊重 URL 上的 ?ch= 参数
-  const initialCh = new URLSearchParams(window.location.search).get('ch');
-  if (initialCh) {
-    const target = Array.from(chapterTabs).find(t => t.dataset.albumChapter === initialCh);
-    if (target) {
-      target.click();
+    function fitActiveSheet() {
+      const activeSheet = sheets.find(sheet => Number(sheet.dataset.albumSheet) === current);
+      if (!activeSheet) return;
+      activeSheet.style.removeProperty('min-height');
+      const openPage = activeSheet.querySelector<HTMLElement>('.album-open');
+      if (openPage && openPage.scrollHeight > activeSheet.clientHeight) {
+        activeSheet.style.minHeight = `${openPage.scrollHeight}px`;
+      }
     }
+
+    function showPage(page: number) {
+      current = Math.max(0, Math.min(totalPages, page));
+      sheets.forEach(s => {
+        s.hidden = Number(s.dataset.albumSheet) !== current;
+      });
+      if (select) select.value = String(current);
+      const url = new URL(window.location.href);
+      if (current === 0) url.searchParams.delete('p');
+      else url.searchParams.set('p', String(current));
+      window.history.replaceState({}, '', url);
+      mainArea?.scrollTo({ top: 0 });
+      root.focus({ preventScroll: true });
+      requestAnimationFrame(fitActiveSheet);
+    }
+
+    root.querySelectorAll<HTMLButtonElement>('[data-album-prev]').forEach(b =>
+      b.addEventListener('click', () => showPage(current - 1)));
+    root.querySelectorAll<HTMLButtonElement>('[data-album-next]').forEach(b =>
+      b.addEventListener('click', () => showPage(current + 1)));
+    root.querySelectorAll<HTMLButtonElement>('[data-album-goto]').forEach(b =>
+      b.addEventListener('click', () => showPage(Number(b.dataset.albumGoto) || 0)));
+    select?.addEventListener('change', () => showPage(Number(select.value) || 0));
+
+    // 键盘左右翻页
+    document.addEventListener('keydown', (event) => {
+      if (modal && !modal.hidden) return;
+      const target = event.target as HTMLElement | null;
+      if (target?.matches('input, select, textarea, button, [contenteditable="true"]')) return;
+      if (event.key === 'ArrowRight') { event.preventDefault(); showPage(current + 1); }
+      if (event.key === 'ArrowLeft') { event.preventDefault(); showPage(current - 1); }
+    });
+
+    // 初始页码：URL ?p=
+    const initial = new URLSearchParams(window.location.search).get('p');
+    showPage(initial ? Number(initial) || 0 : 0);
+    window.addEventListener('resize', fitActiveSheet);
   }
 
-  // ── 图片灯箱（复用 home-image-modal 模式，独立不污染全局） ──
+  // ── 图片灯箱（对开页内单图放大） ──
   const modal = document.querySelector<HTMLElement>('#albumImageModal');
   const modalImg = modal?.querySelector<HTMLImageElement>('[data-modal-image]');
   const close = () => {

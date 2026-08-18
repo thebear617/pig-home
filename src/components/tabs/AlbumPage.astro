@@ -1,0 +1,64 @@
+---
+import type { AlbumEntry, AlbumBlock } from '../../data/album-data';
+
+interface Props {
+  entry: AlbumEntry;
+  base: string;
+  pageNum: number; // 独立页码（左=2n-1，右=2n）
+  isLeft: boolean;
+}
+
+const { entry, base, pageNum, isLeft } = Astro.props;
+const pageLabel = String(pageNum).padStart(2, '0');
+const dateStr = entry.dateLong || (entry.date ? entry.date.replace(/-/g, '.') : '');
+const mediaList = entry.media || [];
+const blocks: AlbumBlock[] = entry.blocks?.length
+  ? entry.blocks
+  : (entry.text ? [{ type: 'paragraph', text: entry.text }] : []);
+const photoClass = mediaList.length === 1
+  ? 'single'
+  : mediaList.length > 4
+    ? 'count-more'
+    : `count-${mediaList.length}`;
+---
+
+<Fragment>
+  {/* 视觉区：0 张也保留优雅的可填占位；1–4 张使用不对称杂志网格 */}
+  <div class="album-page-visual">
+    {mediaList.length > 0 ? (
+      <div class={`album-page-photos ${photoClass}`}>
+        {mediaList.map((m) => (
+          <button
+            class={`album-page-photo ${m.span ? `span-${m.span}` : ''}`}
+            type="button"
+            data-image-src={`${base}${m.src}`}
+            data-image-alt={`${entry.title}${m.caption ? ' · ' + m.caption : ''}`}
+            title={m.caption || '点击放大'}
+            aria-label="放大图片"
+          >
+            <img src={`${base}${m.src}`} alt={m.caption || entry.title} loading="lazy" />
+            {m.caption && <span class="album-page-photo-caption">{m.caption}</span>}
+          </button>
+        ))}
+      </div>
+    ) : (
+      <div class="album-page-placeholder">
+        <span class="album-page-placeholder-ico">○</span>
+        <p class="album-page-placeholder-title">{entry.title}</p>
+        <p class="album-page-placeholder-hint">{entry.status === 'filled' ? '照片待补充' : '待记录'}</p>
+      </div>
+    )}
+  </div>
+  <div class="album-page-copy">
+    {dateStr ? <span class="album-page-date">{dateStr}</span> : <span class="album-page-date">待记录</span>}
+    <h3 class={`album-page-title ${entry.status !== 'filled' ? 'album-page-title-muted' : ''}`}>{entry.title}</h3>
+    <div class="album-page-blocks">
+      {blocks.map((block) => (
+        <p class={`album-page-block album-page-block-${block.type}`}>{block.text}</p>
+      ))}
+    </div>
+  </div>
+
+  {/* 页码 */}
+  <span class={`album-page-number ${isLeft ? 'left' : 'right'}`}>{pageLabel}</span>
+</Fragment>

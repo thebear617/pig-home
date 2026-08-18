@@ -44,14 +44,14 @@ export const TODO_BOARDS: TodoBoard[] = [
     icon: '💻',
     items: [
       { id: 'c8', title: '研究用家里的台式机作为自己的服务器', status: 'todo', date: '2026-08-25', createdAt: '2026-08-05', url: '', note: '' },
-      { id: 'c10', title: '复现 chatnotes：顺序学习的时候， 一颗节点树（N 个节点=N 个卡片画布），逆序总结收敛的时候，一篇markdown（N 个悬浮窗=经过内容总结后的 N 个节点）', status: 'doing', date: '2026-08-10', createdAt: '2026-08-08', url: 'https://www.bilibili.com/video/BV11mNA6vEJX', note: 'B 站视频项目复现' },
+      { id: 'c10', title: '复现 chatnotes', status: 'doing', date: '2026-08-10', createdAt: '2026-08-08', url: 'https://www.bilibili.com/video/BV11mNA6vEJX', note: '顺序学习的时候， 一颗节点树（N 个节点=N 个卡片画布），逆序总结收敛的时候，一篇markdown（N 个悬浮窗=经过内容总结后的 N 个节点）-无限画布去做节点树，就是可以自己任意拖拽组织的（这个能实现吗，感觉聊天对话里不能实现，但每个对话总结好以后就能实现了）' },
       { id: 'c11', title: 'MiniMax 的 2000 积分到期', status: 'todo', date: '2026-11-11', createdAt: '2026-08-12', url: '', note: '到期前用掉，别浪费' },
       { id: 'c12', title: '尝试 codex 原生功能与 skill：browser、computer use、product design、figma、image gen、goal 模式 for UI', status: 'todo', date: '2026-08-22', createdAt: '2026-08-14', url: '', note: '' },
-      { id: 'c14', title: '补全之前个人开发时间线的 UI（个人审美记录）', status: 'doing', date: '2026-08-17', createdAt: '2026-08-16', url: '', note: '' },
       { id: 'c15', title: '参考 B 站视频美化自己的个人仪表盘，学习他的记笔记方式', status: 'todo', date: '2026-08-22', createdAt: '2026-08-16', url: 'https://www.bilibili.com/video/BV1bkPYzqET3', note: '' },
       { id: 'c16', title: 'idea：平时吵架/演讲前录音，丢给 AI 分析，做成网页接口', status: 'todo', date: '2026-08-22', createdAt: '2026-08-16', url: '', note: '' },
       { id: 'c17', title: '研究 Agent 路由：创建多个 Agent，一个 Agent 负责一个具体任务（如一个 Agent 负责搜索豆瓣上的评分、评论）', status: 'todo', date: '2026-08-22', createdAt: '2026-08-17', url: '', note: '' },
       { id: 'c18', title: '研究如何增强 codex 的生图', status: 'todo', date: '2026-08-22', createdAt: '2026-08-18', url: 'https://github.com/blackdm666/88API-image-gen', note: '' },
+      { id: 'c19', title: '参考 B 站视频优化自己的看板视图', status: 'todo', date: '2026-08-22', createdAt: '2026-08-18', url: 'https://www.bilibili.com/video/BV1F2Mw6FExo', note: '' },
     ]
   },
   {
