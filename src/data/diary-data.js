@@ -6814,6 +6814,208 @@ export const diaryRecords = {
         "dishGuess": null
       }
     ]
+  },
+  "2026-08-20": {
+    "value": 10,
+    "tasks": [
+      {
+        "status": "x",
+        "time": "00:00-00:20",
+        "desc": "洗澡",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      },
+      {
+        "status": "x",
+        "time": "00:20-09:00",
+        "desc": "睡觉",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      },
+      {
+        "status": "x",
+        "time": "09:00-10:20",
+        "desc": "开发（lifenotes：完善常识笔记后台编辑体验与存量内容（v1.1.2）、按更新时间排序常识笔记列表、优化笔记打印与 PDF 导出；devnotes：补充常识笔记 v1.1.2 开发时间线）",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      },
+      {
+        "status": "x",
+        "time": "10:20-10:40",
+        "desc": "去吃老东巷桂林米粉（不是很好吃）",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      },
+      {
+        "status": "x",
+        "time": "10:40-13:00",
+        "desc": "去图书馆学习，探索人工智能综述",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      },
+      {
+        "status": "x",
+        "time": "13:00-18:00",
+        "desc": "去吃水街美食，一边骑车一边打卡了三家咖啡店",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      },
+      {
+        "status": "x",
+        "time": "18:00-19:00",
+        "desc": "洗澡，进行了一会儿开发",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      },
+      {
+        "status": "x",
+        "time": "19:00-20:30",
+        "desc": "在家里吃重庆牛肉火锅",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      },
+      {
+        "status": "x",
+        "time": "20:30-23:30",
+        "desc": "开发（home：美食地图新增 Together Coffee（新竹路·推荐）、方几咖啡（民族广场·想去）；lifenotes：新增咖啡科普笔记）",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      },
+      {
+        "status": "x",
+        "time": "23:30-24:00",
+        "desc": "玩手机",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      }
+    ]
+  },
+  "2026-08-21": {
+    "value": 14,
+    "tasks": [
+      {
+        "status": "x",
+        "time": "00:00-00:40",
+        "desc": "玩手机",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      },
+      {
+        "status": "x",
+        "time": "00:40-08:40",
+        "desc": "睡觉",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      },
+      {
+        "status": "x",
+        "time": "08:40-09:00",
+        "desc": "玩手机",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      },
+      {
+        "status": "x",
+        "time": "09:00-09:30",
+        "desc": "开发聊天站（chatnotes：增加 Dots 路由与回答模式、完善工作区批量操作与关系视图）",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      },
+      {
+        "status": "x",
+        "time": "09:30-11:00",
+        "desc": "逛双码井，去竹塘路吃大唐卷筒粉",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      },
+      {
+        "status": "x",
+        "time": "11:00-13:00",
+        "desc": "在区图自习，进行开发（devnotes：更新开发知识库内容、补充八月随笔、修正后台预览区底部留白、发布 v0.15.3 增加后台自动保存、补充自动保存开发时间线、按大版本判断时间线缺口；lifenotes：v1.1.3 增加后台自动保存、重整沟通技巧笔记）",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      },
+      {
+        "status": "x",
+        "time": "13:00-14:00",
+        "desc": "去吃发源地桂林米粉",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      },
+      {
+        "status": "x",
+        "time": "14:00-14:15",
+        "desc": "坐地铁去灰光咖啡",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      },
+      {
+        "status": "x",
+        "time": "14:15-17:00",
+        "desc": "开发",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      },
+      {
+        "status": "x",
+        "time": "17:00-18:00",
+        "desc": "回家",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      },
+      {
+        "status": "x",
+        "time": "18:00-18:30",
+        "desc": "洗澡",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      },
+      {
+        "status": "x",
+        "time": "18:30-19:30",
+        "desc": "学习",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      },
+      {
+        "status": "x",
+        "time": "19:30-20:00",
+        "desc": "吃饭",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      },
+      {
+        "status": "x",
+        "time": "20:00-22:00",
+        "desc": "和过马路打视频",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      }
+    ]
   }
 };
 export const specialEvents = {

@@ -51,6 +51,7 @@ export const TODO_BOARDS: TodoBoard[] = [
       { id: 'c17', title: '研究 Agent 路由：创建多个 Agent，一个 Agent 负责一个具体任务（如一个 Agent 负责搜索豆瓣上的评分、评论）', status: 'todo', date: '2026-08-22', createdAt: '2026-08-17', url: '', note: '' },
       { id: 'c18', title: '研究如何增强 codex 的生图', status: 'todo', date: '2026-08-22', createdAt: '2026-08-18', url: 'https://github.com/blackdm666/88API-image-gen', note: '' },
       { id: 'c19', title: '参考 B 站视频优化自己的看板视图', status: 'todo', date: '2026-08-22', createdAt: '2026-08-18', url: 'https://www.bilibili.com/video/BV1F2Mw6FExo', note: '' },
+      { id: 'c20', title: '了解什么叫 BYOK', status: 'todo', date: '2026-08-23', createdAt: '2026-08-20', url: '', note: '' },
     ]
   },
   {
@@ -58,7 +59,7 @@ export const TODO_BOARDS: TodoBoard[] = [
     name: '科研',
     icon: '🔍',
     items: [
-      { id: 'r3', title: '准备 8 月 21 日的大组会', status: 'doing', date: '2026-08-17', createdAt: '2026-08-17', url: '', note: '8/21 大组会' }
+      { id: 'r4', title: '8 月 23 号下午 3 点，参加多模态组的工作汇报（大组会）', status: 'todo', date: '2026-08-23', createdAt: '2026-08-20', url: '', note: '' }
     ]
   }
 ];
