@@ -35,7 +35,8 @@ export const ARCHIVED_TODO_BOARDS: TodoBoard[] = [
       { id: 'r2', title: '录制 IGrass 12 分钟 oral 视频', status: 'done', date: '2026-08-06', createdAt: '2026-08-05', url: '', note: '8/6 20:30-22:30 录制完成' },
       { id: 'v10', title: '这个 skill，让 AI 做出顶级审美的图表', url: 'https://www.bilibili.com/video/BV14HgY6YEMx/?share_source=copy_web&vd_source=03f4c4c1219f23af84f99d441d39f961', status: 'done', note: '来源：B站；已完成 8/7', createdAt: '2026-07-31', date: '2026-08-07' },
       { id: 'v2', title: '中科院研究生如何用 AI 把 idea 一步步变成论文', url: 'https://www.bilibili.com/video/BV1LKjS6gEh4/', status: 'done', note: '预计归 reanotes/literature；已完成 8/7', createdAt: '2026-07-18', date: '2026-08-07' },
-      { id: 'v11', title: 'Cloud code 负责人的 1 小时播客，讲述他对 Vibe Coding 的看法', url: 'http://xhslink.cn/o/5mYU5BrF8KZ', status: 'done', note: '来源：小红书；已完成 8/7', createdAt: '2026-07-31', date: '2026-08-07' }
+      { id: 'v11', title: 'Cloud code 负责人的 1 小时播客，讲述他对 Vibe Coding 的看法', url: 'http://xhslink.cn/o/5mYU5BrF8KZ', status: 'done', note: '来源：小红书；已完成 8/7', createdAt: '2026-07-31', date: '2026-08-07' },
+      { id: 'r4', title: '8 月 23 号下午 3 点，参加多模态组的工作汇报（大组会）', status: 'done', date: '2026-08-23', createdAt: '2026-08-20', url: '', note: '8/23 13:30-16:00 边开大组会边思考学习' }
     ]
   },
   {
@@ -63,7 +64,8 @@ export const ARCHIVED_TODO_BOARDS: TodoBoard[] = [
       { id: 'l29', title: '下午 3 点开大组会：VGGT: Visual Geometry Grounded Transformer', status: 'done', date: '2026-08-15', createdAt: '2026-08-15', url: '', note: '下午 3 点' },
       { id: 'l30', title: '去电信营业厅办理新的电话卡', status: 'done', date: '2026-08-17', createdAt: '2026-08-16', url: '', note: '' },
       { id: 'l16', title: '继续去民主路补牙', status: 'done', date: '2026-08-19', createdAt: '2026-08-11', url: '', note: '补第 4 颗牙' },
-      { id: 'l13', title: '逛南宁夜市：步行街、建政路', status: 'done', date: '2026-08-19', createdAt: '2026-08-08', url: '', note: '剩余 2 条夜市街待逛' }
+      { id: 'l13', title: '逛南宁夜市：步行街、建政路', status: 'done', date: '2026-08-19', createdAt: '2026-08-08', url: '', note: '剩余 2 条夜市街待逛' },
+      { id: 'l18', title: '走之前去平西夜市买一对穿壮族服饰的水豚噜噜、去买点泸溪河', status: 'done', date: '2026-08-23', createdAt: '2026-08-12', url: '', note: '8/23 平西夜市买壮族噜噜（70 元）+ 泸溪河面包碎（39.6 元）' }
     ]
   }
 ];

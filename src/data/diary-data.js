@@ -6901,7 +6901,7 @@ export const diaryRecords = {
     ]
   },
   "2026-08-21": {
-    "value": 14,
+    "value": 15,
     "tasks": [
       {
         "status": "x",
@@ -7014,6 +7014,192 @@ export const diaryRecords = {
         "isCooking": false,
         "mealType": null,
         "dishGuess": null
+      },
+      {
+        "status": "x",
+        "time": "22:00-24:00",
+        "desc": "和张宇轩、阿彬一起去吃陆姐紫苏蜂蜜烧烤",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      }
+    ]
+  },
+  "2026-08-22": {
+    "value": 10,
+    "tasks": [
+      {
+        "status": "x",
+        "time": "00:00-01:00",
+        "desc": "打车回家，然后洗澡",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      },
+      {
+        "status": "x",
+        "time": "01:00-01:30",
+        "desc": "玩手机",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      },
+      {
+        "status": "x",
+        "time": "01:30-07:30",
+        "desc": "睡觉",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      },
+      {
+        "status": "x",
+        "time": "07:30-11:00",
+        "desc": "和妈妈、大表姐、三表姐一起回横县吊唁阿婆",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      },
+      {
+        "status": "x",
+        "time": "11:00-13:00",
+        "desc": "吊唁做法事（红白布-芭蕉树-孟婆汤-奈何桥-大火-红绳-利是-火化-坛子-柚叶水）",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      },
+      {
+        "status": "x",
+        "time": "13:00-16:00",
+        "desc": "送大姑二姑、去吃三品王、回镇医院看阿公、和爸爸去交易场杀鸡",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      },
+      {
+        "status": "x",
+        "time": "16:00-18:00",
+        "desc": "回公安局净屋",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      },
+      {
+        "status": "x",
+        "time": "18:00-20:00",
+        "desc": "去莉香餐饮吃席（和姑姑他们，还有老爸的朋友们）",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      },
+      {
+        "status": "x",
+        "time": "20:00-22:00",
+        "desc": "回南宁",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      },
+      {
+        "status": "x",
+        "time": "22:00-24:00",
+        "desc": "去百货大楼和欧宗儒（宗某）、李家俊（肚）、沈文泉（沈妈）、覃可（🎹🉑）打电动，接着去吃肥肥的烧烤屋",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      }
+    ]
+  },
+  "2026-08-23": {
+    "value": 11,
+    "tasks": [
+      {
+        "status": "x",
+        "time": "00:00-01:00",
+        "desc": "和欧宗儒、李家俊、沈文泉、覃可继续在肥肥的烧烤屋聊天，聊了很多以前的初中同学（韩子林去华能、苏小茜去央行、黄子璇在意大利读博、林潇禾已经见了亲家、酒桶李家俊 25 年 1 月已经领证了）",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      },
+      {
+        "status": "x",
+        "time": "01:00-01:30",
+        "desc": "坐李家俊的车回家",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      },
+      {
+        "status": "x",
+        "time": "01:30-02:00",
+        "desc": "洗澡",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      },
+      {
+        "status": "x",
+        "time": "02:00-11:00",
+        "desc": "睡觉",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      },
+      {
+        "status": "x",
+        "time": "11:00-12:00",
+        "desc": "玩手机",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      },
+      {
+        "status": "x",
+        "time": "12:00-13:30",
+        "desc": "在家里和老豆老妈吃最后一顿午饭",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      },
+      {
+        "status": "x",
+        "time": "13:30-18:00",
+        "desc": "边开大组会，边思考学习，整理日程支出，开发学习思考",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      },
+      {
+        "status": "x",
+        "time": "18:00-19:30",
+        "desc": "去看外婆",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      },
+      {
+        "status": "x",
+        "time": "19:30-22:00",
+        "desc": "和老豆老妈一起去吃甘家界牌柠檬鸭，去平西夜市买了壮族噜噜，然后买了泸溪河的面包碎",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      },
+      {
+        "status": "x",
+        "time": "22:00-22:30",
+        "desc": "整理今天的日程和收入",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      },
+      {
+        "status": "x",
+        "time": "22:30-24:00",
+        "desc": "睡觉",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
       }
     ]
   }
@@ -7060,6 +7246,14 @@ export const specialEvents = {
     ],
     "keywords": [
       "跳舞"
+    ]
+  },
+  "2026-08-23": {
+    "icons": [
+      "💒"
+    ],
+    "keywords": [
+      "领证"
     ]
   }
 };

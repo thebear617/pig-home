@@ -30,7 +30,6 @@ export const TODO_BOARDS: TodoBoard[] = [
       { id: 'l1', title: '给宝宝做相册（0/80页）', status: 'doing', date: '2026-07-19', createdAt: '2026-07-19', url: '', note: '' },
       { id: 'l8', title: '带赫兹去博辰复诊', status: 'todo', date: '2026-09-02', createdAt: '2026-08-02', url: '', note: '赫兹口炎治疗（441）后续' },
       { id: 'l9', title: '晾晒活性炭', status: 'todo', date: '2026-09-02', createdAt: '2026-08-03', url: '', note: '甲醛处理后续：活性炭需定期晾晒保持吸附能力' },
-      { id: 'l18', title: '走之前去平西夜市买一对穿壮族服饰的水豚噜噜、去买点泸溪河', status: 'todo', date: '2026-08-19', createdAt: '2026-08-12', url: '', note: '带回去给过马路，大概 20 元' },
       { id: 'l17', title: '回去和过马路一起打桌游', status: 'todo', date: '2026-08-25', createdAt: '2026-08-11', url: '', note: '' },
       { id: 'l11', title: '购买不锈钢碗、大菜篮子、检查燃气热水器 CO', status: 'todo', date: '2026-08-25', createdAt: '2026-08-05', url: '', note: '3 件事：① 买不锈钢碗 ② 买大菜篮子 ③ 检查燃气热水器一氧化碳问题' },
       { id: 'l15', title: '研究京东 PLUS 12 积分如何使用', status: 'todo', date: '2026-08-25', createdAt: '2026-08-08', url: '', note: '京东 PLUS 会员每年有 12 积分，在「我的 → PLUS 专区 → 生活服务包」可兑换家政保洁 / 洗衣洗鞋 / 洗车 / 寄快递 / 在线问诊 / 读书月卡等（保洁 5 分、洗车 3 分、洗衣洗鞋 3 分、寄件 1 分）' },
@@ -52,14 +51,13 @@ export const TODO_BOARDS: TodoBoard[] = [
       { id: 'c18', title: '研究如何增强 codex 的生图', status: 'todo', date: '2026-08-22', createdAt: '2026-08-18', url: 'https://github.com/blackdm666/88API-image-gen', note: '' },
       { id: 'c19', title: '参考 B 站视频优化自己的看板视图', status: 'todo', date: '2026-08-22', createdAt: '2026-08-18', url: 'https://www.bilibili.com/video/BV1F2Mw6FExo', note: '' },
       { id: 'c20', title: '了解什么叫 BYOK', status: 'todo', date: '2026-08-23', createdAt: '2026-08-20', url: '', note: '' },
+      { id: 'c21', title: '猫猫笔记升级及后台升级', status: 'todo', date: '2026-08-25', createdAt: '2026-08-23', url: '', note: '' },
     ]
   },
   {
     id: 'research',
     name: '科研',
     icon: '🔍',
-    items: [
-      { id: 'r4', title: '8 月 23 号下午 3 点，参加多模态组的工作汇报（大组会）', status: 'todo', date: '2026-08-23', createdAt: '2026-08-20', url: '', note: '' }
-    ]
+    items: []
   }
 ];

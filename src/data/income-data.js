@@ -6,5 +6,12 @@ export const incomeRecords = [
     "sub": "日常红包",
     "amount": 660.0,
     "note": "外婆红包"
+  },
+  {
+    "date": "2026-08-23",
+    "cat": "红包礼金/日常红包",
+    "sub": "外婆红包",
+    "amount": 660.0,
+    "note": ""
   }
 ];
