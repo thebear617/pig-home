@@ -7202,6 +7202,67 @@ export const diaryRecords = {
         "dishGuess": null
       }
     ]
+  },
+  "2026-08-24": {
+    "value": 7,
+    "tasks": [
+      {
+        "status": "x",
+        "time": "00:00-05:00",
+        "desc": "睡觉",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      },
+      {
+        "status": "x",
+        "time": "05:00-06:00",
+        "desc": "吃早餐然后和老豆去机场",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      },
+      {
+        "status": "x",
+        "time": "06:00-07:00",
+        "desc": "过安检（南宁机场安检花了 53 分钟）",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      },
+      {
+        "status": "x",
+        "time": "07:00-10:30",
+        "desc": "坐飞机从南宁飞西安",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      },
+      {
+        "status": "x",
+        "time": "10:30-12:00",
+        "desc": "从咸阳机场 T3 坐大巴回来",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      },
+      {
+        "status": "x",
+        "time": "12:00-13:30",
+        "desc": "在创汇吃魏家凉皮，去霸王茶姬边学习边等宝宝",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      },
+      {
+        "status": "x",
+        "time": "13:30-16:00",
+        "desc": "回隆江城洗床单、洗衣服、扫地、接管线机、洗澡、通下水",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      }
+    ]
   }
 };
 export const specialEvents = {

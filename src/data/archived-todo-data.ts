@@ -65,7 +65,9 @@ export const ARCHIVED_TODO_BOARDS: TodoBoard[] = [
       { id: 'l30', title: '去电信营业厅办理新的电话卡', status: 'done', date: '2026-08-17', createdAt: '2026-08-16', url: '', note: '' },
       { id: 'l16', title: '继续去民主路补牙', status: 'done', date: '2026-08-19', createdAt: '2026-08-11', url: '', note: '补第 4 颗牙' },
       { id: 'l13', title: '逛南宁夜市：步行街、建政路', status: 'done', date: '2026-08-19', createdAt: '2026-08-08', url: '', note: '剩余 2 条夜市街待逛' },
-      { id: 'l18', title: '走之前去平西夜市买一对穿壮族服饰的水豚噜噜、去买点泸溪河', status: 'done', date: '2026-08-23', createdAt: '2026-08-12', url: '', note: '8/23 平西夜市买壮族噜噜（70 元）+ 泸溪河面包碎（39.6 元）' }
+      { id: 'l18', title: '走之前去平西夜市买一对穿壮族服饰的水豚噜噜、去买点泸溪河', status: 'done', date: '2026-08-23', createdAt: '2026-08-12', url: '', note: '8/23 平西夜市买壮族噜噜（70 元）+ 泸溪河面包碎（39.6 元）' },
+      { id: 'l11', title: '购买不锈钢碗、大菜篮子、检查燃气热水器 CO', status: 'done', date: '2026-08-24', createdAt: '2026-08-05', url: '', note: '8/24 完成：买不锈钢碗、大菜篮子、检查燃气热水器一氧化碳' },
+      { id: 'l9', title: '晾晒活性炭', status: 'done', date: '2026-08-24', createdAt: '2026-08-03', url: '', note: '甲醛处理后续：活性炭晾晒完成' }
     ]
   }
 ];
