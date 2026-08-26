@@ -23,7 +23,8 @@ export const ARCHIVED_TODO_BOARDS: TodoBoard[] = [
       { id: 'c10', title: '进行「猪窝的美食地图」的升级 + 整理南宁美食', status: 'done', date: '2026-08-07', createdAt: '2026-08-05', note: '两件事合并：① 美食地图升级 ② 整理南宁美食' },
       { id: 'c12', title: '研究浏览器的连接器具体有哪几种', status: 'done', date: '2026-08-10', createdAt: '2026-08-08', url: '', note: '参考 devnotes「学习资源：开发资源合集」里的四款浏览器连接器对比（Cua Driver / ego / Kimi WebBridge 等）' },
       { id: 'c13', title: '猪窝加上收入的逻辑', status: 'done', date: '2026-08-17', createdAt: '2026-08-16', url: '', note: '' },
-      { id: 'c14', title: '补全之前个人开发时间线的 UI（个人审美记录）', status: 'done', date: '2026-08-18', createdAt: '2026-08-16', url: '', note: 'devnotes 补全各站点历史 UI 时间线，发布 v0.15.0' }
+      { id: 'c14', title: '补全之前个人开发时间线的 UI（个人审美记录）', status: 'done', date: '2026-08-18', createdAt: '2026-08-16', url: '', note: 'devnotes 补全各站点历史 UI 时间线，发布 v0.15.0' },
+      { id: 'c22', title: '尝试 codex 原生功能与 skill：browser、computer use、product design、figma、image gen、goal 模式 for UI', status: 'done', date: '2026-08-24', createdAt: '2026-08-14', url: '', note: '8/24 完成 codex 原生功能尝试' }
     ]
   },
   {

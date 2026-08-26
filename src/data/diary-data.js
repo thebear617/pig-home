@@ -7204,7 +7204,7 @@ export const diaryRecords = {
     ]
   },
   "2026-08-24": {
-    "value": 7,
+    "value": 11,
     "tasks": [
       {
         "status": "x",
@@ -7258,6 +7258,152 @@ export const diaryRecords = {
         "status": "x",
         "time": "13:30-16:00",
         "desc": "回隆江城洗床单、洗衣服、扫地、接管线机、洗澡、通下水",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      },
+      {
+        "status": "x",
+        "time": "16:00-18:40",
+        "desc": "学了一会",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      },
+      {
+        "status": "x",
+        "time": "18:50-22:00",
+        "desc": "去宜家和过马路吃滨寿司，然后逛了宜家，买了香薰",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      },
+      {
+        "status": "x",
+        "time": "22:00-22:20",
+        "desc": "打车回家",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      },
+      {
+        "status": "x",
+        "time": "22:20-24:00",
+        "desc": "做课件",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      }
+    ]
+  },
+  "2026-08-25": {
+    "value": 9,
+    "tasks": [
+      {
+        "status": "x",
+        "time": "00:00-02:00",
+        "desc": "搞 PPT（做大模型扩展能力的 PPT）",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      },
+      {
+        "status": "x",
+        "time": "02:00-07:00",
+        "desc": "睡觉",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      },
+      {
+        "status": "x",
+        "time": "07:00-15:00",
+        "desc": "搞 PPT（继续做大模型扩展能力的 PPT，累计用时 10 小时：0-2 点 2 小时 + 7-15 点 8 小时）",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      },
+      {
+        "status": "x",
+        "time": "15:00-16:00",
+        "desc": "洗澡、洗毛巾、洗剃须刀",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      },
+      {
+        "status": "x",
+        "time": "16:00-16:30",
+        "desc": "点了一个不保存，继续改 PPT，暂时改到满意了一版",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      },
+      {
+        "status": "x",
+        "time": "16:30-20:00",
+        "desc": "和过马路去万科吃江西菜，然后看电影《空枪》",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      },
+      {
+        "status": "x",
+        "time": "22:00-23:00",
+        "desc": "过马路去逛茅坡路夜市，买了贺园烤冷面，然后走去地铁站坐地铁回家",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      },
+      {
+        "status": "x",
+        "time": "23:00-23:40",
+        "desc": "回家以后找饼饼鼠，它钻进了洗衣机里面，找了半天才把它抓出来",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      },
+      {
+        "status": "x",
+        "time": "23:40-24:00",
+        "desc": "洗澡",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      }
+    ]
+  },
+  "2026-08-26": {
+    "value": 4,
+    "tasks": [
+      {
+        "status": "x",
+        "time": "00:00-01:00",
+        "desc": "洗澡，玩玩手机",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      },
+      {
+        "status": "x",
+        "time": "01:00-02:30",
+        "desc": "和过马路打电动",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      },
+      {
+        "status": "x",
+        "time": "02:30-11:00",
+        "desc": "睡觉",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      },
+      {
+        "status": "x",
+        "time": "11:00-13:00",
+        "desc": "起床洗澡，洗完澡以后去买菜、备菜、买打火锅的食材，给玉姐来家里打火锅做准备",
         "isCooking": false,
         "mealType": null,
         "dishGuess": null
