@@ -13,5 +13,12 @@ export const incomeRecords = [
     "sub": "日常红包",
     "amount": 660.0,
     "note": "外婆红包"
+  },
+  {
+    "date": "2026-08-28",
+    "cat": "退款返现",
+    "sub": "零散退款",
+    "amount": 50.0,
+    "note": "支付宝零花钱退款"
   }
 ];

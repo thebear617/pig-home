@@ -7584,7 +7584,7 @@ export const diaryRecords = {
     ]
   },
   "2026-08-28": {
-    "value": 4,
+    "value": 9,
     "tasks": [
       {
         "status": "x",
@@ -7616,6 +7616,46 @@ export const diaryRecords = {
         "desc": "做饭（过马路做的紫菜蛋炒饭），然后吃饭收拾",
         "isCooking": true,
         "mealType": "中饭",
+        "dishGuess": null
+      },
+      {
+        "status": "x",
+        "time": "13:10-17:00",
+        "desc": "学习和开发（多站点侧边栏折叠/展开交互与品牌区升级：home 侧边栏品牌区视觉升级 v1.11.0、整理活跃看板清单（6 归档+5 清理+c11→生活）；lifenotes 默认折叠侧边栏与品牌区升级 v1.4.0、统一常识笔记内容结构 v1.3.0、省钱速查补京东 PLUS 积分兑换；devnotes 侧边栏交互与站点 UI 留档升级 v0.17.0、对齐知识库字段并记录常识笔记 v1.3.0；cats 默认折叠侧边栏并统一展开交互 v0.14.0；home 收支分类归一化脚本与看板 c15 链接更新）",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      },
+      {
+        "status": "x",
+        "time": "17:00-19:00",
+        "desc": "和过马路去兴隆买菜买饭，回来吃饭，看中餐厅",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      },
+      {
+        "status": "x",
+        "time": "19:00-20:00",
+        "desc": "洗澡收拾",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      },
+      {
+        "status": "x",
+        "time": "20:00-21:00",
+        "desc": "学习",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      },
+      {
+        "status": "x",
+        "time": "21:00-24:00",
+        "desc": "过马路去看《欢迎来龙餐馆》（西电对面的花叔电影公园）",
+        "isCooking": false,
+        "mealType": null,
         "dishGuess": null
       }
     ]
