@@ -98,14 +98,14 @@ button {
 
 .sidebar-brand {
   position: relative;
-  padding: 3.5rem 1.2rem 2.5rem;
+  padding: 2.625rem 1.2rem 1.875rem;
   text-align: center;
 }
 
 .sidebar-brand::after {
   display: block;
   width: calc(100% - .5rem);
-  margin: 2.5rem auto 0;
+  margin: 1.25rem auto 0;
   border-top: 1px solid rgba(255, 255, 255, .16);
   content: '';
 }
@@ -114,7 +114,7 @@ button {
   display: block;
   width: 2.35rem;
   height: 2.35rem;
-  margin: 0 auto 1.3rem;
+  margin: 0 auto .975rem;
   fill: none;
   stroke: #f7c974;
   stroke-width: 1.55;
@@ -125,25 +125,30 @@ button {
 
 .sidebar-eyebrow {
   color: #f7c974;
-  font-size: .72rem;
-  font-weight: 800;
-  letter-spacing: .08em;
+  font-family: Georgia, "Times New Roman", "Songti SC", STSong, serif;
+  font-size: .68rem;
+  font-weight: 600;
+  letter-spacing: .17em;
   text-transform: uppercase;
 }
 
 .sidebar-title {
-  margin-top: .3rem;
-  font-size: 1.35rem;
-  font-weight: 900;
-  line-height: 1.15;
+  margin-top: .225rem;
+  color: #efd1a1;
+  font-family: Georgia, "Songti SC", STSong, serif;
+  font-size: 1.55rem;
+  font-weight: 400;
+  letter-spacing: .11em;
+  line-height: 1.25;
 }
 
 .sidebar-subtitle {
   display: block;
-  margin-top: .6rem;
-  color: rgba(255, 255, 255, .58);
+  margin-top: .45rem;
+  color: rgba(239, 209, 161, .72);
+  font-family: Georgia, "Songti SC", STSong, serif;
   font-size: .76rem;
-  letter-spacing: .12em;
+  letter-spacing: .15em;
 }
 
 .sidebar-nav {
@@ -165,6 +170,7 @@ button {
   border-radius: 8px;
   background: transparent;
   color: rgba(255, 255, 255, .72);
+  font-family: Georgia, "Songti SC", STSong, serif;
   font-size: .9rem;
   font-weight: 700;
   cursor: pointer;
@@ -278,7 +284,7 @@ button {
     align-items: center;
     justify-content: center;
     position: absolute;
-    top: .75rem;
+    top: .5rem;
     right: 1rem;
     width: 2rem;
     height: 2rem;
@@ -4878,12 +4884,12 @@ body[data-page="relationship-timeline"] .q-field-text {
   }
 
   .sidebar-brand {
-    padding: 3rem .9rem 2rem;
+    padding: 2.25rem .9rem 1.5rem;
     position: relative;
   }
 
   .sidebar-brand::after {
-    margin-top: 2rem;
+    margin-top: 1.25rem;
   }
 
   .sidebar-home-mark {
@@ -4892,7 +4898,7 @@ body[data-page="relationship-timeline"] .q-field-text {
   }
 
   .sidebar-title {
-    font-size: 1.1rem;
+    font-size: 1.25rem;
   }
 
   .sidebar-nav {
