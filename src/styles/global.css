@@ -3202,6 +3202,24 @@ body[data-page="membership"] {
   min-width: 0;
 }
 
+.membership-name-link {
+  font-size: .88rem;
+  color: #b45309;
+  font-weight: 700;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  min-width: 0;
+  text-decoration: none;
+  cursor: pointer;
+}
+.membership-name-link:hover {
+  text-decoration: underline;
+}
+.membership-expired .membership-name-link {
+  color: var(--muted);
+}
+
 .membership-row-note-mobile {
   display: none;
 }

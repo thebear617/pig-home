@@ -808,7 +808,8 @@ function membershipSubscriptionsHtml(): string {
       return `<span class="membership-tag" style="background:${colors.bg};color:${colors.fg}">${escape(tag)}</span>`;
     }).join('');
     html += `<div class="membership-row${dueSoonClass}${expiredClass}">`;
-    html += `<div class="membership-row-main"><span class="membership-row-logo">${icon}</span><div class="membership-row-copy"><strong>${escape(record.name)}</strong><span class="membership-row-note-mobile">${record.note ? escape(record.note) : '—'}</span></div></div>`;
+    const nameHtml = record.url ? `<a class="membership-name-link" href="${escape(record.url)}" target="_blank" rel="noopener">${escape(record.name)}</a>` : `<strong>${escape(record.name)}</strong>`;
+    html += `<div class="membership-row-main"><span class="membership-row-logo">${icon}</span><div class="membership-row-copy">${nameHtml}<span class="membership-row-note-mobile">${record.note ? escape(record.note) : '—'}</span></div></div>`;
     html += `<div class="membership-row-tags">${tagHtml}</div>`;
     html += `<div class="membership-row-note">${record.note ? escape(record.note) : '—'}</div>`;
     html += `<div class="membership-row-price"><strong>${priceText}</strong></div>`;

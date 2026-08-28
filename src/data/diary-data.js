@@ -7374,7 +7374,7 @@ export const diaryRecords = {
     ]
   },
   "2026-08-26": {
-    "value": 4,
+    "value": 12,
     "tasks": [
       {
         "status": "x",
@@ -7404,6 +7404,200 @@ export const diaryRecords = {
         "status": "x",
         "time": "11:00-13:00",
         "desc": "起床洗澡，洗完澡以后去买菜、备菜、买打火锅的食材，给玉姐来家里打火锅做准备",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      },
+      {
+        "status": "x",
+        "time": "13:00-15:00",
+        "desc": "在家里吃重庆火锅打火锅，玉姐来家里做客，算是一次乔迁宴",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      },
+      {
+        "status": "x",
+        "time": "15:00-17:30",
+        "desc": "和过马路、玉姐边打扑克边聊天，打斗地主",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      },
+      {
+        "status": "x",
+        "time": "17:30-18:45",
+        "desc": "放空、发呆、看电视，记录一些日程和支出",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      },
+      {
+        "status": "x",
+        "time": "18:45-20:00",
+        "desc": "学了一会，整理了一下之前的笔记",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      },
+      {
+        "status": "x",
+        "time": "20:00-21:00",
+        "desc": "给饼饼鼠装箱子",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      },
+      {
+        "status": "x",
+        "time": "21:00-23:00",
+        "desc": "吃饭（在家吃重庆火锅），边看《中餐厅》边吃",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      },
+      {
+        "status": "x",
+        "time": "23:00-23:20",
+        "desc": "洗澡",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      },
+      {
+        "status": "x",
+        "time": "23:20-24:00",
+        "desc": "学习",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      }
+    ]
+  },
+  "2026-08-27": {
+    "value": 13,
+    "tasks": [
+      {
+        "status": "x",
+        "time": "00:00-01:00",
+        "desc": "学习开发更新游戏",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      },
+      {
+        "status": "x",
+        "time": "01:00-09:00",
+        "desc": "睡觉",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      },
+      {
+        "status": "x",
+        "time": "09:00-11:00",
+        "desc": "学习和构建 PPT 思路",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      },
+      {
+        "status": "x",
+        "time": "11:00-12:48",
+        "desc": "去学校看 Mac Air，吃猪脚饭，看大头，买菜",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      },
+      {
+        "status": "x",
+        "time": "12:48-13:00",
+        "desc": "洗澡",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      },
+      {
+        "status": "x",
+        "time": "13:00-13:20",
+        "desc": "装饼饼鼠滚轮",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      },
+      {
+        "status": "x",
+        "time": "13:20-18:30",
+        "desc": "学习，制作大组会的 PPT",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      },
+      {
+        "status": "x",
+        "time": "18:30-19:00",
+        "desc": "下楼拿快递、煮饭",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      },
+      {
+        "status": "x",
+        "time": "19:00-20:00",
+        "desc": "做宫保鸡丁（期间还做了凉拌西兰花、凉拌黄瓜胡萝卜）",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      },
+      {
+        "status": "x",
+        "time": "20:00-20:30",
+        "desc": "吃饭、洗碗收拾、过马路",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      },
+      {
+        "status": "x",
+        "time": "20:30-20:40",
+        "desc": "洗杯子休息",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      },
+      {
+        "status": "x",
+        "time": "20:40-23:00",
+        "desc": "做课件",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      },
+      {
+        "status": "x",
+        "time": "23:00-24:00",
+        "desc": "打电动",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      }
+    ]
+  },
+  "2026-08-28": {
+    "value": 2,
+    "tasks": [
+      {
+        "status": "x",
+        "time": "00:00-01:00",
+        "desc": "玩手机",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      },
+      {
+        "status": "x",
+        "time": "01:00-10:00",
+        "desc": "睡觉",
         "isCooking": false,
         "mealType": null,
         "dishGuess": null

@@ -22,4 +22,11 @@ export const homeEvents: HomeEvent[] = [
     note: '把床板搬走',
     image: 'images/home/2026-07-24-bed-board-moved.jpg',
   },
+  {
+    date: '2026-08-27',
+    type: '添置',
+    title: '饼饼鼠入住新家',
+    note: '给饼饼鼠装窝以及装滚轮，饼饼鼠入住',
+    image: 'images/home/2026-08-27-bingbing-cage.jpg',
+  },
 ];
