@@ -7584,7 +7584,7 @@ export const diaryRecords = {
     ]
   },
   "2026-08-28": {
-    "value": 2,
+    "value": 4,
     "tasks": [
       {
         "status": "x",
@@ -7600,6 +7600,22 @@ export const diaryRecords = {
         "desc": "睡觉",
         "isCooking": false,
         "mealType": null,
+        "dishGuess": null
+      },
+      {
+        "status": "x",
+        "time": "10:00-12:20",
+        "desc": "学习（进行了一些站点改动，主要是对每个站点的侧边栏进行逻辑修改，增加\"非悬停时折叠，悬停时展开\"的逻辑）",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      },
+      {
+        "status": "x",
+        "time": "12:20-13:10",
+        "desc": "做饭（过马路做的紫菜蛋炒饭），然后吃饭收拾",
+        "isCooking": true,
+        "mealType": "中饭",
         "dishGuess": null
       }
     ]
