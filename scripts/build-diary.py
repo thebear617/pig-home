@@ -14,6 +14,17 @@ expenses = []
 incomes = []
 seen = set()
 
+# 合法分类（大类）集合 —— 与 src/data/expense-categories.ts / income-categories.ts 保持一致。
+# build-diary.py 无法 import TS，故此处硬编码。若分类表变更需同步更新这里。
+EXPENSE_CATS = {
+    '居家生活', '通讯订阅', '形象装扮', '市内出行', '娱乐消费', '自我提升',
+    '电子产品', '人情社交', '市外出行', '猫协救助', '医疗保健',
+}
+INCOME_CATS = {
+    '工资收入', '兼职外快', '红包礼金', '退款返现', '报销', '他人还款', '理财收益', '其他收入',
+}
+violations = []  # [(类型, 日期, 原始分类, 提示)] 非规范记录收集，用于报错兜底
+
 # 从配置文件加载特殊纪念关键词→图标映射
 KW_FILE = ROOT / 'scripts' / 'special-keywords.json'
 SPECIAL_KEYWORDS = {}
@@ -125,6 +136,34 @@ for fname in sorted(os.listdir(DIARY_DIR)):
                 amount = float(amt_raw)
             except ValueError:
                 continue
+
+            # ---- 分类归一化 + 规范校验 ----
+            # 分类列可能写成「大类/子类」合并格式（如「市内出行/奶茶饮品」），
+            # 需拆出合法大类；无法识别的大类直接报错兜底，阻止编译。
+            valid_cats = EXPENSE_CATS if header == '支出' else INCOME_CATS
+            major = None
+            minor = None
+            for part in cat.split('/'):
+                part = part.strip()
+                if part in valid_cats:
+                    major = part
+                    break
+            if major is None:
+                violations.append(
+                    f'  ✗ {header}记录 日期={date} 分类「{cat}」→ 未命中任何合法大类。'
+                    f'合法大类：{"、".join(sorted(valid_cats))}。请改成规范大类（子类放子项列）。'
+                )
+                continue
+            if '/' in cat:
+                # 提取大类后的第一段作为子类，并入 sub；原 sub（具体项）并入 note，避免丢信息
+                minor = [p.strip() for p in cat.split('/') if p.strip() and p.strip() not in valid_cats]
+                minor = minor[0] if minor else ''
+                if minor:
+                    sub = minor + ('·' + sub if sub and sub != minor else '')
+                if not minor and sub:
+                    pass
+            cat = major
+
             key = (date, cat, sub, amount, note)
             if key in seen:
                 continue
@@ -139,6 +178,15 @@ for fname in sorted(os.listdir(DIARY_DIR)):
 
     parse_table_section('支出', expenses)
     parse_table_section('收入', incomes)
+
+# ---- 规范校验：存在非规范分类时阻止编译，逼 Agent 查明并修正 ----
+if violations:
+    print('\n❌ 检测到非规范分类记录，未生成数据，请先修正以下内容：')
+    for v in violations:
+        print(v)
+    print('\n说明：分类列应写规范大类（如「市内出行」），子类/子项写子项列。')
+    print('     脚本会自动把「大类/子类」合并格式拆分为规范大类。')
+    raise SystemExit(1)
 
 with open(DIARY_OUT, 'w', encoding='utf-8') as f:
     f.write('// Auto-generated from _diary/*.md by scripts/build-diary.py\n')
