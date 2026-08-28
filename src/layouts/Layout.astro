@@ -19,14 +19,21 @@ const base = import.meta.env.BASE_URL;
     <link rel="icon" type="image/png" href={`${base}favicon.png`} />
     <title>{title}</title>
   </head>
-  <body data-page={activeTab}>
+  <body data-page={activeTab} class="sidebar-collapsed">
     <div class="layout">
-      <button class="sidebar-toggle" id="sidebarToggle" aria-label="切换侧边栏">☰</button>
+      <button
+        class="sidebar-toggle"
+        id="sidebarToggle"
+        type="button"
+        aria-label="展开侧边栏"
+        aria-expanded="false"
+      >☰</button>
       <div class="sidebar-backdrop" id="sidebarBackdrop" hidden></div>
 
       <nav class="sidebar" id="sidebar" aria-label="主导航">
         <div class="sidebar-brand">
           <button class="sidebar-close" id="sidebarClose" aria-label="关闭侧边栏">✕</button>
+          <button class="sidebar-collapse" id="sidebarCollapse" type="button" aria-label="收起侧边栏" title="收起侧边栏">‹</button>
           <p class="sidebar-eyebrow">Home Sweet Home</p>
           <h1 class="sidebar-title">猪窝</h1>
         </div>
