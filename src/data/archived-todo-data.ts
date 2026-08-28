@@ -24,6 +24,7 @@ export const ARCHIVED_TODO_BOARDS: TodoBoard[] = [
       { id: 'c12', title: '研究浏览器的连接器具体有哪几种', status: 'done', date: '2026-08-10', createdAt: '2026-08-08', url: '', note: '参考 devnotes「学习资源：开发资源合集」里的四款浏览器连接器对比（Cua Driver / ego / Kimi WebBridge 等）' },
       { id: 'c13', title: '猪窝加上收入的逻辑', status: 'done', date: '2026-08-17', createdAt: '2026-08-16', url: '', note: '' },
       { id: 'c14', title: '补全之前个人开发时间线的 UI（个人审美记录）', status: 'done', date: '2026-08-18', createdAt: '2026-08-16', url: '', note: 'devnotes 补全各站点历史 UI 时间线，发布 v0.15.0' },
+      { id: 'c15', title: '参考 B 站视频美化自己的个人仪表盘，学习他的记笔记方式', status: 'done', date: '2026-08-28', createdAt: '2026-08-16', url: 'https://lvyovo-wiki.tech/', note: '' },
       { id: 'c22', title: '尝试 codex 原生功能与 skill：browser、computer use、product design、figma、image gen、goal 模式 for UI', status: 'done', date: '2026-08-24', createdAt: '2026-08-14', url: '', note: '8/24 完成 codex 原生功能尝试' }
     ]
   },
@@ -68,7 +69,12 @@ export const ARCHIVED_TODO_BOARDS: TodoBoard[] = [
       { id: 'l13', title: '逛南宁夜市：步行街、建政路', status: 'done', date: '2026-08-19', createdAt: '2026-08-08', url: '', note: '剩余 2 条夜市街待逛' },
       { id: 'l18', title: '走之前去平西夜市买一对穿壮族服饰的水豚噜噜、去买点泸溪河', status: 'done', date: '2026-08-23', createdAt: '2026-08-12', url: '', note: '8/23 平西夜市买壮族噜噜（70 元）+ 泸溪河面包碎（39.6 元）' },
       { id: 'l11', title: '购买不锈钢碗、大菜篮子、检查燃气热水器 CO', status: 'done', date: '2026-08-24', createdAt: '2026-08-05', url: '', note: '8/24 完成：买不锈钢碗、大菜篮子、检查燃气热水器一氧化碳' },
-      { id: 'l9', title: '晾晒活性炭', status: 'done', date: '2026-08-24', createdAt: '2026-08-03', url: '', note: '甲醛处理后续：活性炭晾晒完成' }
+      { id: 'l9', title: '晾晒活性炭', status: 'done', date: '2026-08-24', createdAt: '2026-08-03', url: '', note: '甲醛处理后续：活性炭晾晒完成' },
+      { id: 'l17', title: '回去和过马路一起打桌游', status: 'done', date: '2026-08-28', createdAt: '2026-08-11', url: '', note: '' },
+      { id: 'l32', title: '过马路去校医院看牙齿', status: 'done', date: '2026-08-28', createdAt: '2026-08-25', url: '', note: '' },
+      { id: 'l33', title: '过马路问学校的电脑多少钱', status: 'done', date: '2026-08-28', createdAt: '2026-08-25', url: '', note: '' },
+      { id: 'l15', title: '研究京东 PLUS 12 积分如何使用', status: 'done', date: '2026-08-28', createdAt: '2026-08-08', url: '', note: '京东 PLUS 会员每年有 12 积分，在「我的 → PLUS 专区 → 生活服务包」可兑换家政保洁 / 洗衣洗鞋 / 洗车 / 寄快递 / 在线问诊 / 读书月卡等（保洁 5 分、洗车 3 分、洗衣洗鞋 3 分、寄件 1 分）' },
+      { id: 'l34', title: '在家里买油瓶', status: 'done', date: '2026-08-28', createdAt: '2026-08-25', url: '', note: '' }
     ]
   }
 ];
