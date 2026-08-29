@@ -3401,6 +3401,35 @@ body[data-page="membership"] {
   text-overflow: ellipsis;
   white-space: nowrap;
   min-width: 0;
+  cursor: pointer;
+}
+
+.membership-row-note:hover {
+  color: var(--dark);
+}
+
+.membership-row-note-mobile {
+  cursor: pointer;
+}
+
+.membership-note-tooltip {
+  position: fixed;
+  z-index: 2000;
+  max-width: min(340px, calc(100vw - 24px));
+  padding: .5rem .7rem;
+  border-radius: 8px;
+  background: var(--dark);
+  color: #fdfbf7;
+  font-size: .72rem;
+  line-height: 1.55;
+  box-shadow: var(--shadow);
+  white-space: normal;
+  overflow-wrap: anywhere;
+  pointer-events: none;
+}
+
+.membership-note-tooltip.copied {
+  background: #3f6212;
 }
 
 .membership-row-price {

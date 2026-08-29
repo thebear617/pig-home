@@ -821,6 +821,42 @@ function membershipSubscriptionsHtml(): string {
   return html;
 }
 
+let membershipNoteTip: HTMLElement | null = null;
+let membershipNoteTipTimer: number | undefined;
+
+function membershipNoteTipText(cell: HTMLElement): string {
+  const text = cell.textContent?.trim() || '';
+  return text && text !== '—' ? text : '';
+}
+
+function showMembershipNoteTip(cell: HTMLElement, text: string, copied = false) {
+  if (!membershipNoteTip) {
+    membershipNoteTip = document.createElement('div');
+    membershipNoteTip.className = 'membership-note-tooltip';
+    document.body.appendChild(membershipNoteTip);
+  }
+  window.clearTimeout(membershipNoteTipTimer);
+  const tip = membershipNoteTip;
+  tip.textContent = copied ? `✓ 已复制：${text}` : text;
+  tip.classList.toggle('copied', copied);
+  tip.style.display = 'block';
+  tip.style.visibility = 'hidden';
+  const rect = cell.getBoundingClientRect();
+  const tipRect = tip.getBoundingClientRect();
+  let left = rect.left;
+  if (left + tipRect.width > window.innerWidth - 12) left = Math.max(12, window.innerWidth - tipRect.width - 12);
+  let top = rect.bottom + 6;
+  if (top + tipRect.height > window.innerHeight - 12) top = Math.max(12, rect.top - tipRect.height - 6);
+  tip.style.left = `${Math.round(left)}px`;
+  tip.style.top = `${Math.round(top)}px`;
+  tip.style.visibility = 'visible';
+}
+
+function hideMembershipNoteTip() {
+  window.clearTimeout(membershipNoteTipTimer);
+  if (membershipNoteTip) membershipNoteTip.style.display = 'none';
+}
+
 function setupAccordions(root: ParentNode = document) {
   root.querySelectorAll<HTMLElement>('.section-header').forEach(header => {
     const section = header.parentElement;
@@ -941,8 +977,19 @@ document.addEventListener('click', event => {
   if (expenseCatNext && !expenseCatNext.disabled) { expenseCatPage++; const el = document.getElementById('dailyExpenseCategory'); if (el) el.innerHTML = dailyExpenseCategoryHtml(); return; }
   const catViewBtn = target.closest<HTMLButtonElement>('.expense-cat-view-btn');
   if (catViewBtn && catViewBtn.dataset.catview) { expenseCatView = catViewBtn.dataset.catview; const el = document.getElementById('expenseCategoryChart'); if (el) el.innerHTML = expenseCategoryChartHtml(); return; }
+  const membershipNoteCell = target.closest<HTMLElement>('.membership-row-note, .membership-row-note-mobile');
+  if (membershipNoteCell) {
+    const noteText = membershipNoteTipText(membershipNoteCell);
+    if (noteText && navigator.clipboard) {
+      navigator.clipboard.writeText(noteText).then(() => {
+        showMembershipNoteTip(membershipNoteCell, noteText, true);
+        membershipNoteTipTimer = window.setTimeout(hideMembershipNoteTip, 1600);
+      }).catch(() => {});
+    }
+    return;
+  }
   const membershipViewBtn = target.closest<HTMLButtonElement>('.membership-view-btn');
-  if (membershipViewBtn?.dataset.membershipView) { membershipView = membershipViewBtn.dataset.membershipView; const el = document.getElementById('membershipSubscriptions'); if (el) el.innerHTML = membershipSubscriptionsHtml(); return; }
+  if (membershipViewBtn?.dataset.membershipView) { hideMembershipNoteTip(); membershipView = membershipViewBtn.dataset.membershipView; const el = document.getElementById('membershipSubscriptions'); if (el) el.innerHTML = membershipSubscriptionsHtml(); return; }
   const trendNode = target.closest<SVGCircleElement>('.expense-line-node');
   if (trendNode?.dataset.expenseTrendDay) { expenseTrendSelectedDay = Number(trendNode.dataset.expenseTrendDay); const el = document.getElementById('expenseTrendChart'); if (el) el.innerHTML = expenseTrendHtml(); return; }
   const tooltipClose = target.closest<HTMLButtonElement>('.expense-line-tooltip-close');
@@ -1018,6 +1065,17 @@ document.addEventListener('click', event => {
     quarrel.classList.toggle('open', !body?.classList.contains('collapsed'));
   }
 });
+
+document.addEventListener('mouseover', event => {
+  const cell = (event.target as HTMLElement).closest<HTMLElement>('.membership-row-note, .membership-row-note-mobile');
+  if (!cell) return;
+  const text = membershipNoteTipText(cell);
+  if (text) showMembershipNoteTip(cell, text);
+});
+document.addEventListener('mouseout', event => {
+  if ((event.target as HTMLElement).closest('.membership-row-note, .membership-row-note-mobile')) hideMembershipNoteTip();
+});
+window.addEventListener('scroll', hideMembershipNoteTip, true);
 
 readQueryState();
 setupAccordions();
