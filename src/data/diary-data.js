@@ -7661,7 +7661,7 @@ export const diaryRecords = {
     ]
   },
   "2026-08-29": {
-    "value": 2,
+    "value": 8,
     "tasks": [
       {
         "status": "x",
@@ -7675,6 +7675,54 @@ export const diaryRecords = {
         "status": "x",
         "time": "02:00-10:00",
         "desc": "睡觉",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      },
+      {
+        "status": "x",
+        "time": "10:00-12:40",
+        "desc": "开发和学习了，换购了一个 token plan，从 MiniMax 的 token plan 换到了火山方舟的 coding plan，更新了相关配置和文档（devnotes：更新开发笔记内容与 Debug Markdown）",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      },
+      {
+        "status": "x",
+        "time": "12:40-15:00",
+        "desc": "回学校吃曹氏鸭脖、剪头发、回去看一下新生报到（本科新生分布在 7 号、8 号、9 号楼；材料院和网安院新生住在 14 号楼的一楼和三楼，五楼不住新人）",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      },
+      {
+        "status": "x",
+        "time": "15:00-16:30",
+        "desc": "回家休息",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      },
+      {
+        "status": "x",
+        "time": "16:30-22:30",
+        "desc": "去创汇社区和过马路以及过马路的家人吃饭（馕包肉、尖椒皮蛋、回锅肉、猪耳朵、彩椒豆角、干辣椒包菜、干辣椒白菜等），拿了一袋馕和一块馕回来，还拿了一些水果；跟蛋卷（过马路的小狗）的关系进了一步",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      },
+      {
+        "status": "x",
+        "time": "22:30-23:30",
+        "desc": "开发（熊窝任务看板 v0.28.0 升级：新增甘特图视图与排期管理、优化完成历史热力图交互与布局，补充看板甘特图时间线，归档 c19 参考 B 站视频优化看板视图）",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      },
+      {
+        "status": "x",
+        "time": "23:30-24:00",
+        "desc": "打电动",
         "isCooking": false,
         "mealType": null,
         "dishGuess": null

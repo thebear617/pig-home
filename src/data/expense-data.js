@@ -1751,6 +1751,13 @@ export const expenseRecords = [
     "note": "花叔电影公园"
   },
   {
+    "date": "2026-08-28",
+    "cat": "市内出行",
+    "sub": "奶茶饮品·水",
+    "amount": 2.0,
+    "note": ""
+  },
+  {
     "date": "2026-08-29",
     "cat": "市内出行",
     "sub": "烧烤烤肉·秦熙烤肉·20 串盐筋",
@@ -1763,5 +1770,19 @@ export const expenseRecords = [
     "sub": "AI 订阅·火山方舟 Coding Plan",
     "amount": 9.4,
     "note": "30 天，首两月 9.9 元，之后恢复 40 元/月"
+  },
+  {
+    "date": "2026-08-29",
+    "cat": "市内出行",
+    "sub": "火锅麻辣·曹氏鸭脖",
+    "amount": 19.35,
+    "note": "回学校"
+  },
+  {
+    "date": "2026-08-29",
+    "cat": "市内出行",
+    "sub": "交通·打车",
+    "amount": 6.3,
+    "note": "去创汇社区"
   }
 ];
