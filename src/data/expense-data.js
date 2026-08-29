@@ -1756,5 +1756,12 @@ export const expenseRecords = [
     "sub": "烧烤烤肉·秦熙烤肉·20 串盐筋",
     "amount": 30.0,
     "note": ""
+  },
+  {
+    "date": "2026-08-29",
+    "cat": "通讯订阅",
+    "sub": "AI 订阅·火山方舟 Coding Plan",
+    "amount": 9.4,
+    "note": "30 天，首两月 9.9 元，之后恢复 40 元/月"
   }
 ];
