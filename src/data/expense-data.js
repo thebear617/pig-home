@@ -1749,5 +1749,12 @@ export const expenseRecords = [
     "sub": "电影·电影票《欢迎来龙餐馆》",
     "amount": 66.0,
     "note": "花叔电影公园"
+  },
+  {
+    "date": "2026-08-29",
+    "cat": "市内出行",
+    "sub": "烧烤烤肉·秦熙烤肉·20 串盐筋",
+    "amount": 30.0,
+    "note": ""
   }
 ];

@@ -7659,6 +7659,27 @@ export const diaryRecords = {
         "dishGuess": null
       }
     ]
+  },
+  "2026-08-29": {
+    "value": 2,
+    "tasks": [
+      {
+        "status": "x",
+        "time": "00:00-02:00",
+        "desc": "和过马路看完电影后聊天、分析复盘，然后去买了烧烤回家吃烧烤喝啤酒",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      },
+      {
+        "status": "x",
+        "time": "02:00-10:00",
+        "desc": "睡觉",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      }
+    ]
   }
 };
 export const specialEvents = {
