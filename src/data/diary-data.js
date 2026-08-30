@@ -7730,7 +7730,7 @@ export const diaryRecords = {
     ]
   },
   "2026-08-30": {
-    "value": 4,
+    "value": 7,
     "tasks": [
       {
         "status": "x",
@@ -7760,6 +7760,30 @@ export const diaryRecords = {
         "status": "x",
         "time": "14:30-15:30",
         "desc": "打电动",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      },
+      {
+        "status": "x",
+        "time": "15:30-19:30",
+        "desc": "在家学习，进行一些开发和科研阅读",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      },
+      {
+        "status": "x",
+        "time": "19:30-20:40",
+        "desc": "买菜做饭（过马路做的香菇青菜，耙耙柑做的青椒肉丝）",
+        "isCooking": true,
+        "mealType": "晚饭",
+        "dishGuess": null
+      },
+      {
+        "status": "x",
+        "time": "20:40-21:15",
+        "desc": "出门买菜倒垃圾，买了鱼香肉丝的食材和果粒橙",
         "isCooking": false,
         "mealType": null,
         "dishGuess": null

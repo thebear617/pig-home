@@ -1798,5 +1798,12 @@ export const expenseRecords = [
     "sub": "包子早餐·泡馍酸菜粉条",
     "amount": 3.0,
     "note": ""
+  },
+  {
+    "date": "2026-08-30",
+    "cat": "居家生活",
+    "sub": "超市采购·鱼香肉丝食材和果粒橙",
+    "amount": 7.77,
+    "note": ""
   }
 ];
