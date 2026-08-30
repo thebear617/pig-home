@@ -7728,6 +7728,43 @@ export const diaryRecords = {
         "dishGuess": null
       }
     ]
+  },
+  "2026-08-30": {
+    "value": 4,
+    "tasks": [
+      {
+        "status": "x",
+        "time": "00:00-03:00",
+        "desc": "和过马路一起打电动",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      },
+      {
+        "status": "x",
+        "time": "03:00-13:00",
+        "desc": "睡觉",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      },
+      {
+        "status": "x",
+        "time": "13:00-14:30",
+        "desc": "吃饭，去吃辣条子和红豆粥",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      },
+      {
+        "status": "x",
+        "time": "14:30-15:30",
+        "desc": "打电动",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      }
+    ]
   }
 };
 export const specialEvents = {
