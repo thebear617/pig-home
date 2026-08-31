@@ -107,8 +107,32 @@ export const albumEntries: AlbumEntry[] = [
   { id: 26, chapterId: 3, page: 13, side: 'right', title: '第一次一起做饭',     status: 'pending' },
   { id: 27, chapterId: 3, page: 14, side: 'left',  title: '分享一碗饭或一杯饮料', status: 'pending' },
   { id: 28, chapterId: 3, page: 14, side: 'right', title: '靠在一起午睡',       status: 'pending' },
-  { id: 29, chapterId: 3, page: 15, side: 'left',  title: '什么都不做却待在一起', status: 'pending' },
-  { id: 30, chapterId: 3, page: 15, side: 'right', title: '最常去的街道或咖啡店', status: 'pending' },
+  {
+    id: 29, chapterId: 3, page: 15, side: 'left',  title: '什么都不做却待在一起',
+    status: 'filled', dateLong: '2026 年 8 月',
+    media: [
+      { src: 'images/albums/album-IMG_7815.jpg', caption: '你掌勺的火锅夜' },
+      { src: 'images/albums/album-IMG_7771.jpg', caption: '辣到跳脚也要吃' },
+      { src: 'images/albums/album-IMG_7825.jpg', caption: '家里新来的小成员' },
+      { src: 'images/albums/album-IMG_7714.jpg', caption: '宜家的一支冰淇淋' },
+    ],
+    blocks: [
+      { type: 'quote', text: '火锅咕嘟咕嘟，你在对面，仓鼠在脚边。' },
+      { type: 'paragraph', text: '什么都不做，就这样待在一起，也很好。' },
+    ],
+  },
+  {
+    id: 30, chapterId: 3, page: 15, side: 'right', title: '最常去的街道或咖啡店',
+    status: 'filled', dateLong: '2026 年 8 月',
+    media: [
+      { src: 'images/albums/album-710202.jpg', caption: '白色那件' },
+      { src: 'images/albums/album-710211.jpg', caption: '灰色那件' },
+    ],
+    blocks: [
+      { type: 'quote', text: '白色还是灰色？都好看。' },
+      { type: 'paragraph', text: '试衣间的镜子，记得你所有好看的样子。' },
+    ],
+  },
 
   // ── 第 4 章 · 可爱的小细节（对开页 16-20）──
   { id: 31, chapterId: 4, page: 16, side: 'left',  title: '放在一起的两只手',   status: 'pending' },
