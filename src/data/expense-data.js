@@ -1812,5 +1812,12 @@ export const expenseRecords = [
     "sub": "电动装备·3 套皮肤加一把枪",
     "amount": 81.1,
     "note": ""
+  },
+  {
+    "date": "2026-08-31",
+    "cat": "电子产品",
+    "sub": "数码产品·京东 8 月份还款（Mac Mini、Mac 充电线、小熊的消毒柜）",
+    "amount": 407.4,
+    "note": ""
   }
 ];
