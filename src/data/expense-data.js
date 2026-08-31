@@ -1789,7 +1789,7 @@ export const expenseRecords = [
     "date": "2026-08-30",
     "cat": "市内出行",
     "sub": "面食·油泼面",
-    "amount": 14.0,
+    "amount": 18.0,
     "note": ""
   },
   {
@@ -1804,6 +1804,13 @@ export const expenseRecords = [
     "cat": "居家生活",
     "sub": "超市采购·鱼香肉丝食材和果粒橙",
     "amount": 7.77,
+    "note": ""
+  },
+  {
+    "date": "2026-08-30",
+    "cat": "娱乐消费",
+    "sub": "电动装备·3 套皮肤加一把枪",
+    "amount": 81.1,
     "note": ""
   }
 ];

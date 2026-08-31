@@ -7730,7 +7730,7 @@ export const diaryRecords = {
     ]
   },
   "2026-08-30": {
-    "value": 7,
+    "value": 9,
     "tasks": [
       {
         "status": "x",
@@ -7784,6 +7784,51 @@ export const diaryRecords = {
         "status": "x",
         "time": "20:40-21:15",
         "desc": "出门买菜倒垃圾，买了鱼香肉丝的食材和果粒橙",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      },
+      {
+        "status": "x",
+        "time": "21:15-23:00",
+        "desc": "学习，开发",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      },
+      {
+        "status": "x",
+        "time": "23:00-24:00",
+        "desc": "打电动",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      }
+    ]
+  },
+  "2026-08-31": {
+    "value": 3,
+    "tasks": [
+      {
+        "status": "x",
+        "time": "00:00-01:30",
+        "desc": "打电动",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      },
+      {
+        "status": "x",
+        "time": "01:30-10:30",
+        "desc": "睡觉",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      },
+      {
+        "status": "x",
+        "time": "10:30-11:00",
+        "desc": "玩手机",
         "isCooking": false,
         "mealType": null,
         "dishGuess": null
