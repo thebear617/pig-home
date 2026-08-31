@@ -7807,7 +7807,7 @@ export const diaryRecords = {
     ]
   },
   "2026-08-31": {
-    "value": 11,
+    "value": 13,
     "tasks": [
       {
         "status": "x",
@@ -7893,6 +7893,22 @@ export const diaryRecords = {
         "status": "x",
         "time": "21:30-22:10",
         "desc": "坐地铁回家",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      },
+      {
+        "status": "x",
+        "time": "22:10-23:34",
+        "desc": "回家给小车充电，然后开发（猫猫笔记升级及后台升级，偷偷完成 todo c21 并归档）",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      },
+      {
+        "status": "x",
+        "time": "23:34-24:00",
+        "desc": "洗漱，然后和过马路一起看电视、看《海蒂和爷爷》",
         "isCooking": false,
         "mealType": null,
         "dishGuess": null
