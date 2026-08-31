@@ -7807,7 +7807,7 @@ export const diaryRecords = {
     ]
   },
   "2026-08-31": {
-    "value": 3,
+    "value": 7,
     "tasks": [
       {
         "status": "x",
@@ -7829,6 +7829,38 @@ export const diaryRecords = {
         "status": "x",
         "time": "10:30-11:00",
         "desc": "玩手机",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      },
+      {
+        "status": "x",
+        "time": "11:00-13:00",
+        "desc": "开发、学习、科研（lifenotes：新增租房固定支出缴费计划文档（含共同财务 6:4 分摊）、完善租房固定支出缴费计划+两人存钱计划+京东白条修正、新增我们的清单（咖啡自习/酒馆/观影）、补充预算管理固定支出及攒钱计划；devnotes：合并 Mac 购置历史与定时提醒为单一配置记录）",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      },
+      {
+        "status": "x",
+        "time": "13:00-15:00",
+        "desc": "和过马路回学校吃黄焖鸡米饭",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      },
+      {
+        "status": "x",
+        "time": "15:00-15:30",
+        "desc": "陪过马路去学校的苹果店买 macbook air m5 16+512",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      },
+      {
+        "status": "x",
+        "time": "15:30-18:50",
+        "desc": "和过马路一起出门去逛中大国际，然后到高新万达的星巴克自习",
         "isCooking": false,
         "mealType": null,
         "dishGuess": null
