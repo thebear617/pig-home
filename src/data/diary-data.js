@@ -7807,7 +7807,7 @@ export const diaryRecords = {
     ]
   },
   "2026-08-31": {
-    "value": 7,
+    "value": 11,
     "tasks": [
       {
         "status": "x",
@@ -7861,6 +7861,38 @@ export const diaryRecords = {
         "status": "x",
         "time": "15:30-18:50",
         "desc": "和过马路一起出门去逛中大国际，然后到高新万达的星巴克自习",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      },
+      {
+        "status": "x",
+        "time": "18:50-19:30",
+        "desc": "继续自习",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      },
+      {
+        "status": "x",
+        "time": "19:30-20:00",
+        "desc": "和过马路去二楼看了一家有小狗小猫的店",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      },
+      {
+        "status": "x",
+        "time": "20:00-21:30",
+        "desc": "吃新疆菜，土豆库大盘鸡",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      },
+      {
+        "status": "x",
+        "time": "21:30-22:10",
+        "desc": "坐地铁回家",
         "isCooking": false,
         "mealType": null,
         "dishGuess": null
