@@ -1854,5 +1854,19 @@ export const expenseRecords = [
     "sub": "交通·西安地铁充值",
     "amount": 50.0,
     "note": ""
+  },
+  {
+    "date": "2026-09-01",
+    "cat": "市内出行",
+    "sub": "包子早餐·买包子",
+    "amount": 4.0,
+    "note": ""
+  },
+  {
+    "date": "2026-09-01",
+    "cat": "市内出行",
+    "sub": "奶茶饮品·图书馆买杯子",
+    "amount": 1.0,
+    "note": ""
   }
 ];

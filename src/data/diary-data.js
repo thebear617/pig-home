@@ -7914,6 +7914,35 @@ export const diaryRecords = {
         "dishGuess": null
       }
     ]
+  },
+  "2026-09-01": {
+    "value": 3,
+    "tasks": [
+      {
+        "status": "x",
+        "time": "00:00-01:00",
+        "desc": "和过马路一起看电影《海蒂和爷爷》",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      },
+      {
+        "status": "x",
+        "time": "01:00-09:30",
+        "desc": "睡觉",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      },
+      {
+        "status": "x",
+        "time": "09:30-11:20",
+        "desc": "出门来学校，买包子，给过马路买药，然后来图书馆学习",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      }
+    ]
   }
 };
 export const specialEvents = {
