@@ -1868,5 +1868,12 @@ export const expenseRecords = [
     "sub": "奶茶饮品·图书馆买杯子",
     "amount": 1.0,
     "note": ""
+  },
+  {
+    "date": "2026-09-01",
+    "cat": "市内出行",
+    "sub": "家常炒菜·川湘小炒",
+    "amount": 12.5,
+    "note": "海棠餐厅"
   }
 ];

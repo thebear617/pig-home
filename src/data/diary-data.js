@@ -7916,7 +7916,7 @@ export const diaryRecords = {
     ]
   },
   "2026-09-01": {
-    "value": 3,
+    "value": 5,
     "tasks": [
       {
         "status": "x",
@@ -7936,8 +7936,24 @@ export const diaryRecords = {
       },
       {
         "status": "x",
-        "time": "09:30-11:20",
-        "desc": "出门来学校，买包子，给过马路买药，然后来图书馆学习",
+        "time": "09:30-12:50",
+        "desc": "出门来学校，买包子，给过马路买药，然后在学校图书馆自习",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      },
+      {
+        "status": "x",
+        "time": "12:50-13:30",
+        "desc": "去海棠餐厅吃川湘小炒",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      },
+      {
+        "status": "x",
+        "time": "13:30-14:40",
+        "desc": "在学校图书馆自习",
         "isCooking": false,
         "mealType": null,
         "dishGuess": null
