@@ -12,6 +12,7 @@ export const membershipRecords = [
   { name: 'OpenCode Go 3', expireDate: '2026-08-29', price: 35, cycleMonths: 1, tags: ['AI'], note: 'thebear 首月', icon: '../assets/membership/opencode.svg' },
   { name: 'OpenCode Go 4', expireDate: '2026-09-27', price: 67.57, cycleMonths: 1, tags: ['AI'], note: '8/28 开通，30 天；8 月 25 日 OpenCode Gold 首月 5 美刀统一涨价为 10 美刀，防止新人反复利用新号薅羊毛', icon: '../assets/membership/opencode.svg' },
   { name: 'minimax-m3-plus', expireDate: '2026-08-30', price: 49, cycleMonths: 1, tags: ['AI'], note: '', icon: '../assets/membership/minimax.ico', url: 'https://platform.minimaxi.com/console/plan' },
+  { name: 'MiniMax 2000 积分', expireDate: '2026-11-11', price: 0, cycleMonths: null, tags: ['AI'], note: '到期前用掉，别浪费', icon: '../assets/membership/minimax.ico', url: 'https://platform.minimaxi.com/console/plan' },
   { name: 'explore.poker-plus', expireDate: '2026-09-08', price: 35, cycleMonths: 1, tags: ['AI'], note: '', icon: '../assets/membership/explore-poker.png', url: 'https://ai.explore.poker/chat' },
   { name: 'ChatGPT Plus 会员 3', expireDate: '2026-08-12', price: 25, cycleMonths: 1, tags: ['AI'], note: '号过期的第 4 天，ChatGPT 网页端才失效，但是 Codex 端仍可以使用；失效后的第 7 天，Codex 就变成 free。', icon: '../assets/membership/chatgpt.png' },
   { name: 'ChatGPT Plus 会员 4', expireDate: '2026-08-18', price: 29, cycleMonths: 1, tags: ['AI'], note: '已失效（8/19 凌晨 2 点开通，下午 16 点就死掉了，账号被封）；邮箱是随机生成的（不是 iCloud 和谷歌邮箱）；绑定的是英国那边的银行卡。', icon: '../assets/membership/chatgpt.png' },
