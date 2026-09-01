@@ -7916,7 +7916,7 @@ export const diaryRecords = {
     ]
   },
   "2026-09-01": {
-    "value": 5,
+    "value": 7,
     "tasks": [
       {
         "status": "x",
@@ -7952,8 +7952,24 @@ export const diaryRecords = {
       },
       {
         "status": "x",
-        "time": "13:30-14:40",
-        "desc": "在学校图书馆自习",
+        "time": "13:30-17:30",
+        "desc": "在学校图书馆自习（中途回去宿舍拿东西，看大头漂亮菊他们）",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      },
+      {
+        "status": "x",
+        "time": "17:30-20:00",
+        "desc": "回家吃饭做菜（耙耙柑做鱼香肉丝和番茄炒蛋，备菜 15 分钟、收拾 15 分钟、煮菜 10 分钟）",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      },
+      {
+        "status": "x",
+        "time": "20:00-21:00",
+        "desc": "买退烧贴，照顾过马路（过马路发烧了）",
         "isCooking": false,
         "mealType": null,
         "dishGuess": null
