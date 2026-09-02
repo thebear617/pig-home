@@ -7916,7 +7916,7 @@ export const diaryRecords = {
     ]
   },
   "2026-09-01": {
-    "value": 7,
+    "value": 8,
     "tasks": [
       {
         "status": "x",
@@ -7970,6 +7970,91 @@ export const diaryRecords = {
         "status": "x",
         "time": "20:00-21:00",
         "desc": "买退烧贴，照顾过马路（过马路发烧了）",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      },
+      {
+        "status": "x",
+        "time": "21:00-24:00",
+        "desc": "边打电动边做 PPT",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      }
+    ]
+  },
+  "2026-09-02": {
+    "value": 9,
+    "tasks": [
+      {
+        "status": "x",
+        "time": "00:00-02:00",
+        "desc": "打电动",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      },
+      {
+        "status": "x",
+        "time": "02:00-11:00",
+        "desc": "睡觉",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      },
+      {
+        "status": "x",
+        "time": "11:00-12:30",
+        "desc": "出门吃油泼面，买榴莲酥",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      },
+      {
+        "status": "x",
+        "time": "12:30-14:30",
+        "desc": "做 PPT（大组会 PPT）",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      },
+      {
+        "status": "x",
+        "time": "14:30-18:00",
+        "desc": "做 PPT（大组会 PPT）",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      },
+      {
+        "status": "x",
+        "time": "18:00-19:00",
+        "desc": "吃麻辣烫外卖（张亮麻辣烫）",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      },
+      {
+        "status": "x",
+        "time": "19:00-22:00",
+        "desc": "做 PPT（大组会 PPT）",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      },
+      {
+        "status": "x",
+        "time": "22:00-23:00",
+        "desc": "打电动",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      },
+      {
+        "status": "x",
+        "time": "23:00-24:00",
+        "desc": "做 PPT（大组会 PPT）",
         "isCooking": false,
         "mealType": null,
         "dishGuess": null
