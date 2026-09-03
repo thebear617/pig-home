@@ -8130,7 +8130,20 @@ export const diaryRecords = {
       },
       {
         "status": "x",
-        "time": "22:10-23:00",
+        "time": "22:10-24:00",
+        "desc": "打电动",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      }
+    ]
+  },
+  "2026-09-04": {
+    "value": 1,
+    "tasks": [
+      {
+        "status": "x",
+        "time": "00:00-02:00",
         "desc": "打电动",
         "isCooking": false,
         "mealType": null,
