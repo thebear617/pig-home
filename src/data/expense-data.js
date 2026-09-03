@@ -1945,5 +1945,12 @@ export const expenseRecords = [
     "sub": "日用品·洁柔卷纸 12 卷",
     "amount": 10.99,
     "note": ""
+  },
+  {
+    "date": "2026-09-03",
+    "cat": "市内出行",
+    "sub": "面食泡馍·土豆炒牛肉拌面",
+    "amount": 17.0,
+    "note": "门口"
   }
 ];

@@ -6,7 +6,7 @@ export const membershipRecords = [
   { name: 'claude 原版', expireDate: '2026-06-15', price: 88, cycleMonths: 1, tags: ['AI'], note: '', icon: '../assets/membership/claude.ico' },
   { name: 'ChatGPT Plus 会员 2', expireDate: '2026-06-20', price: 29, cycleMonths: 1, tags: ['AI'], note: '', icon: '../assets/membership/chatgpt.png' },
   { name: '爱奇艺', expireDate: '2026-02-14', price: 138, cycleMonths: 12, tags: ['视频'], note: '平时25一个月，优惠了162', icon: '../assets/membership/iqiyi.ico' },
-  { name: '一生足迹', expireDate: '2025-11-12', price: null, cycleMonths: 12, tags: ['工具'], note: '' },
+  { name: '一生足迹', expireDate: '2026-11-12', price: 12, cycleMonths: 12, tags: ['工具'], note: '每年自动续订，年费 12 元' },
   { name: 'OpenCode Go 1', expireDate: '2026-07-17', price: 35, cycleMonths: 1, tags: ['AI'], note: '', icon: '../assets/membership/opencode.svg' },
   { name: 'OpenCode Go 2', expireDate: '2026-07-30', price: 35, cycleMonths: 1, tags: ['AI'], note: '', icon: '../assets/membership/opencode.svg' },
   { name: 'OpenCode Go 3', expireDate: '2026-08-29', price: 35, cycleMonths: 1, tags: ['AI'], note: 'thebear 首月', icon: '../assets/membership/opencode.svg' },
