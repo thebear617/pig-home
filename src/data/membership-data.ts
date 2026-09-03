@@ -19,7 +19,7 @@ export const membershipRecords = [
   { name: 'ChatGPT Plus 会员 5', expireDate: '2026-09-18', price: 36.04, cycleMonths: 1, tags: ['AI'], note: '8/19 开通，30 天；这次用的是谷歌邮箱，是用越南银行卡买的', icon: '../assets/membership/chatgpt.png' },
   { name: '阿里 qoder 国际版', expireDate: '2026-09-30', price: 0, cycleMonths: 1, tags: ['AI'], note: '800 次千问 3.8 max 调用', icon: '../assets/membership/qoder.png' },
   { name: '88vip➕网易云➕优酷年会员', expireDate: '2026-09-30', price: 0, cycleMonths: 12, tags: ['购物'], note: '' },
-  { name: '百度云', expireDate: '2026-09-13', price: 148, cycleMonths: 12, tags: ['网盘'], note: '学生优惠148一年', icon: '../assets/membership/baidu-netdisk.svg' },
+  { name: '百度云', expireDate: '2027-09-13', price: 148, cycleMonths: 12, tags: ['网盘'], note: '学生优惠148一年', icon: '../assets/membership/baidu-netdisk.svg' },
   { name: 'wps超级会员', expireDate: '2026-11-30', price: 79, cycleMonths: 12, tags: ['工具'], note: '2年158元，折合79/年', icon: '../assets/membership/wps.ico' },
   { name: '京东plus', expireDate: '2027-02-05', price: 49.5, cycleMonths: 24, tags: ['购物'], note: '建议在原会员失效后购买双年卡', icon: '../assets/membership/jd.ico' },
   { name: '网易云音乐', expireDate: '2027-02-17', price: 108, cycleMonths: 12, tags: ['音乐'], note: '学生优惠；88vip赠送部分有效期', icon: '../assets/membership/netease-cloud-music.ico' },
