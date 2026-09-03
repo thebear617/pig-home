@@ -1938,5 +1938,12 @@ export const expenseRecords = [
     "sub": "火锅麻辣·张亮麻辣烫",
     "amount": 13.48,
     "note": "外卖"
+  },
+  {
+    "date": "2026-09-03",
+    "cat": "居家生活",
+    "sub": "日用品·洁柔卷纸 12 卷",
+    "amount": 10.99,
+    "note": ""
   }
 ];
