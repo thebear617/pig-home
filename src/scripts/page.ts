@@ -564,9 +564,9 @@ function expenseView() {
     const sinceExpense = (window.__expenseRecords || []).filter(item => item.date >= base.date).reduce((s, i) => s + i.amount, 0);
     currentBalance = base.amount + sinceIncome - sinceExpense;
   }
-  // 可支配资金 = 当前余额 - 预留房租（4000 元） - 调整系数（529.31 元）
+  // 可支配资金 = 当前余额 - 预留房租（4000 元） - 调整系数（677.31 元）
   const rentReserve = 4000;
-  const adjustmentFactor = 529.31;
+  const adjustmentFactor = 677.31;
   const availableBalance = currentBalance - rentReserve - adjustmentFactor;
   let html = base ? `<div class="summary-bar"><div class="summary-item"><span class="summary-label">可支配资金</span><span class="summary-value ${availableBalance >= 0 ? 'income-amount' : 'expense-amount'}">¥${availableBalance.toFixed(2)}</span></div><div class="summary-divider"></div><div class="summary-item"><span class="summary-label">本月支出</span><span class="summary-value expense-amount">¥${total.toFixed(2)}</span></div><div class="summary-divider"></div><div class="summary-item"><span class="summary-label">本月收入</span><span class="summary-value income-amount">¥${totalIncome.toFixed(2)}</span></div><div class="summary-divider"></div><div class="summary-item"><span class="summary-label">记录笔数</span><span class="summary-value">${records.length}</span></div><div class="summary-divider"></div><div class="summary-item"><span class="summary-label">日均支出</span><span class="summary-value expense-amount">¥${days ? (total / days).toFixed(2) : '0.00'}</span></div></div>` : (total || totalIncome ? `<div class="summary-bar"><div class="summary-item"><span class="summary-label">本月支出</span><span class="summary-value expense-amount">¥${total.toFixed(2)}</span></div><div class="summary-divider"></div><div class="summary-item"><span class="summary-label">本月收入</span><span class="summary-value income-amount">¥${totalIncome.toFixed(2)}</span></div><div class="summary-divider"></div><div class="summary-item"><span class="summary-label">记录笔数</span><span class="summary-value">${records.length}</span></div><div class="summary-divider"></div><div class="summary-item"><span class="summary-label">日均支出</span><span class="summary-value expense-amount">¥${days ? (total / days).toFixed(2) : '0.00'}</span></div></div>` : '<div class="empty-state"><p>本月暂无支出/收入记录</p></div>');
 
