@@ -32,4 +32,5 @@ export const membershipRecords = [
   { name: '扇贝大会员', expireDate: '2027-08-14', price: 180, cycleMonths: 12, tags: ['工具'], note: '一年 180 元', icon: '../assets/membership/shanbay.png' },
   { name: '塘市江西菜代金券', expireDate: '2026-11-26', price: 0, cycleMonths: 1, tags: ['美食'], note: '2 张 100-30 + 2 张 150-50，三个月有效（8/26 起）', icon: '../assets/membership/hamburger.png' },
   { name: '火山方舟 Coding Plan', expireDate: '2026-09-28', price: 9.4, cycleMonths: 1, tags: ['AI'], note: '8/29 开通，30 天。首两个月都是 9.9 元，续费 9.9 元，后面恢复原价 40 元/月。实际测试用量大概能有 250M token，比 MiniMax Plus 的 600M token 少了一些，但也足够用了；且支持多模型，可以实现模型路由。', icon: '../assets/membership/volcengine-ark.png', url: 'https://console.volcengine.com/ark' },
+  { name: '阿里 qoder 4000 积分', expireDate: '2026-09-30', price: 0, cycleMonths: null, tags: ['AI'], note: '9/30 前开通可以有 4000 积分送', icon: '../assets/membership/qoder.png', url: 'https://docs.qoder.cn/events/bogo?spm=5176.28644950.0.0.1df579bb3dM2AI' },
 ];
