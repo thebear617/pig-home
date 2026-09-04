@@ -8139,12 +8139,100 @@ export const diaryRecords = {
     ]
   },
   "2026-09-04": {
-    "value": 1,
+    "value": 12,
     "tasks": [
       {
         "status": "x",
-        "time": "00:00-02:00",
-        "desc": "打电动",
+        "time": "02:00-11:00",
+        "desc": "睡觉",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      },
+      {
+        "status": "x",
+        "time": "11:00-12:50",
+        "desc": "玩手机、做饭",
+        "isCooking": true,
+        "mealType": "中饭",
+        "dishGuess": null
+      },
+      {
+        "status": "x",
+        "time": "12:50-14:30",
+        "desc": "学习、开发（熊窝任务看板：甘特图视图增加按小时排期；常识笔记 & 开发笔记：CMS 优化视图；开发笔记：调整分类）",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      },
+      {
+        "status": "x",
+        "time": "14:30-15:30",
+        "desc": "煮泡面吃",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      },
+      {
+        "status": "x",
+        "time": "15:30-18:10",
+        "desc": "继续学习、开发（熊窝任务看板：甘特图按小时排期；常识笔记 & 开发笔记：CMS 视图优化；开发笔记：分类调整）",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      },
+      {
+        "status": "x",
+        "time": "18:10-18:40",
+        "desc": "去门口买菜",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      },
+      {
+        "status": "x",
+        "time": "18:40-19:40",
+        "desc": "备菜做饭（耙耙柑做鱼香肉丝和凉拌黄瓜，花费 8 元，备菜 30 分钟、收拾 10 分钟）",
+        "isCooking": true,
+        "mealType": "晚饭",
+        "dishGuess": null
+      },
+      {
+        "status": "x",
+        "time": "19:40-20:10",
+        "desc": "吃饭和收拾",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      },
+      {
+        "status": "x",
+        "time": "20:10-20:30",
+        "desc": "做记录、整理菜谱",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      },
+      {
+        "status": "x",
+        "time": "20:30-21:15",
+        "desc": "出门和过马路逛街，买水果饮料",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      },
+      {
+        "status": "x",
+        "time": "21:15-23:08",
+        "desc": "整理开发笔记内容，给开发笔记 CMS 加排序精度细化",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      },
+      {
+        "status": "x",
+        "time": "23:08-24:00",
+        "desc": "继续整理开发笔记内容",
         "isCooking": false,
         "mealType": null,
         "dishGuess": null
