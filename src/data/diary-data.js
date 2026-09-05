@@ -8238,6 +8238,43 @@ export const diaryRecords = {
         "dishGuess": null
       }
     ]
+  },
+  "2026-09-05": {
+    "value": 4,
+    "tasks": [
+      {
+        "status": "x",
+        "time": "00:00-12:00",
+        "desc": "睡觉",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      },
+      {
+        "status": "x",
+        "time": "12:00-15:00",
+        "desc": "来学校放电脑，给车充电，吃生烫牛肉米线",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      },
+      {
+        "status": "x",
+        "time": "15:00-17:00",
+        "desc": "在网安大楼学习",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      },
+      {
+        "status": "x",
+        "time": "17:00-18:20",
+        "desc": "和过马路一起回家，去门口吃螺蛳粉",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      }
+    ]
   }
 };
 export const specialEvents = {
