@@ -2036,5 +2036,12 @@ export const expenseRecords = [
     "sub": "交通·给电车充电瓶",
     "amount": 2.0,
     "note": ""
+  },
+  {
+    "date": "2026-09-05",
+    "cat": "市内出行",
+    "sub": "烧烤烤肉·东北烧烤",
+    "amount": 20.0,
+    "note": ""
   }
 ];
