@@ -8240,7 +8240,7 @@ export const diaryRecords = {
     ]
   },
   "2026-09-05": {
-    "value": 6,
+    "value": 8,
     "tasks": [
       {
         "status": "x",
@@ -8286,6 +8286,75 @@ export const diaryRecords = {
         "status": "x",
         "time": "21:30-22:30",
         "desc": "骑车出门逛街散心，吃烧烤（东北烧烤）",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      },
+      {
+        "status": "x",
+        "time": "22:30-23:10",
+        "desc": "打电动",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      },
+      {
+        "status": "x",
+        "time": "23:10-24:00",
+        "desc": "睡前看电视",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      }
+    ]
+  },
+  "2026-09-06": {
+    "value": 6,
+    "tasks": [
+      {
+        "status": "x",
+        "time": "00:00-00:30",
+        "desc": "继续做大组会 PPT",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      },
+      {
+        "status": "x",
+        "time": "00:30-08:00",
+        "desc": "睡觉",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      },
+      {
+        "status": "x",
+        "time": "08:00-12:00",
+        "desc": "开大组会（工作总结及学期计划），和 3 个工程博士见面聊各自方向",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      },
+      {
+        "status": "x",
+        "time": "12:00-22:00",
+        "desc": "和胡哥、晓坤师兄、韩师姐那群博士吃牛肉面（胡哥付）→ 去韩师姐家打牌 → 晚上吃哈力家西北烤肉（周雄师兄付）→ 打车回网安（晓坤师兄付）→ 骑车回家",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      },
+      {
+        "status": "x",
+        "time": "22:00-22:30",
+        "desc": "和宝宝出门买菜取快递",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      },
+      {
+        "status": "x",
+        "time": "22:30-23:00",
+        "desc": "回家洗澡收拾",
         "isCooking": false,
         "mealType": null,
         "dishGuess": null

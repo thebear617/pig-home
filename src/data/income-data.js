@@ -27,5 +27,12 @@ export const incomeRecords = [
     "sub": "生活费",
     "amount": 3000.0,
     "note": "老豆 9 月份给的生活费"
+  },
+  {
+    "date": "2026-09-06",
+    "cat": "其他收入",
+    "sub": "麻将扑克",
+    "amount": 36.0,
+    "note": "扑克"
   }
 ];

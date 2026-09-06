@@ -2043,5 +2043,12 @@ export const expenseRecords = [
     "sub": "烧烤烤肉·东北烧烤",
     "amount": 20.0,
     "note": ""
+  },
+  {
+    "date": "2026-09-06",
+    "cat": "市内出行",
+    "sub": "奶茶饮品·果粒橙",
+    "amount": 2.17,
+    "note": ""
   }
 ];
