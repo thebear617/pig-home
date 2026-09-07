@@ -1755,12 +1755,14 @@ button {
 
 .food-view-tabs {
   display: inline-flex;
+  flex-wrap: wrap;
   gap: .4rem;
   padding: .3rem;
   background: var(--surface-soft);
   border: 1px solid var(--line);
   border-radius: 999px;
   align-self: flex-start;
+  max-width: 100%;
 }
 
 .food-view-tab {
@@ -2091,6 +2093,447 @@ button {
 
 .cookbook-md tr:nth-child(even) td {
   background: var(--surface-soft);
+}
+
+/* ─── 价格速查 ─── */
+.price-panel {
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+}
+
+.price-cat {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: .9rem 1rem 1rem;
+  box-shadow: var(--shadow);
+}
+
+.price-cat-head {
+  display: flex;
+  align-items: baseline;
+  gap: .6rem;
+  margin-bottom: .8rem;
+}
+
+.price-cat-head h3 {
+  font-size: 1.02rem;
+  font-weight: 900;
+  color: var(--dark);
+}
+
+.price-cat-count {
+  font-size: .78rem;
+  font-weight: 700;
+  color: var(--muted);
+  background: var(--surface-soft);
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  padding: .05rem .5rem;
+}
+
+.price-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(190px, 1fr));
+  gap: .6rem;
+}
+
+.price-card {
+  display: flex;
+  flex-direction: column;
+  gap: .1rem;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  padding: .6rem .8rem .65rem;
+  background: var(--surface);
+  transition: box-shadow .15s;
+}
+
+.price-card:hover {
+  box-shadow: var(--shadow);
+}
+
+.price-card-top {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: .4rem;
+}
+
+.price-name {
+  font-weight: 800;
+  font-size: .92rem;
+  color: var(--text);
+}
+
+.price-spec {
+  font-size: .72rem;
+  color: var(--muted);
+  font-weight: 600;
+  flex-shrink: 0;
+}
+
+.price-main {
+  font-size: 1.12rem;
+  font-weight: 900;
+  color: var(--red, #b5482f);
+  font-variant-numeric: tabular-nums;
+}
+
+.price-meta-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: .35rem;
+  align-items: center;
+  margin-top: .2rem;
+}
+
+.price-badge {
+  background: var(--surface-soft);
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  padding: .05rem .45rem;
+  font-size: .7rem;
+  color: var(--muted);
+  font-weight: 700;
+}
+
+.price-note {
+  font-size: .75rem;
+  color: var(--muted);
+  line-height: 1.4;
+}
+
+/* ─── 价格速查 / 食材存放：空态 ─── */
+.price-empty {
+  text-align: center;
+  padding: 3rem 1.2rem;
+  color: var(--muted);
+  background: var(--surface);
+  border: 1px dashed var(--line);
+  border-radius: var(--radius);
+}
+
+.price-empty-icon {
+  font-size: 2.2rem;
+  margin-bottom: .5rem;
+}
+
+.price-empty p {
+  margin: .3rem 0;
+  font-size: 1rem;
+  font-weight: 800;
+  color: var(--text);
+}
+
+.price-empty-sub {
+  font-size: .85rem;
+  font-weight: 400;
+  color: var(--muted);
+  line-height: 1.6;
+  max-width: 40ch;
+  margin: .5rem auto 0;
+}
+
+.price-empty code {
+  font-family: "SF Mono", Menlo, Consolas, monospace;
+  font-size: .78rem;
+  background: var(--surface-soft);
+  border: 1px solid var(--line);
+  border-radius: 4px;
+  padding: .05rem .3rem;
+}
+
+/* ─── 食材存放：库存甘特图 + 存放周期参考 ─── */
+.pantry-panel {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.pantry-summary {
+  display: flex;
+  flex-wrap: wrap;
+  gap: .5rem;
+  align-items: center;
+  padding: .6rem .8rem;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+}
+
+.pantry-sum-chip {
+  font-size: .78rem;
+  font-weight: 800;
+  padding: .22rem .6rem;
+  border-radius: 999px;
+  background: var(--surface-soft);
+  border: 1px solid var(--line);
+  color: var(--muted);
+}
+
+.pantry-sum-chip.ch-red { background: #fdeceb; border-color: #f2c2bf; color: #b3261e; }
+.pantry-sum-chip.ch-yellow { background: #fdf3df; border-color: #efd9a8; color: #92600a; }
+.pantry-sum-chip.ch-green { background: #eaf6ee; border-color: #c6e5d1; color: #1e7a43; }
+
+.pantry-board {
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: var(--surface);
+  box-shadow: var(--shadow);
+  overflow: hidden;
+}
+
+.pantry-scroll {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+.pantry-grid {
+  min-width: 640px;
+}
+
+.pantry-head,
+.pantry-row {
+  display: grid;
+  grid-template-columns: 200px 1fr;
+}
+
+.pantry-head {
+  border-bottom: 1px solid var(--line);
+  background: var(--surface-soft);
+}
+
+.pantry-row {
+  border-bottom: 1px solid var(--line);
+}
+
+.pantry-row:last-child {
+  border-bottom: none;
+}
+
+.pantry-head-label {
+  padding: .5rem .75rem;
+  font-size: .78rem;
+  font-weight: 800;
+  color: var(--muted);
+  border-right: 1px solid var(--line);
+  align-self: stretch;
+  display: flex;
+  align-items: center;
+}
+
+.pantry-head-axis {
+  display: grid;
+  padding: .35rem .45rem;
+  gap: 1px;
+}
+
+.pantry-day {
+  font-size: .66rem;
+  color: var(--muted);
+  text-align: center;
+  line-height: 1.6;
+  white-space: nowrap;
+}
+
+.pantry-day.is-month {
+  font-weight: 800;
+  color: var(--text);
+}
+
+.pantry-day.is-today {
+  font-weight: 900;
+  color: #fff;
+  background: var(--red, #b5482f);
+  border-radius: 999px;
+  align-self: center;
+  line-height: 1.5;
+}
+
+.pantry-label {
+  padding: .5rem .75rem;
+  border-right: 1px solid var(--line);
+  display: flex;
+  flex-direction: column;
+  gap: .15rem;
+  justify-content: center;
+  min-width: 0;
+}
+
+.pantry-label-top {
+  display: flex;
+  align-items: center;
+  gap: .4rem;
+  min-width: 0;
+}
+
+.pantry-name {
+  font-weight: 800;
+  font-size: .9rem;
+  color: var(--text);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.pantry-place {
+  flex-shrink: 0;
+  font-size: .68rem;
+  font-weight: 800;
+  border-radius: 999px;
+  padding: .08rem .5rem;
+  border: 1px solid;
+}
+
+.pantry-place.place-cold { background: #e9f1fb; border-color: #c7dcf4; color: #1d5fae; }
+.pantry-place.place-freeze { background: #e6f6f5; border-color: #c3e6e2; color: #17716c; }
+.pantry-place.place-room { background: #f1f2f4; border-color: #d9dce1; color: #5b6472; }
+.pantry-place.place-shade { background: #faf0dc; border-color: #eed9a7; color: #8a5f10; }
+
+.pantry-dates {
+  display: flex;
+  align-items: baseline;
+  gap: .5rem;
+  font-size: .72rem;
+  color: var(--muted);
+}
+
+.pantry-dates .exp-red { color: #b3261e; font-weight: 800; }
+.pantry-dates .exp-yellow { color: #92600a; font-weight: 800; }
+.pantry-dates .exp-green { color: #1e7a43; font-weight: 800; }
+
+.pantry-note {
+  font-size: .7rem;
+  color: var(--muted);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.pantry-track {
+  display: grid;
+  gap: 1px;
+  padding: .4rem .45rem;
+  align-items: center;
+  background: repeating-linear-gradient(90deg, rgba(0, 0, 0, .015) 0 21px, transparent 21px 22px);
+}
+
+.pantry-cell {
+  height: 14px;
+  border-radius: 3px;
+  background: transparent;
+}
+
+.pantry-cell.bar-red { background: #e04538; }
+.pantry-cell.bar-yellow { background: #edb03b; }
+.pantry-cell.bar-green { background: #48a878; }
+
+.pantry-cell.bar-red + .pantry-cell.bar-red,
+.pantry-cell.bar-yellow + .pantry-cell.bar-yellow,
+.pantry-cell.bar-green + .pantry-cell.bar-green {
+  border-radius: 0;
+}
+
+/* ─── 存放周期参考卡 ─── */
+.pantry-shelf {
+  display: flex;
+  flex-direction: column;
+  gap: .8rem;
+}
+
+.pantry-shelf-head {
+  display: flex;
+  align-items: baseline;
+  gap: .6rem;
+  flex-wrap: wrap;
+}
+
+.pantry-shelf-head h3 {
+  font-size: 1.02rem;
+  font-weight: 900;
+  color: var(--dark);
+}
+
+.pantry-shelf-sub {
+  font-size: .8rem;
+  color: var(--muted);
+}
+
+.pantry-shelf-group {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: .7rem .9rem .95rem;
+  box-shadow: var(--shadow);
+}
+
+.pantry-shelf-group h4 {
+  font-size: .9rem;
+  font-weight: 800;
+  color: var(--text);
+  margin: 0 0 .6rem;
+}
+
+.pantry-shelf-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: .5rem;
+}
+
+.pantry-shelf-card {
+  display: flex;
+  flex-direction: column;
+  gap: .35rem;
+  border: 1px dashed var(--line);
+  border-radius: 8px;
+  padding: .5rem .65rem;
+  background: var(--surface-soft);
+}
+
+.pantry-shelf-name {
+  font-weight: 700;
+  font-size: .85rem;
+  color: var(--text);
+}
+
+.pantry-shelf-refs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: .3rem;
+}
+
+.pantry-shelf-ref {
+  display: inline-flex;
+  align-items: center;
+  gap: .3rem;
+  font-size: .72rem;
+  color: var(--muted);
+  background: #fff;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  padding: .12rem .5rem;
+}
+
+.place-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.place-dot.p-cold { background: #4a90d9; }
+.place-dot.p-freeze { background: #2aa5a0; }
+.place-dot.p-room { background: #9aa3ad; }
+.place-dot.p-shade { background: #e0a23c; }
+
+@media (max-width: 820px) {
+  .pantry-head,
+  .pantry-row {
+    grid-template-columns: 164px 1fr;
+  }
 }
 
 /* ─── 生活备忘录 / 物资采购：区域卡片正文 ─── */

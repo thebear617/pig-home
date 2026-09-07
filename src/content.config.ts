@@ -6,7 +6,8 @@ const cookingTipsCollection = defineCollection({
   loader: glob({ pattern: '**/*.md', base: './src/content/cooking-tips' }),
   schema: z.object({
     title: z.string(),
-    category: z.string(),
+    // 分类按「吃法/场合」，新分类需在此补充
+    category: z.enum(['主食', '荤菜', '素菜', '汤羹', '小吃夜宵', '酱料蘸料', '烘焙面点', '饮品甜品']),
     icon: z.string(),
     ware: z.string().optional(),
   }),

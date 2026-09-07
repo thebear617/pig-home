@@ -1,6 +1,8 @@
 ---
 import { getCollection } from 'astro:content';
 import { marked } from 'marked';
+import { foodPrices, FOOD_PRICE_CATEGORIES } from '../../data/food-prices';
+import { foodPantry, pantryShelfGroups } from '../../data/food-pantry';
 
 const tips = await getCollection('cooking-tips');
 const catMap = new Map<string, typeof tips>();
@@ -10,7 +12,7 @@ for (const tip of tips) {
   catMap.get(cat)!.push(tip);
 }
 const tipCategories = Array.from(catMap.entries());
-const categoryOrder = ['备菜', '炒菜', '烘焙', '烹煮', '煎制', '饮品'];
+const categoryOrder = ['主食', '荤菜', '汤羹', '小吃夜宵', '酱料蘸料', '烘焙面点', '饮品甜品'];
 tipCategories.sort(([a], [b]) => {
   const ai = categoryOrder.indexOf(a);
   const bi = categoryOrder.indexOf(b);
@@ -27,13 +29,65 @@ const cardColors = [
 ];
 
 const weekdays = ['日', '一', '二', '三', '四', '五', '六'];
+
+// ── 食材存放：库存甘特图 + 存放周期参考 ──
+const ymd = (d: Date) => `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
+const md = (d: Date) => `${d.getMonth() + 1}/${d.getDate()}`;
+const parseYmd = (s: string) => {
+  const [y, m, d] = s.split('-').map(Number);
+  return new Date(y, m - 1, d);
+};
+const todayRef = new Date();
+const todayZero = new Date(todayRef.getFullYear(), todayRef.getMonth(), todayRef.getDate());
+const PANTRY_COLS = 18; // 时间轴总天数：今天-2 ～ 今天+15
+const pantryStart = new Date(todayZero);
+pantryStart.setDate(todayZero.getDate() - 2);
+const pantryAxis: Date[] = Array.from({ length: PANTRY_COLS }, (_, i) => new Date(pantryStart.getFullYear(), pantryStart.getMonth(), pantryStart.getDate() + i));
+const dayNum = (d: Date, ref: Date) => Math.round((d.getTime() - ref.getTime()) / 86400000);
+const pantryColsStyle = `grid-template-columns:repeat(${PANTRY_COLS},minmax(22px,1fr))`;
+const placeCls: Record<string, string> = { 冷藏: 'cold', 冷冻: 'freeze', 常温: 'room', 阴凉: 'shade' };
+const placeOf = (p: string) => placeCls[p] ?? (p.includes('冷藏') ? 'cold' : p.includes('冷冻') ? 'freeze' : p.includes('阴凉') ? 'shade' : 'room');
+const statusRank: Record<string, number> = { red: 0, yellow: 1, green: 2 };
+const axisDayLabel = (d: Date) => (d.getDate() === 1 ? `${d.getMonth() + 1}/${d.getDate()}` : String(d.getDate()));
+const pantryRows = foodPantry
+  .map(it => {
+    const buy = parseYmd(it.bought);
+    const exp = new Date(buy);
+    exp.setDate(buy.getDate() + it.days);
+    const diff = dayNum(exp, todayZero);
+    return {
+      ...it,
+      buy,
+      exp,
+      diff,
+      status: diff <= 0 ? 'red' : diff <= 2 ? 'yellow' : 'green',
+      startCol: dayNum(buy, pantryStart),
+      endCol: dayNum(exp, pantryStart),
+    };
+  })
+  .sort((a, b) => statusRank[a.status] - statusRank[b.status] || a.diff - b.diff);
+const pantryCount = (s: string) => pantryRows.filter(r => r.status === s).length;
+
+// ── 价格速查：按分类分组（顺序以 FOOD_PRICE_CATEGORIES 为准，未知分类兜底到尾部）──
+const priceCatIcons: Record<string, string> = {
+  蔬菜: '🥬', 肉禽蛋: '🥩', 水产: '🦐', 主食豆制品: '🍚',
+  调料干货: '🧂', 水果: '🍎', 冷冻速食: '🧊', 饮品零食: '🥤',
+};
+const priceCatOrder = new Map(FOOD_PRICE_CATEGORIES.map((c, i) => [c, i]));
+const priceCatRank = (c: string) => priceCatOrder.get(c) ?? 99;
+const priceGroups = [...new Set(foodPrices.map(p => p.category))]
+  .sort((a, b) => priceCatRank(a) - priceCatRank(b))
+  .map(cat => ({ cat, items: foodPrices.filter(p => p.category === cat) }));
+const priceTotal = foodPrices.length;
 ---
 
 <div data-tab="food-records">
   <div class="food-views">
     <div class="food-view-tabs">
-      <button class="food-view-tab active" data-view="calendar">📅 美食日历</button>
-      <button class="food-view-tab" data-view="tips">💡 做饭心得</button>
+      <button class="food-view-tab active" data-view="calendar">🍳 做菜记录</button>
+      <button class="food-view-tab" data-view="tips">📖 菜谱</button>
+      <button class="food-view-tab" data-view="pantry">🧊 食材存放</button>
+      <button class="food-view-tab" data-view="prices">🏷️ 价格速查</button>
     </div>
     <div class="food-view-panel" data-panel="calendar">
       <div class="food-calendar-layout">
@@ -99,6 +153,131 @@ const weekdays = ['日', '一', '二', '三', '四', '五', '六'];
             </div>
           ))}
         </div>
+      </div>
+    </div>
+    <div class="food-view-panel" data-panel="pantry" hidden>
+      <div class="pantry-panel">
+        {pantryRows.length === 0 ? (
+          <div class="price-empty">
+            <div class="price-empty-icon">🧊</div>
+            <p>食材存放 · 还没有在吃的食材</p>
+            <p class="price-empty-sub">冰箱 / 储物柜里现在有什么、几号买的、打算放几天？报给我录进 <code>home/src/data/food-pantry.ts</code>，上面就会长出「哪些食材到哪号过期」的甘特图。</p>
+          </div>
+        ) : (
+          <>
+            <div class="pantry-summary">
+              <span class="pantry-sum-chip">🍳 在吃 {pantryRows.length}</span>
+              <span class="pantry-sum-chip ch-red">🔴 已过期 / 今天到期 {pantryCount('red')}</span>
+              <span class="pantry-sum-chip ch-yellow">🟡 明后天到期 {pantryCount('yellow')}</span>
+              <span class="pantry-sum-chip ch-green">🟢 安全 {pantryCount('green')}</span>
+            </div>
+            <div class="pantry-board">
+              <div class="pantry-scroll">
+                <div class="pantry-grid">
+                  <div class="pantry-head">
+                    <div class="pantry-head-label">食材 · 存放位置</div>
+                    <div class="pantry-head-axis" style={pantryColsStyle}>
+                      {pantryAxis.map((d, i) => {
+                        const isToday = ymd(d) === ymd(todayZero);
+                        return (
+                          <span class={`pantry-day${isToday ? ' is-today' : ''}${d.getDate() === 1 ? ' is-month' : ''}`}>
+                            {isToday ? '今' : axisDayLabel(d)}
+                          </span>
+                        );
+                      })}
+                    </div>
+                  </div>
+                  {pantryRows.map(r => (
+                    <div class="pantry-row">
+                      <div class="pantry-label">
+                        <div class="pantry-label-top">
+                          <span class="pantry-name" title={r.name}>{r.name}</span>
+                          <span class={`pantry-place place-${placeOf(r.place)}`}>{r.place}</span>
+                        </div>
+                        <div class="pantry-dates">
+                          <span>{md(r.buy)} 买</span>
+                          <span class={`exp-${r.status}`}>{md(r.exp)} 到期</span>
+                        </div>
+                        {r.note && <div class="pantry-note">{r.note}</div>}
+                      </div>
+                      <div class="pantry-track" style={pantryColsStyle}>
+                        {pantryAxis.map((_, i) => (
+                          <span
+                            class={`pantry-cell${i >= Math.max(0, r.startCol) && i <= Math.min(r.endCol, PANTRY_COLS - 1) ? ` bar-${r.status}` : ''}`}
+                          />
+                        ))}
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </>
+        )}
+        <div class="pantry-shelf">
+          <div class="pantry-shelf-head">
+            <h3>📋 存放周期参考</h3>
+            <span class="pantry-shelf-sub">同一食材不同放法能撑的天数差别很大；入库时照着这张卡填「能放几天」</span>
+          </div>
+          {pantryShelfGroups.map(g => (
+            <section class="pantry-shelf-group">
+              <h4>{g.cat}</h4>
+              <div class="pantry-shelf-grid">
+                {g.items.map(item => (
+                  <div class="pantry-shelf-card">
+                    <span class="pantry-shelf-name">{item.name}</span>
+                    <span class="pantry-shelf-refs">
+                      {item.refs.map(r => (
+                        <span class="pantry-shelf-ref">
+                          <i class={`place-dot p-${placeOf(r.p)}`} />
+                          {r.p} · {r.t}
+                        </span>
+                      ))}
+                    </span>
+                  </div>
+                ))}
+              </div>
+            </section>
+          ))}
+        </div>
+      </div>
+    </div>
+    <div class="food-view-panel" data-panel="prices" hidden>
+      <div class="price-panel">
+        {priceTotal === 0 ? (
+          <div class="price-empty">
+            <div class="price-empty-icon">🏷️</div>
+            <p>价格速查 · 待录入</p>
+            <p class="price-empty-sub">买菜时留意一下单价，整理进 <code>home/src/data/food-prices.ts</code>，这里就会长出「买菜前先瞄一眼」的速查表。</p>
+          </div>
+        ) : (
+          priceGroups.map(g => (
+            <section class="price-cat">
+              <div class="price-cat-head">
+                <h3>{priceCatIcons[g.cat] ?? '🛒'} {g.cat}</h3>
+                <span class="price-cat-count">{g.items.length} 条</span>
+              </div>
+              <div class="price-grid">
+                {g.items.map(item => (
+                  <div class="price-card">
+                    <div class="price-card-top">
+                      <span class="price-name">{item.name}</span>
+                      {item.spec && <span class="price-spec">{item.spec}</span>}
+                    </div>
+                    {item.price && <div class="price-main">{item.price}</div>}
+                    {(item.source || item.updated) && (
+                      <div class="price-meta-row">
+                        {item.source && <span class="price-badge">📍 {item.source}</span>}
+                        {item.updated && <span class="price-badge">📅 {item.updated}</span>}
+                      </div>
+                    )}
+                    {item.note && <div class="price-note">{item.note}</div>}
+                  </div>
+                ))}
+              </div>
+            </section>
+          ))
+        )}
       </div>
     </div>
   </div>

@@ -7,7 +7,7 @@ export interface Tab {
 
 export const TABS: Tab[] = [
   { id: 'home-archive', title: '家居档案', icon: '🏠' },
-  { id: 'food-records', title: '美食记录与做饭心得', icon: '🍳', months: true },
+  { id: 'food-records', title: '厨房工作台', icon: '🍳', months: true },
   { id: 'daily-tracker', title: '每日追踪', icon: '📅', months: true },
   { id: 'expense-records', title: '收支记录', icon: '💰', months: true },
   { id: 'membership', title: '会员订阅', icon: '💳' },
