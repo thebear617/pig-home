@@ -158,5 +158,11 @@ export const foodRecords: Record<string, FoodMeal[]> = {
       { name: '鱼香肉丝', madeBy: '耙耙柑' },
       { name: '凉拌黄瓜', madeBy: '耙耙柑' }
     ]}
+  ],
+  '2026-09-07': [
+    { meal: '晚饭', prep: 10, cleanup: 10, shopping: 20, cost: 15, dishes: [
+      { name: '麻花回锅肉', madeBy: '耙耙柑' },
+      { name: '蒜蓉油麦菜', madeBy: '过马路' }
+    ]}
   ]
 };

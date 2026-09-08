@@ -8309,7 +8309,7 @@ export const diaryRecords = {
     ]
   },
   "2026-09-06": {
-    "value": 6,
+    "value": 7,
     "tasks": [
       {
         "status": "x",
@@ -8355,6 +8355,112 @@ export const diaryRecords = {
         "status": "x",
         "time": "22:30-23:00",
         "desc": "回家洗澡收拾",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      },
+      {
+        "status": "x",
+        "time": "23:00-24:00",
+        "desc": "打电动洗漱",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      }
+    ]
+  },
+  "2026-09-07": {
+    "value": 9,
+    "tasks": [
+      {
+        "status": "x",
+        "time": "00:00-01:00",
+        "desc": "和过马路看《海蒂和爷爷》",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      },
+      {
+        "status": "x",
+        "time": "01:00-11:15",
+        "desc": "睡觉",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      },
+      {
+        "status": "x",
+        "time": "11:15-12:00",
+        "desc": "洗澡，收拾家里垃圾",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      },
+      {
+        "status": "x",
+        "time": "12:00-14:00",
+        "desc": "去学校，吃竹园牛肉面，买咖啡喝，来图书馆二楼自习",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      },
+      {
+        "status": "x",
+        "time": "14:00-17:30",
+        "desc": "在图书馆二楼学习（整理常识笔记内容，重构分类学）",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      },
+      {
+        "status": "x",
+        "time": "17:30-20:00",
+        "desc": "和过马路一起回家买菜取快递做饭吃饭",
+        "isCooking": true,
+        "mealType": "晚饭",
+        "dishGuess": null
+      },
+      {
+        "status": "x",
+        "time": "20:00-21:00",
+        "desc": "和过马路出门倒垃圾、散步，接着去买半价菜，然后回家洗澡收拾",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      },
+      {
+        "status": "x",
+        "time": "21:00-22:30",
+        "desc": "学习",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      },
+      {
+        "status": "x",
+        "time": "22:30-24:00",
+        "desc": "和过马路看《海蒂和爷爷》",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      }
+    ]
+  },
+  "2026-09-08": {
+    "value": 2,
+    "tasks": [
+      {
+        "status": "x",
+        "time": "00:00-03:00",
+        "desc": "和过马路吵架",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      },
+      {
+        "status": "x",
+        "time": "03:00-12:00",
+        "desc": "睡觉",
         "isCooking": false,
         "mealType": null,
         "dishGuess": null
