@@ -1,5 +1,13 @@
 # 猪窝 home 更新日志
 
+## v1.14.0 — 2026-09-09
+
+- feat: 新增「日程和财务」聚合页 `/schedule-finance/`，把「每日追踪 / 收支记录 / 会员订阅」三个独立页面合并为同一页的三个视图，顶部胶囊切换条切换（图标按钮 + Hover 文字浮签），切换条左对齐
+- feat: 视图切换写 `?view=daily-tracker|expense-records|membership` 并同步浏览器标题；三个视图一次性渲染、切换只改 `hidden`，月/年/选中日/翻页等内部状态不重置
+- refactor: 侧边栏三个入口合并为一个「日程和财务」；`src/lib/tabs.ts` 新增 `SCHEDULE_FINANCE_VIEWS` / `DEFAULT_SCHEDULE_FINANCE_VIEW`
+- refactor: `src/scripts/page.ts` 的 `refresh()` 拆出 `renderView(view)`，新增 `applyScheduleView()` 统一处理视图切换
+- chore: `/daily-tracker/`、`/expense-records/`、`/membership/` 改为跳转页，重定向到 `/schedule-finance/?view=…`
+
 ## v1.13.0 — 2026-09-09
 
 - feat: 厨房工作台一体化重构：把「做菜记录 / 菜谱 / 食材存放 / 价格速查」四个 Tab 视图合并为单页多模块 Dashboard，一屏可看「本月做了什么 / 今天吃了什么 / 还能做什么菜 / 冰箱有什么快坏了 / 买菜大概多少钱」
