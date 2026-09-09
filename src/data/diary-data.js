@@ -8447,7 +8447,7 @@ export const diaryRecords = {
     ]
   },
   "2026-09-08": {
-    "value": 2,
+    "value": 8,
     "tasks": [
       {
         "status": "x",
@@ -8461,6 +8461,54 @@ export const diaryRecords = {
         "status": "x",
         "time": "03:00-12:00",
         "desc": "睡觉",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      },
+      {
+        "status": "x",
+        "time": "12:00-13:00",
+        "desc": "回学校，去海棠吃孜然土豆炒肉",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      },
+      {
+        "status": "x",
+        "time": "13:00-15:30",
+        "desc": "在图书馆学习",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      },
+      {
+        "status": "x",
+        "time": "15:30-17:00",
+        "desc": "回家买菜",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      },
+      {
+        "status": "x",
+        "time": "17:00-18:00",
+        "desc": "回家做饭",
+        "isCooking": true,
+        "mealType": "晚饭",
+        "dishGuess": null
+      },
+      {
+        "status": "x",
+        "time": "18:00-23:00",
+        "desc": "骑车出门去和王广轩、王一坤他们打扑克",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      },
+      {
+        "status": "x",
+        "time": "23:00-24:00",
+        "desc": "骑车回家，洗漱收拾",
         "isCooking": false,
         "mealType": null,
         "dishGuess": null

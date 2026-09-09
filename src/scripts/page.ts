@@ -3,7 +3,6 @@ import { escapeHtml, getLunarInfo, getLunarDayName, pad } from '../lib/helpers';
 declare global {
   interface Window {
     __utilityRecords?: Record<string, { elecRemaining: number; recharge?: number }>;
-    __foodRecords?: Record<string, any[]>;
     __hemaDayRecords?: Record<string, any>;
     __diaryRecords?: Record<string, any>;
     __specialEvents?: Record<string, any>;
@@ -113,51 +112,6 @@ function setTitle(selector: string, value = monthTitle()) {
   if (element) element.textContent = value;
 }
 
-function foodGrid() {
-  const records = window.__foodRecords || {};
-  return calendarFrame((day, today) => {
-    const key = dateKey(state.year, state.month, day);
-    const hasData = Boolean(records[key]);
-    const classes = ['cal-cell'];
-    if (today) classes.push('cal-today');
-    if (hasData) classes.push('cal-has-data');
-    if (state.selected === key) classes.push('cal-selected');
-    return `<div class="${classes.join(' ')}" data-date="${key}">${lunarText(state.year, state.month, day)}<span class="cal-date${today ? ' cal-date-today' : ''}">${day}日</span>${hasData ? '<span class="cal-balance food-indicator">🍳</span>' : ''}</div>`;
-  });
-}
-
-function foodDetail(key: string | null) {
-  const meals = key ? window.__foodRecords?.[key] : null;
-  if (!meals?.length) return '';
-  const day = new Date(`${key}T00:00:00`);
-  let html = `<div class="detail-panel food-detail"><div class="detail-header"><span class="detail-title">${day.getMonth() + 1}月${day.getDate()}日 美食记录</span><button class="detail-close util-dc">✕</button></div><div class="detail-body">`;
-  for (const [index, meal] of meals.entries()) {
-    if (index) html += '<div class="food-divider"></div>';
-    const dishes = meal.dishes || [];
-    const objectDishes = dishes.length > 0 && typeof dishes[0] === 'object';
-    html += `<div class="food-meal-block"><div class="food-meal-head"><span class="food-meal-tag">${escape(meal.meal || '餐')}</span></div><div class="food-dishes">`;
-    for (const dish of dishes) {
-      if (objectDishes) {
-        html += `<div class="food-dish-card"><span class="food-dish-icon">🥘</span><div class="food-dish-body"><div class="food-dish-head"><span class="food-dish-name">${escape(dish.name)}</span><span class="food-dish-by">${escape(dish.madeBy || '')} 做</span>${dish.cost != null ? `<span class="food-dish-cost">${dish.cost} 元</span>` : ''}</div>${dish.note ? `<span class="food-dish-note">${escape(dish.note)}</span>` : ''}</div></div>`;
-      } else {
-        html += `<div class="food-dish-card"><span class="food-dish-icon">🥘</span><span class="food-dish-name">${escape(dish)}</span></div>`;
-      }
-    }
-    html += '</div>';
-    if (meal.image) html += `<div class="food-photo"><img src="${escape(assetUrl(meal.image))}" alt="照片" loading="lazy"></div>`;
-    const cost = meal.cost ?? (objectDishes ? dishes.reduce((sum: number, dish: any) => sum + (dish.cost || 0), 0) : null);
-    html += '<div class="food-meta-grid">';
-    if (cost != null) html += `<div class="food-meta-item"><span class="food-meta-label">花费</span><span class="food-meta-value food-cost">${cost} 元</span></div>`;
-    if (!objectDishes && meal.chef) html += `<div class="food-meta-item"><span class="food-meta-label">主厨</span><span class="food-meta-value">${escape(meal.chef)}</span></div>`;
-    if (!objectDishes && meal.helper) html += `<div class="food-meta-item"><span class="food-meta-label">帮手</span><span class="food-meta-value">${escape(meal.helper)}</span></div>`;
-    if (meal.shopping) html += `<div class="food-meta-item"><span class="food-meta-label">买菜</span><span class="food-meta-value">${escape(meal.shopping)} 分钟</span></div>`;
-    if (meal.prep) html += `<div class="food-meta-item"><span class="food-meta-label">餐前备菜</span><span class="food-meta-value">${escape(meal.prep)} 分钟</span></div>`;
-    if (meal.cleanup) html += `<div class="food-meta-item"><span class="food-meta-label">收拾后厨</span><span class="food-meta-value">${escape(meal.cleanup)} 分钟</span></div>`;
-    html += '</div></div>';
-  }
-  return `${html}</div></div>`;
-}
-
 function parseMin(v: number | string | undefined): number {
   if (v == null) return 0;
   if (typeof v === 'number') return v;
@@ -170,148 +124,6 @@ function formatMin(min: number): string {
   const h = Math.floor(min / 60);
   const m = min % 60;
   return m ? `${h}小时${m}分钟` : `${h}小时`;
-}
-
-const RECENT_PER_PAGE = 3;
-let recentPage = 0;
-
-function monthlyStatsHtml(): string {
-  const records = window.__foodRecords || {};
-  const prefix = `${state.year}-${pad(state.month)}`;
-  let days = 0, totalCost = 0, totalMin = 0, mealCount = 0;
-  for (const [date, meals] of Object.entries(records)) {
-    if (!date.startsWith(prefix)) continue;
-    days++;
-    for (const meal of meals) {
-      mealCount++;
-      const dishes = meal.dishes || [];
-      const obj = dishes.length > 0 && typeof dishes[0] === 'object';
-      totalMin += parseMin(meal.prep) + parseMin(meal.shopping) + parseMin(meal.cleanup);
-      totalCost += meal.cost ?? (obj ? dishes.reduce((s: number, d: any) => s + (d.cost || 0), 0) : 0);
-    }
-  }
-  if (!days) return '<div class="food-kanban-head"><h3 class="food-kanban-title">📊 本月统计</h3></div><div class="food-kanban-empty">本月暂无记录</div>';
-  const avg = mealCount ? (totalCost / mealCount).toFixed(1) : '0';
-  const timeStr = formatMin(totalMin);
-  return `<div class="food-kanban-head"><h3 class="food-kanban-title">📊 本月统计</h3></div>
-<div class="food-stats-grid">
-  <div class="food-stat-item"><span class="food-stat-label">做饭</span><span class="food-stat-value">${days}天</span></div>
-  <div class="food-stat-item"><span class="food-stat-label">花费</span><span class="food-stat-value food-cost">¥${totalCost.toFixed(0)}</span></div>
-  <div class="food-stat-item"><span class="food-stat-label">均费</span><span class="food-stat-value">¥${avg}</span></div>
-  <div class="food-stat-item"><span class="food-stat-label">用时</span><span class="food-stat-value">${timeStr || '-'}</span></div>
-</div>`;
-}
-
-function topDishesHtml(): string {
-  const records = window.__foodRecords || {};
-  const count = new Map<string, number>();
-  for (const meals of Object.values(records)) {
-    for (const meal of meals) {
-      const dishes = meal.dishes || [];
-      const obj = dishes.length > 0 && typeof dishes[0] === 'object';
-      for (const d of dishes) {
-        const name = obj ? d.name : String(d);
-        count.set(name, (count.get(name) || 0) + 1);
-      }
-    }
-  }
-  const top = [...count.entries()].sort((a, b) => b[1] - a[1]).slice(0, 5);
-  if (!top.length) return '<div class="food-kanban-head"><h3 class="food-kanban-title">🥘 高频菜品</h3></div><div class="food-kanban-empty">暂无数据</div>';
-  const max = top[0][1];
-  let html = '<div class="food-kanban-head"><h3 class="food-kanban-title">🥘 高频菜品</h3></div><div class="food-top-list">';
-  for (const [name, n] of top) {
-    const pct = Math.round((n / max) * 100);
-    html += `<div class="food-top-item"><span class="food-top-name">${escape(name)}</span><span class="food-top-bar"><span class="food-top-fill" style="width:${pct}%"></span></span><span class="food-top-count">${n}次</span></div>`;
-  }
-  return html + '</div>';
-}
-
-function chefRankHtml(): string {
-  const records = window.__foodRecords || {};
-  const chefs = new Map<string, { count: number; cost: number }>();
-  for (const meals of Object.values(records)) {
-    for (const meal of meals) {
-      const dishes = meal.dishes || [];
-      const obj = dishes.length > 0 && typeof dishes[0] === 'object';
-      if (obj) {
-        for (const d of dishes) {
-          const name = d.madeBy || '未知';
-          const c = chefs.get(name) || { count: 0, cost: 0 };
-          c.count++;
-          c.cost += d.cost || 0;
-          chefs.set(name, c);
-        }
-      } else {
-        const name = meal.chef || '未知';
-        const c = chefs.get(name) || { count: 0, cost: 0 };
-        c.count += dishes.length;
-        c.cost += meal.cost || 0;
-        chefs.set(name, c);
-      }
-    }
-  }
-  const rank = [...chefs.entries()].sort((a, b) => b[1].count - a[1].count);
-  if (!rank.length) return '<div class="food-kanban-head"><h3 class="food-kanban-title">🏆 厨师排行</h3></div><div class="food-kanban-empty">暂无数据</div>';
-  const medals = ['🥇', '🥈', '🥉'];
-  let html = '<div class="food-kanban-head"><h3 class="food-kanban-title">🏆 厨师排行</h3></div><div class="food-chef-list">';
-  for (let i = 0; i < rank.length; i++) {
-    const [name, data] = rank[i];
-    const medal = medals[i] || `${i + 1}.`;
-    html += `<div class="food-chef-item"><span class="food-chef-medal">${medal}</span><span class="food-chef-name">${escape(name)}</span><span class="food-chef-count">${data.count}道菜</span><span class="food-chef-cost">¥${data.cost.toFixed(0)}</span></div>`;
-  }
-  return html + '</div>';
-}
-
-function getRecentDishes() {
-  const records = window.__foodRecords || {};
-  const dates = Object.keys(records).sort().reverse();
-  const list: { date: string; name: string; madeBy: string; min: number; cost: number | null; meal: string }[] = [];
-  for (const date of dates) {
-    for (const meal of records[date]) {
-      const dishes = meal.dishes || [];
-      const obj = dishes.length > 0 && typeof dishes[0] === 'object';
-      const min = parseMin(meal.prep) + parseMin(meal.shopping) + parseMin(meal.cleanup);
-      const cost = meal.cost ?? (obj ? dishes.reduce((sum: number, dish: any) => sum + (dish.cost || 0), 0) : null);
-      for (const d of dishes) {
-        list.push({
-          date,
-          name: obj ? d.name : String(d),
-          madeBy: obj ? (d.madeBy || '') : (meal.chef || ''),
-          min,
-          cost,
-          meal: meal.meal || '餐',
-        });
-      }
-    }
-  }
-  return list;
-}
-
-function recentDishesHtml(): string {
-  const dishes = getRecentDishes();
-  const total = Math.max(1, Math.ceil(dishes.length / RECENT_PER_PAGE));
-  if (recentPage >= total) recentPage = total - 1;
-  if (recentPage < 0) recentPage = 0;
-  const slice = dishes.slice(recentPage * RECENT_PER_PAGE, (recentPage + 1) * RECENT_PER_PAGE);
-  let html = '<div class="food-recent-head"><h3 class="food-recent-title">🍳 最近几道菜</h3>';
-  if (total > 1) {
-    html += `<div class="food-recent-nav"><button class="food-recent-btn food-recent-prev"${recentPage === 0 ? ' disabled' : ''}>◀</button><span class="food-recent-num">${recentPage + 1} / ${total}</span><button class="food-recent-btn food-recent-next"${recentPage >= total - 1 ? ' disabled' : ''}>▶</button></div>`;
-  }
-  html += '</div><div class="food-recent-list">';
-  for (const d of slice) {
-    const day = new Date(`${d.date}T00:00:00`);
-    const dateStr = `${day.getMonth() + 1}/${day.getDate()}`;
-    const timeStr = formatMin(d.min);
-    html += `<div class="food-recent-card"><div class="food-recent-top"><span class="food-recent-name">🥘 ${escape(d.name)}</span><span class="food-recent-date">${dateStr}</span></div><div class="food-recent-bot">`;
-    html += `<span class="food-recent-meal">${escape(d.meal)}</span>`;
-    if (d.madeBy) html += `<span class="food-recent-chef">${escape(d.madeBy)}做</span>`;
-    if (d.cost != null) html += `<span class="food-recent-cost">💵 ${d.cost}元</span>`;
-    if (timeStr) html += `<span class="food-recent-time">⏱ ${timeStr}</span>`;
-    html += '</div></div>';
-  }
-  if (!slice.length) html += '<div class="food-recent-empty">暂无记录</div>';
-  html += '</div>';
-  return html;
 }
 
 function dailyGrid() {
@@ -877,19 +689,7 @@ function setupAccordions(root: ParentNode = document) {
 }
 
 function refresh() {
-  if (page === 'food-records') {
-    document.getElementById('foodCalendar')!.innerHTML = foodGrid();
-    document.querySelector('.food-detail-container')!.innerHTML = foodDetail(state.selected);
-    const statsEl = document.getElementById('foodMonthlyStats');
-    if (statsEl) statsEl.innerHTML = monthlyStatsHtml();
-    const topEl = document.getElementById('foodTopDishes');
-    if (topEl) topEl.innerHTML = topDishesHtml();
-    const chefEl = document.getElementById('foodChefRank');
-    if (chefEl) chefEl.innerHTML = chefRankHtml();
-    const recentEl = document.getElementById('foodRecentKanban');
-    if (recentEl) recentEl.innerHTML = recentDishesHtml();
-    setTitle('[data-tab="food-records"] .cal-title');
-  } else if (page === 'daily-tracker') {
+  if (page === 'daily-tracker') {
     document.getElementById('dailyCalendar')!.innerHTML = dailyGrid();
     document.getElementById('dailyDetail')!.innerHTML = dailyDetail(state.selected);
     const summaryEl = document.getElementById('dailySummary');
@@ -960,17 +760,6 @@ document.addEventListener('click', event => {
   }
   if (target.closest('.util-dc')) { state.selected = null; writeQueryState(); refresh(); return; }
 
-  const foodView = target.closest<HTMLButtonElement>('.food-view-tab');
-  if (foodView) {
-    const root = foodView.closest('.food-views');
-    root?.querySelectorAll('.food-view-tab').forEach(button => button.classList.toggle('active', button === foodView));
-    root?.querySelectorAll<HTMLElement>('.food-view-panel').forEach(panel => { panel.hidden = panel.dataset.panel !== foodView.dataset.view; });
-    return;
-  }
-  const recentPrev = target.closest<HTMLButtonElement>('.food-recent-prev');
-  if (recentPrev && !recentPrev.disabled) { recentPage--; const el = document.getElementById('foodRecentKanban'); if (el) el.innerHTML = recentDishesHtml(); return; }
-  const recentNext = target.closest<HTMLButtonElement>('.food-recent-next');
-  if (recentNext && !recentNext.disabled) { recentPage++; const el = document.getElementById('foodRecentKanban'); if (el) el.innerHTML = recentDishesHtml(); return; }
   const hemaPrev = target.closest<HTMLButtonElement>('.daily-hema-prev');
   if (hemaPrev && !hemaPrev.disabled) { hemaPage--; const el = document.getElementById('dailyHemaDay'); if (el) el.innerHTML = dailyHemaDayHtml(); return; }
   const hemaNext = target.closest<HTMLButtonElement>('.daily-hema-next');
@@ -1006,20 +795,6 @@ document.addEventListener('click', event => {
   if (gridPrev && gridPrev.dataset.cat && !gridPrev.disabled) { const cat = gridPrev.dataset.cat; expenseCatPages[cat] = Math.max(0, expenseCatPages[cat] - 1); document.getElementById('expenseContent')!.innerHTML = expenseView(); return; }
   const gridNext = target.closest<HTMLButtonElement>('.expense-grid-next');
   if (gridNext && gridNext.dataset.cat && !gridNext.disabled) { const cat = gridNext.dataset.cat; expenseCatPages[cat]++; document.getElementById('expenseContent')!.innerHTML = expenseView(); return; }
-  const category = target.closest<HTMLButtonElement>('.cook-nav-btn');
-  if (category) {
-    const root = category.closest('.cookbook');
-    root?.querySelectorAll('.cook-nav-btn').forEach(button => button.classList.toggle('active', button === category));
-    root?.querySelectorAll<HTMLElement>('.cook-cat-panel').forEach(panel => { panel.hidden = panel.dataset.cat !== category.dataset.cat; });
-    return;
-  }
-  const recipe = target.closest<HTMLButtonElement>('.cook-rec-head');
-  if (recipe) {
-    const body = recipe.parentElement?.querySelector<HTMLElement>('.cook-rec-body');
-    if (body) body.hidden = !body.hidden;
-    recipe.classList.toggle('open', body ? !body.hidden : false);
-    return;
-  }
   const city = target.closest<HTMLButtonElement>('[data-fm-city]');
   if (city) {
     const value = city.dataset.fmCity;

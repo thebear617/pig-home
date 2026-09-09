@@ -34,5 +34,19 @@ export const incomeRecords = [
     "sub": "麻将扑克",
     "amount": 36.0,
     "note": "扑克"
+  },
+  {
+    "date": "2026-09-08",
+    "cat": "其他收入",
+    "sub": "麻将扑克",
+    "amount": 4.5,
+    "note": "打扑克赢的"
+  },
+  {
+    "date": "2026-09-08",
+    "cat": "退款返现",
+    "sub": "网购退款",
+    "amount": 19.04,
+    "note": "冻干桶退款"
   }
 ];

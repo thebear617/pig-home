@@ -9543,3 +9543,535 @@ body[data-page="couple-album"] .album-chapters2-num {
     grid-auto-rows: minmax(115px, auto);
   }
 }
+/* ═══════════════ 厨房工作台 KitchenDashboard（body[data-page=food-records] 专用） ═══════════════ */
+body[data-page="food-records"] {
+  --k-bg: #f6f1e9;
+  --k-surface: #ffffff;
+  --k-surface-soft: #fdf8f1;
+  --k-ink: #33291f;
+  --k-muted: #8a7a68;
+  --k-line: #ebe1d2;
+  --k-primary: #e76f2e;
+  --k-primary-deep: #c4551d;
+  --k-primary-soft: #fff0e6;
+  --k-danger: #e24c4b;
+  --k-danger-soft: #fdecec;
+  --k-warn: #d99a1b;
+  --k-warn-soft: #fcf2dd;
+  --k-ok: #2e9e63;
+  --k-ok-soft: #e8f5ec;
+  --k-info: #4d8fea;
+  --k-info-soft: #ebf2fd;
+  --k-shadow: 0 1px 2px rgba(96, 70, 40, .04), 0 10px 26px rgba(96, 70, 40, .07);
+  --k-radius: 16px;
+  --k-radius-sm: 11px;
+  --bg: var(--k-bg);
+  --surface: var(--k-surface);
+  --surface-soft: var(--k-surface-soft);
+  --line: var(--k-line);
+  --text: var(--k-ink);
+  --muted: var(--k-muted);
+  --dark: var(--k-ink);
+  background: var(--k-bg);
+}
+
+body[data-page="food-records"] .app-shell {
+  max-width: min(1600px, calc(100vw - 1.2rem));
+  padding: 0.9rem 0.6rem 3rem;
+}
+
+body[data-page="food-records"] .k-dash {
+  display: flex;
+  flex-direction: column;
+  gap: 0.7rem;
+}
+
+.k-card {
+  background: var(--k-surface);
+  border: 1px solid var(--k-line);
+  border-radius: var(--k-radius);
+  box-shadow: var(--k-shadow);
+}
+.k-card-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 0.6rem;
+  margin-bottom: 0.6rem;
+}
+.k-card-title { font-size: 1.02rem; font-weight: 900; color: var(--k-ink); margin: 0; letter-spacing: 0.01em; }
+.k-card-sub { font-size: 0.76rem; color: var(--k-muted); font-weight: 600; }
+.k-card-empty { color: var(--k-muted); font-size: 0.84rem; line-height: 1.7; padding: 1rem 0.2rem; text-align: left; }
+.k-card-empty code { font-family: "SF Mono", Menlo, Consolas, monospace; font-size: 0.78rem; background: var(--k-surface-soft); border: 1px solid var(--k-line); border-radius: 5px; padding: 0 0.3rem; }
+
+.k-topbar { display: flex; align-items: center; justify-content: space-between; gap: 1.2rem; padding: 0.15rem 0.1rem 0.05rem; }
+.k-topbar-left { display: flex; align-items: center; gap: 0.75rem; min-width: 0; flex-shrink: 0; }
+.k-logo-mark { flex-shrink: 0; width: 46px; height: 46px; display: grid; place-items: center; font-size: 1.4rem; background: var(--k-primary-soft); border: 1px solid #f7d9c2; border-radius: 14px; }
+.k-title { margin: 0; font-size: 1.28rem; font-weight: 900; color: var(--k-ink); letter-spacing: 0.01em; }
+.k-subtitle { margin: 0.12rem 0 0; font-size: 0.8rem; color: var(--k-muted); }
+.k-topbar-center { flex: 1; display: flex; justify-content: flex-end; min-width: 0; }
+.k-topbar-center .k-search { width: min(460px, 100%); }
+.k-topbar-right { display: flex; align-items: center; gap: 0.7rem; flex-shrink: 0; }
+.k-topbar-mood { display: flex; align-items: center; gap: 0.4rem; }
+.k-mood-icon { font-size: 1.15rem; }
+.k-mood-text { display: flex; flex-direction: column; line-height: 1.1; }
+.k-mood-text b { font-size: 0.78rem; font-weight: 800; color: var(--k-ink); }
+.k-mood-text i { font-size: 0.66rem; font-style: normal; color: var(--k-muted); margin-top: 0.1rem; }
+.k-avatar { width: 38px; height: 38px; display: grid; place-items: center; font-size: 1.4rem; background: var(--k-primary-soft); border: 1px solid #f7d9c2; border-radius: 50%; flex-shrink: 0; }
+.k-today-line { font-size: 0.82rem; color: var(--k-muted); font-weight: 600; white-space: nowrap; }
+
+/* ── 搜索 ── */
+.k-search { position: relative; width: min(340px, 46vw); }
+.k-search-icon { position: absolute; left: 0.85rem; top: 50%; transform: translateY(-50%); font-size: 0.9rem; opacity: 0.75; pointer-events: none; }
+.k-search input {
+  width: 100%; box-sizing: border-box; padding: 0.52rem 0.9rem 0.52rem 2.1rem;
+  border: 1px solid var(--k-line); border-radius: 999px; background: var(--k-surface);
+  color: var(--k-ink); font-size: 0.88rem; outline: none; transition: border-color .15s, box-shadow .15s;
+}
+.k-search input:focus { border-color: #eec7ab; box-shadow: 0 0 0 3px rgba(231, 111, 46, 0.12); }
+.k-search-res {
+  position: absolute; top: calc(100% + 6px); left: 0; right: 0; z-index: 60;
+  background: var(--k-surface); border: 1px solid var(--k-line); border-radius: 14px;
+  box-shadow: 0 14px 40px rgba(90, 60, 30, 0.14); overflow: hidden; max-height: 60vh; overflow-y: auto;
+  animation: kFade .15s ease;
+}
+.k-search-group { padding: 0.35rem 0; border-bottom: 1px dashed var(--k-line); }
+.k-search-group:last-child { border-bottom: none; }
+.k-search-group-name { padding: 0.2rem 0.85rem 0.25rem; font-size: 0.72rem; font-weight: 800; color: var(--k-muted); }
+.k-search-item { display: flex; align-items: center; gap: 0.6rem; width: 100%; text-align: left; padding: 0.42rem 0.85rem; background: none; border: none; cursor: pointer; }
+.k-search-item:hover { background: var(--k-surface-soft); }
+.k-search-emoji { width: 30px; height: 30px; flex-shrink: 0; display: grid; place-items: center; background: var(--k-surface-soft); border-radius: 9px; font-size: 1rem; }
+.k-search-main { flex: 1; min-width: 0; display: flex; flex-direction: column; line-height: 1.3; }
+.k-search-main b { font-size: 0.88rem; color: var(--k-ink); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.k-search-main em { font-size: 0.72rem; color: var(--k-muted); font-style: normal; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.k-search-empty { padding: 1.2rem 0.9rem; text-align: center; color: var(--k-muted); font-size: 0.86rem; line-height: 1.8; }
+.k-search-empty span { font-size: 0.74rem; }
+
+/* ── Hero ── */
+.k-hero {
+  position: relative; display: flex; align-items: center; justify-content: space-between; gap: 1rem;
+  padding: 1.05rem 1.5rem; min-height: 108px; overflow: hidden;
+  background: linear-gradient(118deg, #fff3e4 0%, #ffe9d2 55%, #ffe1c2 100%);
+  border: 1px solid #f4d9bb; border-radius: calc(var(--k-radius) + 4px);
+}
+.k-hero::after { content: ''; position: absolute; inset: 0; pointer-events: none; background: radial-gradient(600px 120px at 88% 0%, rgba(255, 255, 255, .55), transparent 70%); }
+.k-hero-copy { position: relative; z-index: 1; }
+.k-hero-eyebrow { margin: 0 0 0.3rem; font-size: 0.76rem; font-weight: 700; color: #b06a33; letter-spacing: 0.02em; }
+.k-hero-title { margin: 0; font-size: 1.5rem; font-weight: 900; color: #6f3c12; }
+.k-hero-sub { margin: 0.3rem 0 0; font-size: 0.88rem; color: #9c6a3b; }
+.k-hero-art { position: relative; z-index: 1; display: flex; align-items: center; gap: 0.85rem; padding-right: 0.2rem; }
+.k-hero-emoji { font-size: 1.9rem; filter: drop-shadow(0 2px 3px rgba(120, 70, 30, .18)); }
+.k-hero-emoji-1 { font-size: 2.4rem; }
+.k-hero-chips { display: flex; flex-direction: column; gap: 0.3rem; }
+.k-hero-chip { font-size: 0.7rem; font-weight: 800; color: #8a5a2b; background: rgba(255, 255, 255, .65); border: 1px solid rgba(180, 120, 60, .25); border-radius: 999px; padding: 0.2rem 0.6rem; white-space: nowrap; }
+
+/* ── KPI ── */
+.k-kpis-inner { display: grid; grid-template-columns: repeat(4, 1fr); gap: 0.55rem; }
+.k-kpi { display: flex; align-items: center; gap: 0.55rem; padding: 0.55rem 0.7rem; background: var(--k-surface); border: 1px solid var(--k-line); border-radius: var(--k-radius-sm); box-shadow: var(--k-shadow); cursor: default; }
+.k-kpi-icon { flex-shrink: 0; width: 32px; height: 32px; display: grid; place-items: center; font-size: 1rem; border-radius: 10px; }
+.tone-primary { background: var(--k-primary-soft); }
+.tone-amber { background: var(--k-warn-soft); }
+.tone-green { background: var(--k-ok-soft); }
+.tone-info { background: var(--k-info-soft); }
+.k-kpi-copy { min-width: 0; }
+.k-kpi-label { display: block; font-size: 0.68rem; font-weight: 700; color: var(--k-muted); margin-bottom: 0.08rem; }
+.k-kpi-value { font-size: 1.05rem; font-weight: 900; color: var(--k-ink); white-space: nowrap; line-height: 1.2; }
+.k-kpi-value small { font-size: 0.7rem; font-weight: 700; color: var(--k-muted); }
+
+/* ── Stage 布局 ── */
+.k-stage { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); gap: 0.7rem; align-items: stretch; }
+.k-stage-primary { grid-template-rows: auto auto; }
+/* 第二行三列固定高度，保证等高 */
+.k-col-pantry, .k-col-shelf, .k-col-price { height: 340px; min-width: 0; }
+.k-col-pantry .k-card, .k-col-shelf .k-card, .k-col-price .k-card { height: 100%; overflow: hidden; }
+.k-col-cal { grid-column: 1 / 7; grid-row: 1; min-width: 0; display: flex; flex-direction: column; gap: 0.7rem; }
+.k-col-mid { grid-column: 7 / 10; grid-row: 1; min-width: 0; display: flex; flex-direction: column; gap: 0.7rem; }
+.k-col-day { grid-column: 10 / 13; grid-row: 1; min-width: 0; display: flex; flex-direction: column; }
+.k-col-pantry { grid-column: 1 / 6; grid-row: 2; min-width: 0; }
+.k-col-shelf { grid-column: 6 / 10; grid-row: 2; min-width: 0; }
+.k-col-price { grid-column: 10 / 13; grid-row: 2; min-width: 0; }
+
+/* 中列 2×1：上面高频+厨师并列、下面菜谱大全满宽 */
+.k-mid-top { display: grid; grid-template-columns: 1fr 1fr; gap: 0.7rem; min-height: 0; }
+.k-mid-top .k-card { min-height: 0; }
+.k-card#kRecipeQuick { flex: 1 1 auto; min-height: 0; }
+.k-col-day .k-card { flex: 1 1 auto; min-height: 0; }
+
+/* ── 日历卡 ── */
+.k-cal-card-inner { background: var(--k-surface); border: 1px solid var(--k-line); border-radius: var(--k-radius); box-shadow: var(--k-shadow); padding: 0.75rem 0.9rem 0.7rem; flex: 1 1 auto; display: flex; flex-direction: column; }
+.k-cal-card-inner .k-cal-grid { flex: 1 1 auto; }
+.k-cal-head { display: flex; align-items: center; justify-content: space-between; gap: 0.6rem; margin-bottom: 0.55rem; }
+.k-cal-titlebox { display: flex; align-items: baseline; gap: 0.55rem; }
+.k-cal-year { font-size: 0.86rem; font-weight: 800; color: var(--k-primary); background: var(--k-primary-soft); border-radius: 999px; padding: 0.14rem 0.6rem; }
+.k-cal-nav { display: flex; align-items: center; gap: 0.35rem; }
+.k-today-btn { font-size: 0.78rem; font-weight: 800; color: var(--k-primary-deep); background: var(--k-primary-soft); border: 1px solid #f6d6bf; border-radius: 999px; padding: 0.3rem 0.8rem; transition: background .15s; }
+.k-today-btn:hover { background: #ffe3cc; }
+.k-icon-btn { width: 30px; height: 30px; display: grid; place-items: center; font-size: 1rem; line-height: 1; color: var(--k-muted); background: var(--k-surface); border: 1px solid var(--k-line); border-radius: 9px; cursor: pointer; transition: background .15s, color .15s, border-color .15s; }
+.k-icon-btn:hover { color: var(--k-primary-deep); border-color: #ecc3a4; background: var(--k-surface-soft); }
+.k-cal-legend { display: flex; gap: 0.85rem; margin-bottom: 0.55rem; font-size: 0.7rem; color: var(--k-muted); align-items: center; }
+.k-cal-legend span { display: inline-flex; align-items: center; gap: 0.3rem; }
+.k-dot { width: 8px; height: 8px; border-radius: 50%; display: inline-block; }
+.dot-record { background: var(--k-primary); }
+.dot-today { background: transparent; box-shadow: inset 0 0 0 2px var(--k-danger); }
+.dot-selected { background: var(--k-primary-soft); box-shadow: inset 0 0 0 2px var(--k-primary); }
+.k-cal-week { display: grid; grid-template-columns: repeat(7, 1fr); text-align: center; margin-bottom: 0.25rem; }
+.k-cal-week span { font-size: 0.72rem; font-weight: 800; color: var(--k-muted); padding: 0.15rem 0; }
+.k-cal-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 2px; }
+.k-day {
+  position: relative; min-height: 44px; padding: 0.22rem 0.1rem 0.18rem; display: flex; flex-direction: column; align-items: center; justify-content: flex-start;
+  border: none; border-radius: 10px; background: transparent; cursor: pointer; font: inherit; transition: background .13s;
+}
+.k-day:hover { background: var(--k-surface-soft); }
+.k-day-lunar { font-size: 0.6rem; color: #b9a893; line-height: 1.2; }
+.k-day-num { font-size: 0.92rem; font-weight: 700; color: var(--k-ink); line-height: 1.25; }
+.k-day-dot { width: 5px; height: 5px; border-radius: 50%; background: var(--k-primary); position: absolute; bottom: 4px; left: 50%; transform: translateX(-50%); }
+.k-day-dim { opacity: 0.42; cursor: default; pointer-events: none; }
+.k-day.is-today { box-shadow: inset 0 0 0 2px #ef8f5f; }
+.k-day.is-today .k-day-num { color: var(--k-primary-deep); font-weight: 900; }
+.k-day.is-selected { background: var(--k-primary-soft); box-shadow: inset 0 0 0 2px var(--k-primary); }
+.k-day.is-selected .k-day-num { color: var(--k-primary-deep); font-weight: 900; }
+.k-cal-foot { margin-top: 0.6rem; text-align: center; font-size: 0.72rem; color: var(--k-muted); margin-top: auto; padding-top: 0.5rem; }
+
+/* ── 高频 / 厨师 ── */
+.k-freq-list { display: flex; flex-direction: column; gap: 0.2rem; }
+.k-freq-row { display: flex; align-items: center; gap: 0.55rem; width: 100%; border: none; background: none; padding: 0.28rem 0.15rem; cursor: pointer; border-radius: 8px; text-align: left; }
+.k-freq-row:hover { background: var(--k-surface-soft); }
+.k-rank { flex-shrink: 0; width: 20px; font-size: 0.78rem; font-weight: 900; color: var(--k-muted); text-align: center; }
+.k-freq-name { flex-shrink: 0; max-width: 46%; font-size: 0.85rem; font-weight: 700; color: var(--k-ink); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.k-freq-bar { flex: 1; min-width: 24px; height: 6px; border-radius: 99px; background: var(--k-surface-soft); overflow: hidden; }
+.k-freq-bar i { display: block; height: 100%; background: linear-gradient(90deg, #f6a25e, var(--k-primary)); border-radius: 99px; }
+.k-freq-count { flex-shrink: 0; font-size: 0.72rem; font-weight: 800; color: var(--k-muted); }
+.k-chef-list { display: flex; flex-direction: column; gap: 0.15rem; }
+.k-chef-row { display: flex; align-items: center; gap: 0.55rem; padding: 0.24rem 0.15rem; font-size: 0.85rem; }
+.k-chef-name { flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-weight: 700; color: var(--k-ink); }
+.k-chef-count { color: var(--k-muted); font-weight: 700; font-size: 0.78rem; }
+.k-chef-cost { color: var(--k-primary-deep); font-weight: 800; font-size: 0.82rem; }
+
+/* ── 菜谱速查（中栏） ── */
+.k-card#kFrequent, .k-card#kChefs, .k-card#kRecipeQuick { padding: 0.7rem 0.85rem; }
+.k-feature-title { font-size: 0.74rem; font-weight: 800; color: var(--k-muted); margin: 0.15rem 0 0.4rem; }
+.k-recipe-card {
+  display: flex; align-items: center; gap: 0.6rem; width: 100%; text-align: left; padding: 0.45rem 0.5rem;
+  border: 1px solid var(--k-line); border-radius: var(--k-radius-sm); background: var(--k-surface); cursor: pointer;
+  transition: transform .12s ease, box-shadow .15s ease, border-color .15s;
+}
+.k-recipe-card:hover { border-color: #ecc4a5; box-shadow: var(--k-shadow); transform: translateY(-1px); }
+.k-recipe-cover-sm { width: 40px; height: 40px; flex-shrink: 0; display: grid; place-items: center; font-size: 1.35rem; border-radius: 11px; background: linear-gradient(135deg, var(--k-primary-soft), #ffe9d4); }
+.k-recipe-card-main { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 0.2rem; }
+.k-recipe-card-main b { font-size: 0.9rem; color: var(--k-ink); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.k-recipe-card-sub { display: flex; align-items: center; gap: 0.45rem; }
+.k-recipe-card-sub i { font-style: normal; font-size: 0.7rem; font-weight: 800; color: var(--k-primary-deep); background: var(--k-primary-soft); padding: 0.05rem 0.45rem; border-radius: 99px; }
+.k-recipe-times { font-size: 0.7rem; font-weight: 700; color: var(--k-ok); }
+.k-chevron { flex-shrink: 0; color: #cbb7a0; font-size: 1rem; }
+.k-cat-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.45rem; margin-top: 0.6rem; }
+.k-recipe-cat {
+  display: flex; align-items: center; gap: 0.4rem; padding: 0.5rem 0.55rem; min-width: 0;
+  background: var(--k-surface-soft); border: 1px solid var(--k-line); border-radius: var(--k-radius-sm); cursor: pointer;
+  font: inherit; text-align: left; transition: transform .12s ease, box-shadow .15s ease, border-color .15s;
+}
+.k-recipe-cat:hover { transform: translateY(-1px); box-shadow: var(--k-shadow); border-color: #eec8ab; }
+.k-recipe-cat-icon { font-size: 1rem; }
+.k-recipe-cat-name { flex: 1; min-width: 0; font-size: 0.8rem; font-weight: 800; color: var(--k-ink); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.k-recipe-cat-count { font-size: 0.68rem; font-weight: 800; color: var(--k-muted); background: var(--k-surface); border: 1px solid var(--k-line); padding: 0.02rem 0.4rem; border-radius: 99px; }
+
+/* ── 日期详情面板 ── */
+.k-day-card { padding: 0.95rem 1rem 1rem; }
+.k-day-head { display: flex; align-items: flex-start; justify-content: space-between; gap: 0.5rem; margin-bottom: 0.75rem; }
+.k-day-head-main { display: flex; flex-direction: column; gap: 0.2rem; }
+.k-day-date { font-size: 1.5rem; font-weight: 900; color: var(--k-ink); letter-spacing: 0.01em; }
+.k-day-week { font-size: 0.78rem; color: var(--k-muted); font-weight: 600; }
+.k-badge { font-size: 0.7rem; font-weight: 800; border-radius: 999px; padding: 0.18rem 0.55rem; }
+.k-badge-today { color: var(--k-danger); background: var(--k-danger-soft); align-self: flex-start; }
+.k-text-btn { border: none; background: none; color: var(--k-primary-deep); font-size: 0.78rem; font-weight: 800; cursor: pointer; padding: 0.2rem 0.4rem; white-space: nowrap; }
+.k-text-btn:hover { text-decoration: underline; }
+.k-day-cover { border-radius: 12px; overflow: hidden; margin-bottom: 0.75rem; }
+.k-day-cover img { display: block; width: 100%; max-height: 180px; object-fit: cover; }
+.k-meal-group { margin-bottom: 0.7rem; }
+.k-meal-group-title { font-size: 0.68rem; font-weight: 800; color: var(--k-muted); letter-spacing: 0.05em; margin-bottom: 0.3rem; }
+.k-meal { padding: 0.45rem 0; border-bottom: 1px dashed var(--k-line); }
+.k-meal:last-child { border-bottom: none; }
+.k-meal-tag-row { display: flex; align-items: baseline; justify-content: space-between; gap: 0.4rem; margin-bottom: 0.3rem; }
+.k-meal-tag { font-size: 0.82rem; font-weight: 900; color: var(--k-ink); }
+.k-meal-meta { font-size: 0.7rem; color: var(--k-muted); font-weight: 600; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.k-dish-chips { display: flex; flex-wrap: wrap; gap: 0.35rem; }
+.k-dish-chip {
+  display: inline-flex; align-items: center; gap: 0.3rem; padding: 0.22rem 0.55rem;
+  border: 1px solid var(--k-line); border-radius: 999px; background: var(--k-surface-soft);
+  font-size: 0.76rem; font-weight: 700; color: var(--k-ink); cursor: pointer; transition: border-color .15s, background .15s;
+}
+.k-dish-chip:hover { border-color: #e9b78f; background: var(--k-primary-soft); }
+.k-dish-cost { font-size: 0.66rem; color: var(--k-primary-deep); font-weight: 800; }
+.k-stat-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.4rem; margin: 0.7rem 0; }
+.k-stat-cell { display: flex; flex-direction: column; gap: 0.1rem; align-items: center; padding: 0.5rem 0.2rem; background: var(--k-surface-soft); border: 1px solid var(--k-line); border-radius: var(--k-radius-sm); }
+.k-stat-icon { font-size: 0.95rem; }
+.k-stat-label { font-size: 0.66rem; color: var(--k-muted); font-weight: 700; }
+.k-stat-value { font-size: 0.8rem; font-weight: 900; color: var(--k-ink); text-align: center; }
+.k-day-section-title { font-size: 0.82rem; font-weight: 900; color: var(--k-ink); margin-bottom: 0.35rem; }
+.k-day-note {
+  width: 100%; box-sizing: border-box; resize: vertical; font: inherit; font-size: 0.8rem; line-height: 1.6; color: var(--k-ink);
+  padding: 0.5rem 0.6rem; border: 1px solid var(--k-line); border-radius: var(--k-radius-sm); background: var(--k-surface-soft); outline: none;
+}
+.k-day-note:focus { border-color: #eeb483; box-shadow: 0 0 0 3px rgba(231, 111, 46, .1); }
+.k-day-empty { text-align: center; padding: 2rem 0.4rem; }
+
+/* ── 食材存放 ── */
+.k-card#kPantry, .k-card#kShelf, .k-card#kPrices { padding: 0.7rem 0.85rem; }
+.k-pantry-badges { display: flex; flex-wrap: wrap; gap: 0.4rem; margin-bottom: 0.7rem; }
+.k-pantry-badge { font-size: 0.72rem; font-weight: 800; border-radius: 999px; padding: 0.22rem 0.65rem; white-space: nowrap; }
+.k-pb-info { color: var(--k-info); background: var(--k-info-soft); }
+.k-pb-red { color: var(--k-danger); background: var(--k-danger-soft); }
+.k-pb-yellow { color: #9c6f0a; background: var(--k-warn-soft); }
+.k-pb-green { color: var(--k-ok); background: var(--k-ok-soft); }
+.k-pantry-scroll { overflow-x: auto; padding-bottom: 0.2rem; }
+.k-pantry-head, .k-px-row { display: grid; grid-template-columns: 140px minmax(220px, 1fr); gap: 0.5rem; align-items: center; min-width: 430px; }
+.k-pantry-head { margin-bottom: 0.2rem; }
+.k-pantry-head-label { font-size: 0.68rem; font-weight: 800; color: var(--k-muted); }
+.k-pantry-head-axis { display: grid; gap: 2px; }
+.k-px-day { text-align: center; font-size: 0.6rem; color: #b9a68f; font-weight: 700; }
+.k-px-day.is-today { color: var(--k-danger); font-weight: 900; }
+.k-px-row { padding: 0.35rem 0; border-top: 1px dashed var(--k-line); cursor: pointer; transition: background .15s; border-radius: 8px; }
+.k-px-row:hover { background: var(--k-surface-soft); }
+.k-px-label-top { display: flex; align-items: center; gap: 0.4rem; margin-bottom: 0.15rem; }
+.k-px-name { font-size: 0.85rem; font-weight: 800; color: var(--k-ink); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.k-place-chip { font-size: 0.66rem; font-weight: 800; padding: 0.06rem 0.45rem; border-radius: 99px; white-space: nowrap; }
+.place-cold { color: var(--k-info); background: var(--k-info-soft); }
+.place-freeze { color: #5b67c9; background: #edf0fc; }
+.place-room { color: #8a6b2f; background: #fbf3dc; }
+.place-shade { color: var(--k-ok); background: var(--k-ok-soft); }
+.k-px-dates { display: flex; align-items: center; gap: 0.3rem; font-size: 0.68rem; color: var(--k-muted); font-weight: 600; }
+.k-px-dates i { font-style: normal; }
+.k-px-exp.exp-red { color: var(--k-danger); font-weight: 800; }
+.k-px-exp.exp-yellow { color: #9c6f0a; font-weight: 800; }
+.k-px-exp.exp-green { color: var(--k-ok); font-weight: 700; }
+.k-px-track { display: grid; gap: 2px; }
+.k-px-cell { height: 16px; border-radius: 4px; background: rgba(0, 0, 0, 0.035); }
+.k-px-cell.bar-red { background: #f4b8b5; }
+.k-px-cell.bar-yellow { background: #f4d48a; }
+.k-px-cell.bar-green { background: #b6dfc6; }
+
+/* ── 存放周期参考 ── */
+.k-shelf-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 0.4rem; }
+.k-shelf-list { display: flex; flex-direction: column; gap: 0.55rem; overflow-y: auto; max-height: 100%; padding-right: 2px; }
+.k-shelf-group { background: linear-gradient(135deg, var(--k-surface-soft) 0%, #fdf7ed 100%); border: 1px solid var(--k-line); border-radius: 12px; padding: 0.45rem 0.55rem 0.5rem; cursor: pointer; transition: border-color .15s; }
+.k-shelf-group:hover { border-color: #e6d5bc; }
+.k-shelf-group-title { margin: 0 0 0.35rem; font-size: 0.74rem; font-weight: 900; color: var(--k-ink); display: flex; align-items: center; gap: 0.3rem; }
+.k-shelf-group-title::after { content: ''; flex: 1; height: 1px; background: linear-gradient(90deg, var(--k-line), transparent); margin-left: 0.3rem; }
+.k-shelf-items { display: grid; grid-template-columns: repeat(4, 1fr); gap: 0.3rem; }
+.k-shelf-item { background: #fdfaf4; border: 1px solid var(--k-line); border-radius: 8px; padding: 0.3rem 0.4rem 0.35rem; display: flex; flex-direction: column; gap: 0.25rem; }
+.k-shelf-name { font-size: 0.64rem; font-weight: 800; color: var(--k-ink); line-height: 1.2; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.k-shelf-refs { display: flex; flex-direction: column; gap: 0.12rem; }
+.k-shelf-ref { font-size: 0.62rem; color: var(--k-muted); font-weight: 600; display: flex; align-items: baseline; gap: 0.25rem; line-height: 1.3; }
+.k-shelf-ref i { display: inline-block; width: 6px; height: 6px; border-radius: 50%; flex-shrink: 0; align-self: center; }
+.k-shelf-ref i.cold { background: var(--k-info); }
+.k-shelf-ref i.freeze { background: #8da4d6; box-shadow: 0 0 0 2px rgba(141, 164, 214, 0.18); }
+.k-shelf-ref i.room { background: #d6a85f; }
+.k-shelf-ref i.shade { background: var(--k-ok); }
+.k-shelf-ref b { color: var(--k-ink); font-weight: 700; }
+.k-shelf-chip {
+  display: flex; align-items: center; gap: 0.4rem; padding: 0.5rem 0.55rem; min-width: 0;
+  background: var(--k-surface-soft); border: 1px solid var(--k-line); border-radius: var(--k-radius-sm);
+  cursor: pointer; font: inherit; text-align: left; transition: transform .12s, box-shadow .15s, border-color .15s;
+}
+.k-shelf-chip:hover { transform: translateY(-1px); box-shadow: var(--k-shadow); border-color: #dfd0bd; }
+.k-shelf-chip-icon { font-size: 1.05rem; }
+.k-shelf-item { padding: 0.45rem 0; border-bottom: 1px dashed var(--k-line); display: flex; flex-direction: column; gap: 0.25rem; }
+.k-shelf-item:last-child { border-bottom: none; }
+.k-shelf-item b { font-size: 0.88rem; color: var(--k-ink); }
+.k-shelf-refs { display: flex; flex-wrap: wrap; gap: 0.35rem; }
+.k-shelf-ref { font-size: 0.72rem; font-weight: 700; color: var(--k-muted); background: var(--k-surface-soft); border: 1px solid var(--k-line); padding: 0.12rem 0.5rem; border-radius: 999px; }
+
+/* ── 价格速查 ── */
+.k-price-body { display: flex; flex-direction: column; gap: 0.6rem; }
+.k-price-tabs { display: flex; flex-wrap: wrap; gap: 0.35rem; }
+.k-price-tab {
+  display: inline-flex; align-items: center; gap: 0.3rem; padding: 0.28rem 0.6rem; font-size: 0.76rem; font-weight: 800;
+  color: var(--k-muted); background: var(--k-surface-soft); border: 1px solid var(--k-line); border-radius: 999px; cursor: pointer;
+}
+.k-price-tab em { font-style: normal; font-size: 0.66rem; color: var(--k-muted); }
+.k-price-tab.active { color: var(--k-primary-deep); background: var(--k-primary-soft); border-color: #f2d0b6; }
+.k-price-list { display: flex; flex-direction: column; gap: 0.3rem; }
+.k-price-row { display: flex; align-items: center; gap: 0.55rem; width: 100%; text-align: left; padding: 0.42rem 0.15rem; border: none; background: none; cursor: pointer; border-radius: 8px; }
+.k-price-row:hover { background: var(--k-surface-soft); }
+.k-price-emoji { flex-shrink: 0; width: 32px; height: 32px; display: grid; place-items: center; background: var(--k-surface-soft); border-radius: 9px; font-size: 1rem; }
+.k-price-main { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 0.15rem; }
+.k-price-top { display: flex; align-items: baseline; gap: 0.4rem; min-width: 0; }
+.k-price-top b { font-size: 0.85rem; color: var(--k-ink); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.k-price-spec { font-size: 0.68rem; color: var(--k-muted); }
+.k-price-meta { font-size: 0.74rem; color: var(--k-muted); }
+.k-price-current { font-weight: 900; color: var(--k-primary-deep); font-size: 0.82rem; }
+
+/* ── 通用：按钮 / 笔记 / 代码 ── */
+.k-btn { display: inline-flex; align-items: center; justify-content: center; gap: 0.4rem; padding: 0.5rem 1rem; border-radius: 10px; border: none; font-size: 0.84rem; font-weight: 800; cursor: pointer; transition: filter .15s, transform .1s; }
+.k-btn:hover { filter: brightness(0.97); }
+.k-btn:active { transform: translateY(1px); }
+.k-btn-primary { background: var(--k-primary); color: #fff; }
+.k-btn-ghost { background: var(--k-surface-soft); color: var(--k-ink); border: 1px solid var(--k-line); }
+.k-btn-block { width: 100%; }
+.k-link-btn { border: none; background: none; color: var(--k-primary-deep); font-size: 0.82rem; font-weight: 800; cursor: pointer; padding: 0; }
+.k-link-btn:hover { text-decoration: underline; }
+.k-hint-text { margin: 0.45rem 0 0; font-size: 0.72rem; color: var(--k-muted); line-height: 1.6; }
+.k-hint-text code { font-family: "SF Mono", Menlo, Consolas, monospace; font-size: 0.72rem; background: var(--k-surface-soft); padding: 0 0.25rem; border-radius: 4px; }
+.k-note-line { margin: 0.35rem 0; font-size: 0.82rem; color: var(--k-muted); line-height: 1.6; }
+.k-note-line code { font-family: "SF Mono", Menlo, Consolas, monospace; font-size: 0.78rem; background: var(--k-surface-soft); padding: 0.1rem 0.3rem; border-radius: 5px; }
+.k-note-box { margin: 0.6rem 0; padding: 0.6rem 0.8rem; font-size: 0.82rem; line-height: 1.7; color: var(--k-ink); background: var(--k-warn-soft); border: 1px solid #ecd9ac; border-radius: var(--k-radius-sm); }
+.k-code-details { margin: 0.5rem 0; }
+.k-code-details summary { cursor: pointer; font-size: 0.78rem; font-weight: 800; color: var(--k-primary-deep); }
+.k-code-pre { margin: 0.5rem 0 0.6rem; padding: 0.7rem 0.85rem; background: var(--k-surface-soft); border: 1px solid var(--k-line); border-radius: 10px; overflow-x: auto; max-height: 46vh; overflow-y: auto; }
+.k-code-pre code { font-family: "SF Mono", Menlo, Consolas, monospace; font-size: 0.72rem; line-height: 1.6; color: var(--k-ink); white-space: pre; }
+.k-field-row { display: grid; grid-template-columns: 1fr 1fr; gap: 0.6rem; margin-bottom: 0.5rem; }
+.k-field { display: flex; flex-direction: column; gap: 0.3rem; font-size: 0.76rem; font-weight: 800; color: var(--k-muted); }
+.k-field input, .k-field select {
+  font: inherit; font-size: 0.86rem; color: var(--k-ink); padding: 0.45rem 0.55rem;
+  border: 1px solid var(--k-line); border-radius: 10px; background: var(--k-surface-soft); outline: none;
+}
+.k-field input:focus, .k-field select:focus { border-color: #eeb483; box-shadow: 0 0 0 3px rgba(231, 111, 46, .1); }
+.k-drawer-actions { display: flex; flex-wrap: wrap; gap: 0.5rem; margin: 0.7rem 0 0.2rem; }
+.k-meta-list { display: flex; flex-direction: column; }
+.k-meta-list-item { display: flex; align-items: baseline; justify-content: space-between; gap: 0.6rem; padding: 0.4rem 0; border-bottom: 1px dashed var(--k-line); font-size: 0.84rem; }
+.k-meta-list-date { color: var(--k-muted); font-weight: 800; white-space: nowrap; }
+.k-meta-list-rest { text-align: right; color: var(--k-ink); min-width: 0; }
+.k-drawer-lead { margin: 0 0 0.5rem; color: var(--k-muted); font-size: 0.82rem; line-height: 1.7; }
+
+/* ── Drawer / Overlay ── */
+.k-overlay { position: fixed; inset: 0; z-index: 120; background: rgba(46, 34, 24, 0.12); animation: kFade .2s ease; }
+.k-drawer-root[hidden] { display: none; }
+.k-drawer-root {
+  position: fixed; inset: 0; z-index: 130; pointer-events: none;
+}
+.k-drawer-root.open { pointer-events: auto; }
+.k-drawer-mask { position: absolute; inset: 0; pointer-events: auto; }
+.k-drawer {
+  position: absolute; top: 0; right: 0; bottom: 0; width: min(430px, 100vw); pointer-events: auto;
+  display: flex; flex-direction: column; background: var(--k-surface); border-left: 1px solid var(--k-line);
+  box-shadow: -18px 0 50px rgba(60, 40, 20, 0.14); border-radius: 20px 0 0 20px;
+  transform: translateX(102%); transition: transform .24s cubic-bezier(.2, .8, .25, 1);
+}
+.k-drawer-root.open .k-drawer { transform: translateX(0); }
+.k-drawer-head { display: flex; align-items: flex-start; justify-content: space-between; gap: 0.8rem; padding: 1.1rem 1.2rem 0.85rem; border-bottom: 1px solid var(--k-line); }
+.k-drawer-titlebox { min-width: 0; }
+.k-drawer-title { margin: 0; font-size: 1.12rem; font-weight: 900; color: var(--k-ink); }
+.k-drawer-sub { margin: 0.2rem 0 0; font-size: 0.76rem; color: var(--k-muted); font-weight: 600; }
+.k-drawer-close { flex-shrink: 0; }
+.k-drawer-body { flex: 1; overflow-y: auto; padding: 1rem 1.2rem 1.2rem; }
+.k-drawer-foot { border-top: 1px dashed var(--k-line); padding: 0.7rem 1.2rem 0.9rem; }
+.k-drawer-close { width: 30px; height: 30px; display: grid; place-items: center; border: 1px solid var(--k-line); background: var(--k-surface); border-radius: 9px; color: var(--k-muted); cursor: pointer; font-size: 0.85rem; }
+.k-drawer-close:hover { color: var(--k-ink); }
+
+/* ── 菜谱详情（Drawer 内） ── */
+.k-recipe-cover { display: flex; align-items: center; gap: 0.9rem; padding: 0.9rem 1rem; border-radius: 14px; margin-bottom: 1rem; background: linear-gradient(120deg, var(--k-primary-soft), #ffe9d4); }
+.k-recipe-cover-emoji { font-size: 2.4rem; line-height: 1; }
+.k-recipe-cover-info { display: flex; flex-wrap: wrap; gap: 0.4rem; }
+.k-recipe-cover-tag { font-size: 0.72rem; font-weight: 800; color: #8a5a2b; background: rgba(255, 255, 255, .7); border: 1px solid rgba(180, 120, 60, .25); border-radius: 999px; padding: 0.16rem 0.6rem; }
+.k-tag-soft { color: var(--k-ok); border-color: rgba(46, 158, 99, .3); background: rgba(255, 255, 255, .6); }
+.k-recipe-section { margin: 0.9rem 0; }
+.k-recipe-section-title { margin: 0 0 0.5rem; font-size: 0.92rem; font-weight: 900; color: var(--k-ink); display: flex; align-items: center; gap: 0.4rem; }
+.k-recipe-section-title::before { content: ''; width: 4px; height: 15px; border-radius: 3px; background: var(--k-primary); display: inline-block; }
+.k-table-wrap { overflow-x: auto; }
+.k-recipe-table { width: 100%; border-collapse: collapse; font-size: 0.8rem; }
+.k-recipe-table th { text-align: left; font-weight: 800; color: var(--k-muted); padding: 0.4rem 0.5rem; border-bottom: 1px solid var(--k-line); }
+.k-recipe-table td { padding: 0.4rem 0.5rem; border-bottom: 1px dashed var(--k-line); color: var(--k-ink); vertical-align: top; }
+.k-steps { margin: 0; padding-left: 1.25rem; display: flex; flex-direction: column; gap: 0.45rem; font-size: 0.88rem; line-height: 1.7; color: var(--k-ink); }
+.k-tip-list { margin: 0; padding-left: 1.1rem; display: flex; flex-direction: column; gap: 0.3rem; font-size: 0.85rem; line-height: 1.7; color: var(--k-ink); }
+.k-recipe-body > p { font-size: 0.86rem; line-height: 1.8; color: var(--k-ink); }
+
+/* ── Hover Card / 轻量浮层 ── */
+.k-hovercard {
+  position: fixed; z-index: 140; max-width: min(370px, calc(100vw - 20px)); max-height: 74vh; overflow: auto;
+  padding: 0.8rem 0.9rem; background: var(--k-surface); border: 1px solid var(--k-line); border-radius: 14px;
+  box-shadow: 0 16px 44px rgba(60, 40, 20, 0.16); animation: kPop .14s ease;
+}
+.k-hovercard[hidden] { display: none; }
+.k-pop-title { font-size: 0.92rem; font-weight: 900; color: var(--k-ink); margin: 0 0 0.35rem; display: flex; align-items: center; gap: 0.5rem; flex-wrap: wrap; }
+.k-pop-line { margin: 0.22rem 0; font-size: 0.8rem; line-height: 1.6; color: var(--k-ink); }
+.k-pop-line b { color: var(--k-ink); }
+.k-pop-stats { color: var(--k-muted); border-top: 1px dashed var(--k-line); padding-top: 0.4rem; margin-top: 0.4rem; }
+.k-pop-status { font-size: 0.7rem; font-weight: 800; border-radius: 999px; padding: 0.08rem 0.5rem; }
+.txt-red { color: var(--k-danger); background: var(--k-danger-soft); }
+.txt-yellow { color: #8a6a12; background: var(--k-warn-soft); }
+.txt-green { color: var(--k-ok); background: var(--k-ok-soft); }
+.k-pop-note { color: var(--k-muted); font-style: italic; }
+.k-hv-recipe .k-hv-title { font-size: 1rem; }
+.k-hv-recipe-top { display: flex; align-items: center; gap: 0.7rem; margin-bottom: 0.5rem; }
+.k-hv-emoji { width: 44px; height: 44px; flex-shrink: 0; display: grid; place-items: center; font-size: 1.5rem; border-radius: 12px; background: linear-gradient(135deg, var(--k-primary-soft), #ffe9d4); }
+.k-hv-tags { display: flex; gap: 0.35rem; margin-top: 0.2rem; flex-wrap: wrap; }
+.k-hv-tags i { font-style: normal; font-size: 0.68rem; font-weight: 800; color: var(--k-primary-deep); background: var(--k-primary-soft); padding: 0.05rem 0.45rem; border-radius: 99px; }
+.k-hv-block { margin: 0.45rem 0; }
+.k-hv-label { font-size: 0.7rem; font-weight: 900; color: var(--k-muted); margin-bottom: 0.15rem; }
+.k-hv-text { margin: 0; font-size: 0.8rem; line-height: 1.65; color: var(--k-ink); }
+.k-hv-steps { margin: 0; padding-left: 1.1rem; font-size: 0.8rem; line-height: 1.7; color: var(--k-ink); }
+.k-hv-more { margin-top: 0.55rem; }
+.k-hv-row { display: flex; align-items: center; justify-content: space-between; gap: 0.6rem; width: 100%; text-align: left; padding: 0.3rem 0.2rem; border: none; background: none; cursor: pointer; font-size: 0.82rem; color: var(--k-ink); border-radius: 8px; }
+.k-hv-row:hover { background: var(--k-surface-soft); }
+.k-hv-row em { font-style: normal; font-size: 0.7rem; color: var(--k-muted); white-space: nowrap; }
+
+/* ── 动画 ── */
+@keyframes kFade { from { opacity: 0; } to { opacity: 1; } }
+@keyframes kPop { from { opacity: 0; transform: translateY(3px) scale(0.99); } to { opacity: 1; transform: none; } }
+
+/* ═══ 900–1279px：日期详情改 Drawer，中列 7+5 排开，第二行 7+5 或 5+4+3 视宽而定 ═══ */
+@media (min-width: 900px) and (max-width: 1279px) {
+  body[data-page="food-records"] .app-shell { max-width: none; }
+  .k-col-cal { grid-column: 1 / 8; }
+  .k-col-mid { grid-column: 8 / 13; }
+  .k-col-day { display: none; }
+  /* 第二行保持 5/4/3，与参考图一致 */
+}
+
+/* ═══ <900px：单列 / 双列，顺序：KPI → 日历 → 菜谱 → 库存 → 价格 → 统计辅助 ═══ */
+@media (max-width: 899px) {
+  .k-stage-primary { display: contents; }
+  .k-dash { display: flex; flex-direction: column; gap: 0.7rem; }
+  .k-col-mid { display: contents; }
+  .k-mid-top { display: contents; }
+  .k-col-day { display: none; }
+  .k-col-cal { order: 2; }
+  #kRecipeQuick { order: 3; }
+  .k-col-pantry { order: 4; width: 100%; }
+  .k-col-shelf { order: 5; width: 100%; }
+  .k-col-price { order: 6; width: 100%; }
+  #kFrequent { order: 7; }
+  #kChefs { order: 8; }
+  .k-col-cal .k-cal-card-inner, .k-col-pantry .k-card, .k-col-shelf .k-card, .k-col-price .k-card { width: 100%; box-sizing: border-box; }
+}
+
+@media (max-width: 719px) {
+  body[data-page="food-records"] .app-shell { padding: 0.7rem 0.6rem 2rem; }
+  .k-topbar { flex-wrap: wrap; }
+  .k-search { width: 100%; order: 3; }
+  .k-hero { padding: 0.95rem 1.1rem; }
+  .k-hero-art { display: none; }
+  .k-kpis-inner { grid-template-columns: repeat(2, 1fr); gap: 0.5rem; }
+  .k-cal-grid { gap: 1px; }
+  .k-day { min-height: 46px; }
+  .k-day-lunar { font-size: 0.54rem; }
+  .k-cat-grid, .k-shelf-grid { grid-template-columns: 1fr 1fr; }
+  .k-shelf-items { grid-template-columns: repeat(2, 1fr); }
+  .k-drawer { border-radius: 20px 20px 0 0; }
+}
+
+/* 移动端 Drawer → Bottom Sheet */
+@media (max-width: 900px) {
+  .k-drawer {
+    top: auto; bottom: 0; left: 0; right: 0; width: 100%; max-height: 88vh; height: auto;
+    border-left: none; border-top: 1px solid var(--k-line); border-radius: 20px 20px 0 0;
+    transform: translateY(102%);
+  }
+  .k-drawer-root.open .k-drawer { transform: translateY(0); }
+}
+
+/* ── 工作台小补丁 ── */
+.k-drawer-body .k-day-card { border: none; box-shadow: none; padding: 0; background: transparent; }
+.k-drawer-body .k-day-note { background: var(--k-surface-soft); }
+.k-drawer-body .k-recipe-card { max-width: 100%; }
+.k-topbar .k-title { line-height: 1.2; }
+.k-shelf-chip, .k-recipe-cat { user-select: none; }
+.k-day:focus-visible, .k-freq-row:focus-visible, .k-recipe-card:focus-visible { outline: 2px solid var(--k-primary); outline-offset: 1px; }
+
+body.k-drawer-open .main-area { overflow: hidden; }
+
+/* 菜谱分类内联展开 */
+.k-inline-recipes { margin-top: 0.7rem; padding-top: 0.6rem; border-top: 1px dashed var(--k-line); }
+.k-inline-recipes-title { display: flex; align-items: center; justify-content: space-between; gap: 0.5rem; font-size: 0.74rem; font-weight: 900; color: var(--k-primary-deep); margin-bottom: 0.45rem; }
+.k-inline-close { font-weight: 800; }
+.k-rec-list { display: flex; flex-direction: column; gap: 0.45rem; }
+.k-rec-list .k-recipe-card { padding: 0.4rem 0.5rem; }

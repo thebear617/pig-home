@@ -1,0 +1,114 @@
+---
+import { getCollection } from 'astro:content';
+import { foodRecords } from '../../data/food-records';
+import { foodPantry, pantryShelfGroups } from '../../data/food-pantry';
+import { foodPrices, FOOD_PRICE_CATEGORIES } from '../../data/food-prices';
+import { parseRecipeMarkdown } from '../../lib/kitchen-parser';
+import type { RecipeData } from '../../lib/kitchen-types';
+
+// 菜谱分类展示顺序（与设计稿一致；素菜目前可能没有菜谱，仅在存在时显示）
+const categoryOrder = ['主食', '荤菜', '素菜', '汤羹', '小吃夜宵', '酱料蘸料', '烘焙面点', '饮品甜品'];
+
+const rawTips = await getCollection('cooking-tips');
+const recipes: RecipeData[] = rawTips.map((r) => ({
+  id: r.id,
+  title: r.data.title,
+  category: r.data.category,
+  icon: r.data.icon,
+  ware: r.data.ware,
+  sections: parseRecipeMarkdown(r.body ?? ''),
+}));
+recipes.sort((a, b) => {
+  const ai = categoryOrder.indexOf(a.category);
+  const bi = categoryOrder.indexOf(b.category);
+  return (ai < 0 ? categoryOrder.length : ai) - (bi < 0 ? categoryOrder.length : bi) || a.title.localeCompare(b.title, 'zh-CN');
+});
+
+const kitchenData = {
+  foodRecords,
+  recipes,
+  categoryOrder,
+  pantry: foodPantry,
+  shelfGroups: pantryShelfGroups,
+  priceCategories: FOOD_PRICE_CATEGORIES,
+  prices: foodPrices,
+};
+---
+
+<div class="k-dash" data-tab="food-records">
+  <header class="k-topbar">
+    <div class="k-topbar-left">
+      <span class="k-logo-mark" aria-hidden="true">🍳</span>
+      <div class="k-topbar-copy">
+        <h1 class="k-title">我的厨房工作台</h1>
+        <p class="k-subtitle">记录三餐烟火 · 让生活更有味道</p>
+      </div>
+    </div>
+    <div class="k-topbar-center">
+      <div class="k-search" id="kSearchWrap">
+        <span class="k-search-icon" aria-hidden="true">🔍</span>
+        <input id="kSearch" type="search" placeholder="搜菜谱 / 食材 / 价格…" autocomplete="off" aria-label="全局搜索" />
+        <div class="k-search-res" id="kSearchRes" hidden></div>
+      </div>
+    </div>
+    <div class="k-topbar-right">
+      <div class="k-topbar-mood">
+        <span class="k-mood-icon" aria-hidden="true">☀️</span>
+        <span class="k-mood-text"><b>好好吃饭</b><i>做最好的生活</i></span>
+      </div>
+      <span class="k-avatar" aria-hidden="true">🐶</span>
+    </div>
+  </header>
+
+  <section class="k-hero" aria-label="厨房心情">
+    <div class="k-hero-copy">
+      <p class="k-hero-eyebrow" id="kHeroEyebrow">…</p>
+      <h2 class="k-hero-title">今天也要好好吃饭呀！</h2>
+      <p class="k-hero-sub">新鲜的食材，简单的烹饪，就是幸福的味道。</p>
+    </div>
+    <div class="k-hero-art" aria-hidden="true">
+      <span class="k-hero-emoji k-hero-emoji-1">🥘</span>
+      <span class="k-hero-emoji k-hero-emoji-2">🥬</span>
+      <span class="k-hero-emoji k-hero-emoji-3">🍊</span>
+      <div class="k-hero-chips">
+        <span class="k-hero-chip">一日三餐</span>
+        <span class="k-hero-chip">四季烟火</span>
+      </div>
+    </div>
+  </section>
+
+  <section class="k-stage k-stage-primary">
+    <div class="k-col-cal">
+      <section class="k-kpis" id="kKpis" aria-label="本月概览"></section>
+      <div class="k-cal-card-inner" id="kCalendarCol" aria-label="做菜记录日历"></div>
+    </div>
+    <div class="k-col-mid">
+      <div class="k-mid-top">
+        <div class="k-card" id="kFrequent" aria-label="高频菜品"></div>
+        <div class="k-card" id="kChefs" aria-label="厨师排行"></div>
+      </div>
+      <div class="k-card k-recipe-quick-card" id="kRecipeQuick" aria-label="菜谱快捷入口"></div>
+    </div>
+    <div class="k-col-day" id="kDayPanel" aria-label="日期详情"></div>
+    <div class="k-col-pantry">
+      <div class="k-card" id="kPantry" aria-label="食材存放"></div>
+    </div>
+    <div class="k-col-shelf">
+      <div class="k-card" id="kShelf" aria-label="存放周期参考"></div>
+    </div>
+    <div class="k-col-price">
+      <div class="k-card" id="kPrices" aria-label="价格速查"></div>
+    </div>
+  </section>
+</div>
+
+<div class="k-overlay" id="kOverlay" hidden></div>
+<div class="k-hovercard" id="kHoverCard" hidden></div>
+<div class="k-drawer-root" id="kDrawerRoot" hidden></div>
+
+<script define:vars={{ kitchenData }}>
+  window.__kitchenData = kitchenData;
+</script>
+<script>
+  import '../../scripts/kitchen/index';
+</script>

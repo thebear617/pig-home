@@ -72,6 +72,6 @@ export interface PantryItem {
 export const foodPantry: PantryItem[] = [
   // 2026-09-07 首批（今天买菜购入）
   { name: '豆角', place: '冷藏', bought: '2026-09-07', days: 6 }, // 参考卡：豆角冷藏 5–7 天
-  { name: '空心菜', place: '冷藏', bought: '2026-09-07', days: 2 }, // 空心菜建议 2 天内吃完
+  // 空心菜：9/8 做蒜蓉空心菜已用完，从库存移除
   { name: '猕猴桃', place: '冷藏', bought: '2026-09-07', days: 5, note: '按硬质水果冷藏约一周记，观察修正' },
 ];
