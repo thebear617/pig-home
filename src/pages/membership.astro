@@ -1,15 +1,20 @@
 ---
-import Layout from '../layouts/Layout.astro';
-import MembershipSubscriptions from '../components/tabs/MembershipSubscriptions.astro';
-import { membershipRecords } from '../data/membership-data';
+const base = import.meta.env.BASE_URL;
+const target = `${base}schedule-finance/?view=membership`;
 ---
 
-<Layout activeTab="membership" title="会员订阅 · 猪窝">
-  <MembershipSubscriptions />
-  <script define:vars={{ membershipRecords }}>
-    window.__membershipRecords = membershipRecords;
-  </script>
-  <script>
-    import '../scripts/page';
-  </script>
-</Layout>
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="refresh" content={`0;url=${target}`} />
+    <link rel="canonical" href={target} />
+    <meta name="viewport" content="width=device-width" />
+    <link rel="icon" type="image/png" href={`${base}favicon.png`} />
+    <title>会员订阅已整合 · 猪窝</title>
+  </head>
+  <body>
+    <p>「会员订阅」已整合到<a href={target}>日程和财务</a>……</p>
+    <script>window.location.replace(`${import.meta.env.BASE_URL}schedule-finance/?view=membership`);</script>
+  </body>
+</html>

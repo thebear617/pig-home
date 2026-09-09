@@ -1,23 +1,20 @@
 ---
-import Layout from '../layouts/Layout.astro';
-import ExpenseRecords from '../components/tabs/ExpenseRecords.astro';
-import { expenseCategories } from '../data/expense-categories';
-import { expenseRecords } from '../data/expense-data';
-import { incomeRecords } from '../data/income-data';
-import { incomeCategories } from '../data/income-categories';
-import { balanceBase } from '../data/balance-base';
+const base = import.meta.env.BASE_URL;
+const target = `${base}schedule-finance/?view=expense-records`;
 ---
 
-<Layout activeTab="expense-records" title="收支记录 · 猪窝">
-  <ExpenseRecords />
-  <script define:vars={{ expenseCategories, expenseRecords, incomeRecords, incomeCategories, balanceBase }}>
-    window.__expenseCategories = expenseCategories;
-    window.__expenseRecords = expenseRecords;
-    window.__incomeRecords = incomeRecords;
-    window.__incomeCategories = incomeCategories;
-    window.__balanceBase = balanceBase;
-  </script>
-  <script>
-    import '../scripts/page';
-  </script>
-</Layout>
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="refresh" content={`0;url=${target}`} />
+    <link rel="canonical" href={target} />
+    <meta name="viewport" content="width=device-width" />
+    <link rel="icon" type="image/png" href={`${base}favicon.png`} />
+    <title>收支记录已整合 · 猪窝</title>
+  </head>
+  <body>
+    <p>「收支记录」已整合到<a href={target}>日程和财务</a>……</p>
+    <script>window.location.replace(`${import.meta.env.BASE_URL}schedule-finance/?view=expense-records`);</script>
+  </body>
+</html>

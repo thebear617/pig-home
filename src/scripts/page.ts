@@ -1,4 +1,5 @@
 import { escapeHtml, getLunarInfo, getLunarDayName, pad } from '../lib/helpers';
+import { SCHEDULE_FINANCE_VIEWS, DEFAULT_SCHEDULE_FINANCE_VIEW } from '../lib/tabs';
 
 declare global {
   interface Window {
@@ -24,6 +25,12 @@ const state: CalendarState = {
   month: now.getMonth() + 1,
   selected: null,
 };
+
+// ─── 「日程和财务」聚合页：多视图切换 ───
+const SCHEDULE_FINANCE_PAGE = 'schedule-finance';
+const SF_VIEW_IDS: string[] = SCHEDULE_FINANCE_VIEWS.map(view => view.id);
+const SF_VIEW_TITLES: Record<string, string> = Object.fromEntries(SCHEDULE_FINANCE_VIEWS.map(view => [view.id, view.title]));
+let scheduleView: string = DEFAULT_SCHEDULE_FINANCE_VIEW;
 
 function dateKey(year: number, month: number, day: number) {
   return `${year}-${pad(month)}-${pad(day)}`;
@@ -688,8 +695,8 @@ function setupAccordions(root: ParentNode = document) {
   });
 }
 
-function refresh() {
-  if (page === 'daily-tracker') {
+function renderView(view: string) {
+  if (view === 'daily-tracker') {
     document.getElementById('dailyCalendar')!.innerHTML = dailyGrid();
     document.getElementById('dailyDetail')!.innerHTML = dailyDetail(state.selected);
     const summaryEl = document.getElementById('dailySummary');
@@ -703,7 +710,7 @@ function refresh() {
     const hemaEl = document.getElementById('dailyHemaDay');
     if (hemaEl) hemaEl.innerHTML = dailyHemaDayHtml();
     setTitle('[data-tab="daily-tracker"] .cal-title');
-  } else if (page === 'expense-records') {
+  } else if (view === 'expense-records') {
     document.getElementById('expenseContent')!.innerHTML = expenseView();
     const trendEl = document.getElementById('expenseTrendChart');
     if (trendEl) trendEl.innerHTML = expenseTrendHtml();
@@ -713,10 +720,47 @@ function refresh() {
     if (topEl) topEl.innerHTML = expenseTopItemsHtml();
     setTitle('[data-tab="expense-records"] .cal-title', `${monthTitle()} · 收支`);
     setupAccordions(document.getElementById('expenseContent')!);
-  } else if (page === 'membership') {
+  } else if (view === 'membership') {
     const membershipEl = document.getElementById('membershipSubscriptions');
     if (membershipEl) membershipEl.innerHTML = membershipSubscriptionsHtml();
   }
+}
+
+function refresh() {
+  renderView(page === SCHEDULE_FINANCE_PAGE ? scheduleView : page);
+}
+
+function readScheduleView(): string {
+  const value = new URLSearchParams(window.location.search).get('view');
+  return value && SF_VIEW_IDS.includes(value) ? value : DEFAULT_SCHEDULE_FINANCE_VIEW;
+}
+
+function applyScheduleView(view: string, options: { replace?: boolean; render?: boolean } = {}) {
+  if (!SF_VIEW_IDS.includes(view)) view = DEFAULT_SCHEDULE_FINANCE_VIEW;
+  scheduleView = view;
+  document.body.dataset.view = view;
+
+  document.querySelectorAll<HTMLElement>('[data-sf-view]').forEach(panel => {
+    const active = panel.dataset.sfView === view;
+    panel.hidden = !active;
+    panel.classList.toggle('active', active);
+  });
+  document.querySelectorAll<HTMLButtonElement>('[data-sf-view-btn]').forEach(button => {
+    const active = button.dataset.sfViewBtn === view;
+    button.classList.toggle('active', active);
+    button.setAttribute('aria-selected', String(active));
+  });
+
+  const title = SF_VIEW_TITLES[view];
+  if (title) document.title = title;
+
+  const params = new URLSearchParams(window.location.search);
+  params.set('view', view);
+  const url = `${window.location.pathname}?${params}`;
+  if (options.replace === false) history.pushState(null, '', url);
+  else history.replaceState(null, '', url);
+
+  if (options.render !== false) refresh();
 }
 
 function shiftMonth(delta: number) {
@@ -747,6 +791,11 @@ function applyTimelineFilter(categoryValue: string) {
 
 document.addEventListener('click', event => {
   const target = event.target as HTMLElement;
+  const sfViewBtn = target.closest<HTMLButtonElement>('[data-sf-view-btn]');
+  if (sfViewBtn?.dataset.sfViewBtn) {
+    if (sfViewBtn.dataset.sfViewBtn !== scheduleView) applyScheduleView(sfViewBtn.dataset.sfViewBtn, { replace: false });
+    return;
+  }
   if (target.closest('.cal-prev')) { shiftMonth(-1); return; }
   if (target.closest('.cal-next')) { shiftMonth(1); return; }
   if (target.closest('.cal-today-btn')) {
@@ -856,6 +905,18 @@ document.addEventListener('mouseout', event => {
 });
 window.addEventListener('scroll', hideMembershipNoteTip, true);
 
+window.addEventListener('popstate', () => {
+  if (page !== SCHEDULE_FINANCE_PAGE) return;
+  applyScheduleView(readScheduleView());
+});
+
 readQueryState();
 setupAccordions();
-refresh();
+
+if (page === SCHEDULE_FINANCE_PAGE) {
+  applyScheduleView(readScheduleView(), { render: false });
+  // 三个视图一次性渲染，切换时无需等待，各自内部状态（月/年/选中日/翻页）保持不变
+  SF_VIEW_IDS.forEach(renderView);
+} else {
+  refresh();
+}

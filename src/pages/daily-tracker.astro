@@ -1,28 +1,20 @@
 ---
-import Layout from '../layouts/Layout.astro';
-import DailyTracker from '../components/tabs/DailyTracker.astro';
-import { hemaDayRecords } from '../data/hema-records';
-import { diaryRecords, specialEvents } from '../data/diary-data';
-import { expenseRecords } from '../data/expense-data';
-import { incomeRecords } from '../data/income-data';
-import { utilityRecords } from '../data/utility-records';
+const base = import.meta.env.BASE_URL;
+const target = `${base}schedule-finance/?view=daily-tracker`;
 ---
 
-<Layout activeTab="daily-tracker" title="每日追踪 · 猪窝">
-  <div class="tracker-page" data-tracker-page>
-    <section class="tracker-view-panel" data-tracker-panel="daily">
-      <DailyTracker />
-    </section>
-  </div>
-  <script define:vars={{ hemaDayRecords, diaryRecords, specialEvents, expenseRecords, incomeRecords, utilityRecords }}>
-    window.__hemaDayRecords = hemaDayRecords;
-    window.__diaryRecords = diaryRecords;
-    window.__specialEvents = specialEvents;
-    window.__expenseRecords = expenseRecords;
-    window.__incomeRecords = incomeRecords;
-    window.__utilityRecords = utilityRecords;
-  </script>
-  <script>
-    import '../scripts/page';
-  </script>
-</Layout>
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="refresh" content={`0;url=${target}`} />
+    <link rel="canonical" href={target} />
+    <meta name="viewport" content="width=device-width" />
+    <link rel="icon" type="image/png" href={`${base}favicon.png`} />
+    <title>每日追踪已整合 · 猪窝</title>
+  </head>
+  <body>
+    <p>「每日追踪」已整合到<a href={target}>日程和财务</a>……</p>
+    <script>window.location.replace(`${import.meta.env.BASE_URL}schedule-finance/?view=daily-tracker`);</script>
+  </body>
+</html>

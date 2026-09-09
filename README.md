@@ -1,6 +1,6 @@
 # 猪窝
 
-个人家庭管理工具，包含家居档案、每日追踪、美食记录、收支记录、美食地图和关系时间线等模块。
+个人家庭管理工具，包含家居档案、厨房工作台、日程和财务、美食地图和关系时间线等模块。
 
 在线地址：https://thebear617.github.io/pig-home/
 
@@ -17,10 +17,8 @@
 | 页面 | 路由 | 视图 / 内容 |
 | --- | --- | --- |
 | 家居档案 | `/home-archive/` | 生活备忘录、猪窝地图、家居变动、入住清单 |
-| 美食记录与做饭心得 | `/food-records/` | 美食日历、做饭心得 |
-| 每日追踪 | `/daily-tracker/` | 每日追踪、水电追踪 |
-| 收支记录 | `/expense-records/` | 按月支出/收入与分类明细 |
-| 会员订阅 | `/membership/` | 订阅续费管理与到期统计 |
+| 厨房工作台 | `/food-records/` | 做菜记录、高频菜品、厨师排行、菜谱速查、食材甘特图、价格速查 |
+| 日程和财务 | `/schedule-finance/` | 每日追踪 `?view=daily-tracker`、收支记录 `?view=expense-records`、会员订阅 `?view=membership` |
 | 美食地图 | `/food-map/` | 探店记录、街区/区域评价与地点筛选 |
 | 关系时间线 | `/relationship-timeline/` | 旅行、西安 walk、吵架复盘 |
 
@@ -31,7 +29,7 @@
 - `/follow-up/memos/[slug]/`
 - `/follow-up/procurement/[slug]/`
 
-历史入口 `/follow-up/`、`/home-map/` 和 `/utility-tracking/` 会跳转到对应的新页面或视图，避免旧链接失效。
+历史入口 `/follow-up/`、`/home-map/`、`/utility-tracking/`、`/daily-tracker/`、`/expense-records/` 和 `/membership/` 会跳转到对应的新页面或视图，避免旧链接失效。
 
 ## 文件结构
 
@@ -40,7 +38,7 @@
 │   ├── content.config.ts         # Content Layer 内容集合配置
 │   ├── pages/
 │   │   ├── home-archive.astro   # 家居档案四视图
-│   │   ├── daily-tracker.astro  # 每日追踪 / 水电追踪双视图
+│   │   ├── schedule-finance.astro # 日程和财务聚合页（每日追踪 / 收支记录 / 会员订阅）
 │   │   ├── follow-up/            # 备忘录与入住清单详情路由
 │   │   └── ...                   # 其他独立页面路由
 │   ├── components/

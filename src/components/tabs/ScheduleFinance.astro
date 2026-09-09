@@ -1,0 +1,37 @@
+---
+import DailyTracker from './DailyTracker.astro';
+import ExpenseRecords from './ExpenseRecords.astro';
+import MembershipSubscriptions from './MembershipSubscriptions.astro';
+import { SCHEDULE_FINANCE_VIEWS, DEFAULT_SCHEDULE_FINANCE_VIEW } from '../../lib/tabs';
+---
+
+<div class="sf-page" data-tab="schedule-finance">
+  <div class="sf-switcher" role="tablist" aria-label="日程和财务视图切换">
+    {SCHEDULE_FINANCE_VIEWS.map((view) => (
+      <button
+        type="button"
+        class:list={['sf-view-btn', { active: view.id === DEFAULT_SCHEDULE_FINANCE_VIEW }]}
+        data-sf-view-btn={view.id}
+        role="tab"
+        aria-selected={view.id === DEFAULT_SCHEDULE_FINANCE_VIEW ? 'true' : 'false'}
+        aria-label={view.label}
+        title={view.label}
+      >
+        <span class="sf-view-ico" aria-hidden="true">{view.icon}</span>
+        <small class="sf-view-tip">{view.label}</small>
+      </button>
+    ))}
+  </div>
+
+  <section class="sf-view" data-sf-view="daily-tracker" role="tabpanel" aria-label="每日追踪">
+    <DailyTracker />
+  </section>
+
+  <section class="sf-view" data-sf-view="expense-records" role="tabpanel" aria-label="收支记录" hidden>
+    <ExpenseRecords />
+  </section>
+
+  <section class="sf-view" data-sf-view="membership" role="tabpanel" aria-label="会员订阅" hidden>
+    <MembershipSubscriptions />
+  </section>
+</div>

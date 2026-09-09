@@ -2664,7 +2664,7 @@ button {
 
 /* ─── 每日追踪看板布局 ─── */
 
-body[data-page="daily-tracker"] .app-shell {
+body[data-page="schedule-finance"] .app-shell {
   max-width: 1100px;
 }
 
@@ -3104,10 +3104,6 @@ body[data-page="daily-tracker"] .app-shell {
 
 /* ─── 支出记录看板布局 ── */
 
-body[data-page="expense-records"] .app-shell {
-  max-width: 1100px;
-}
-
 .expense-layout {
   display: grid;
   grid-template-columns: minmax(0, 1fr);
@@ -3484,11 +3480,7 @@ body[data-page="expense-records"] .app-shell {
   margin: 0;
 }
 
-body[data-page="membership"] .app-shell {
-  max-width: 1100px;
-}
-
-body[data-page="membership"] {
+body[data-page="schedule-finance"][data-view="membership"] {
   --bg: #faf7f0;
   --surface: #fffdf9;
   --surface-soft: #fdf7eb;
@@ -3942,7 +3934,7 @@ body[data-page="membership"] {
 }
 
 @media (max-width: 560px) {
-  body[data-page="membership"] .app-shell {
+  body[data-page="schedule-finance"][data-view="membership"] .app-shell {
     padding: .85rem .7rem 1.5rem;
   }
 
@@ -10068,6 +10060,109 @@ body[data-page="food-records"] .k-dash {
 .k-day:focus-visible, .k-freq-row:focus-visible, .k-recipe-card:focus-visible { outline: 2px solid var(--k-primary); outline-offset: 1px; }
 
 body.k-drawer-open .main-area { overflow: hidden; }
+
+/* ─── 日程和财务：视图切换胶囊 ─── */
+
+.sf-switcher {
+  display: flex;
+  width: -moz-fit-content;
+  width: fit-content;
+  align-items: center;
+  gap: .28rem;
+  margin-bottom: 1.15rem;
+  padding: .3rem .4rem;
+  border: 1px solid #ece3d5;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, .66);
+  box-shadow: 0 8px 22px rgba(94, 71, 40, .1), inset 0 1px 0 rgba(255, 255, 255, .82);
+  -webkit-backdrop-filter: blur(14px);
+  backdrop-filter: blur(14px);
+}
+
+.sf-view-btn {
+  position: relative;
+  display: inline-grid;
+  place-items: center;
+  width: 2.25rem;
+  height: 2.25rem;
+  border: none;
+  border-radius: 50%;
+  background: transparent;
+  color: #8a7a68;
+  font-size: 1.05rem;
+  line-height: 1;
+  transition: background .18s ease, color .18s ease, transform .18s ease, box-shadow .18s ease;
+}
+
+.sf-view-btn:hover,
+.sf-view-btn:focus-visible {
+  background: rgba(255, 255, 255, .92);
+  color: #5c4b3a;
+  transform: translateY(-1px);
+}
+
+.sf-view-btn.active {
+  background: #fffdf8;
+  color: #b06a12;
+  box-shadow: 0 2px 8px rgba(146, 106, 48, .18), inset 0 0 0 1px #ecd9b6;
+}
+
+.sf-view-btn:focus-visible {
+  outline: 2px solid rgba(176, 106, 18, .45);
+  outline-offset: 2px;
+}
+
+.sf-view-tip {
+  position: absolute;
+  top: calc(100% + .5rem);
+  left: 50%;
+  z-index: 5;
+  padding: .22rem .5rem;
+  border: 1px solid #ece3d5;
+  border-radius: .5rem;
+  background: rgba(255, 255, 255, .97);
+  color: #6b5744;
+  font-size: .66rem;
+  font-weight: 700;
+  line-height: 1.2;
+  white-space: nowrap;
+  opacity: 0;
+  pointer-events: none;
+  transform: translate(-50%, -.2rem);
+  transition: opacity .18s ease, transform .18s ease;
+  box-shadow: 0 6px 16px rgba(94, 71, 40, .12);
+}
+
+.sf-view-btn:hover .sf-view-tip,
+.sf-view-btn:focus-visible .sf-view-tip {
+  opacity: 1;
+  transform: translate(-50%, 0);
+}
+
+.sf-view[hidden] {
+  display: none;
+}
+
+.sf-view.active {
+  animation: sfViewIn .22s ease;
+}
+
+@keyframes sfViewIn {
+  from {
+    opacity: 0;
+    transform: translateY(4px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@media (max-width: 560px) {
+  .sf-view-tip {
+    display: none;
+  }
+}
 
 /* 菜谱分类内联展开 */
 .k-inline-recipes { margin-top: 0.7rem; padding-top: 0.6rem; border-top: 1px dashed var(--k-line); }
