@@ -81,17 +81,23 @@ for fname in sorted(os.listdir(DIARY_DIR)):
                 end = match.group(3)
                 time = f'{start}-{end}'
                 desc = match.group(4).strip()
+                area_tags = sorted(set(re.findall(r'(?<!\S)#area/[A-Za-z0-9_-]+', line)))
+                study_areas = {'study', 'dev', 'research'}
+                is_study = any(tag.split('/', 1)[1] in study_areas for tag in area_tags)
                 is_cooking = '做饭' in desc
                 meal_type = classify_meal(start) if is_cooking else None
                 dish_guess = extract_dish(desc) if is_cooking else None
-                tasks.append({
+                task = {
                     'status': status,
                     'time': time,
                     'desc': desc,
                     'isCooking': is_cooking,
                     'mealType': meal_type,
                     'dishGuess': dish_guess,
-                })
+                }
+                if is_study:
+                    task['isStudy'] = True
+                tasks.append(task)
 
         if tasks:
             done_count = sum(1 for t in tasks if t['status'] == 'x')

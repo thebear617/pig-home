@@ -102,6 +102,18 @@ function monthTitle() {
   return `${state.year}年${state.month}月`;
 }
 
+const STUDY_AREAS = new Set(['study', 'dev', 'research']);
+
+function taskAreas(task: any): string[] {
+  if (Array.isArray(task?.areas)) return task.areas;
+  return Array.from(String(task?.desc || '').matchAll(/#area\/([A-Za-z0-9_-]+)/g), match => match[1]);
+}
+
+function isStudyTask(task: any): boolean {
+  if (task?.isStudy === true) return true;
+  return taskAreas(task).some(area => STUDY_AREAS.has(area));
+}
+
 // 可支配余额不包含租房储蓄：已攒 4000 元，本月再预留 1850 元。
 const RENT_RESERVE = 4000;
 const RENT_SAVING_RESERVE = 1850;
@@ -173,19 +185,21 @@ function renderScheduleFinanceKpis() {
     const [hour, minute] = value.trim().split(':').map(Number);
     return hour * 60 + minute;
   };
-  const sleepDurations: number[] = [];
+  const studyDailyDurations: number[] = [];
   for (const [date, record] of Object.entries(window.__diaryRecords || {})) {
     if (!date.startsWith(prefix)) continue;
+    let dailyDuration = 0;
     for (const task of record.tasks || []) {
-      if (task.desc !== '睡觉' && task.desc !== '睡懒觉') continue;
+      if (!isStudyTask(task)) continue;
       const parts = String(task.time || '').split('-');
       if (parts.length !== 2) continue;
       const start = toMinutes(parts[0]);
       const endValue = toMinutes(parts[1]);
       if (Number.isNaN(start) || Number.isNaN(endValue)) continue;
       const end = endValue <= start ? endValue + 24 * 60 : endValue;
-      sleepDurations.push(end - start);
+      dailyDuration += end - start;
     }
+    if (dailyDuration > 0) studyDailyDurations.push(dailyDuration);
   }
 
   const today = new Date();
@@ -200,7 +214,7 @@ function renderScheduleFinanceKpis() {
     balance: availableBalance == null ? '—' : `¥${availableBalance.toFixed(2)}`,
     expense: `¥${totalExpense.toFixed(2)}`,
     'daily-expense': `¥${expenseDays ? (totalExpense / expenseDays).toFixed(2) : '0.00'}`,
-    sleep: sleepDurations.length ? `${(sleepDurations.reduce((sum, value) => sum + value, 0) / sleepDurations.length / 60).toFixed(1)}h` : '—',
+    study: studyDailyDurations.length ? `${(studyDailyDurations.reduce((sum, value) => sum + value, 0) / studyDailyDurations.length / 60).toFixed(1)}h` : '—',
     renewal: `${renewalCount} 项`,
   };
   Object.entries(values).forEach(([key, value]) => {
