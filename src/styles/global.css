@@ -24,6 +24,23 @@
   --radius: 10px;
   --max-w: 840px;
   --sidebar-w: 220px;
+
+  /* Schedule and finance reference tokens */
+  --bg-page: #f7f0e6;
+  --bg-card: #fdfbf8;
+  --bg-card-soft: #fbf4e9;
+  --text-primary: #2d2723;
+  --text-secondary: #6f665e;
+  --text-muted: #9b938b;
+  --border-soft: rgba(111, 87, 64, .12);
+  --divider: rgba(111, 87, 64, .1);
+  --orange: #d44c0f;
+  --orange-soft: #fff0df;
+  --shadow-card: 0 2px 8px rgba(89, 58, 28, .05);
+  --radius-card: 11px;
+  --radius-inner: 9px;
+  --radius-button: 9px;
+  --radius-pill: 999px;
 }
 
 html {
@@ -2651,27 +2668,327 @@ button {
   background: var(--line);
 }
 
-/* ─── 日历水电余额 ─── */
-
-.cal-utility-balance {
-  display: inline-block;
-  font-size: .65rem;
-  color: var(--muted);
-  font-weight: 600;
-  margin-left: .3rem;
-  font-variant-numeric: tabular-nums;
-}
-
 /* ─── 每日追踪看板布局 ─── */
 
 body[data-page="schedule-finance"] .app-shell {
-  max-width: 1100px;
+  max-width: min(1440px, calc(100vw - var(--sidebar-w) - 2rem));
+  margin: 0 auto;
+  padding: 0 16px 8px;
+  min-height: 100%;
+}
+
+body[data-page="schedule-finance"] {
+  background: var(--bg-page);
+  color: var(--text-primary);
+}
+
+/* ─── 日程和财务：Stage 1 Header + Hero ─── */
+
+body[data-page="schedule-finance"] .sf-page {
+  display: flex;
+  min-height: 100%;
+  flex-direction: column;
+}
+
+.sf-top-spacer {
+  flex: 0 0 18px;
+  height: 18px;
+}
+
+.sf-hero {
+  position: relative;
+  min-height: 98px;
+}
+
+.sf-hero-copy {
+  position: relative;
+  z-index: 1;
+  padding-top: 35px;
+}
+
+.sf-hero-brand {
+  display: block;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+
+.sf-hero-brand:focus-visible {
+  outline: 2px solid rgba(212, 76, 15, .45);
+  outline-offset: 5px;
+}
+
+.sf-hero-title-row {
+  display: flex;
+  align-items: end;
+  gap: 17px;
+}
+
+.sf-hero h1 {
+  color: var(--text-primary);
+  font-size: 36px;
+  font-weight: 800;
+  letter-spacing: -.04em;
+  line-height: 1.2;
+}
+
+.sf-hero-mark {
+  width: 90px;
+  height: 30px;
+  margin-bottom: -4px;
+  overflow: visible;
+  fill: none;
+  stroke: var(--orange);
+  stroke-width: 2.2;
+  stroke-linecap: round;
+  opacity: .9;
+}
+
+.sf-month-switcher {
+  position: absolute;
+  top: 42px;
+  left: 52%;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.sf-month-button,
+.sf-current-month {
+  height: 36px;
+  border: 1px solid var(--border-soft);
+  border-radius: var(--radius-button);
+  background: var(--bg-card);
+  color: var(--text-primary);
+  box-shadow: var(--shadow-card);
+  font-size: 12px;
+}
+
+.sf-month-button {
+  width: 36px;
+  color: var(--text-secondary);
+}
+
+.sf-month-title {
+  min-width: 103px;
+  color: var(--text-primary);
+  font-size: 23px;
+  font-weight: 800;
+  letter-spacing: -.02em;
+  text-align: center;
+  white-space: nowrap;
+}
+
+.sf-current-month {
+  min-width: 64px;
+  margin-left: 1px;
+  padding: 0 13px;
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.sf-hero-decoration {
+  position: absolute;
+  top: -13px;
+  right: 0;
+  width: 375px;
+  height: 115px;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.sf-hero-decoration img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: fill;
+}
+
+.sf-hero-decoration::after {
+  position: absolute;
+  right: auto;
+  bottom: 0;
+  left: 0;
+  width: 105px;
+  height: 56px;
+  background: var(--bg-page);
+  content: '';
+}
+
+.sf-switcher {
+  display: none;
+}
+
+.sf-kpi-row {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 14px;
+  margin-top: 14px;
+  container: sf-kpi / inline-size;
+}
+
+/* 日程工作台：左列承载 KPI + 日历，详情面板跨越两行 */
+body[data-page="schedule-finance"] .sf-primary-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1.95fr) minmax(0, 1fr);
+  grid-template-rows: auto auto;
+  gap: 14px;
+  align-items: stretch;
+}
+
+body[data-page="schedule-finance"] .sf-primary-layout > .sf-view[data-sf-view="daily-tracker"],
+body[data-page="schedule-finance"] .sf-primary-layout > .sf-view[data-sf-view="daily-tracker"] > [data-tab="daily-tracker"],
+body[data-page="schedule-finance"] .sf-primary-layout > .sf-view[data-sf-view="daily-tracker"] > [data-tab="daily-tracker"] .daily-tracker-layout {
+  display: contents;
+}
+
+body[data-page="schedule-finance"] .sf-primary-layout > .sf-view[data-sf-view="daily-tracker"][hidden] {
+  display: none !important;
+}
+
+body[data-page="schedule-finance"] .sf-primary-layout > .sf-kpi-row {
+  grid-column: 1;
+  grid-row: 1;
+  margin-top: 0;
+}
+
+body[data-page="schedule-finance"] .sf-primary-layout .daily-tracker-col {
+  grid-column: 1;
+  grid-row: 2;
+}
+
+body[data-page="schedule-finance"] .sf-primary-layout .sf-context-panel {
+  grid-column: 2;
+  grid-row: 1 / span 2;
+  height: auto;
+  align-self: stretch;
+}
+
+body[data-page="schedule-finance"] .sf-primary-layout .sf-analytics-grid {
+  grid-column: 1 / -1;
+  grid-row: 3;
+  margin-top: 0;
+}
+
+body[data-page="schedule-finance"][data-view="membership"] .sf-kpi-row {
+  display: none;
+}
+
+body[data-page="schedule-finance"][data-view="expense-records"] .sf-kpi-row {
+  display: none;
+}
+
+body[data-page="schedule-finance"][data-view="expense-records"] .sf-month-switcher,
+body[data-page="schedule-finance"][data-view="membership"] .sf-month-switcher {
+  display: none;
+}
+
+.sf-kpi-card {
+  display: grid;
+  grid-template-columns: clamp(26px, 5.3cqi, 42px) minmax(0, 1fr) clamp(9px, 1.8cqi, 14px);
+  align-items: center;
+  gap: clamp(5px, 1.7cqi, 13px);
+  min-width: 0;
+  height: clamp(72px, 10cqi, 86px);
+  padding: 0 clamp(9px, 2.2cqi, 17px);
+  overflow: hidden;
+  border: 1px solid var(--border-soft);
+  border-radius: var(--radius-card);
+  background: var(--bg-card);
+  box-shadow: var(--shadow-card);
+}
+
+.sf-kpi-card.is-renewal {
+  background: #f7fbf2;
+}
+
+.sf-kpi-icon {
+  display: grid;
+  width: clamp(26px, 5.3cqi, 42px);
+  height: clamp(26px, 5.3cqi, 42px);
+  place-items: center;
+  border-radius: 50%;
+  background: #fff5e8;
+  color: #ef8b2e;
+}
+
+.sf-kpi-icon svg {
+  width: clamp(17px, 3.1cqi, 25px);
+  height: clamp(17px, 3.1cqi, 25px);
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.7;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.sf-kpi-icon.is-balance { color: #e88927; }
+.sf-kpi-icon.is-expense { color: #e94b2e; background: #fff0e9; }
+.sf-kpi-icon.is-daily { color: #f28c27; }
+.sf-kpi-icon.is-sleep { color: #3f73d2; background: #eef4ff; }
+.sf-kpi-icon.is-renewal-icon { color: #d99c16; background: #fff5db; }
+
+.sf-kpi-copy {
+  display: grid;
+  align-content: center;
+  gap: 3px;
+  min-width: 0;
+}
+
+.sf-kpi-copy > span {
+  overflow: hidden;
+  color: var(--text-secondary);
+  font-size: clamp(9px, 1.55cqi, 14px);
+  line-height: 1.2;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.sf-kpi-copy strong {
+  color: var(--text-primary);
+  font-size: clamp(13px, 2.5cqi, 25px);
+  font-weight: 800;
+  letter-spacing: -.02em;
+  line-height: 1.1;
+  white-space: nowrap;
+}
+
+.sf-kpi-card:first-child .sf-kpi-copy strong { color: #087c3c; }
+.sf-kpi-card:nth-child(2) .sf-kpi-copy strong { color: #dd3623; }
+.sf-kpi-card.is-renewal .sf-kpi-copy strong { color: var(--orange); }
+
+.sf-kpi-arrow {
+  color: #817870;
+  font-size: clamp(18px, 3.4cqi, 27px);
+  font-weight: 300;
+  line-height: 1;
+}
+
+@container sf-kpi (max-width: 980px) {
+  .sf-kpi-card {
+    grid-template-columns: clamp(24px, 5cqi, 32px) minmax(0, 1fr);
+    gap: clamp(4px, 1.3cqi, 7px);
+    padding-inline: clamp(7px, 1.6cqi, 11px);
+  }
+
+  .sf-kpi-arrow { display: none; }
+  .sf-kpi-icon { width: clamp(24px, 5cqi, 32px); height: clamp(24px, 5cqi, 32px); }
+  .sf-kpi-icon svg { width: clamp(16px, 3.2cqi, 20px); height: clamp(16px, 3.2cqi, 20px); }
+  .sf-kpi-copy strong { font-size: clamp(12px, 2.15cqi, 20px); }
 }
 
 .daily-tracker-layout {
-  display: flex;
-  gap: 1.25rem;
+  display: grid;
+  grid-template-columns: minmax(0, 1.95fr) minmax(0, 1fr);
+  gap: 16px;
   align-items: stretch;
+  margin-top: 18px;
 }
 
 .daily-tracker-col {
@@ -2682,21 +2999,1085 @@ body[data-page="schedule-finance"] .app-shell {
 }
 
 .daily-tracker-col .calendar-view {
-  flex: 1;
+  height: 492px;
   display: flex;
   flex-direction: column;
+  overflow: hidden;
+  border: 1px solid var(--border-soft);
+  border-radius: var(--radius-card);
+  background: var(--bg-card);
+  box-shadow: var(--shadow-card);
 }
 
 .daily-tracker-col .cal-grid {
   flex: 1;
+  min-height: 0;
+  grid-auto-rows: minmax(0, 1fr);
 }
 
-.daily-side-col {
-  width: 260px;
+.daily-tracker-col .cal-header {
   flex-shrink: 0;
+  height: 56px;
+  margin-bottom: 0;
+  padding: 0 21px;
+}
+
+.daily-tracker-col .cal-header .cal-nav {
+  display: none;
+}
+
+.daily-tracker-col .cal-title {
+  color: var(--text-primary);
+  font-size: 25px;
+  letter-spacing: -.04em;
+}
+
+.cal-legend {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  color: var(--text-secondary);
+  font-size: 13px;
+  white-space: nowrap;
+}
+
+.cal-legend span {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.cal-legend i {
+  display: inline-block;
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+}
+
+.cal-legend i.is-expense { background: #df3a2f; }
+.cal-legend i.is-schedule { background: #3470c9; }
+.cal-legend i.is-subscription { background: #f49b2d; }
+.cal-legend i.is-sleep { background: #12804b; }
+
+.daily-tracker-col .cal-weekdays {
+  flex-shrink: 0;
+  height: 39px;
+  border-top: 1px solid var(--divider);
+  border-left: 0;
+}
+
+.daily-tracker-col .cal-weekday {
+  display: grid;
+  place-items: center;
+  padding: 0;
+  border-color: var(--divider);
+  background: transparent;
+  color: var(--text-secondary);
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.daily-tracker-col .cal-cell {
+  min-height: 0;
+  padding: 12px 16px;
+  border-color: var(--divider);
+  background: var(--bg-card);
+}
+
+.daily-tracker-col .cal-cell:hover {
+  background: #fffaf4;
+}
+
+.daily-tracker-col .cal-date {
+  display: inline-flex;
+  align-items: center;
+  min-height: 24px;
+  margin-top: 0;
+  color: var(--text-primary);
+  font-size: 17px;
+  font-weight: 800;
+  line-height: 1.2;
+}
+
+.daily-tracker-col .cal-lunar {
+  display: inline;
+  margin-left: 8px;
+  color: var(--text-secondary);
+  font-size: 13px;
+  line-height: 1.2;
+}
+
+.daily-tracker-col .cal-other-month .cal-date,
+.daily-tracker-col .cal-other-month .cal-lunar {
+  color: #c8c0b8;
+}
+
+.daily-tracker-col .cal-date-today {
+  width: auto;
+  height: auto;
+  justify-content: flex-start;
+  margin: 0;
+  border-radius: 0;
+  background: transparent;
+  color: var(--orange);
+  font-size: 17px;
+}
+
+.daily-tracker-col .cal-today {
+  background: var(--bg-card);
+}
+
+.daily-tracker-col .cal-selected {
+  outline: 0;
+  border: 1px solid #f3b27e;
+  background: #fff8f0;
+  z-index: 1;
+}
+
+.daily-tracker-col .cal-expense-dot,
+.daily-tracker-col .cal-schedule-dot,
+.daily-tracker-col .cal-subscription-dot,
+.daily-tracker-col .cal-sleep-dot {
+  position: absolute;
+  bottom: 13px;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+}
+
+.daily-tracker-col .cal-expense-dot { right: 17px; background: #df3a2f; }
+.daily-tracker-col .cal-schedule-dot { right: 31px; background: #3470c9; }
+.daily-tracker-col .cal-subscription-dot { right: 45px; background: #f49b2d; }
+.daily-tracker-col .cal-sleep-dot { left: 17px; background: #12804b; }
+.daily-tracker-col .cal-income-dot,
+.daily-tracker-col .cal-hema-badge { display: none; }
+
+.daily-side-col {
+  min-width: 0;
+}
+
+.sf-context-panel {
   display: flex;
   flex-direction: column;
-  gap: .6rem;
+  gap: 10px;
+  min-width: 0;
+  height: auto;
+  padding: 16px;
+  overflow: visible;
+  border: 1px solid var(--border-soft);
+  border-radius: var(--radius-card);
+  background: var(--bg-card);
+  box-shadow: var(--shadow-card);
+}
+
+.sf-context-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 8px;
+  min-height: 44px;
+  padding: 0 7px;
+}
+
+.sf-context-heading {
+  display: flex;
+  align-items: center;
+  flex: 0 0 auto;
+  min-width: 0;
+  gap: 8px;
+}
+
+.sf-context-header h2 {
+  color: var(--text-primary);
+  font-size: 25px;
+  font-weight: 800;
+  letter-spacing: -.04em;
+  line-height: 1.2;
+  white-space: nowrap;
+}
+
+.sf-context-header p {
+  flex: 1 1 0;
+  width: 175px;
+  min-width: 0;
+  margin-top: 0;
+  color: #9b725c;
+  font-family: KaiTi, STKaiti, serif;
+  font-size: 13px;
+  line-height: 1.35;
+  text-align: right;
+}
+
+.sf-context-body {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  grid-template-areas:
+    "expense expense"
+    "schedule schedule"
+    "sleep subscription"
+    "utility .";
+  gap: 10px;
+  min-width: 0;
+}
+
+.sf-context-expenses,
+.sf-context-mini {
+  min-width: 0;
+  border: 1px solid var(--divider);
+  border-radius: var(--radius-inner);
+  background: rgba(255, 255, 255, .56);
+}
+
+.sf-context-expenses {
+  grid-area: expense;
+  flex: 0 0 auto;
+  overflow: visible;
+}
+
+.sf-context-schedule {
+  position: relative;
+  grid-area: schedule;
+}
+.sf-context-sleep {
+  position: relative;
+  grid-area: sleep;
+}
+.sf-context-utility { grid-area: utility; }
+.sf-context-subscription {
+  position: relative;
+  grid-area: subscription;
+  overflow: visible;
+}
+
+.sf-context-expenses > header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-height: 56px;
+  padding: 8px 12px;
+  border-bottom: 1px solid var(--divider);
+}
+
+.sf-context-section-icon {
+  display: grid;
+  width: 40px;
+  height: 40px;
+  flex: 0 0 40px;
+  place-items: center;
+  border-radius: 50%;
+  background: #fff4e4;
+  color: #e88927;
+  font-size: 22px;
+  line-height: 1;
+}
+
+.sf-context-section-icon.is-sleep { background: #e9f5e8; color: #278d4b; }
+.sf-context-section-icon.is-schedule { background: #e8f0ff; color: #3f7bd8; }
+.sf-context-section-icon.is-subscription { background: #fff4df; color: #d69a15; }
+.sf-context-section-icon.is-utility { background: #fff4e4; color: var(--orange); }
+
+.sf-context-expenses > header > div,
+.sf-context-mini > div {
+  min-width: 0;
+}
+
+.sf-context-expenses > header > div > span,
+.sf-context-mini > div > span {
+  display: block;
+  color: var(--text-primary);
+  font-size: 14px;
+  line-height: 1.2;
+}
+
+.sf-context-expenses > header strong {
+  display: block;
+  margin-top: 0;
+  color: #df3323;
+  font-size: 20px;
+  font-weight: 800;
+  line-height: 1.1;
+}
+
+.sf-context-record-button {
+  height: 34px;
+  margin-left: auto;
+  padding: 0 15px;
+  border: 1px solid #f2c49d;
+  border-radius: var(--radius-button);
+  background: #fffaf5;
+  color: var(--orange);
+  font-size: 14px;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.sf-context-expense-row {
+  display: grid;
+  grid-template-columns: 24px minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 8px;
+  min-height: 39px;
+  padding: 0 12px;
+  border-bottom: 1px solid var(--divider);
+}
+
+.sf-context-expense-row:last-child { border-bottom: 0; }
+
+/* 详情栏默认保持紧凑；完整记录通过自定义气泡查看。 */
+.sf-context-expenses,
+.sf-context-schedule {
+  position: relative;
+}
+
+.sf-context-popover {
+  position: absolute;
+  top: calc(100% + 8px);
+  left: 0;
+  z-index: 30;
+  display: none;
+  width: min(360px, calc(100vw - 24px));
+  max-height: min(380px, 58vh);
+  padding: 10px 12px 12px;
+  overflow: hidden;
+  border: 1px solid #ebd4bd;
+  border-radius: 12px;
+  background: #fffaf5;
+  box-shadow: 0 12px 28px rgba(89, 58, 28, .16);
+}
+
+.sf-context-popover::before {
+  position: absolute;
+  top: -6px;
+  left: 22px;
+  width: 11px;
+  height: 11px;
+  border-top: 1px solid #ebd4bd;
+  border-left: 1px solid #ebd4bd;
+  background: #fffaf5;
+  content: '';
+  transform: rotate(45deg);
+}
+
+@media (hover: hover) {
+  [data-sf-popover]:hover > .sf-context-popover {
+    display: block;
+  }
+}
+
+[data-sf-popover].is-open > .sf-context-popover {
+  display: block;
+}
+
+.sf-context-popover-head {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 8px;
+  padding-bottom: 7px;
+  border-bottom: 1px solid var(--divider);
+}
+
+.sf-context-popover-head span {
+  color: var(--text-primary);
+  font-size: 13px;
+  font-weight: 800;
+}
+
+.sf-context-popover-head small {
+  color: var(--text-muted);
+  font-size: 11px;
+  white-space: nowrap;
+}
+
+.sf-context-popover-list {
+  max-height: min(330px, 50vh);
+  margin-top: 3px;
+  overflow: auto;
+}
+
+.sf-context-popover .sf-context-expense-row,
+.sf-context-popover .sf-context-schedule-row {
+  padding-inline: 2px;
+}
+
+.sf-context-popover .sf-context-schedule-row {
+  padding-block: 4px;
+  border-bottom: 1px solid var(--divider);
+}
+
+.sf-context-popover .sf-context-schedule-row:last-child {
+  border-bottom: 0;
+}
+
+.sf-context-subscription > div:first-of-type {
+  flex: 1 1 auto;
+  min-width: 0;
+  overflow: hidden;
+}
+
+.sf-context-subscription > div:first-of-type > small {
+  display: block;
+  margin-left: 0;
+  color: var(--orange);
+  font-size: 16px;
+  font-weight: 800;
+  line-height: 1.1;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.sf-context-subscription > .sf-context-popover {
+  top: auto;
+  right: 0;
+  bottom: calc(100% + 8px);
+  left: auto;
+}
+
+.sf-context-subscription > .sf-context-popover::before {
+  top: auto;
+  right: 22px;
+  bottom: -6px;
+  left: auto;
+  border-top: 0;
+  border-left: 0;
+  border-right: 1px solid #ebd4bd;
+  border-bottom: 1px solid #ebd4bd;
+}
+
+.sf-context-popover-copy {
+  padding: 10px 2px 1px;
+  color: var(--text-primary);
+  font-size: 13px;
+  line-height: 1.5;
+  overflow-wrap: anywhere;
+}
+
+.sf-context-row-icon {
+  color: #7b776f;
+  font-size: 17px;
+  text-align: center;
+}
+
+.sf-context-expense-name {
+  overflow: hidden;
+  color: var(--text-primary);
+  font-size: 14px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.sf-context-expense-name small {
+  margin-left: 6px;
+  color: var(--text-muted);
+  font-size: 11px;
+}
+
+.sf-context-expense-row strong {
+  color: #df3323;
+  font-size: 14px;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.sf-context-no-record,
+.sf-context-muted,
+.sf-context-empty {
+  color: var(--text-muted);
+  font-size: 13px;
+}
+
+.sf-context-no-record { padding: 14px 12px; }
+
+.sf-context-mini {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-height: 67px;
+  padding: 10px 12px;
+}
+
+.sf-context-mini strong {
+  display: inline-block;
+  margin-top: 3px;
+  color: var(--text-primary);
+  font-size: 20px;
+  font-weight: 800;
+  line-height: 1.05;
+}
+
+.sf-context-mini > small,
+.sf-context-mini > div > small {
+  margin-left: auto;
+  color: var(--text-secondary);
+  font-size: 13px;
+  white-space: nowrap;
+}
+
+.sf-context-sleep > small {
+  grid-column: 2;
+  grid-row: 2;
+  max-width: 100%;
+  margin: 2px 0 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.sf-context-sleep {
+  display: grid;
+  grid-template-columns: 32px minmax(0, 1fr);
+  grid-template-rows: auto auto;
+  column-gap: 8px;
+  row-gap: 1px;
+  align-content: center;
+  align-items: center;
+}
+
+.sf-context-sleep .sf-context-section-icon {
+  grid-column: 1;
+  grid-row: 1 / span 2;
+  width: 32px;
+  height: 32px;
+  flex-basis: 32px;
+  font-size: 18px;
+}
+
+.sf-context-sleep > div {
+  grid-column: 2;
+  grid-row: 1;
+  min-width: 0;
+}
+
+.sf-context-sleep strong {
+  margin-top: 0;
+  line-height: 1.1;
+}
+
+.sf-context-sleep > small {
+  margin-top: 0;
+  line-height: 1.25;
+}
+
+.sf-context-utility strong {
+  margin-top: 0;
+  color: var(--orange);
+  line-height: 1.1;
+}
+
+.sf-context-schedule-list {
+  max-height: none;
+  margin-top: 4px;
+  overflow: visible;
+}
+
+.sf-context-schedule-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 6px;
+  color: var(--text-primary);
+  font-size: 13px;
+  line-height: 1.45;
+  white-space: normal;
+}
+
+.sf-context-schedule-row i {
+  width: 7px;
+  height: 7px;
+  flex: 0 0 7px;
+  margin-top: calc((1.45em - 7px) / 2);
+  border-radius: 50%;
+  background: #3470c9;
+}
+
+.sf-context-schedule-row span {
+  flex: 0 0 78px;
+  max-width: 78px;
+  color: var(--text-secondary);
+  white-space: nowrap;
+}
+.sf-context-schedule-row strong {
+  display: block;
+  flex: 1 1 auto;
+  min-width: 0;
+  margin-top: 0;
+  overflow: visible;
+  color: var(--text-primary);
+  font-size: 13px;
+  font-weight: 500;
+  line-height: 1.45;
+  overflow-wrap: anywhere;
+  text-overflow: clip;
+  white-space: normal;
+}
+.sf-context-empty { display: grid; flex: 1; place-items: center; }
+
+body[data-page="schedule-finance"] .daily-utility-summary {
+  display: none;
+}
+
+body[data-page="schedule-finance"] .sf-analytics-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.18fr) minmax(0, 1fr) minmax(0, .94fr);
+  gap: 14px;
+  margin-top: 12px;
+}
+
+body[data-page="schedule-finance"] .sf-analytics-card {
+  min-width: 0;
+  height: 230px;
+  overflow: hidden;
+  border: 1px solid var(--border-soft);
+  border-radius: var(--radius-card);
+  background: var(--bg-card);
+  box-shadow: var(--shadow-card);
+}
+
+body[data-page="schedule-finance"] .sf-trend-card {
+  padding: 0;
+}
+
+body[data-page="schedule-finance"] .sf-trend-card .expense-kanban-head {
+  align-items: center;
+  margin: 0;
+  padding: 17px 18px 0;
+}
+
+body[data-page="schedule-finance"] .sf-trend-card .expense-kanban-title {
+  flex: 0 0 auto;
+  white-space: nowrap;
+}
+
+body[data-page="schedule-finance"] #expenseTrendChart .expense-kanban-title {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  line-height: 28px;
+}
+
+body[data-page="schedule-finance"] .sf-trend-card .sf-chart-detail-button {
+  margin-left: auto;
+}
+
+body[data-page="schedule-finance"] .sf-trend-card .expense-kanban-title {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  color: var(--text-primary);
+  font-size: 20px;
+  font-weight: 800;
+  letter-spacing: -.03em;
+}
+
+body[data-page="schedule-finance"] .sf-chart-icon {
+  display: inline-flex;
+  align-items: flex-end;
+  gap: 3px;
+  width: 19px;
+  height: 20px;
+}
+
+body[data-page="schedule-finance"] .sf-chart-icon i {
+  display: block;
+  width: 4px;
+  border-radius: 2px 2px 0 0;
+  background: var(--orange);
+}
+
+body[data-page="schedule-finance"] .sf-chart-icon i:nth-child(1) { height: 9px; }
+body[data-page="schedule-finance"] .sf-chart-icon i:nth-child(2) { height: 15px; }
+body[data-page="schedule-finance"] .sf-chart-icon i:nth-child(3) { height: 20px; }
+
+body[data-page="schedule-finance"] .sf-chart-toggle {
+  display: inline-flex;
+  align-items: center;
+  height: 28px;
+  overflow: hidden;
+  border: 1px solid var(--border-soft);
+  border-radius: var(--radius-pill);
+  color: var(--text-secondary);
+  font-size: 12px;
+  font-weight: 700;
+}
+
+body[data-page="schedule-finance"] .sf-trend-toggle-row {
+  display: flex;
+  justify-content: flex-start;
+  padding: 7px 18px 0;
+}
+
+body[data-page="schedule-finance"] .sf-content-action-button,
+body[data-page="schedule-finance"] .sf-view-back {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  height: 30px;
+  padding: 0 12px;
+  border: 1px solid #f2c49d;
+  border-radius: var(--radius-button);
+  background: #fffaf5;
+  color: var(--orange);
+  font-size: 12px;
+  font-weight: 700;
+  line-height: 1;
+  white-space: nowrap;
+  cursor: pointer;
+}
+
+body[data-page="schedule-finance"] .sf-content-action-button:hover,
+body[data-page="schedule-finance"] .sf-content-action-button:focus-visible,
+body[data-page="schedule-finance"] .sf-view-back:hover,
+body[data-page="schedule-finance"] .sf-view-back:focus-visible {
+  border-color: var(--orange);
+  background: var(--orange-soft);
+}
+
+body[data-page="schedule-finance"] .sf-content-action-button > span,
+body[data-page="schedule-finance"] .sf-view-back > span:first-child {
+  font-size: 17px;
+  line-height: .8;
+}
+
+body[data-page="schedule-finance"] .sf-view-back {
+  margin-bottom: 10px;
+}
+
+body[data-page="schedule-finance"] .sf-subscription-more {
+  margin: 10px auto 0;
+}
+
+body[data-page="schedule-finance"] .sf-chart-toggle span {
+  display: inline-flex;
+  align-items: center;
+  height: 100%;
+  padding: 0 14px;
+}
+
+body[data-page="schedule-finance"] .sf-chart-toggle button {
+  display: inline-flex;
+  align-items: center;
+  height: 100%;
+  padding: 0 14px;
+  border: 0;
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  cursor: pointer;
+}
+
+body[data-page="schedule-finance"] .sf-chart-toggle .is-active,
+body[data-page="schedule-finance"] .sf-chart-toggle button:hover {
+  background: var(--orange);
+  color: #fff;
+}
+
+body[data-page="schedule-finance"] .sf-chart-toggle button:focus-visible {
+  outline: 2px solid var(--orange);
+  outline-offset: -2px;
+}
+
+body[data-page="schedule-finance"] .sf-trend-card .expense-line-area.expense-line-income {
+  fill: rgba(39, 141, 75, .14);
+}
+
+body[data-page="schedule-finance"] .sf-trend-card .expense-line-path.expense-line-income {
+  stroke: var(--green);
+}
+
+body[data-page="schedule-finance"] .sf-trend-card .expense-line-node.expense-line-income {
+  stroke: var(--green);
+}
+
+body[data-page="schedule-finance"] .sf-trend-card .expense-line-node.expense-line-income:hover,
+body[data-page="schedule-finance"] .sf-trend-card .expense-line-node.expense-line-income.selected {
+  fill: var(--green);
+}
+
+body[data-page="schedule-finance"] .sf-trend-card .expense-line-node.expense-line-income.zero {
+  stroke: #92c8a5;
+}
+
+body[data-page="schedule-finance"] .sf-category-card .expense-kanban-head {
+  flex: 0 0 auto;
+  padding: 17px 17px 0;
+}
+
+body[data-page="schedule-finance"] .sf-category-card > #sfCategorySummary {
+  display: flex;
+  height: 100%;
+  min-height: 0;
+  flex-direction: column;
+}
+
+body[data-page="schedule-finance"] .sf-trend-card .expense-kanban-title,
+body[data-page="schedule-finance"] .sf-category-card .expense-kanban-title,
+body[data-page="schedule-finance"] .sf-subscription-card .expense-kanban-title {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  color: var(--text-primary);
+  font-size: 17px;
+  font-weight: 800;
+  letter-spacing: -.02em;
+  line-height: 28px;
+}
+
+body[data-page="schedule-finance"] .sf-category-icon {
+  color: var(--orange);
+  font-size: 25px;
+  line-height: 20px;
+}
+
+body[data-page="schedule-finance"] .sf-category-list {
+  display: flex;
+  min-height: 0;
+  flex: 1 1 auto;
+  flex-direction: column;
+  gap: 8px;
+  padding: 10px 18px 12px;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  scrollbar-width: thin;
+}
+
+body[data-page="schedule-finance"] .sf-category-row {
+  display: grid;
+  grid-template-columns: 14px 66px minmax(0, 1fr) 64px;
+  align-items: center;
+  gap: 7px;
+  min-height: 19px;
+}
+
+body[data-page="schedule-finance"] .sf-category-swatch {
+  width: 13px;
+  height: 13px;
+  border-radius: 4px;
+}
+
+body[data-page="schedule-finance"] .sf-category-name {
+  overflow: hidden;
+  color: var(--text-secondary);
+  font-size: 13px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+body[data-page="schedule-finance"] .sf-category-track {
+  height: 14px;
+  overflow: hidden;
+  border-radius: var(--radius-pill);
+  background: #f5f3ef;
+}
+
+body[data-page="schedule-finance"] .sf-category-fill {
+  display: block;
+  height: 100%;
+  border-radius: inherit;
+}
+
+body[data-page="schedule-finance"] .sf-category-amount {
+  color: var(--text-primary);
+  font-size: 14px;
+  font-weight: 700;
+  text-align: right;
+  white-space: nowrap;
+}
+
+body[data-page="schedule-finance"] .sf-category-swatch-0,
+body[data-page="schedule-finance"] .sf-category-fill-0 { background: #f47b49; }
+body[data-page="schedule-finance"] .sf-category-swatch-1,
+body[data-page="schedule-finance"] .sf-category-fill-1 { background: #ffc65b; }
+body[data-page="schedule-finance"] .sf-category-swatch-2,
+body[data-page="schedule-finance"] .sf-category-fill-2 { background: #6bc38b; }
+body[data-page="schedule-finance"] .sf-category-swatch-3,
+body[data-page="schedule-finance"] .sf-category-fill-3 { background: #55a4ec; }
+body[data-page="schedule-finance"] .sf-category-swatch-4,
+body[data-page="schedule-finance"] .sf-category-fill-4 { background: #a66ce0; }
+body[data-page="schedule-finance"] .sf-category-swatch-5,
+body[data-page="schedule-finance"] .sf-category-fill-5 { background: #e978a4; }
+
+body[data-page="schedule-finance"] .sf-chart-empty {
+  padding: 76px 18px;
+  color: var(--text-muted);
+  font-size: 13px;
+  text-align: center;
+}
+
+body[data-page="schedule-finance"] .sf-subscription-card .expense-kanban-head {
+  padding: 17px 17px 0;
+}
+
+body[data-page="schedule-finance"] .sf-subscription-icon {
+  color: var(--orange);
+  font-size: 25px;
+  line-height: 20px;
+}
+
+body[data-page="schedule-finance"] .sf-subscription-add {
+  height: 30px;
+  padding: 0 12px;
+  border: 1px solid #f2c49d;
+  border-radius: var(--radius-button);
+  background: #fffaf5;
+  color: var(--orange);
+  font-size: 12px;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+body[data-page="schedule-finance"] .sf-subscription-list {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 7px 17px 0;
+}
+
+body[data-page="schedule-finance"] .sf-subscription-row {
+  display: grid;
+  grid-template-columns: 40px minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 9px;
+  min-height: 52px;
+  padding: 4px 7px;
+  border-radius: var(--radius-inner);
+  background: rgba(255, 255, 255, .48);
+}
+
+body[data-page="schedule-finance"] .sf-subscription-logo {
+  display: grid;
+  width: 36px;
+  height: 36px;
+  place-items: center;
+  overflow: hidden;
+  border-radius: 9px;
+  background: #fff;
+  color: var(--orange);
+  font-size: 21px;
+}
+
+body[data-page="schedule-finance"] .sf-subscription-logo img {
+  width: 31px;
+  height: 31px;
+  object-fit: contain;
+}
+
+body[data-page="schedule-finance"] .sf-subscription-copy,
+body[data-page="schedule-finance"] .sf-subscription-price {
+  min-width: 0;
+}
+
+body[data-page="schedule-finance"] .sf-subscription-copy strong {
+  display: block;
+  overflow: hidden;
+  color: var(--text-primary);
+  font-size: 14px;
+  font-weight: 800;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+body[data-page="schedule-finance"] .sf-subscription-copy span {
+  display: block;
+  margin-top: 3px;
+  color: var(--orange);
+  font-size: 12px;
+  font-weight: 700;
+}
+
+body[data-page="schedule-finance"] .sf-subscription-copy em {
+  display: inline-flex;
+  align-items: center;
+  height: 19px;
+  margin-left: 5px;
+  padding: 0 7px;
+  border: 1px solid #f2c995;
+  border-radius: 6px;
+  background: #fff8ec;
+  color: #b86116;
+  font-size: 11px;
+  font-style: normal;
+  line-height: 1;
+}
+
+body[data-page="schedule-finance"] .sf-subscription-price {
+  text-align: right;
+}
+
+body[data-page="schedule-finance"] .sf-subscription-price strong {
+  display: block;
+  color: #d93f2e;
+  font-size: 15px;
+  font-weight: 800;
+}
+
+body[data-page="schedule-finance"] .sf-subscription-price span {
+  display: block;
+  margin-top: 4px;
+  color: var(--text-muted);
+  font-size: 11px;
+  white-space: nowrap;
+}
+
+body[data-page="schedule-finance"] .sf-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  min-height: 25px;
+  margin-top: auto;
+  padding-top: 16px;
+  color: var(--text-muted);
+  font-size: 12px;
+}
+
+body[data-page="schedule-finance"] .sf-trend-card .expense-line-chart-wrap {
+  height: 188px;
+  padding: 0 12px;
+  overflow: hidden;
+}
+
+body[data-page="schedule-finance"] .sf-trend-card .expense-line-chart {
+  width: 100%;
+  min-width: 0;
+  height: 188px;
+}
+
+body[data-page="schedule-finance"] .sf-trend-card .expense-line-grid {
+  stroke: rgba(111, 87, 64, .1);
+}
+
+body[data-page="schedule-finance"] .sf-trend-card .expense-line-y-label,
+body[data-page="schedule-finance"] .sf-trend-card .expense-line-x-label {
+  fill: var(--text-muted);
+  font-size: 11px;
+}
+
+body[data-page="schedule-finance"] .sf-trend-card .expense-line-area {
+  fill: rgba(255, 196, 133, .2);
+}
+
+body[data-page="schedule-finance"] .sf-trend-card .expense-line-path {
+  stroke: var(--orange);
+  stroke-width: 2.5;
+}
+
+body[data-page="schedule-finance"] .sf-trend-card .expense-line-node {
+  stroke: var(--orange);
+  stroke-width: 2;
+}
+
+body[data-page="schedule-finance"] .sf-trend-card .expense-line-node:hover,
+body[data-page="schedule-finance"] .sf-trend-card .expense-line-node.selected {
+  fill: var(--orange);
+}
+
+body[data-page="schedule-finance"] .sf-trend-card .expense-line-node.zero {
+  stroke: #e7b889;
+}
+
+body[data-page="schedule-finance"] .sf-trend-card .expense-line-meta {
+  display: none;
 }
 
 .daily-side-kanban {
@@ -3128,6 +4509,433 @@ body[data-page="schedule-finance"] .app-shell {
   border-radius: var(--radius);
   background: var(--surface);
   padding: .55rem .65rem;
+}
+
+/* ─── 收支记录：紧凑工作区 ─── */
+
+body[data-page="schedule-finance"] .expense-layout {
+  grid-template-columns: minmax(0, 1.48fr) minmax(310px, .92fr);
+  gap: 14px;
+  align-items: stretch;
+}
+
+body[data-page="schedule-finance"] .expense-main-col {
+  display: flex;
+  min-height: 0;
+  flex-direction: column;
+  gap: 10px;
+}
+
+body[data-page="schedule-finance"] .expense-main-col > .cal-header {
+  height: 34px;
+  margin: 0;
+  padding: 0 2px;
+}
+
+body[data-page="schedule-finance"] .expense-main-col > .cal-header .cal-title {
+  color: var(--text-primary);
+  font-size: 19px;
+  letter-spacing: -.03em;
+}
+
+body[data-page="schedule-finance"] .expense-main-col > .cal-header .cal-nav {
+  gap: 6px;
+}
+
+body[data-page="schedule-finance"] .expense-main-col > .cal-header .cal-nav-btn,
+body[data-page="schedule-finance"] .expense-main-col > .cal-header .cal-today-btn {
+  height: 30px;
+}
+
+body[data-page="schedule-finance"] .expense-content {
+  min-width: 0;
+  padding: 14px 16px 10px;
+  border: 1px solid var(--border-soft);
+  border-radius: var(--radius-card);
+  background: var(--bg-card);
+  box-shadow: var(--shadow-card);
+}
+
+body[data-page="schedule-finance"] .expense-record-workspace {
+  display: flex;
+  min-width: 0;
+  flex-direction: column;
+}
+
+body[data-page="schedule-finance"] .expense-summary-strip {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 10px;
+  padding-bottom: 11px;
+  border-bottom: 1px solid var(--divider);
+}
+
+body[data-page="schedule-finance"] .expense-summary-strip > div {
+  display: flex;
+  min-width: 0;
+  flex-direction: column;
+  gap: 2px;
+}
+
+body[data-page="schedule-finance"] .expense-summary-strip span {
+  overflow: hidden;
+  color: var(--text-muted);
+  font-size: 11px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+body[data-page="schedule-finance"] .expense-summary-strip strong {
+  overflow: hidden;
+  color: var(--text-primary);
+  font-size: 16px;
+  font-weight: 800;
+  line-height: 1.15;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+body[data-page="schedule-finance"] .expense-record-controls {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  min-width: 0;
+  padding: 11px 0 8px;
+}
+
+body[data-page="schedule-finance"] .expense-record-type-nav,
+body[data-page="schedule-finance"] .expense-record-category-nav {
+  display: flex;
+  align-items: center;
+  min-width: 0;
+}
+
+body[data-page="schedule-finance"] .expense-record-category-nav {
+  flex: 1 1 auto;
+  gap: 5px;
+  padding: 0;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+
+body[data-page="schedule-finance"] .expense-record-category-nav::-webkit-scrollbar {
+  display: none;
+}
+
+body[data-page="schedule-finance"] .expense-record-type-nav {
+  flex: 0 0 auto;
+  overflow: hidden;
+  border: 1px solid var(--border-soft);
+  border-radius: var(--radius-pill);
+}
+
+body[data-page="schedule-finance"] .expense-record-type-btn,
+body[data-page="schedule-finance"] .expense-record-category-btn {
+  border: 0;
+  background: transparent;
+  color: var(--text-secondary);
+  font: inherit;
+  font-size: 12px;
+  font-weight: 700;
+  line-height: 1;
+  cursor: pointer;
+}
+
+body[data-page="schedule-finance"] .expense-record-type-btn {
+  min-width: 58px;
+  height: 27px;
+  padding: 0 13px;
+}
+
+body[data-page="schedule-finance"] .expense-record-type-btn.is-active {
+  background: var(--orange);
+  color: #fff;
+}
+
+body[data-page="schedule-finance"] .expense-record-count {
+  color: var(--text-muted);
+  font-size: 11px;
+  white-space: nowrap;
+}
+
+body[data-page="schedule-finance"] .expense-record-category-btn {
+  flex: 0 0 auto;
+  padding: 6px 9px;
+  border: 1px solid transparent;
+  border-radius: var(--radius-pill);
+  white-space: nowrap;
+}
+
+body[data-page="schedule-finance"] .expense-record-category-btn:hover,
+body[data-page="schedule-finance"] .expense-record-category-btn:focus-visible {
+  border-color: #f2c49d;
+  color: var(--orange);
+}
+
+body[data-page="schedule-finance"] .expense-record-category-btn.is-active {
+  border-color: #f2c49d;
+  background: var(--orange-soft);
+  color: var(--orange);
+}
+
+body[data-page="schedule-finance"] .expense-record-list {
+  display: flex;
+  min-width: 0;
+  flex-direction: column;
+  border-top: 1px solid var(--divider);
+}
+
+body[data-page="schedule-finance"] .expense-record-row {
+  display: grid;
+  grid-template-columns: 43px 74px minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 9px;
+  min-width: 0;
+  min-height: 39px;
+  border-bottom: 1px solid var(--divider);
+}
+
+body[data-page="schedule-finance"] .expense-record-row time,
+body[data-page="schedule-finance"] .expense-record-category {
+  color: var(--text-muted);
+  font-size: 11px;
+  white-space: nowrap;
+}
+
+body[data-page="schedule-finance"] .expense-record-category {
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+body[data-page="schedule-finance"] .expense-record-copy {
+  display: flex;
+  min-width: 0;
+  align-items: baseline;
+  gap: 7px;
+}
+
+body[data-page="schedule-finance"] .expense-record-copy strong {
+  min-width: 0;
+  overflow: hidden;
+  color: var(--text-primary);
+  font-size: 13px;
+  font-weight: 600;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+body[data-page="schedule-finance"] .expense-record-copy small {
+  min-width: 0;
+  overflow: hidden;
+  color: var(--text-muted);
+  font-size: 11px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+body[data-page="schedule-finance"] .expense-record-amount {
+  font-size: 14px;
+  font-weight: 800;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+body[data-page="schedule-finance"] .expense-record-empty {
+  padding: 30px 0;
+  color: var(--text-muted);
+  font-size: 13px;
+  text-align: center;
+}
+
+body[data-page="schedule-finance"] .expense-record-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  min-height: 32px;
+}
+
+body[data-page="schedule-finance"] .expense-record-footer .expense-record-count {
+  color: var(--text-muted);
+  font-size: 11px;
+  white-space: nowrap;
+}
+
+body[data-page="schedule-finance"] .expense-record-pagination {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--text-muted);
+  font-size: 11px;
+}
+
+body[data-page="schedule-finance"] .expense-record-pagination button {
+  display: grid;
+  width: 23px;
+  height: 23px;
+  place-items: center;
+  border: 1px solid var(--border-soft);
+  border-radius: 6px;
+  background: var(--bg-card);
+  color: var(--text-secondary);
+  cursor: pointer;
+}
+
+body[data-page="schedule-finance"] .expense-record-pagination button:hover:not(:disabled) {
+  border-color: #f2c49d;
+  color: var(--orange);
+}
+
+body[data-page="schedule-finance"] .expense-record-pagination button:disabled {
+  opacity: .35;
+  cursor: default;
+}
+
+body[data-page="schedule-finance"] .expense-top-panel {
+  grid-column: 2;
+  grid-row: 1;
+  display: flex;
+  min-width: 0;
+  min-height: 0;
+  flex-direction: column;
+  border: 1px solid var(--border-soft);
+  border-radius: var(--radius-card);
+  background: var(--bg-card);
+  box-shadow: var(--shadow-card);
+}
+
+body[data-page="schedule-finance"] .expense-analysis-row {
+  grid-column: 1 / -1;
+  grid-row: 2;
+  display: grid;
+  grid-template-columns: minmax(0, 1.18fr) minmax(0, 1fr);
+  gap: 14px;
+  min-width: 0;
+}
+
+body[data-page="schedule-finance"] .expense-analysis-card {
+  display: flex;
+  min-width: 0;
+  min-height: 260px;
+  flex-direction: column;
+  overflow: hidden;
+  border: 1px solid var(--border-soft);
+  border-radius: var(--radius-card);
+  background: var(--bg-card);
+  box-shadow: var(--shadow-card);
+}
+
+body[data-page="schedule-finance"] .expense-top-panel .expense-side-kanban,
+body[data-page="schedule-finance"] .expense-analysis-card .expense-side-kanban {
+  min-height: 100%;
+  padding: 15px 16px;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
+}
+
+body[data-page="schedule-finance"] .expense-analysis-card .expense-kanban-head,
+body[data-page="schedule-finance"] .expense-top-panel .expense-kanban-head {
+  margin-bottom: 10px;
+}
+
+body[data-page="schedule-finance"] .expense-analysis-card .expense-kanban-title,
+body[data-page="schedule-finance"] .expense-top-panel .expense-kanban-title {
+  color: var(--text-primary);
+  font-size: 17px;
+}
+
+body[data-page="schedule-finance"] .expense-analysis-card .expense-line-chart-wrap {
+  height: 220px;
+  overflow: hidden;
+}
+
+body[data-page="schedule-finance"] .expense-analysis-card .expense-line-chart {
+  width: 100%;
+  min-width: 0;
+  height: 220px;
+}
+
+body[data-page="schedule-finance"] .expense-analysis-card .expense-line-path {
+  stroke: var(--orange);
+}
+
+body[data-page="schedule-finance"] .expense-analysis-card .expense-line-node {
+  stroke: var(--orange);
+}
+
+body[data-page="schedule-finance"] .expense-analysis-card .expense-line-node:hover,
+body[data-page="schedule-finance"] .expense-analysis-card .expense-line-node.selected {
+  fill: var(--orange);
+}
+
+body[data-page="schedule-finance"] .expense-analysis-card .expense-line-meta {
+  margin-top: 8px;
+}
+
+body[data-page="schedule-finance"] .expense-analysis-card .sf-category-list {
+  padding: 8px 0 0;
+}
+
+body[data-page="schedule-finance"] .expense-top-panel .expense-top-list {
+  flex: 1 1 auto;
+  gap: 5px;
+}
+
+@media (max-width: 900px) {
+  body[data-page="schedule-finance"] .expense-layout {
+    grid-template-columns: minmax(0, 1.2fr) minmax(280px, .9fr);
+  }
+
+  body[data-page="schedule-finance"] .expense-summary-strip {
+    gap: 6px;
+  }
+
+  body[data-page="schedule-finance"] .expense-summary-strip strong {
+    font-size: 14px;
+  }
+}
+
+@media (max-width: 719px) {
+  body[data-page="schedule-finance"] .expense-layout {
+    grid-template-columns: 1fr;
+    grid-template-rows: auto;
+  }
+
+  body[data-page="schedule-finance"] .expense-main-col,
+  body[data-page="schedule-finance"] .expense-top-panel,
+  body[data-page="schedule-finance"] .expense-analysis-row {
+    grid-column: auto;
+    grid-row: auto;
+  }
+
+  body[data-page="schedule-finance"] .expense-analysis-row {
+    grid-template-columns: 1fr;
+  }
+
+  body[data-page="schedule-finance"] .expense-top-panel {
+    min-height: 260px;
+  }
+
+  body[data-page="schedule-finance"] .expense-summary-strip {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    row-gap: 10px;
+  }
+
+  body[data-page="schedule-finance"] .expense-summary-strip > div:nth-child(n + 4) {
+    grid-row: 2;
+  }
+
+  body[data-page="schedule-finance"] .expense-record-row {
+    grid-template-columns: 40px minmax(0, 1fr) auto;
+    gap: 7px;
+  }
+
+  body[data-page="schedule-finance"] .expense-record-category {
+    display: none;
+  }
 }
 
 /* ─── 通用看板样式 ─── */
@@ -3705,6 +5513,18 @@ body[data-page="schedule-finance"][data-view="membership"] {
   margin-bottom: 1rem;
 }
 
+.membership-list-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: .75rem;
+  margin-bottom: .75rem;
+}
+
+.membership-list-heading .membership-section-title {
+  margin: 0;
+}
+
 .membership-table {
   border: 1px solid var(--line);
   border-radius: 12px;
@@ -3712,9 +5532,101 @@ body[data-page="schedule-finance"][data-view="membership"] {
   background: var(--surface);
 }
 
+.membership-pagination {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: .65rem;
+  margin-top: .75rem;
+}
+
+.membership-list-heading .membership-pagination {
+  flex-shrink: 0;
+  margin: 0;
+}
+
+.membership-page-btn {
+  display: inline-grid;
+  width: 1.8rem;
+  height: 1.8rem;
+  place-items: center;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: var(--surface);
+  color: var(--dark);
+  font-size: 1rem;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.membership-page-btn:hover:not(:disabled),
+.membership-page-btn:focus-visible {
+  border-color: var(--amber);
+  color: var(--amber);
+}
+
+.membership-page-btn:disabled {
+  cursor: default;
+  opacity: .4;
+}
+
+.membership-page-num {
+  min-width: 3.2rem;
+  color: var(--muted);
+  font-size: .75rem;
+  font-variant-numeric: tabular-nums;
+  text-align: center;
+}
+
+.membership-renew-switch {
+  position: relative;
+  display: inline-flex;
+  width: 38px;
+  height: 22px;
+  align-items: center;
+  padding: 0;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: #e9e2d7;
+  cursor: pointer;
+  transition: background .15s ease, border-color .15s ease;
+}
+
+.membership-renew-switch::after {
+  position: absolute;
+  top: 3px;
+  left: 3px;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: #fffdf9;
+  box-shadow: 0 1px 3px rgba(80, 50, 25, .18);
+  content: '';
+  transition: left .15s ease;
+}
+
+.membership-renew-switch.is-on {
+  border-color: var(--amber);
+  background: var(--amber);
+}
+
+.membership-renew-switch.is-on::after {
+  left: 19px;
+}
+
+.membership-renew-switch:hover,
+.membership-renew-switch:focus-visible {
+  border-color: var(--amber);
+}
+
+.membership-renew-switch:focus-visible {
+  outline: 2px solid rgba(217, 130, 0, .35);
+  outline-offset: 2px;
+}
+
 .membership-table-head {
   display: grid;
-  grid-template-columns: minmax(170px, 1.35fr) minmax(54px, .42fr) minmax(0, 1fr) 110px 140px;
+  grid-template-columns: minmax(170px, 1.35fr) minmax(54px, .42fr) minmax(0, 1fr) 110px 72px 140px;
   gap: .75rem;
   padding: .7rem 1rem;
   background: var(--surface-soft);
@@ -3725,6 +5637,7 @@ body[data-page="schedule-finance"][data-view="membership"] {
 .membership-th-tag,
 .membership-th-note,
 .membership-th-price,
+.membership-th-renew,
 .membership-th-status {
   font-size: .72rem;
   font-weight: 700;
@@ -3734,13 +5647,25 @@ body[data-page="schedule-finance"][data-view="membership"] {
 }
 
 .membership-th-price,
+.membership-th-renew,
 .membership-th-status {
   text-align: right;
 }
 
+.membership-th-renew,
+.membership-row-renew {
+  text-align: center;
+}
+
+.membership-row-renew {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
 .membership-row {
   display: grid;
-  grid-template-columns: minmax(170px, 1.35fr) minmax(54px, .42fr) minmax(0, 1fr) 110px 140px;
+  grid-template-columns: minmax(170px, 1.35fr) minmax(54px, .42fr) minmax(0, 1fr) 110px 72px 140px;
   gap: .75rem;
   padding: .85rem 1rem;
   border-bottom: 1px solid var(--line);
@@ -3798,7 +5723,7 @@ body[data-page="schedule-finance"][data-view="membership"] {
 }
 
 .membership-row-copy strong {
-  font-size: .88rem;
+  font-size: .94rem;
   color: var(--dark);
   font-weight: 700;
   white-space: nowrap;
@@ -3808,7 +5733,7 @@ body[data-page="schedule-finance"][data-view="membership"] {
 }
 
 .membership-name-link {
-  font-size: .88rem;
+  font-size: .94rem;
   color: #b45309;
   font-weight: 700;
   white-space: nowrap;
@@ -3872,7 +5797,7 @@ body[data-page="schedule-finance"][data-view="membership"] {
 }
 
 .membership-row-price strong {
-  font-size: .9rem;
+  font-size: .95rem;
   color: var(--dark);
   font-weight: 800;
   font-variant-numeric: tabular-nums;
@@ -4134,6 +6059,28 @@ body[data-page="schedule-finance"][data-view="membership"] {
     grid-column: 1;
     grid-row: 3;
     text-align: left;
+  }
+
+  .membership-row-renew {
+    grid-column: 2;
+    grid-row: 2;
+    justify-self: end;
+  }
+
+  .membership-renew-switch {
+    width: 32px;
+    height: 18px;
+  }
+
+  .membership-renew-switch::after {
+    top: 2px;
+    left: 2px;
+    width: 12px;
+    height: 12px;
+  }
+
+  .membership-renew-switch.is-on::after {
+    left: 17px;
   }
 
   .membership-row-price strong {
@@ -10161,6 +12108,603 @@ body.k-drawer-open .main-area { overflow: hidden; }
 @media (max-width: 560px) {
   .sf-view-tip {
     display: none;
+  }
+}
+
+/* ─── 日程和财务：移动端第一版 ───
+   移动端将工作台收束为单列：先看概览，再看日历，再看当天详情，
+   最后查看分析。日历保留 7 列，但降低单元格信息密度，避免横向撑破页面。 */
+@media (max-width: 820px) {
+  body[data-page="schedule-finance"] {
+    overflow-x: hidden;
+  }
+
+  body[data-page="schedule-finance"] .app-shell {
+    width: 100%;
+    max-width: none;
+    padding: 0 12px 8px;
+  }
+
+  body[data-page="schedule-finance"] .sf-page {
+    width: 100%;
+    min-width: 0;
+  }
+
+  body[data-page="schedule-finance"] .sf-top-spacer {
+    flex-basis: 10px;
+    height: 10px;
+  }
+
+  body[data-page="schedule-finance"] .sf-hero {
+    min-height: 0;
+  }
+
+  body[data-page="schedule-finance"] .sf-hero-copy {
+    padding-top: 18px;
+  }
+
+  body[data-page="schedule-finance"] .sf-hero-title-row {
+    align-items: flex-end;
+    gap: 8px;
+  }
+
+  body[data-page="schedule-finance"] .sf-hero h1 {
+    font-size: 28px;
+  }
+
+  body[data-page="schedule-finance"] .sf-hero-mark {
+    width: 62px;
+    height: 22px;
+    margin-bottom: -2px;
+  }
+
+  body[data-page="schedule-finance"] .sf-month-switcher {
+    position: static;
+    align-self: flex-start;
+    gap: 8px;
+    margin-top: 11px;
+  }
+
+  body[data-page="schedule-finance"] .sf-month-button,
+  body[data-page="schedule-finance"] .sf-current-month {
+    height: 32px;
+  }
+
+  body[data-page="schedule-finance"] .sf-month-button {
+    width: 32px;
+  }
+
+  body[data-page="schedule-finance"] .sf-month-title {
+    min-width: 88px;
+    font-size: 18px;
+  }
+
+  body[data-page="schedule-finance"] .sf-current-month {
+    min-width: 54px;
+    padding-inline: 10px;
+    font-size: 12px;
+  }
+
+  body[data-page="schedule-finance"] .sf-hero-decoration {
+    display: none;
+  }
+
+  body[data-page="schedule-finance"] .sf-primary-layout {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  body[data-page="schedule-finance"] .sf-primary-layout > .sf-kpi-row {
+    order: 1;
+    width: 100%;
+    grid-column: auto;
+    grid-row: auto;
+  }
+
+  body[data-page="schedule-finance"] .sf-kpi-row {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 8px;
+    margin-top: 0;
+  }
+
+  body[data-page="schedule-finance"] .sf-kpi-card {
+    height: 70px;
+    padding-inline: 9px;
+  }
+
+  body[data-page="schedule-finance"] .sf-kpi-card.is-renewal {
+    grid-column: 1 / -1;
+  }
+
+  body[data-page="schedule-finance"] .sf-kpi-copy > span {
+    font-size: clamp(9px, 3.1cqi, 12px);
+  }
+
+  body[data-page="schedule-finance"] .sf-kpi-copy strong {
+    font-size: clamp(12px, 5.2cqi, 18px);
+  }
+
+  body[data-page="schedule-finance"] .sf-primary-layout .daily-tracker-col {
+    order: 2;
+    width: 100%;
+    grid-column: auto;
+    grid-row: auto;
+  }
+
+  body[data-page="schedule-finance"] .daily-tracker-col .calendar-view {
+    height: auto;
+    min-height: 0;
+  }
+
+  body[data-page="schedule-finance"] .daily-tracker-col .cal-header {
+    height: auto;
+    min-height: 48px;
+    padding: 8px 10px;
+  }
+
+  body[data-page="schedule-finance"] .daily-tracker-col .cal-title {
+    flex: 0 0 auto;
+    font-size: 20px;
+  }
+
+  body[data-page="schedule-finance"] .daily-tracker-col .cal-legend {
+    min-width: 0;
+    justify-content: flex-end;
+    gap: 6px;
+    overflow-x: auto;
+    font-size: 10px;
+    scrollbar-width: none;
+  }
+
+  body[data-page="schedule-finance"] .daily-tracker-col .cal-legend::-webkit-scrollbar {
+    display: none;
+  }
+
+  body[data-page="schedule-finance"] .daily-tracker-col .cal-legend span {
+    gap: 3px;
+  }
+
+  body[data-page="schedule-finance"] .daily-tracker-col .cal-legend i {
+    width: 6px;
+    height: 6px;
+  }
+
+  body[data-page="schedule-finance"] .daily-tracker-col .cal-weekdays {
+    height: 30px;
+  }
+
+  body[data-page="schedule-finance"] .daily-tracker-col .cal-weekday {
+    font-size: 11px;
+  }
+
+  body[data-page="schedule-finance"] .daily-tracker-col .cal-grid {
+    flex: 0 0 auto;
+  }
+
+  body[data-page="schedule-finance"] .daily-tracker-col .cal-cell {
+    height: 62px;
+    min-height: 62px;
+    padding: 7px 3px;
+  }
+
+  body[data-page="schedule-finance"] .daily-tracker-col .cal-date {
+    display: block;
+    min-height: 0;
+    overflow: hidden;
+    font-size: 13px;
+    line-height: 1.2;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  body[data-page="schedule-finance"] .daily-tracker-col .cal-date-today {
+    display: block;
+    width: auto;
+    height: auto;
+    margin: 0;
+    place-items: normal;
+    background: transparent;
+    color: var(--orange);
+    font-size: 12px;
+  }
+
+  body[data-page="schedule-finance"] .daily-tracker-col .cal-lunar {
+    display: block;
+    max-width: 100%;
+    margin: 2px 0 0;
+    overflow: hidden;
+    font-size: 9px;
+    line-height: 1.1;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  body[data-page="schedule-finance"] .daily-tracker-col .cal-expense-dot,
+  body[data-page="schedule-finance"] .daily-tracker-col .cal-schedule-dot,
+  body[data-page="schedule-finance"] .daily-tracker-col .cal-subscription-dot,
+  body[data-page="schedule-finance"] .daily-tracker-col .cal-sleep-dot {
+    bottom: 8px;
+    width: 5px;
+    height: 5px;
+  }
+
+  body[data-page="schedule-finance"] .daily-tracker-col .cal-expense-dot { right: 5px; }
+  body[data-page="schedule-finance"] .daily-tracker-col .cal-schedule-dot { right: 13px; }
+  body[data-page="schedule-finance"] .daily-tracker-col .cal-subscription-dot { right: 21px; }
+  body[data-page="schedule-finance"] .daily-tracker-col .cal-sleep-dot { left: 5px; }
+
+  body[data-page="schedule-finance"] .sf-primary-layout .sf-context-panel {
+    order: 3;
+    width: 100%;
+    grid-column: auto;
+    grid-row: auto;
+    min-height: 0;
+    padding: 12px;
+    align-self: stretch;
+  }
+
+  body[data-page="schedule-finance"] .sf-context-header {
+    min-height: 38px;
+    padding-inline: 2px;
+  }
+
+  body[data-page="schedule-finance"] .sf-context-header h2 {
+    font-size: 19px;
+  }
+
+  body[data-page="schedule-finance"] .sf-context-header p {
+    width: auto;
+    max-width: 125px;
+    font-size: 10px;
+  }
+
+  body[data-page="schedule-finance"] .sf-context-record-button {
+    height: 30px;
+    padding-inline: 9px;
+    font-size: 11px;
+  }
+
+  body[data-page="schedule-finance"] .sf-context-body {
+    gap: 10px;
+  }
+
+  body[data-page="schedule-finance"] .sf-context-expenses > header {
+    min-height: 52px;
+    padding: 7px 9px;
+  }
+
+  body[data-page="schedule-finance"] .sf-context-section-icon {
+    width: 32px;
+    height: 32px;
+    flex-basis: 32px;
+    font-size: 18px;
+  }
+
+  body[data-page="schedule-finance"] .sf-context-expenses > header > div > span,
+  body[data-page="schedule-finance"] .sf-context-mini > div > span {
+    font-size: 11px;
+  }
+
+  body[data-page="schedule-finance"] .sf-context-expenses > header strong,
+  body[data-page="schedule-finance"] .sf-context-mini strong {
+    font-size: 15px;
+  }
+
+  body[data-page="schedule-finance"] .sf-context-expense-row {
+    min-height: 35px;
+    padding-inline: 9px;
+    font-size: 12px;
+  }
+
+  body[data-page="schedule-finance"] .sf-context-expense-name {
+    font-size: 11px;
+  }
+
+  body[data-page="schedule-finance"] .sf-context-expense-row strong {
+    font-size: 11px;
+  }
+
+  body[data-page="schedule-finance"] .sf-context-mini {
+    min-height: 52px;
+    gap: 8px;
+    padding: 8px;
+  }
+
+  body[data-page="schedule-finance"] .sf-context-mini em {
+    margin-left: 4px;
+    padding-inline: 5px;
+    font-size: 10px;
+  }
+
+  body[data-page="schedule-finance"] .sf-context-mini > small,
+  body[data-page="schedule-finance"] .sf-context-mini > div > small {
+    max-width: 42%;
+    overflow: hidden;
+    font-size: 11px;
+    text-overflow: ellipsis;
+  }
+
+  body[data-page="schedule-finance"] .sf-context-sleep > small {
+    max-width: 100%;
+    margin-top: 0;
+    line-height: 1.2;
+  }
+
+  body[data-page="schedule-finance"] .sf-context-subscription > div:first-of-type > small {
+    color: var(--orange);
+    font-size: 14px;
+    font-weight: 800;
+    line-height: 1.1;
+  }
+
+  body[data-page="schedule-finance"] .sf-context-schedule-row {
+    gap: 4px;
+    align-items: flex-start;
+    min-width: 0;
+    overflow: visible;
+    font-size: 10px;
+    white-space: normal;
+  }
+
+  body[data-page="schedule-finance"] .sf-context-schedule-row span {
+    flex: 0 0 53px;
+    max-width: 53px;
+    overflow: visible;
+    text-overflow: clip;
+    white-space: nowrap;
+  }
+
+  body[data-page="schedule-finance"] .sf-context-schedule-row strong {
+    min-width: 0;
+    overflow: visible;
+    font-size: 11px;
+    line-height: 1.45;
+    overflow-wrap: anywhere;
+    text-overflow: clip;
+    white-space: normal;
+  }
+
+  /* 移动端详情：固定四行比例，内容不足时也保持卡片填满。 */
+  body[data-page="schedule-finance"] .sf-primary-layout .sf-context-panel {
+    height: clamp(560px, calc(100dvh - 110px), 620px);
+  }
+
+  body[data-page="schedule-finance"] .sf-context-body {
+    display: grid;
+    flex: 1 1 auto;
+    min-height: 0;
+    grid-template-rows: minmax(0, 1.75fr) minmax(0, 1.3fr) minmax(0, .9fr) minmax(0, .9fr);
+    grid-template-areas:
+      "expense expense"
+      "schedule schedule"
+      "sleep subscription"
+      "utility .";
+  }
+
+  body[data-page="schedule-finance"] .sf-context-body:not(.has-utility) {
+    grid-template-rows: minmax(0, 1.75fr) minmax(0, 1.3fr) minmax(0, .9fr);
+    grid-template-areas:
+      "expense expense"
+      "schedule schedule"
+      "sleep subscription";
+  }
+
+  body[data-page="schedule-finance"] .sf-context-expenses {
+    display: flex;
+    min-height: 0;
+    flex-direction: column;
+    overflow: hidden;
+  }
+
+  body[data-page="schedule-finance"] .sf-context-expense-list {
+    display: flex;
+    min-height: 0;
+    flex: 1 1 auto;
+    flex-direction: column;
+  }
+
+  body[data-page="schedule-finance"] .sf-context-expense-list .sf-context-expense-row {
+    min-height: 0;
+    flex: 1 1 0;
+  }
+
+  body[data-page="schedule-finance"] .sf-context-expense-list .sf-context-no-record {
+    display: flex;
+    flex: 1 1 auto;
+    align-items: center;
+    justify-content: center;
+  }
+
+  body[data-page="schedule-finance"] .sf-context-schedule {
+    display: flex;
+    min-height: 0;
+    align-items: center;
+  }
+
+  body[data-page="schedule-finance"] .sf-context-schedule > div {
+    display: flex;
+    min-width: 0;
+    min-height: 0;
+    flex: 1 1 auto;
+    flex-direction: column;
+  }
+
+  body[data-page="schedule-finance"] .sf-context-schedule-list {
+    display: flex;
+    min-height: 0;
+    height: 100%;
+    margin-top: 0;
+    flex-direction: column;
+    justify-content: space-evenly;
+    overflow: hidden;
+  }
+
+  body[data-page="schedule-finance"] .sf-context-schedule-row {
+    min-height: 0;
+    flex: 1 1 0;
+    align-items: center;
+  }
+
+  body[data-page="schedule-finance"] .sf-context-sleep,
+  body[data-page="schedule-finance"] .sf-context-subscription,
+  body[data-page="schedule-finance"] .sf-context-utility {
+    min-height: 0;
+    align-self: stretch;
+  }
+
+  body[data-page="schedule-finance"] .sf-primary-layout .sf-analytics-grid {
+    order: 4;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    gap: 12px;
+    margin-top: 0;
+    grid-column: auto;
+    grid-row: auto;
+  }
+
+  body[data-page="schedule-finance"] .sf-analytics-card {
+    width: 100%;
+    height: auto;
+    min-height: 220px;
+    max-height: none;
+  }
+
+  body[data-page="schedule-finance"] .sf-trend-card .expense-kanban-head,
+  body[data-page="schedule-finance"] .sf-category-card .expense-kanban-head,
+  body[data-page="schedule-finance"] .sf-subscription-card .expense-kanban-head {
+    flex-wrap: wrap;
+    gap: 8px;
+    padding: 14px 14px 0;
+  }
+
+  body[data-page="schedule-finance"] .sf-trend-card .expense-kanban-head {
+    flex-wrap: nowrap;
+  }
+
+  body[data-page="schedule-finance"] .sf-trend-toggle-row {
+    padding: 7px 14px 0;
+  }
+
+  body[data-page="schedule-finance"] .sf-trend-card .expense-kanban-title {
+    font-size: 17px;
+  }
+
+  body[data-page="schedule-finance"] .sf-category-card .expense-kanban-title,
+  body[data-page="schedule-finance"] .sf-subscription-card .expense-kanban-title {
+    font-size: 17px;
+  }
+
+  body[data-page="schedule-finance"] .sf-chart-toggle {
+    height: 26px;
+    font-size: 11px;
+  }
+
+  body[data-page="schedule-finance"] .sf-chart-toggle span,
+  body[data-page="schedule-finance"] .sf-chart-toggle button {
+    padding-inline: 10px;
+  }
+
+  body[data-page="schedule-finance"] .sf-trend-card .expense-line-chart-wrap,
+  body[data-page="schedule-finance"] .sf-trend-card .expense-line-chart {
+    height: 160px;
+  }
+
+  body[data-page="schedule-finance"] .sf-trend-card .expense-line-chart-wrap {
+    padding-inline: 8px;
+  }
+
+  body[data-page="schedule-finance"] .sf-category-list {
+    gap: 7px;
+    padding: 10px 14px 14px;
+    overflow-y: visible;
+  }
+
+  body[data-page="schedule-finance"] .sf-category-card > #sfCategorySummary {
+    height: auto;
+  }
+
+  body[data-page="schedule-finance"] .sf-category-row {
+    grid-template-columns: 12px 60px minmax(0, 1fr) 56px;
+    gap: 5px;
+  }
+
+  body[data-page="schedule-finance"] .sf-category-swatch {
+    width: 12px;
+    height: 12px;
+  }
+
+  body[data-page="schedule-finance"] .sf-category-name,
+  body[data-page="schedule-finance"] .sf-category-amount {
+    font-size: 12px;
+  }
+
+  body[data-page="schedule-finance"] .sf-category-track {
+    height: 12px;
+  }
+
+  body[data-page="schedule-finance"] .sf-subscription-card .expense-kanban-title {
+    font-size: 17px;
+  }
+
+  body[data-page="schedule-finance"] .sf-subscription-add {
+    height: 28px;
+    padding-inline: 10px;
+    font-size: 11px;
+  }
+
+  body[data-page="schedule-finance"] .sf-subscription-list {
+    padding: 7px 14px 0;
+  }
+
+  body[data-page="schedule-finance"] .sf-subscription-row {
+    grid-template-columns: 34px minmax(0, 1fr) auto;
+    gap: 7px;
+    min-height: 48px;
+    padding-inline: 5px;
+  }
+
+  body[data-page="schedule-finance"] .sf-subscription-logo {
+    width: 30px;
+    height: 30px;
+    font-size: 18px;
+  }
+
+  body[data-page="schedule-finance"] .sf-subscription-logo img {
+    width: 26px;
+    height: 26px;
+  }
+
+  body[data-page="schedule-finance"] .sf-subscription-copy strong {
+    font-size: 12px;
+  }
+
+  body[data-page="schedule-finance"] .sf-subscription-copy span,
+  body[data-page="schedule-finance"] .sf-subscription-price span {
+    font-size: 10px;
+  }
+
+  body[data-page="schedule-finance"] .sf-subscription-copy em {
+    height: 17px;
+    padding-inline: 5px;
+    font-size: 9px;
+  }
+
+  body[data-page="schedule-finance"] .sf-subscription-price strong {
+    font-size: 13px;
+  }
+
+  body[data-page="schedule-finance"] .sf-subscription-more {
+    margin-top: 9px;
+  }
+
+  body[data-page="schedule-finance"] .sf-footer {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 3px;
+    padding-top: 4px;
+    font-size: 10px;
   }
 }
 

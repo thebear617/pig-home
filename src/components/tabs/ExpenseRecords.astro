@@ -1,7 +1,4 @@
 ---
-import { expenseCategories } from '../../data/expense-categories';
-import { pad, escapeHtml } from '../../lib/helpers';
-
 const today = new Date();
 const calYear = today.getFullYear();
 const calMonth = today.getMonth() + 1;
@@ -22,10 +19,16 @@ const calMonth = today.getMonth() + 1;
         <div class="empty-state"><p>加载中...</p></div>
       </div>
     </div>
-    <div class="expense-side-col">
-      <div class="expense-side-kanban" id="expenseTrendChart"></div>
-      <div class="expense-side-kanban" id="expenseCategoryChart"></div>
+    <aside class="expense-top-panel" aria-label="最高支出">
       <div class="expense-side-kanban" id="expenseTopItems"></div>
+    </aside>
+    <div class="expense-analysis-row" aria-label="收支分析">
+      <section class="expense-analysis-card" aria-label="收支趋势">
+        <div class="expense-side-kanban" id="expenseTrendChart"></div>
+      </section>
+      <section class="expense-analysis-card" aria-label="支出分类">
+        <div class="expense-side-kanban" id="expenseCategoryChart"></div>
+      </section>
     </div>
   </div>
 </div>

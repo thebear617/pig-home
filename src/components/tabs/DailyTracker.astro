@@ -17,6 +17,12 @@ const weekdays = ['日', '一', '二', '三', '四', '五', '六'];
       <div class="calendar-view">
         <div class="cal-header">
           <span class="cal-title">{calYear}年{calMonth}月</span>
+          <div class="cal-legend" aria-label="日历图例">
+            <span><i class="is-expense"></i>有支出</span>
+            <span><i class="is-schedule"></i>有日程</span>
+            <span><i class="is-subscription"></i>有订阅</span>
+            <span><i class="is-sleep"></i>睡眠良好</span>
+          </div>
           <div class="cal-nav">
             <button class="cal-nav-btn cal-prev">◀</button>
             <button class="cal-today-btn cal-today">今天</button>
@@ -48,11 +54,18 @@ const weekdays = ['日', '一', '二', '三', '四', '五', '六'];
       </div>
       <div class="daily-utility-summary" id="dailyUtilitySummary"></div>
     </div>
-    <div class="daily-side-col">
-      <div class="daily-side-kanban" id="dailyMonthlyOverview"></div>
-      <div class="daily-side-kanban" id="dailyExpenseCategory"></div>
-      <div class="daily-side-kanban" id="dailyHemaDay"></div>
-    </div>
+    <aside class="sf-context-panel" id="sfContextPanel" aria-label="选中日期详情"></aside>
   </div>
-  <div class="daily-detail-full" id="dailyDetail"></div>
+  <div id="dailyDetail" hidden></div>
+  <section class="sf-analytics-grid" aria-label="支出分析">
+    <article class="sf-analytics-card sf-trend-card">
+      <div id="sfExpenseTrend"></div>
+    </article>
+    <article class="sf-analytics-card sf-category-card">
+      <div id="sfCategorySummary"></div>
+    </article>
+    <article class="sf-analytics-card sf-subscription-card">
+      <div id="sfSubscriptionSummary"></div>
+    </article>
+  </section>
 </div>

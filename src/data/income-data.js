@@ -48,5 +48,12 @@ export const incomeRecords = [
     "sub": "网购退款",
     "amount": 19.04,
     "note": "冻干桶退款"
+  },
+  {
+    "date": "2026-09-09",
+    "cat": "工资收入",
+    "sub": "基础工资",
+    "amount": 1850.0,
+    "note": "研究生 26 年 9 月国家补助金"
   }
 ];

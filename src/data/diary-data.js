@@ -8516,7 +8516,7 @@ export const diaryRecords = {
     ]
   },
   "2026-09-09": {
-    "value": 2,
+    "value": 9,
     "tasks": [
       {
         "status": "x",
@@ -8530,6 +8530,99 @@ export const diaryRecords = {
         "status": "x",
         "time": "02:00-11:30",
         "desc": "睡觉",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      },
+      {
+        "status": "x",
+        "time": "11:30-15:00",
+        "desc": "打车回学校，吃曹氏鸭脖",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      },
+      {
+        "status": "x",
+        "time": "15:00-16:00",
+        "desc": "和 1931 文创对接猫猫合作事宜",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      },
+      {
+        "status": "x",
+        "time": "16:00-18:30",
+        "desc": "在图书馆学习（整理开发笔记、常识笔记；思考重构猪窝日程和财务）",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      },
+      {
+        "status": "x",
+        "time": "18:30-19:00",
+        "desc": "和过马路一起打车回家（回超市买精瘦肉）",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      },
+      {
+        "status": "x",
+        "time": "19:00-20:10",
+        "desc": "做菜吃饭",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      },
+      {
+        "status": "x",
+        "time": "20:10-20:40",
+        "desc": "和哈哈学长、大贝果开会商量猫猫合作事宜",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      },
+      {
+        "status": "x",
+        "time": "20:40-24:00",
+        "desc": "继续开发，思考猪窝的日程和财务页面如何设计",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      }
+    ]
+  },
+  "2026-09-10": {
+    "value": 4,
+    "tasks": [
+      {
+        "status": "x",
+        "time": "00:00-10:00",
+        "desc": "睡觉",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      },
+      {
+        "status": "x",
+        "time": "10:00-11:00",
+        "desc": "开发：继续微调猪窝的日程和财务",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      },
+      {
+        "status": "x",
+        "time": "11:00-12:30",
+        "desc": "和过马路来学校吃拌一桶",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      },
+      {
+        "status": "x",
+        "time": "12:30-14:30",
+        "desc": "来图书馆学习，进行猪窝的日程财务的开发收尾",
         "isCooking": false,
         "mealType": null,
         "dishGuess": null

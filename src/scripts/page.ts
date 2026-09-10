@@ -31,6 +31,7 @@ const SCHEDULE_FINANCE_PAGE = 'schedule-finance';
 const SF_VIEW_IDS: string[] = SCHEDULE_FINANCE_VIEWS.map(view => view.id);
 const SF_VIEW_TITLES: Record<string, string> = Object.fromEntries(SCHEDULE_FINANCE_VIEWS.map(view => [view.id, view.title]));
 let scheduleView: string = DEFAULT_SCHEDULE_FINANCE_VIEW;
+const CONTEXT_PREVIEW_LIMIT = 3;
 
 function dateKey(year: number, month: number, day: number) {
   return `${year}-${pad(month)}-${pad(day)}`;
@@ -48,6 +49,9 @@ function readQueryState() {
   }
   const selected = params.get('date');
   state.selected = selected && /^\d{4}-\d{2}-\d{2}$/.test(selected) ? selected : null;
+  if (!state.selected && state.year === now.getFullYear() && state.month === now.getMonth() + 1) {
+    state.selected = dateKey(state.year, state.month, now.getDate());
+  }
 }
 
 function writeQueryState() {
@@ -60,6 +64,25 @@ function writeQueryState() {
 
 function escape(value: unknown) {
   return escapeHtml(value);
+}
+
+function isRenewalRecord(record: any) {
+  return record?.willRenew === true;
+}
+
+async function syncMembershipRenewalState(record: any): Promise<boolean> {
+  if (!import.meta.env.DEV) return true;
+  try {
+    const response = await fetch(`${import.meta.env.BASE_URL}__dev/membership-renewal`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ name: record.name, expireDate: record.expireDate, willRenew: record.willRenew === true }),
+    });
+    return response.ok;
+  } catch (error) {
+    console.error('无法同步会员续订状态到本地文件', error);
+    return false;
+  }
 }
 
 function renderDesc(value: unknown) {
@@ -79,6 +102,25 @@ function monthTitle() {
   return `${state.year}年${state.month}月`;
 }
 
+// 可支配余额不包含租房储蓄：已攒 4000 元，本月再预留 1850 元。
+const RENT_RESERVE = 4000;
+const RENT_SAVING_RESERVE = 1850;
+const BALANCE_ADJUSTMENT = 529.31;
+
+function getAvailableBalance(): number | null {
+  const base = window.__balanceBase;
+  if (!base) return null;
+  const todayKey = dateKey(now.getFullYear(), now.getMonth() + 1, now.getDate());
+  const sinceIncome = (window.__incomeRecords || [])
+    .filter(item => item.date >= base.date && item.date <= todayKey)
+    .reduce((sum, item) => sum + item.amount, 0);
+  const sinceExpense = (window.__expenseRecords || [])
+    .filter(item => item.date >= base.date && item.date <= todayKey)
+    .reduce((sum, item) => sum + item.amount, 0);
+  const currentBalance = base.amount + sinceIncome - sinceExpense;
+  return currentBalance - RENT_RESERVE - RENT_SAVING_RESERVE - BALANCE_ADJUSTMENT;
+}
+
 function lunarText(year: number, month: number, day: number) {
   const lunar = getLunarInfo(year, month, day);
   return `<span class="cal-lunar${lunar.isStart ? ' cal-lunar-start' : ''}">${lunar.isStart ? lunar.lMonthName : getLunarDayName(lunar.lDay)}</span>`;
@@ -89,7 +131,7 @@ function previousCells(year: number, month: number, startDay: number) {
   const previousLast = new Date(year, month - 1, 0).getDate();
   for (let i = 0; i < startDay; i++) {
     const day = previousLast - startDay + i + 1;
-    html += `<div class="cal-cell cal-other-month">${lunarText(year, month - 1, day)}<span class="cal-date">${day}日</span></div>`;
+    html += `<div class="cal-cell cal-other-month"><span class="cal-date">${day}日</span>${lunarText(year, month - 1, day)}</div>`;
   }
   return html;
 }
@@ -98,7 +140,7 @@ function nextCells(year: number, month: number, startDay: number, days: number) 
   let html = '';
   const remainder = (7 - ((startDay + days) % 7)) % 7;
   for (let day = 1; day <= remainder; day++) {
-    html += `<div class="cal-cell cal-other-month">${lunarText(year, month + 1, day)}<span class="cal-date">${day}日</span></div>`;
+    html += `<div class="cal-cell cal-other-month"><span class="cal-date">${day}日</span>${lunarText(year, month + 1, day)}</div>`;
   }
   return html;
 }
@@ -117,6 +159,54 @@ function calendarFrame(renderDay: (day: number, today: boolean) => string) {
 function setTitle(selector: string, value = monthTitle()) {
   const element = document.querySelector(selector);
   if (element) element.textContent = value;
+  document.querySelectorAll<HTMLElement>('[data-sf-month-title]').forEach((month) => { month.textContent = monthTitle(); });
+}
+
+function renderScheduleFinanceKpis() {
+  const prefix = `${state.year}-${pad(state.month)}`;
+  const expenses = (window.__expenseRecords || []).filter(item => item.date.startsWith(prefix));
+  const totalExpense = expenses.reduce((sum, item) => sum + item.amount, 0);
+  const expenseDays = new Set(expenses.map(item => item.date)).size;
+  const availableBalance = getAvailableBalance();
+
+  const toMinutes = (value: string) => {
+    const [hour, minute] = value.trim().split(':').map(Number);
+    return hour * 60 + minute;
+  };
+  const sleepDurations: number[] = [];
+  for (const [date, record] of Object.entries(window.__diaryRecords || {})) {
+    if (!date.startsWith(prefix)) continue;
+    for (const task of record.tasks || []) {
+      if (task.desc !== '睡觉' && task.desc !== '睡懒觉') continue;
+      const parts = String(task.time || '').split('-');
+      if (parts.length !== 2) continue;
+      const start = toMinutes(parts[0]);
+      const endValue = toMinutes(parts[1]);
+      if (Number.isNaN(start) || Number.isNaN(endValue)) continue;
+      const end = endValue <= start ? endValue + 24 * 60 : endValue;
+      sleepDurations.push(end - start);
+    }
+  }
+
+  const today = new Date();
+  today.setHours(0, 0, 0, 0);
+  const renewalCount = (window.__membershipRecords || []).filter(record => {
+    if (!isRenewalRecord(record)) return false;
+    if (!record.expireDate) return false;
+    const days = (new Date(`${record.expireDate}T00:00:00`).getTime() - today.getTime()) / 86400000;
+    return days >= 0 && days <= 7;
+  }).length;
+  const values: Record<string, string> = {
+    balance: availableBalance == null ? '—' : `¥${availableBalance.toFixed(2)}`,
+    expense: `¥${totalExpense.toFixed(2)}`,
+    'daily-expense': `¥${expenseDays ? (totalExpense / expenseDays).toFixed(2) : '0.00'}`,
+    sleep: sleepDurations.length ? `${(sleepDurations.reduce((sum, value) => sum + value, 0) / sleepDurations.length / 60).toFixed(1)}h` : '—',
+    renewal: `${renewalCount} 项`,
+  };
+  Object.entries(values).forEach(([key, value]) => {
+    const element = document.querySelector<HTMLElement>(`[data-sf-kpi="${key}"]`);
+    if (element) element.textContent = value;
+  });
 }
 
 function parseMin(v: number | string | undefined): number {
@@ -139,7 +229,7 @@ function dailyGrid() {
   const incomes = window.__incomeRecords || [];
   const special = window.__specialEvents || {};
   const hema = window.__hemaDayRecords || {};
-  const utility = window.__utilityRecords || {};
+  const memberships = window.__membershipRecords || [];
   return calendarFrame((day, today) => {
     const key = dateKey(state.year, state.month, day);
     const record = diary[key];
@@ -147,14 +237,16 @@ function dailyGrid() {
     const hasIncome = incomes.some(item => item.date === key);
     const monday = new Date(`${key}T00:00:00`).getDay() === 1;
     const event = special[key];
-    const utilRecord = utility[key];
+    const hasSchedule = Boolean(record?.tasks?.length);
+    const hasSleep = Boolean(record?.tasks?.some((task: any) => task.desc === '睡觉' || task.desc === '睡懒觉'));
+    const hasSubscription = memberships.some(item => isRenewalRecord(item) && item.expireDate === key);
     const classes = ['cal-cell'];
     if (today) classes.push('cal-today');
     if (record || hasExpense || hasIncome || monday) classes.push('cal-has-data');
     if (monday) classes.push('cal-hema-day');
     if (state.selected === key) classes.push('cal-selected');
     if (event) classes.push('cal-special');
-    return `<div class="${classes.join(' ')}" data-date="${key}">${lunarText(state.year, state.month, day)}<span class="cal-date${today ? ' cal-date-today' : ''}">${day}日</span>${hasExpense ? '<span class="cal-expense-dot" title="有支出"></span>' : ''}${hasIncome ? '<span class="cal-income-dot" title="有收入"></span>' : ''}${monday ? '<span class="cal-hema-badge" title="盒马日">盒马日</span>' : ''}${event ? `<span class="cal-special-icons" title="${escape(event.keywords?.join('、'))}">${event.icons?.join('') || ''}</span>` : ''}${utilRecord ? `<span class="cal-utility-balance">¥${utilRecord.elecRemaining.toFixed(2)}</span>` : ''}</div>`;
+    return `<div class="${classes.join(' ')}" data-date="${key}"><span class="cal-date${today ? ' cal-date-today' : ''}">${day}日</span>${lunarText(state.year, state.month, day)}${hasExpense ? '<span class="cal-expense-dot" title="有支出"></span>' : ''}${hasSchedule ? '<span class="cal-schedule-dot" title="有日程"></span>' : ''}${hasSubscription ? '<span class="cal-subscription-dot" title="有订阅"></span>' : ''}${hasSleep ? '<span class="cal-sleep-dot" title="睡眠良好"></span>' : ''}${event ? `<span class="cal-special-icons" title="${escape(event.keywords?.join('、'))}">${event.icons?.join('') || ''}</span>` : ''}</div>`;
   });
 }
 
@@ -197,6 +289,67 @@ function dailyDetail(key: string | null) {
     if (!hema) html += '<div class="hema-empty">本周还没记录盒马日，记得补上～</div>';
   }
   return `${html}</div></div>`;
+}
+
+function contextExpenseIcon(item: any): string {
+  const value = `${item.cat || ''}${item.sub || ''}`;
+  if (/交通|打车|地铁|公交/.test(value)) return '▣';
+  if (/奶茶|饮品|酒水/.test(value)) return '◉';
+  if (/做饭|餐饮|炒菜|面|饭|粉|包子|蛋糕|鸭脖/.test(value)) return '♨';
+  return '▤';
+}
+
+function dailyContextHtml(key: string | null): string {
+  if (!key) return '<div class="sf-context-empty">选择一个日期查看当天记录</div>';
+  const day = new Date(`${key}T00:00:00`);
+  const expenses = (window.__expenseRecords || []).filter(item => item.date === key);
+  const record = window.__diaryRecords?.[key];
+  const tasks = (record?.tasks || []).filter((task: any) => task.desc !== '睡觉' && task.desc !== '睡懒觉');
+  const sleepTask = (record?.tasks || []).filter((task: any) => task.desc === '睡觉' || task.desc === '睡懒觉').at(-1);
+  const subscriptions = (window.__membershipRecords || []).filter(item => isRenewalRecord(item) && item.expireDate === key);
+  const todayKey = dateKey(now.getFullYear(), now.getMonth() + 1, now.getDate());
+  const nextSubscription = (window.__membershipRecords || [])
+    .filter(item => isRenewalRecord(item) && item.expireDate >= todayKey)
+    .sort((a, b) => a.expireDate.localeCompare(b.expireDate))[0];
+  const expenseTotal = expenses.reduce((sum, item) => sum + item.amount, 0);
+  const sleepText = sleepTask?.time || '';
+  let sleepDuration = 0;
+  if (sleepText.includes('-')) {
+    const [startText, endText] = sleepText.split('-');
+    const toMinutes = (value: string) => {
+      const [hour, minute] = value.trim().split(':').map(Number);
+      return hour * 60 + minute;
+    };
+    const start = toMinutes(startText);
+    const endValue = toMinutes(endText);
+    if (!Number.isNaN(start) && !Number.isNaN(endValue)) sleepDuration = (endValue <= start ? endValue + 1440 : endValue) - start;
+  }
+  const weekday = new Intl.DateTimeFormat('zh-CN', { weekday: 'short' }).format(day);
+  const dateTitle = `${day.getMonth() + 1}月${day.getDate()}日 ${weekday}`;
+  const expenseRow = (item: any) => `<div class="sf-context-expense-row"><span class="sf-context-row-icon" aria-hidden="true">${contextExpenseIcon(item)}</span><span class="sf-context-expense-name">${escape(item.sub)}${item.note ? `<small>${escape(item.note)}</small>` : ''}</span><strong>¥${item.amount.toFixed(2)}</strong></div>`;
+  const expenseRows = expenses.length
+    ? expenses.map(expenseRow).join('')
+    : '<div class="sf-context-no-record">当天无支出</div>';
+  const expensePreviewRows = expenses.slice(0, CONTEXT_PREVIEW_LIMIT).map(expenseRow).join('');
+  const scheduleRow = (task: any) => `<div class="sf-context-schedule-row"><i></i><span>${escape(task.time || '')}</span><strong>${renderDesc(task.desc)}</strong></div>`;
+  const scheduleRows = tasks.length
+    ? tasks.map(scheduleRow).join('')
+    : '<span class="sf-context-muted">当天无日程</span>';
+  const schedulePreviewRows = tasks.slice(0, CONTEXT_PREVIEW_LIMIT).map(scheduleRow).join('');
+  const utility = window.__utilityRecords?.[key];
+  const nextSubscriptionDateText = nextSubscription ? (() => { const nextDate = new Date(`${nextSubscription.expireDate}T00:00:00`); return `${nextDate.getMonth() + 1}月${nextDate.getDate()}日`; })() : '';
+  const subscriptionText = subscriptions.length
+    ? `今日 ${subscriptions.length} 项续费`
+    : nextSubscription ? nextSubscriptionDateText : '暂无待续费项目';
+  const subscriptionDetailText = subscriptions.length
+    ? `今日 ${subscriptions.length} 项续费`
+    : nextSubscription ? `下次续费：${nextSubscriptionDateText} ${escape(nextSubscription.name)}` : '暂无待续费项目';
+  return `<div class="sf-context-header"><div class="sf-context-heading"><h2>${dateTitle}</h2></div><p>“平凡的一天，<br />也是值得记录的生活。”</p></div>
+<div class="sf-context-body${utility ? ' has-utility' : ''}"><section class="sf-context-expenses" data-sf-popover="expenses" aria-label="今日支出"><header><span class="sf-context-section-icon is-wallet" aria-hidden="true">▰</span><div><strong>¥${expenseTotal.toFixed(2)}</strong></div><button class="sf-context-record-button" type="button" data-sf-record-expense data-sf-view-btn="expense-records">＋ 记一笔</button></header><div class="sf-context-expense-list">${expenses.length ? expensePreviewRows : expenseRows}</div>${expenses.length > CONTEXT_PREVIEW_LIMIT ? `<div class="sf-context-popover sf-context-expense-popover" id="sfExpensePopover" role="tooltip" aria-hidden="true"><div class="sf-context-popover-head"><span>全部支出</span><small>${expenses.length} 项记录</small></div><div class="sf-context-popover-list">${expenseRows}</div></div>` : ''}</section>
+<section class="sf-context-mini sf-context-sleep" aria-label="睡眠"><span class="sf-context-section-icon is-sleep" aria-hidden="true">☾</span><div><strong>${sleepDuration ? `${(sleepDuration / 60).toFixed(1)}h` : '—'}</strong></div><small>${sleepText || '暂无睡眠记录'}</small></section>
+<section class="sf-context-mini sf-context-schedule" data-sf-popover="schedule" aria-label="今日日程"><span class="sf-context-section-icon is-schedule" aria-hidden="true">▦</span><div><div class="sf-context-schedule-list">${tasks.length ? schedulePreviewRows : scheduleRows}</div></div>${tasks.length > CONTEXT_PREVIEW_LIMIT ? `<div class="sf-context-popover sf-context-schedule-popover" id="sfSchedulePopover" role="tooltip" aria-hidden="true"><div class="sf-context-popover-head"><span>全部日程</span><small>${tasks.length} 项安排</small></div><div class="sf-context-popover-list">${scheduleRows}</div></div>` : ''}</section>
+${utility ? `<section class="sf-context-mini sf-context-utility" aria-label="电费余额"><span class="sf-context-section-icon is-utility" aria-hidden="true">ϟ</span><div><strong>¥${utility.elecRemaining.toFixed(2)}</strong></div></section>` : ''}
+<section class="sf-context-mini sf-context-subscription" data-sf-popover="subscription" aria-label="订阅与续费"><span class="sf-context-section-icon is-subscription" aria-hidden="true">♛</span><div><small>${subscriptionText}</small></div><div class="sf-context-popover sf-context-subscription-popover" id="sfSubscriptionPopover" role="tooltip" aria-hidden="true"><div class="sf-context-popover-head"><span>续费详情</span><small>完整信息</small></div><div class="sf-context-popover-copy">${subscriptionDetailText}</div></div></section></div>`;
 }
 
 function dailySummary() {
@@ -361,85 +514,67 @@ function dailyHemaDayHtml(): string {
   return html + '</div>';
 }
 
-let expenseCatView = 'bar';
-let expenseCatPages: Record<string, number> = {};
 let expenseTrendSelectedDay: number | null = null;
+let expenseTrendView: 'expense' | 'income' = 'expense';
+let scheduleCategoryView: 'amount' | 'percentage' = 'amount';
 let expenseTopPage = 0;
+let expenseRecordView: 'expense' | 'income' = 'expense';
+let expenseRecordCategory = 'all';
+let expenseRecordPage = 0;
+const EXPENSE_RECORDS_PER_PAGE = 8;
 let membershipView = 'active';
+const MEMBERSHIP_PER_PAGE = 10;
+let membershipListPage = 0;
 
 function expenseView() {
-  const records = (window.__expenseRecords || []).filter(item => item.date.startsWith(`${state.year}-${pad(state.month)}`)).sort((a, b) => b.date.localeCompare(a.date));
-  const categories = window.__expenseCategories || [];
-  const incomeRecords = (window.__incomeRecords || []).filter(item => item.date.startsWith(`${state.year}-${pad(state.month)}`));
-  const total = records.reduce((sum, item) => sum + item.amount, 0);
+  const prefix = `${state.year}-${pad(state.month)}`;
+  const expenseRecords = (window.__expenseRecords || []).filter(item => item.date.startsWith(prefix));
+  const incomeRecords = (window.__incomeRecords || []).filter(item => item.date.startsWith(prefix));
+  const totalExpense = expenseRecords.reduce((sum, item) => sum + item.amount, 0);
   const totalIncome = incomeRecords.reduce((sum, item) => sum + item.amount, 0);
-  const balance = totalIncome - total;
-  const days = new Set(records.map(item => item.date)).size;
-  // 当前余额 = 基准余额 + 基准日及之后(全年)的累计收入 - 累计支出
-  const base = window.__balanceBase;
-  let currentBalance = 0;
-  if (base) {
-    const sinceIncome = (window.__incomeRecords || []).filter(item => item.date >= base.date).reduce((s, i) => s + i.amount, 0);
-    const sinceExpense = (window.__expenseRecords || []).filter(item => item.date >= base.date).reduce((s, i) => s + i.amount, 0);
-    currentBalance = base.amount + sinceIncome - sinceExpense;
-  }
-  // 可支配资金 = 当前余额 - 预留房租（4000 元） - 调整系数（529.31 元）
-  const rentReserve = 4000;
-  const adjustmentFactor = 529.31;
-  const availableBalance = currentBalance - rentReserve - adjustmentFactor;
-  let html = base ? `<div class="summary-bar"><div class="summary-item"><span class="summary-label">可支配资金</span><span class="summary-value ${availableBalance >= 0 ? 'income-amount' : 'expense-amount'}">¥${availableBalance.toFixed(2)}</span></div><div class="summary-divider"></div><div class="summary-item"><span class="summary-label">本月支出</span><span class="summary-value expense-amount">¥${total.toFixed(2)}</span></div><div class="summary-divider"></div><div class="summary-item"><span class="summary-label">本月收入</span><span class="summary-value income-amount">¥${totalIncome.toFixed(2)}</span></div><div class="summary-divider"></div><div class="summary-item"><span class="summary-label">记录笔数</span><span class="summary-value">${records.length}</span></div><div class="summary-divider"></div><div class="summary-item"><span class="summary-label">日均支出</span><span class="summary-value expense-amount">¥${days ? (total / days).toFixed(2) : '0.00'}</span></div></div>` : (total || totalIncome ? `<div class="summary-bar"><div class="summary-item"><span class="summary-label">本月支出</span><span class="summary-value expense-amount">¥${total.toFixed(2)}</span></div><div class="summary-divider"></div><div class="summary-item"><span class="summary-label">本月收入</span><span class="summary-value income-amount">¥${totalIncome.toFixed(2)}</span></div><div class="summary-divider"></div><div class="summary-item"><span class="summary-label">记录笔数</span><span class="summary-value">${records.length}</span></div><div class="summary-divider"></div><div class="summary-item"><span class="summary-label">日均支出</span><span class="summary-value expense-amount">¥${days ? (total / days).toFixed(2) : '0.00'}</span></div></div>` : '<div class="empty-state"><p>本月暂无支出/收入记录</p></div>');
-
-  // ─── 本月收入（按一级分类分组，二级为自由文字）───
-  if (totalIncome) {
-    const incomeCats = window.__incomeCategories || [];
-    const incomeGroups = incomeCats.map(category => ({ ...category, items: incomeRecords.filter(item => item.cat === category.name) })).filter(group => group.items.length).sort((a, b) => b.items.reduce((s, item) => s + item.amount, 0) - a.items.reduce((s, item) => s + item.amount, 0));
-    html += '<div class="expense-section-title">📥 本月收入</div><div class="expense-grid">';
-    for (const group of incomeGroups) {
-      const groupTotal = group.items.reduce((sum, item) => sum + item.amount, 0);
-      html += `<div class="expense-grid-card"><div class="expense-grid-header"><div class="expense-grid-header-left"><span class="expense-cat-icon">${group.icon}</span><h3>${escape(group.name)}</h3></div><div class="expense-grid-header-right"><span class="expense-cat-amount income-amount">¥${groupTotal.toFixed(2)}</span></div></div><div class="expense-grid-body">`;
-      for (const item of group.items) {
-        const date = new Date(`${item.date}T00:00:00`);
-        html += `<div class="expense-item"><div class="expense-item-left"><span class="expense-item-sub">${escape(item.sub)}</span>${item.note ? `<span class="expense-item-note">${escape(item.note)}</span>` : ''}</div><div class="expense-item-right"><span class="expense-item-amount income-amount">¥${item.amount.toFixed(2)}</span><span class="expense-item-date">${date.getMonth() + 1}/${date.getDate()}</span></div></div>`;
-      }
-      html += '</div></div>';
-    }
-    html += '</div>';
-  }
-
-  const groups = categories.map(category => ({ ...category, items: records.filter(item => item.cat === category.name) })).filter(group => group.items.length).sort((a, b) => b.items.reduce((s, item) => s + item.amount, 0) - a.items.reduce((s, item) => s + item.amount, 0));
-
-  html += '<div class="expense-section-title">📤 本月支出</div><div class="expense-grid">';
-  for (const group of groups) {
-    const groupTotal = group.items.reduce((sum, item) => sum + item.amount, 0);
-    const catKey = group.name;
-    if (!(catKey in expenseCatPages)) expenseCatPages[catKey] = 0;
-    const perPage = 5;
-    const totalPages = Math.max(1, Math.ceil(group.items.length / perPage));
-    if (expenseCatPages[catKey] >= totalPages) expenseCatPages[catKey] = totalPages - 1;
-    const page = expenseCatPages[catKey];
-    const pageItems = group.items.slice(page * perPage, (page + 1) * perPage);
-
-    html += `<div class="expense-grid-card"><div class="expense-grid-header"><div class="expense-grid-header-left"><span class="expense-cat-icon">${group.icon}</span><h3>${escape(group.name)}</h3></div><div class="expense-grid-header-right"><span class="expense-cat-amount">¥${groupTotal.toFixed(2)}</span></div></div>`;
-
-    if (totalPages > 1) {
-      html += `<div class="expense-grid-nav"><button class="expense-grid-btn expense-grid-prev"${page === 0 ? ' disabled' : ''} data-cat="${escape(catKey)}">◀</button><span class="expense-grid-page">${page + 1}/${totalPages}</span><button class="expense-grid-btn expense-grid-next"${page >= totalPages - 1 ? ' disabled' : ''} data-cat="${escape(catKey)}">▶</button></div>`;
-    }
-
-    html += '<div class="expense-grid-body">';
-    for (const item of pageItems) {
-      const date = new Date(`${item.date}T00:00:00`);
-      html += `<div class="expense-item"><div class="expense-item-left"><span class="expense-item-sub">${escape(item.sub)}</span>${item.note ? `<span class="expense-item-note">${escape(item.note)}</span>` : ''}</div><div class="expense-item-right"><span class="expense-item-amount">¥${item.amount.toFixed(2)}</span><span class="expense-item-date">${date.getMonth() + 1}/${date.getDate()}</span></div></div>`;
-    }
-    if (!pageItems.length) html += '<div class="expense-grid-empty">暂无记录</div>';
-    html += '</div></div>';
-  }
-  html += '</div>';
-  return html;
+  const expenseDays = new Set(expenseRecords.map(item => item.date)).size;
+  const availableBalance = getAvailableBalance();
+  const categoryDefinitions = expenseRecordView === 'income' ? (window.__incomeCategories || []) : (window.__expenseCategories || []);
+  const categoryNames = categoryDefinitions
+    .map(category => category.name)
+    .filter(name => (expenseRecordView === 'income' ? incomeRecords : expenseRecords).some(item => item.cat === name));
+  if (expenseRecordCategory !== 'all' && !categoryNames.includes(expenseRecordCategory)) expenseRecordCategory = 'all';
+  const activeRecords = (expenseRecordView === 'income' ? incomeRecords : expenseRecords)
+    .filter(item => expenseRecordCategory === 'all' || item.cat === expenseRecordCategory)
+    .sort((a, b) => b.date.localeCompare(a.date));
+  const totalPages = Math.max(1, Math.ceil(activeRecords.length / EXPENSE_RECORDS_PER_PAGE));
+  if (expenseRecordPage >= totalPages) expenseRecordPage = totalPages - 1;
+  if (expenseRecordPage < 0) expenseRecordPage = 0;
+  const pageRecords = activeRecords.slice(expenseRecordPage * EXPENSE_RECORDS_PER_PAGE, (expenseRecordPage + 1) * EXPENSE_RECORDS_PER_PAGE);
+  const typeLabel = expenseRecordView === 'income' ? '收入' : '支出';
+  const typeButton = (value: 'expense' | 'income', label: string) => `<button class="expense-record-type-btn${expenseRecordView === value ? ' is-active' : ''}" type="button" data-expense-record-type="${value}" role="tab" aria-selected="${expenseRecordView === value}">${label}</button>`;
+  const categoryButton = (name: string) => `<button class="expense-record-category-btn${expenseRecordCategory === name ? ' is-active' : ''}" type="button" data-expense-record-category="${escape(name)}" role="tab" aria-selected="${expenseRecordCategory === name}">${name === 'all' ? '全部' : escape(name)}</button>`;
+  const summary = `<div class="expense-summary-strip"><div><span>可支配余额</span><strong class="${availableBalance != null && availableBalance >= 0 ? 'income-amount' : 'expense-amount'}">${availableBalance == null ? '—' : `¥${availableBalance.toFixed(2)}`}</strong></div><div><span>本月支出</span><strong class="expense-amount">¥${totalExpense.toFixed(2)}</strong></div><div><span>本月收入</span><strong class="income-amount">¥${totalIncome.toFixed(2)}</strong></div><div><span>记录</span><strong>${expenseRecords.length + incomeRecords.length} 笔</strong></div><div><span>日均支出</span><strong class="expense-amount">¥${expenseDays ? (totalExpense / expenseDays).toFixed(2) : '0.00'}</strong></div></div>`;
+  const categoryNav = `<div class="expense-record-category-nav" role="tablist" aria-label="${typeLabel}分类">${categoryButton('all')}${categoryNames.map(categoryButton).join('')}</div>`;
+  const controls = `<div class="expense-record-controls">${categoryNav}<div class="expense-record-type-nav" role="tablist" aria-label="记录类型">${typeButton('expense', '支出')}${typeButton('income', '收入')}</div></div>`;
+  const rows = pageRecords.map(item => {
+    const date = new Date(`${item.date}T00:00:00`);
+    return `<div class="expense-record-row"><time datetime="${item.date}">${date.getMonth() + 1}/${date.getDate()}</time><span class="expense-record-category">${escape(item.cat)}</span><div class="expense-record-copy"><strong>${escape(item.sub)}</strong>${item.note ? `<small>${escape(item.note)}</small>` : ''}</div><strong class="expense-record-amount ${expenseRecordView === 'income' ? 'income-amount' : 'expense-amount'}">${expenseRecordView === 'income' ? '+' : '-'}¥${item.amount.toFixed(2)}</strong></div>`;
+  }).join('');
+  const list = rows || `<div class="expense-record-empty">本月暂无${typeLabel}记录</div>`;
+  const pagination = `<nav class="expense-record-pagination" aria-label="${typeLabel}记录分页"><button type="button" data-expense-record-page="prev" aria-label="上一页"${expenseRecordPage === 0 ? ' disabled' : ''}>‹</button><span>${expenseRecordPage + 1} / ${totalPages}</span><button type="button" data-expense-record-page="next" aria-label="下一页"${expenseRecordPage >= totalPages - 1 ? ' disabled' : ''}>›</button></nav>`;
+  const footer = `<div class="expense-record-footer"><span class="expense-record-count">${typeLabel} ${activeRecords.length} 笔</span>${pagination}</div>`;
+  return `<div class="expense-record-workspace">${summary}${controls}<div class="expense-record-list">${list}</div>${footer}</div>`;
 }
 
 function expenseTrendHtml(): string {
-  const records = (window.__expenseRecords || []).filter(item => item.date.startsWith(`${state.year}-${pad(state.month)}`));
-  if (!records.length) return '<div class="expense-kanban-head"><h3 class="expense-kanban-title"> 支出趋势</h3></div><div class="expense-kanban-empty">本月暂无支出</div>';
+  const prefix = `${state.year}-${pad(state.month)}`;
+  const activeTrendView = scheduleView === 'expense-records' ? expenseTrendView : 'expense';
+  const trendLabel = activeTrendView === 'income' ? '收入' : '支出';
+  const trendRecords = activeTrendView === 'income' ? (window.__incomeRecords || []) : (window.__expenseRecords || []);
+  const records = trendRecords.filter(item => item.date.startsWith(prefix));
+  const trendToggle = scheduleView === 'expense-records'
+    ? `<div class="sf-chart-toggle" role="tablist" aria-label="趋势类型"><button type="button" class="${expenseTrendView === 'expense' ? 'is-active' : ''}" data-sf-trend-view="expense" role="tab" aria-selected="${expenseTrendView === 'expense'}">支出</button><button type="button" class="${expenseTrendView === 'income' ? 'is-active' : ''}" data-sf-trend-view="income" role="tab" aria-selected="${expenseTrendView === 'income'}">收入</button></div>`
+    : '';
+  const detailLink = scheduleView === 'daily-tracker' ? '<button class="sf-content-action-button sf-chart-detail-button" type="button" data-sf-view-btn="expense-records">收支记录 <span aria-hidden="true">›</span></button>' : '';
+  const trendToggleInHeader = scheduleView === 'expense-records' ? trendToggle : '';
+  const trendHeader = `<div class="expense-kanban-head sf-chart-head"><h3 class="expense-kanban-title"><span class="sf-chart-icon" aria-hidden="true"><i></i><i></i><i></i></span>本月${trendLabel}趋势</h3>${detailLink}${trendToggleInHeader}</div>`;
+  if (!records.length) return `${trendHeader}<div class="expense-kanban-empty">本月暂无${trendLabel}</div>`;
   const daysInMonth = new Date(state.year, state.month, 0).getDate();
   if (expenseTrendSelectedDay && expenseTrendSelectedDay > daysInMonth) expenseTrendSelectedDay = null;
   const dailyTotals = Array.from({ length: daysInMonth }, (_, index) => records.filter(record => Number(record.date.slice(-2)) === index + 1).reduce((sum, record) => sum + record.amount, 0));
@@ -460,61 +595,64 @@ function expenseTrendHtml(): string {
     const selectedIndex = expenseTrendSelectedDay - 1;
     const selectedPoint = points[selectedIndex];
     const selectedRecords = records.filter(record => Number(record.date.slice(-2)) === expenseTrendSelectedDay);
-    const details = selectedRecords.length ? selectedRecords.map(record => `<li><span><b>${escape(record.cat)}</b> · ${escape(record.sub)}${record.note ? `<small>${escape(record.note)}</small>` : ''}</span><strong>¥${record.amount.toFixed(2)}</strong></li>`).join('') : '<li class="expense-line-tooltip-empty">当天无支出</li>';
+    const details = selectedRecords.length ? selectedRecords.map(record => `<li><span><b>${escape(record.cat)}</b> · ${escape(record.sub)}${record.note ? `<small>${escape(record.note)}</small>` : ''}</span><strong class="${activeTrendView === 'income' ? 'income-amount' : ''}">¥${record.amount.toFixed(2)}</strong></li>`).join('') : `<li class="expense-line-tooltip-empty">当天无${trendLabel}</li>`;
     const tooltipTop = selectedPoint.y > 88 ? Math.max(8, selectedPoint.y - 84) : selectedPoint.y + 12;
-    tooltip = `<div class="expense-line-tooltip" style="--point-x:${(selectedPoint.x / width * 100).toFixed(2)}%; top:${tooltipTop.toFixed(1)}px"><div class="expense-line-tooltip-head"><strong>${state.month}/${expenseTrendSelectedDay} · ¥${dailyTotals[selectedIndex].toFixed(2)}</strong><button class="expense-line-tooltip-close" type="button" aria-label="关闭当天支出详情">×</button></div><ul>${details}</ul></div>`;
+    tooltip = `<div class="expense-line-tooltip" style="--point-x:${(selectedPoint.x / width * 100).toFixed(2)}%; top:${tooltipTop.toFixed(1)}px"><div class="expense-line-tooltip-head"><strong>${state.month}/${expenseTrendSelectedDay} · ¥${dailyTotals[selectedIndex].toFixed(2)}</strong><button class="expense-line-tooltip-close" type="button" aria-label="关闭当天${trendLabel}详情">×</button></div><ul>${details}</ul></div>`;
   }
   const peak = Math.max(...dailyTotals);
   const peakDay = dailyTotals.indexOf(peak) + 1;
-  return `<div class="expense-kanban-head"><h3 class="expense-kanban-title">📈 每日支出趋势</h3></div><div class="expense-line-chart-wrap"><svg class="expense-line-chart" viewBox="0 0 ${width} ${height}" role="img" aria-label="${state.month}月每日支出趋势">${gridLines}<path class="expense-line-area" d="${areaPath}"/><path class="expense-line-path" d="${linePath}"/>${nodes}${labels}</svg>${tooltip}</div><div class="expense-line-meta"><span>共 ${daysInMonth} 个每日节点</span><span>峰值：${state.month}/${peakDay} ¥${peak.toFixed(0)}</span></div>`;
+  const trendClass = activeTrendView === 'income' ? ' expense-line-income' : '';
+  return `${trendHeader}<div class="expense-line-chart-wrap"><svg class="expense-line-chart" viewBox="0 0 ${width} ${height}" role="img" aria-label="${state.month}月每日${trendLabel}趋势">${gridLines}<path class="expense-line-area${trendClass}" d="${areaPath}"/><path class="expense-line-path${trendClass}" d="${linePath}"/>${nodes.replaceAll('expense-line-node', `expense-line-node${trendClass}`)}${labels}</svg>${tooltip}</div><div class="expense-line-meta"><span>共 ${daysInMonth} 个每日节点</span><span>峰值：${state.month}/${peakDay} ¥${peak.toFixed(0)}</span></div>`;
+}
+
+function scheduleExpenseCategoryHtml(): string {
+  const records = (window.__expenseRecords || []).filter(item => item.date.startsWith(`${state.year}-${pad(state.month)}`));
+  const catMap = new Map<string, number>();
+  for (const record of records) catMap.set(record.cat, (catMap.get(record.cat) || 0) + record.amount);
+  const categories = [...catMap.entries()].sort((a, b) => b[1] - a[1]);
+  if (!categories.length) return '<div class="sf-chart-empty">本月暂无支出</div>';
+  const max = categories[0][1];
+  const total = categories.reduce((sum, [, amount]) => sum + amount, 0);
+  const rows = categories.map(([name, amount], index) => {
+    const percentage = amount / total * 100;
+    const barWidth = scheduleCategoryView === 'percentage' ? percentage : amount / max * 100;
+    const value = scheduleCategoryView === 'percentage' ? `${percentage.toFixed(1)}%` : `¥${amount.toFixed(2)}`;
+    const minimumBarWidth = scheduleCategoryView === 'percentage' ? 2 : 5;
+    return `<div class="sf-category-row"><span class="sf-category-swatch sf-category-swatch-${index % 6}" aria-hidden="true"></span><span class="sf-category-name">${escape(name)}</span><span class="sf-category-track"><span class="sf-category-fill sf-category-fill-${index % 6}" style="width:${Math.max(minimumBarWidth, Math.round(barWidth))}%"></span></span><strong class="sf-category-amount">${value}</strong></div>`;
+  }).join('');
+  const categoryToggle = `<div class="sf-chart-toggle" role="tablist" aria-label="支出分类显示方式"><button type="button" class="${scheduleCategoryView === 'amount' ? 'is-active' : ''}" data-sf-category-view="amount" role="tab" aria-selected="${scheduleCategoryView === 'amount'}">金额</button><button type="button" class="${scheduleCategoryView === 'percentage' ? 'is-active' : ''}" data-sf-category-view="percentage" role="tab" aria-selected="${scheduleCategoryView === 'percentage'}">占比</button></div>`;
+  return `<div class="expense-kanban-head sf-chart-head"><h3 class="expense-kanban-title"><span class="sf-category-icon" aria-hidden="true">◕</span>支出分类占比</h3>${categoryToggle}</div><div class="sf-category-list">${rows}</div>`;
+}
+
+function scheduleSubscriptionHtml(): string {
+  const today = new Date();
+  today.setHours(0, 0, 0, 0);
+  const todayTime = today.getTime();
+  const parseDate = (value: string) => new Date(`${value}T00:00:00`).getTime();
+  const upcoming = (window.__membershipRecords || [])
+    .filter(record => isRenewalRecord(record) && record.expireDate && parseDate(record.expireDate) >= todayTime)
+    .sort((a, b) => parseDate(a.expireDate) - parseDate(b.expireDate))
+    .slice(0, 2);
+  const priceText = (record: any) => record.price == null ? '待补' : record.price === 0 ? '免费' : `¥${record.price.toFixed(2)}`;
+  const rows = upcoming.map(record => {
+    const date = new Date(`${record.expireDate}T00:00:00`);
+    const days = Math.round((date.getTime() - todayTime) / 86400000);
+    const daysText = days === 0 ? '今天' : `还有 ${days} 天`;
+    return `<div class="sf-subscription-row"><span class="sf-subscription-logo">${getServiceIcon(record)}</span><div class="sf-subscription-copy"><strong>${escape(record.name)}</strong><span>${date.getMonth() + 1}月${date.getDate()}日 <em class="sf-renewal-label">续费</em></span></div><div class="sf-subscription-price"><strong>${priceText(record)}</strong><span>${daysText}</span></div></div>`;
+  }).join('');
+  const header = `<div class="expense-kanban-head sf-chart-head"><h3 class="expense-kanban-title"><span class="sf-subscription-icon" aria-hidden="true">♛</span>订阅与周期账单</h3><button class="sf-content-action-button sf-subscription-entry" type="button" data-sf-view-btn="membership">全部订阅 <span aria-hidden="true">›</span></button></div>`;
+  if (!rows) return `${header}<div class="sf-chart-empty">暂无待续费订阅</div>`;
+  return `${header}<div class="sf-subscription-list">${rows}</div>`;
 }
 
 function expenseCategoryChartHtml(): string {
-  const records = (window.__expenseRecords || []).filter(item => item.date.startsWith(`${state.year}-${pad(state.month)}`));
-  if (!records.length) return '<div class="expense-kanban-head"><h3 class="expense-kanban-title">📊 分类占比</h3></div><div class="expense-kanban-empty">本月暂无支出</div>';
-  const catMap = new Map<string, { amount: number; count: number }>();
-  for (const r of records) {
-    const c = catMap.get(r.cat) || { amount: 0, count: 0 };
-    c.amount += r.amount;
-    c.count++;
-    catMap.set(r.cat, c);
-  }
-  const cats = [...catMap.entries()].sort((a, b) => b[1].amount - a[1].amount);
-  const total = cats.reduce((s, c) => s + c[1].amount, 0);
-  let html = '<div class="expense-kanban-head"><h3 class="expense-kanban-title">📊 分类占比</h3>';
-  html += `<div class="expense-cat-view-nav"><button class="expense-cat-view-btn${expenseCatView === 'bar' ? ' active' : ''}" data-catview="bar">柱状</button><button class="expense-cat-view-btn${expenseCatView === 'pie' ? ' active' : ''}" data-catview="pie">饼图</button></div>`;
-  html += '</div>';
-  if (expenseCatView === 'bar') {
-    const max = cats[0][1].amount;
-    html += '<div class="expense-cat-bar-list">';
-    for (const [cat, data] of cats) {
-      const pct = Math.round((data.amount / max) * 100);
-      html += `<div class="expense-cat-bar-item"><span class="expense-cat-bar-name">${escape(cat)}</span><div class="expense-cat-bar-track"><div class="expense-cat-bar-fill" style="width:${pct}%"></div></div><span class="expense-cat-bar-amount">¥${data.amount.toFixed(0)}</span></div>`;
-    }
-    html += '</div>';
-  } else {
-    const colors = ['#4f46e5','#059669','#d97706','#dc2626','#7c3aed','#0891b2','#be185d','#65a30d','#ea580c','#475569','#8b5cf6'];
-    let offset = 0;
-    const segments: string[] = [];
-    for (let i = 0; i < cats.length; i++) {
-      const pct = (cats[i][1].amount / total) * 100;
-      segments.push(`${colors[i % colors.length]} ${offset}% ${offset + pct}%`);
-      offset += pct;
-    }
-    html += `<div class="expense-cat-pie"><div class="expense-cat-pie-ring" style="background:conic-gradient(${segments.join(', ')})"><div class="expense-cat-pie-center"><span class="expense-cat-pie-total">¥${total.toFixed(0)}</span></div></div><div class="expense-cat-pie-legend">`;
-    for (let i = 0; i < cats.length; i++) {
-      const pct = ((cats[i][1].amount / total) * 100).toFixed(0);
-      html += `<div class="expense-cat-pie-legend-item"><span class="expense-cat-pie-dot" style="background:${colors[i % colors.length]}"></span><span class="expense-cat-pie-legend-name">${escape(cats[i][0])}</span><span class="expense-cat-pie-legend-pct">${pct}%</span></div>`;
-    }
-    html += '</div></div>';
-  }
-  return html;
+  return scheduleExpenseCategoryHtml();
 }
 
 function expenseTopItemsHtml(): string {
   const records = (window.__expenseRecords || []).filter(item => item.date.startsWith(`${state.year}-${pad(state.month)}`)).sort((a, b) => b.amount - a.amount);
   if (!records.length) return '<div class="expense-kanban-head"><h3 class="expense-kanban-title">🔥 最高支出</h3></div><div class="expense-kanban-empty">本月暂无支出</div>';
-  const perPage = 5;
+  const perPage = 10;
   const totalPages = Math.ceil(records.length / perPage);
   if (expenseTopPage >= totalPages) expenseTopPage = totalPages - 1;
   const pageRecords = records.slice(expenseTopPage * perPage, (expenseTopPage + 1) * perPage);
@@ -585,6 +723,10 @@ function membershipSubscriptionsHtml(): string {
   const dueSoon = active.filter(record => (parseDate(record.expireDate) - todayTime) / 86400000 <= 30).length;
   const groups: Record<string, any[]> = { all: records, active, expired };
   const current = groups[membershipView] || active;
+  const totalPages = Math.max(1, Math.ceil(current.length / MEMBERSHIP_PER_PAGE));
+  if (membershipListPage >= totalPages) membershipListPage = totalPages - 1;
+  if (membershipListPage < 0) membershipListPage = 0;
+  const pageRecords = current.slice(membershipListPage * MEMBERSHIP_PER_PAGE, (membershipListPage + 1) * MEMBERSHIP_PER_PAGE);
   const daysLabel = (record: any) => { const days = Math.round((parseDate(record.expireDate) - todayTime) / 86400000); return days > 0 ? `${days} 天后到期` : `已过期 ${-days} 天`; };
   const isDueSoon = (record: any) => (parseDate(record.expireDate) - todayTime) / 86400000 <= 30;
   const isExpired = (record: any) => parseDate(record.expireDate) < todayTime;
@@ -599,27 +741,14 @@ function membershipSubscriptionsHtml(): string {
   html += `<div class="membership-stat-card${dueSoon ? ' membership-stat-warning' : ''}"><span class="membership-stat-icon">${membershipIcon('clock')}</span><div class="membership-stat-body"><span class="membership-stat-label">30天内到期</span><span class="membership-stat-value">${dueSoon} 项</span></div></div>`;
   html += '</div>';
 
-  const yearGroups = new Map<number, { items: any[]; total: number }>();
-  for (const record of active) {
-    if (!record.expireDate || record.price == null) continue;
-    const year = new Date(`${record.expireDate}T00:00:00`).getFullYear();
-    if (!yearGroups.has(year)) yearGroups.set(year, { items: [], total: 0 });
-    yearGroups.get(year)!.items.push(record);
-    yearGroups.get(year)!.total += record.price;
-  }
-  const sortedYears = [...yearGroups.keys()].sort();
-  if (sortedYears.length) {
-    html += '<div class="membership-yearly-section"><h3 class="membership-section-title">每年订阅费用</h3><div class="membership-yearly-cards">';
-    for (const year of sortedYears) {
-      const group = yearGroups.get(year)!;
-      html += `<div class="membership-yearly-card"><span class="membership-yearly-icon">${membershipIcon('calendar')}</span><div class="membership-yearly-body"><div class="membership-yearly-info"><strong class="membership-yearly-year">${year}</strong><span class="membership-yearly-count">${group.items.length} 个订阅</span></div><strong class="membership-yearly-total">¥${Math.round(group.total)}</strong></div></div>`;
-    }
-    html += '</div></div>';
-  }
-
-  html += '<div class="membership-list-section"><h3 class="membership-section-title">订阅列表</h3><div class="membership-table">';
-  html += '<div class="membership-table-head"><span class="membership-th-name">订阅服务</span><span class="membership-th-tag">标签</span><span class="membership-th-note">备注</span><span class="membership-th-price">价格</span><span class="membership-th-status">到期状态</span></div>';
-  for (const record of current) {
+  const membershipPagination = totalPages > 1
+    ? `<nav class="membership-pagination" aria-label="订阅列表分页"><button class="membership-page-btn" type="button" data-membership-page="prev" aria-label="上一页"${membershipListPage === 0 ? ' disabled' : ''}>‹</button><span class="membership-page-num">${membershipListPage + 1} / ${totalPages}</span><button class="membership-page-btn" type="button" data-membership-page="next" aria-label="下一页"${membershipListPage >= totalPages - 1 ? ' disabled' : ''}>›</button></nav>`
+    : '';
+  html += `<div class="membership-list-section"><div class="membership-list-heading"><h3 class="membership-section-title">订阅列表</h3>${membershipPagination}</div><div class="membership-table">`;
+  html += '<div class="membership-table-head"><span class="membership-th-name">订阅服务</span><span class="membership-th-tag">标签</span><span class="membership-th-note">备注</span><span class="membership-th-price">价格</span><span class="membership-th-renew">续订</span><span class="membership-th-status">到期状态</span></div>';
+  for (const record of pageRecords) {
+    const recordIndex = records.indexOf(record);
+    const willRenew = isRenewalRecord(record);
     const icon = getServiceIcon(record);
     const tags = (record.tags || []) as string[];
     const priceText = record.price == null ? '价格待补' : record.price === 0 ? '免费' : `¥${record.price}${record.cycleMonths ? ` / ${record.cycleMonths}月` : ''}`;
@@ -636,6 +765,7 @@ function membershipSubscriptionsHtml(): string {
     html += `<div class="membership-row-tags">${tagHtml}</div>`;
     html += `<div class="membership-row-note">${record.note ? escape(record.note) : '—'}</div>`;
     html += `<div class="membership-row-price"><strong>${priceText}</strong></div>`;
+    html += `<div class="membership-row-renew"><button class="membership-renew-switch${willRenew ? ' is-on' : ''}" type="button" data-membership-index="${recordIndex}" aria-pressed="${willRenew}" aria-label="${willRenew ? '关闭' : '开启'} ${escape(record.name)}续订"><span aria-hidden="true"></span></button></div>`;
     const statusIcon = membershipIcon('clock');
     html += `<div class="membership-row-status"><span class="membership-status-icon">${statusIcon}</span><span>${statusText}</span></div>`;
     html += `</div>`;
@@ -699,16 +829,20 @@ function renderView(view: string) {
   if (view === 'daily-tracker') {
     document.getElementById('dailyCalendar')!.innerHTML = dailyGrid();
     document.getElementById('dailyDetail')!.innerHTML = dailyDetail(state.selected);
+    const contextPanel = document.getElementById('sfContextPanel');
+    if (contextPanel) {
+      contextPanel.innerHTML = dailyContextHtml(state.selected);
+    }
+    const scheduleTrendEl = document.getElementById('sfExpenseTrend');
+    if (scheduleTrendEl) scheduleTrendEl.innerHTML = expenseTrendHtml();
+    const scheduleCategoryEl = document.getElementById('sfCategorySummary');
+    if (scheduleCategoryEl) scheduleCategoryEl.innerHTML = scheduleExpenseCategoryHtml();
+    const scheduleSubscriptionEl = document.getElementById('sfSubscriptionSummary');
+    if (scheduleSubscriptionEl) scheduleSubscriptionEl.innerHTML = scheduleSubscriptionHtml();
     const summaryEl = document.getElementById('dailySummary');
     if (summaryEl) summaryEl.innerHTML = dailySummary();
     const utilityEl = document.getElementById('dailyUtilitySummary');
     if (utilityEl) utilityEl.innerHTML = dailyUtilitySummaryHtml();
-    const overviewEl = document.getElementById('dailyMonthlyOverview');
-    if (overviewEl) overviewEl.innerHTML = dailyMonthlyOverviewHtml();
-    const catEl = document.getElementById('dailyExpenseCategory');
-    if (catEl) catEl.innerHTML = dailyExpenseCategoryHtml();
-    const hemaEl = document.getElementById('dailyHemaDay');
-    if (hemaEl) hemaEl.innerHTML = dailyHemaDayHtml();
     setTitle('[data-tab="daily-tracker"] .cal-title');
   } else if (view === 'expense-records') {
     document.getElementById('expenseContent')!.innerHTML = expenseView();
@@ -727,6 +861,7 @@ function renderView(view: string) {
 }
 
 function refresh() {
+  if (page === SCHEDULE_FINANCE_PAGE) renderScheduleFinanceKpis();
   renderView(page === SCHEDULE_FINANCE_PAGE ? scheduleView : page);
 }
 
@@ -763,12 +898,20 @@ function applyScheduleView(view: string, options: { replace?: boolean; render?: 
   if (options.render !== false) refresh();
 }
 
+function renderExpenseTrendTargets() {
+  ['expenseTrendChart', 'sfExpenseTrend'].forEach(id => {
+    const element = document.getElementById(id);
+    if (element) element.innerHTML = expenseTrendHtml();
+  });
+}
+
 function shiftMonth(delta: number) {
   state.month += delta;
   if (state.month < 1) { state.year--; state.month = 12; }
   if (state.month > 12) { state.year++; state.month = 1; }
   state.selected = null;
   writeQueryState();
+  setTitle('[data-sf-month-title]');
   refresh();
 }
 
@@ -789,7 +932,7 @@ function applyTimelineFilter(categoryValue: string) {
   });
 }
 
-document.addEventListener('click', event => {
+document.addEventListener('click', async event => {
   const target = event.target as HTMLElement;
   const sfViewBtn = target.closest<HTMLButtonElement>('[data-sf-view-btn]');
   if (sfViewBtn?.dataset.sfViewBtn) {
@@ -807,6 +950,13 @@ document.addEventListener('click', event => {
     state.selected = state.selected === cell.dataset.date ? null : cell.dataset.date;
     writeQueryState(); refresh(); return;
   }
+  const contextPopoverTrigger = target.closest<HTMLElement>('[data-sf-popover]');
+  if (contextPopoverTrigger && !target.closest('.sf-context-popover') && window.matchMedia('(hover: none)').matches) {
+    const isOpen = contextPopoverTrigger.classList.toggle('is-open');
+    const popover = contextPopoverTrigger.querySelector<HTMLElement>('.sf-context-popover');
+    popover?.setAttribute('aria-hidden', String(!isOpen));
+    return;
+  }
   if (target.closest('.util-dc')) { state.selected = null; writeQueryState(); refresh(); return; }
 
   const hemaPrev = target.closest<HTMLButtonElement>('.daily-hema-prev');
@@ -817,8 +967,39 @@ document.addEventListener('click', event => {
   if (expenseCatPrev && !expenseCatPrev.disabled) { expenseCatPage--; const el = document.getElementById('dailyExpenseCategory'); if (el) el.innerHTML = dailyExpenseCategoryHtml(); return; }
   const expenseCatNext = target.closest<HTMLButtonElement>('.daily-expense-next');
   if (expenseCatNext && !expenseCatNext.disabled) { expenseCatPage++; const el = document.getElementById('dailyExpenseCategory'); if (el) el.innerHTML = dailyExpenseCategoryHtml(); return; }
-  const catViewBtn = target.closest<HTMLButtonElement>('.expense-cat-view-btn');
-  if (catViewBtn && catViewBtn.dataset.catview) { expenseCatView = catViewBtn.dataset.catview; const el = document.getElementById('expenseCategoryChart'); if (el) el.innerHTML = expenseCategoryChartHtml(); return; }
+  const expenseRecordTypeBtn = target.closest<HTMLButtonElement>('[data-expense-record-type]');
+  if (expenseRecordTypeBtn?.dataset.expenseRecordType === 'expense' || expenseRecordTypeBtn?.dataset.expenseRecordType === 'income') {
+    expenseRecordView = expenseRecordTypeBtn.dataset.expenseRecordType;
+    expenseRecordCategory = 'all';
+    expenseRecordPage = 0;
+    const el = document.getElementById('expenseContent');
+    if (el) el.innerHTML = expenseView();
+    return;
+  }
+  const expenseRecordCategoryBtn = target.closest<HTMLButtonElement>('[data-expense-record-category]');
+  if (expenseRecordCategoryBtn?.dataset.expenseRecordCategory) {
+    expenseRecordCategory = expenseRecordCategoryBtn.dataset.expenseRecordCategory;
+    expenseRecordPage = 0;
+    const el = document.getElementById('expenseContent');
+    if (el) el.innerHTML = expenseView();
+    return;
+  }
+  const trendViewBtn = target.closest<HTMLButtonElement>('[data-sf-trend-view]');
+  if (trendViewBtn?.dataset.sfTrendView === 'expense' || trendViewBtn?.dataset.sfTrendView === 'income') {
+    expenseTrendView = trendViewBtn.dataset.sfTrendView;
+    expenseTrendSelectedDay = null;
+    renderExpenseTrendTargets();
+    return;
+  }
+  const scheduleCategoryViewBtn = target.closest<HTMLButtonElement>('[data-sf-category-view]');
+  if (scheduleCategoryViewBtn?.dataset.sfCategoryView === 'amount' || scheduleCategoryViewBtn?.dataset.sfCategoryView === 'percentage') {
+    scheduleCategoryView = scheduleCategoryViewBtn.dataset.sfCategoryView;
+    ['sfCategorySummary', 'expenseCategoryChart'].forEach(id => {
+      const element = document.getElementById(id);
+      if (element) element.innerHTML = scheduleExpenseCategoryHtml();
+    });
+    return;
+  }
   const membershipNoteCell = target.closest<HTMLElement>('.membership-row-note, .membership-row-note-mobile');
   if (membershipNoteCell) {
     const noteText = membershipNoteTipText(membershipNoteCell);
@@ -831,19 +1012,42 @@ document.addEventListener('click', event => {
     return;
   }
   const membershipViewBtn = target.closest<HTMLButtonElement>('.membership-view-btn');
-  if (membershipViewBtn?.dataset.membershipView) { hideMembershipNoteTip(); membershipView = membershipViewBtn.dataset.membershipView; const el = document.getElementById('membershipSubscriptions'); if (el) el.innerHTML = membershipSubscriptionsHtml(); return; }
+  if (membershipViewBtn?.dataset.membershipView) { hideMembershipNoteTip(); membershipView = membershipViewBtn.dataset.membershipView; membershipListPage = 0; const el = document.getElementById('membershipSubscriptions'); if (el) el.innerHTML = membershipSubscriptionsHtml(); return; }
+  const membershipRenewBtn = target.closest<HTMLButtonElement>('[data-membership-index]');
+  if (membershipRenewBtn?.dataset.membershipIndex) {
+    const index = Number(membershipRenewBtn.dataset.membershipIndex);
+    const record = (window.__membershipRecords || [])[index];
+    if (record) {
+      const previousValue = isRenewalRecord(record);
+      record.willRenew = !isRenewalRecord(record);
+      const synced = await syncMembershipRenewalState(record);
+      if (!synced) record.willRenew = previousValue;
+      refresh();
+    }
+    return;
+  }
+  const membershipPageBtn = target.closest<HTMLButtonElement>('[data-membership-page]');
+  if (membershipPageBtn && !membershipPageBtn.disabled) {
+    membershipListPage += membershipPageBtn.dataset.membershipPage === 'next' ? 1 : -1;
+    const el = document.getElementById('membershipSubscriptions');
+    if (el) el.innerHTML = membershipSubscriptionsHtml();
+    return;
+  }
   const trendNode = target.closest<SVGCircleElement>('.expense-line-node');
-  if (trendNode?.dataset.expenseTrendDay) { expenseTrendSelectedDay = Number(trendNode.dataset.expenseTrendDay); const el = document.getElementById('expenseTrendChart'); if (el) el.innerHTML = expenseTrendHtml(); return; }
+  if (trendNode?.dataset.expenseTrendDay) { expenseTrendSelectedDay = Number(trendNode.dataset.expenseTrendDay); renderExpenseTrendTargets(); return; }
   const tooltipClose = target.closest<HTMLButtonElement>('.expense-line-tooltip-close');
-  if (tooltipClose) { expenseTrendSelectedDay = null; const el = document.getElementById('expenseTrendChart'); if (el) el.innerHTML = expenseTrendHtml(); return; }
+  if (tooltipClose) { expenseTrendSelectedDay = null; renderExpenseTrendTargets(); return; }
   const topPrev = target.closest<HTMLButtonElement>('.expense-top-prev');
   if (topPrev && !topPrev.disabled) { expenseTopPage--; const el = document.getElementById('expenseTopItems'); if (el) el.innerHTML = expenseTopItemsHtml(); return; }
   const topNext = target.closest<HTMLButtonElement>('.expense-top-next');
   if (topNext && !topNext.disabled) { expenseTopPage++; const el = document.getElementById('expenseTopItems'); if (el) el.innerHTML = expenseTopItemsHtml(); return; }
-  const gridPrev = target.closest<HTMLButtonElement>('.expense-grid-prev');
-  if (gridPrev && gridPrev.dataset.cat && !gridPrev.disabled) { const cat = gridPrev.dataset.cat; expenseCatPages[cat] = Math.max(0, expenseCatPages[cat] - 1); document.getElementById('expenseContent')!.innerHTML = expenseView(); return; }
-  const gridNext = target.closest<HTMLButtonElement>('.expense-grid-next');
-  if (gridNext && gridNext.dataset.cat && !gridNext.disabled) { const cat = gridNext.dataset.cat; expenseCatPages[cat]++; document.getElementById('expenseContent')!.innerHTML = expenseView(); return; }
+  const expenseRecordPageBtn = target.closest<HTMLButtonElement>('[data-expense-record-page]');
+  if (expenseRecordPageBtn && !expenseRecordPageBtn.disabled) {
+    expenseRecordPage += expenseRecordPageBtn.dataset.expenseRecordPage === 'next' ? 1 : -1;
+    const el = document.getElementById('expenseContent');
+    if (el) el.innerHTML = expenseView();
+    return;
+  }
   const city = target.closest<HTMLButtonElement>('[data-fm-city]');
   if (city) {
     const value = city.dataset.fmCity;
@@ -915,6 +1119,7 @@ setupAccordions();
 
 if (page === SCHEDULE_FINANCE_PAGE) {
   applyScheduleView(readScheduleView(), { render: false });
+  renderScheduleFinanceKpis();
   // 三个视图一次性渲染，切换时无需等待，各自内部状态（月/年/选中日/翻页）保持不变
   SF_VIEW_IDS.forEach(renderView);
 } else {
