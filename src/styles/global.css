@@ -5526,10 +5526,15 @@ body[data-page="schedule-finance"][data-view="membership"] {
 }
 
 .membership-table {
+  --membership-columns: minmax(170px, 1.35fr) minmax(54px, .42fr) minmax(0, 1fr) 110px 140px;
   border: 1px solid var(--line);
   border-radius: 12px;
   overflow: hidden;
   background: var(--surface);
+}
+
+.membership-table.is-local {
+  --membership-columns: minmax(170px, 1.35fr) minmax(54px, .42fr) minmax(0, 1fr) 110px 72px 140px;
 }
 
 .membership-pagination {
@@ -5626,7 +5631,7 @@ body[data-page="schedule-finance"][data-view="membership"] {
 
 .membership-table-head {
   display: grid;
-  grid-template-columns: minmax(170px, 1.35fr) minmax(54px, .42fr) minmax(0, 1fr) 110px 72px 140px;
+  grid-template-columns: var(--membership-columns);
   gap: .75rem;
   padding: .7rem 1rem;
   background: var(--surface-soft);
@@ -5665,7 +5670,7 @@ body[data-page="schedule-finance"][data-view="membership"] {
 
 .membership-row {
   display: grid;
-  grid-template-columns: minmax(170px, 1.35fr) minmax(54px, .42fr) minmax(0, 1fr) 110px 72px 140px;
+  grid-template-columns: var(--membership-columns);
   gap: .75rem;
   padding: .85rem 1rem;
   border-bottom: 1px solid var(--line);

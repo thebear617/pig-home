@@ -1,19 +1,387 @@
 ---
-import { DEFAULT_TAB } from '../lib/tabs';
-const target = `${import.meta.env.BASE_URL}${DEFAULT_TAB}/`;
+import Layout from '../layouts/Layout.astro';
+
+const base = import.meta.env.BASE_URL;
+const entries = [
+  {
+    id: 'schedule-finance',
+    icon: '📅',
+    eyebrow: 'TODAY',
+    title: '日程和财务',
+    description: '把今天的日程、支出、睡眠和订阅放在同一个工作台。',
+    featured: true,
+  },
+  {
+    id: 'food-records',
+    icon: '🍳',
+    eyebrow: 'KITCHEN',
+    title: '厨房工作台',
+    description: '记录做过的菜，也顺手看看食材和菜谱。',
+  },
+  {
+    id: 'home-archive',
+    icon: '🏠',
+    eyebrow: 'HOME',
+    title: '家居档案',
+    description: '收好家的布局、清单和每一次变化。',
+  },
+  {
+    id: 'food-map',
+    icon: '🗺️',
+    eyebrow: 'PLACES',
+    title: '美食地图',
+    description: '收藏想去的店，也记下已经吃过的地方。',
+  },
+  {
+    id: 'relationship-timeline',
+    icon: '💞',
+    eyebrow: 'TOGETHER',
+    title: '关系时间线',
+    description: '记录一起走过的时间和重要片段。',
+  },
+  {
+    id: 'couple-album',
+    icon: '📸',
+    eyebrow: 'MEMORIES',
+    title: '情侣相册',
+    description: '把值得回看的照片留在这里。',
+  },
+];
 ---
 
-<!doctype html>
-<html lang="zh-CN">
-  <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="refresh" content={`0;url=${target}`} />
-    <link rel="canonical" href={target} />
-    <meta name="viewport" content="width=device-width" />
-    <link rel="icon" type="image/png" href={`${import.meta.env.BASE_URL}favicon.png`} />
-    <title>猪窝</title>
-  </head>
-  <body>
-    <p>正在进入<a href={target}>每日追踪</a>……</p>
-  </body>
-</html>
+<Layout activeTab="" title="猪窝 · 我们的小家">
+  <div class="pig-entry-page">
+    <header class="pig-entry-hero">
+      <div class="pig-entry-copy">
+        <p class="pig-entry-kicker">PIG HOME · OUR LITTLE PLACE</p>
+        <h1>猪窝</h1>
+        <p class="pig-entry-lede">记录生活的每一天，让平凡的日子也闪闪发光。</p>
+        <a class="pig-entry-primary" href={`${base}schedule-finance/`}>
+          <span>进入日程和财务</span>
+          <span aria-hidden="true">→</span>
+        </a>
+      </div>
+      <div class="pig-entry-mark" aria-hidden="true">
+        <span class="pig-entry-sun"></span>
+        <span class="pig-entry-line pig-entry-line-one"></span>
+        <span class="pig-entry-line pig-entry-line-two"></span>
+        <span class="pig-entry-pig">🐖</span>
+      </div>
+    </header>
+
+    <section class="pig-entry-directory" aria-labelledby="pig-entry-directory-title">
+      <div class="pig-entry-section-heading">
+        <div>
+          <p class="pig-entry-kicker">OPEN A ROOM</p>
+          <h2 id="pig-entry-directory-title">从这里开始</h2>
+        </div>
+        <span>{entries.length} 个入口</span>
+      </div>
+
+      <div class="pig-entry-grid">
+        {entries.filter(entry => !entry.featured).map(entry => (
+          <a class="pig-entry-card" href={`${base}${entry.id}/`}>
+            <span class="pig-entry-card-icon" aria-hidden="true">{entry.icon}</span>
+            <span class="pig-entry-card-body">
+              <span class="pig-entry-card-eyebrow">{entry.eyebrow}</span>
+              <strong>{entry.title}</strong>
+              <small>{entry.description}</small>
+            </span>
+            <span class="pig-entry-card-arrow" aria-hidden="true">↗</span>
+          </a>
+        ))}
+      </div>
+    </section>
+
+    <footer class="pig-entry-footer">
+      <span>猪窝 · 记录生活的每一天</span>
+      <span>Have a nice day ☼</span>
+    </footer>
+  </div>
+</Layout>
+
+<style>
+  .pig-entry-page {
+    --entry-ink: #2f2924;
+    --entry-muted: #80766c;
+    --entry-line: rgba(111, 87, 64, .16);
+    --entry-cream: #fdf8ef;
+    --entry-orange: #d44c0f;
+    display: grid;
+    gap: 1.1rem;
+    min-height: calc(100vh - 2.4rem);
+    color: var(--entry-ink);
+  }
+
+  .pig-entry-hero,
+  .pig-entry-directory {
+    border: 1px solid var(--entry-line);
+    border-radius: 14px;
+    background: rgba(253, 251, 248, .86);
+    box-shadow: 0 2px 9px rgba(89, 58, 28, .05);
+  }
+
+  .pig-entry-hero {
+    position: relative;
+    display: flex;
+    min-height: 18rem;
+    align-items: center;
+    justify-content: space-between;
+    gap: 2rem;
+    overflow: hidden;
+    padding: 3rem 3.2rem;
+    background: linear-gradient(110deg, #fffaf2 0%, #fdf7ec 68%, #f8ead6 100%);
+  }
+
+  .pig-entry-copy {
+    position: relative;
+    z-index: 1;
+    max-width: 33rem;
+  }
+
+  .pig-entry-kicker {
+    color: var(--entry-orange);
+    font-size: .68rem;
+    font-weight: 800;
+    letter-spacing: .16em;
+    text-transform: uppercase;
+  }
+
+  .pig-entry-hero h1 {
+    margin-top: .45rem;
+    font-family: Georgia, "Songti SC", STSong, serif;
+    font-size: clamp(2.6rem, 6vw, 4.6rem);
+    font-weight: 500;
+    letter-spacing: .08em;
+    line-height: 1;
+  }
+
+  .pig-entry-lede {
+    max-width: 28rem;
+    margin-top: 1rem;
+    color: var(--entry-muted);
+    font-size: 1rem;
+  }
+
+  .pig-entry-primary {
+    display: inline-flex;
+    align-items: center;
+    gap: 1rem;
+    margin-top: 1.6rem;
+    padding: .7rem 1rem .7rem 1.1rem;
+    border: 1px solid var(--entry-orange);
+    border-radius: 9px;
+    background: var(--entry-orange);
+    color: #fffaf3;
+    font-size: .88rem;
+    font-weight: 800;
+    text-decoration: none;
+    transition: transform .15s ease, box-shadow .15s ease;
+  }
+
+  .pig-entry-primary:hover {
+    box-shadow: 0 5px 15px rgba(212, 76, 15, .18);
+    transform: translateY(-1px);
+  }
+
+  .pig-entry-mark {
+    position: relative;
+    width: 15rem;
+    height: 12rem;
+    flex: 0 0 15rem;
+    opacity: .9;
+  }
+
+  .pig-entry-sun {
+    position: absolute;
+    top: .5rem;
+    right: 1.1rem;
+    width: 5.8rem;
+    height: 5.8rem;
+    border-radius: 50%;
+    background: #f6c86e;
+    opacity: .42;
+  }
+
+  .pig-entry-pig {
+    position: absolute;
+    right: 2.2rem;
+    bottom: 1.9rem;
+    font-size: 5.6rem;
+    filter: saturate(.8);
+    transform: rotate(-4deg);
+  }
+
+  .pig-entry-line {
+    position: absolute;
+    display: block;
+    height: 1px;
+    border-radius: 999px;
+    background: var(--entry-orange);
+    opacity: .7;
+    transform: rotate(-9deg);
+  }
+
+  .pig-entry-line-one {
+    right: 4rem;
+    bottom: 1.3rem;
+    width: 9rem;
+  }
+
+  .pig-entry-line-two {
+    right: 1.8rem;
+    bottom: 1rem;
+    width: 4.8rem;
+    transform: rotate(7deg);
+  }
+
+  .pig-entry-directory {
+    padding: 1.35rem;
+  }
+
+  .pig-entry-section-heading {
+    display: flex;
+    align-items: end;
+    justify-content: space-between;
+    gap: 1rem;
+    margin-bottom: 1rem;
+  }
+
+  .pig-entry-section-heading h2 {
+    margin-top: .3rem;
+    font-family: Georgia, "Songti SC", STSong, serif;
+    font-size: 1.35rem;
+    font-weight: 600;
+  }
+
+  .pig-entry-section-heading > span {
+    color: var(--entry-muted);
+    font-size: .76rem;
+  }
+
+  .pig-entry-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: .65rem;
+  }
+
+  .pig-entry-card {
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr) auto;
+    align-items: center;
+    gap: .85rem;
+    min-height: 6.3rem;
+    padding: .9rem 1rem;
+    border: 1px solid var(--entry-line);
+    border-radius: 10px;
+    background: var(--entry-cream);
+    color: inherit;
+    text-decoration: none;
+    transition: border-color .15s ease, background .15s ease, transform .15s ease;
+  }
+
+  .pig-entry-card:hover {
+    border-color: rgba(212, 76, 15, .42);
+    background: #fffdf9;
+    transform: translateY(-1px);
+  }
+
+  .pig-entry-card-icon {
+    display: grid;
+    width: 2.65rem;
+    height: 2.65rem;
+    place-items: center;
+    border-radius: 50%;
+    background: #fff0df;
+    font-size: 1.25rem;
+  }
+
+  .pig-entry-card-body {
+    display: grid;
+    min-width: 0;
+    gap: .16rem;
+  }
+
+  .pig-entry-card-eyebrow {
+    color: var(--entry-orange);
+    font-size: .6rem;
+    font-weight: 800;
+    letter-spacing: .12em;
+  }
+
+  .pig-entry-card-body strong {
+    overflow: hidden;
+    font-family: Georgia, "Songti SC", STSong, serif;
+    font-size: 1rem;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .pig-entry-card-body small {
+    overflow: hidden;
+    color: var(--entry-muted);
+    font-size: .74rem;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .pig-entry-card-arrow {
+    color: var(--entry-orange);
+    font-size: 1.1rem;
+  }
+
+  .pig-entry-footer {
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+    padding: .25rem .2rem 0;
+    color: var(--entry-muted);
+    font-size: .72rem;
+  }
+
+  @media (max-width: 720px) {
+    .pig-entry-page {
+      min-height: calc(100vh - 1.4rem);
+      gap: .8rem;
+    }
+
+    .pig-entry-hero {
+      min-height: 20rem;
+      align-items: flex-start;
+      padding: 2rem 1.2rem;
+    }
+
+    .pig-entry-hero h1 {
+      font-size: 3rem;
+    }
+
+    .pig-entry-mark {
+      position: absolute;
+      right: -.8rem;
+      bottom: -.8rem;
+      width: 11rem;
+      height: 9rem;
+      transform: scale(.8);
+      transform-origin: bottom right;
+    }
+
+    .pig-entry-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .pig-entry-directory {
+      padding: 1rem;
+    }
+  }
+
+  @media (max-width: 420px) {
+    .pig-entry-hero {
+      min-height: 18rem;
+    }
+
+    .pig-entry-footer {
+      display: grid;
+      gap: .2rem;
+    }
+  }
+</style>

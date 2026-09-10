@@ -712,6 +712,7 @@ function membershipIcon(name: 'card' | 'calendar' | 'shield' | 'clock'): string 
 
 function membershipSubscriptionsHtml(): string {
   const records = window.__membershipRecords || [];
+  const showRenewalColumn = import.meta.env.DEV;
   const today = new Date();
   today.setHours(0, 0, 0, 0);
   const todayTime = today.getTime();
@@ -744,8 +745,8 @@ function membershipSubscriptionsHtml(): string {
   const membershipPagination = totalPages > 1
     ? `<nav class="membership-pagination" aria-label="订阅列表分页"><button class="membership-page-btn" type="button" data-membership-page="prev" aria-label="上一页"${membershipListPage === 0 ? ' disabled' : ''}>‹</button><span class="membership-page-num">${membershipListPage + 1} / ${totalPages}</span><button class="membership-page-btn" type="button" data-membership-page="next" aria-label="下一页"${membershipListPage >= totalPages - 1 ? ' disabled' : ''}>›</button></nav>`
     : '';
-  html += `<div class="membership-list-section"><div class="membership-list-heading"><h3 class="membership-section-title">订阅列表</h3>${membershipPagination}</div><div class="membership-table">`;
-  html += '<div class="membership-table-head"><span class="membership-th-name">订阅服务</span><span class="membership-th-tag">标签</span><span class="membership-th-note">备注</span><span class="membership-th-price">价格</span><span class="membership-th-renew">续订</span><span class="membership-th-status">到期状态</span></div>';
+  html += `<div class="membership-list-section"><div class="membership-list-heading"><h3 class="membership-section-title">订阅列表</h3>${membershipPagination}</div><div class="membership-table${showRenewalColumn ? ' is-local' : ''}">`;
+  html += `<div class="membership-table-head"><span class="membership-th-name">订阅服务</span><span class="membership-th-tag">标签</span><span class="membership-th-note">备注</span><span class="membership-th-price">价格</span>${showRenewalColumn ? '<span class="membership-th-renew">续订</span>' : ''}<span class="membership-th-status">到期状态</span></div>`;
   for (const record of pageRecords) {
     const recordIndex = records.indexOf(record);
     const willRenew = isRenewalRecord(record);
@@ -765,7 +766,7 @@ function membershipSubscriptionsHtml(): string {
     html += `<div class="membership-row-tags">${tagHtml}</div>`;
     html += `<div class="membership-row-note">${record.note ? escape(record.note) : '—'}</div>`;
     html += `<div class="membership-row-price"><strong>${priceText}</strong></div>`;
-    html += `<div class="membership-row-renew"><button class="membership-renew-switch${willRenew ? ' is-on' : ''}" type="button" data-membership-index="${recordIndex}" aria-pressed="${willRenew}" aria-label="${willRenew ? '关闭' : '开启'} ${escape(record.name)}续订"><span aria-hidden="true"></span></button></div>`;
+    if (showRenewalColumn) html += `<div class="membership-row-renew"><button class="membership-renew-switch${willRenew ? ' is-on' : ''}" type="button" data-membership-index="${recordIndex}" aria-pressed="${willRenew}" aria-label="${willRenew ? '关闭' : '开启'} ${escape(record.name)}续订"><span aria-hidden="true"></span></button></div>`;
     const statusIcon = membershipIcon('clock');
     html += `<div class="membership-row-status"><span class="membership-status-icon">${statusIcon}</span><span>${statusText}</span></div>`;
     html += `</div>`;
