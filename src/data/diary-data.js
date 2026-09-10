@@ -49,7 +49,8 @@ export const diaryRecords = {
         "desc": "讨论归档任务优化方向 · 结论：暂不需要改动，归档后手动维护",
         "isCooking": false,
         "mealType": null,
-        "dishGuess": null
+        "dishGuess": null,
+        "isStudy": true
       },
       {
         "status": "x",
@@ -203,7 +204,8 @@ export const diaryRecords = {
         "desc": "Codex 手机验证问题研究与跑通（hero-sms + 日本号 + TUN）",
         "isCooking": false,
         "mealType": null,
-        "dishGuess": null
+        "dishGuess": null,
+        "isStudy": true
       },
       {
         "status": "x",
@@ -471,7 +473,8 @@ export const diaryRecords = {
         "desc": "研究 NotebookLM + Agent 结合 #area/dev",
         "isCooking": false,
         "mealType": null,
-        "dishGuess": null
+        "dishGuess": null,
+        "isStudy": true
       },
       {
         "status": "x",
@@ -511,7 +514,8 @@ export const diaryRecords = {
         "desc": "继续学习 OS",
         "isCooking": false,
         "mealType": null,
-        "dishGuess": null
+        "dishGuess": null,
+        "isStudy": true
       },
       {
         "status": "x",
@@ -564,7 +568,8 @@ export const diaryRecords = {
         "desc": "研究开放词表 OVS",
         "isCooking": false,
         "mealType": null,
-        "dishGuess": null
+        "dishGuess": null,
+        "isStudy": true
       },
       {
         "status": "x",
@@ -609,7 +614,8 @@ export const diaryRecords = {
         "desc": "研究 OVS",
         "isCooking": false,
         "mealType": null,
-        "dishGuess": null
+        "dishGuess": null,
+        "isStudy": true
       },
       {
         "status": "x",
@@ -670,7 +676,8 @@ export const diaryRecords = {
         "desc": "研究 OVS",
         "isCooking": false,
         "mealType": null,
-        "dishGuess": null
+        "dishGuess": null,
+        "isStudy": true
       },
       {
         "status": "x",
@@ -691,7 +698,8 @@ export const diaryRecords = {
         "desc": "研究 OVS #area/research",
         "isCooking": false,
         "mealType": null,
-        "dishGuess": null
+        "dishGuess": null,
+        "isStudy": true
       },
       {
         "status": "x",
@@ -715,7 +723,8 @@ export const diaryRecords = {
         "desc": "研究 OVS #area/research",
         "isCooking": false,
         "mealType": null,
-        "dishGuess": null
+        "dishGuess": null,
+        "isStudy": true
       },
       {
         "status": "x",
@@ -760,7 +769,8 @@ export const diaryRecords = {
         "desc": "OVS 学习（DINO / SILC 费曼 + 知识管理方法论沉淀）",
         "isCooking": false,
         "mealType": null,
-        "dishGuess": null
+        "dishGuess": null,
+        "isStudy": true
       },
       {
         "status": "x",
@@ -776,7 +786,8 @@ export const diaryRecords = {
         "desc": "OVS 学习（WS 主线 QN11/QN12、SAM-CLIP、TF QN13：ReCo / CLIP Surgery / SCLIP）",
         "isCooking": false,
         "mealType": null,
-        "dishGuess": null
+        "dishGuess": null,
+        "isStudy": true
       },
       {
         "status": "x",
@@ -800,7 +811,8 @@ export const diaryRecords = {
         "desc": "OVS 学习接续",
         "isCooking": false,
         "mealType": null,
-        "dishGuess": null
+        "dishGuess": null,
+        "isStudy": true
       },
       {
         "status": "x",
@@ -808,7 +820,8 @@ export const diaryRecords = {
         "desc": "Codex 新会话初始化上下文压缩复盘",
         "isCooking": false,
         "mealType": null,
-        "dishGuess": null
+        "dishGuess": null,
+        "isStudy": true
       }
     ]
   },
@@ -874,7 +887,8 @@ export const diaryRecords = {
         "desc": "写研究指南",
         "isCooking": false,
         "mealType": null,
-        "dishGuess": null
+        "dishGuess": null,
+        "isStudy": true
       },
       {
         "status": "x",
@@ -914,7 +928,8 @@ export const diaryRecords = {
         "desc": "在宿舍学习",
         "isCooking": false,
         "mealType": null,
-        "dishGuess": null
+        "dishGuess": null,
+        "isStudy": true
       },
       {
         "status": "x",
@@ -922,7 +937,8 @@ export const diaryRecords = {
         "desc": "在宿舍学习 OVS + 完善猫咪系统 #area/research",
         "isCooking": false,
         "mealType": null,
-        "dishGuess": null
+        "dishGuess": null,
+        "isStudy": true
       },
       {
         "status": "x",
@@ -1012,7 +1028,8 @@ export const diaryRecords = {
         "desc": "学习 OVS",
         "isCooking": false,
         "mealType": null,
-        "dishGuess": null
+        "dishGuess": null,
+        "isStudy": true
       },
       {
         "status": "x",
@@ -1036,7 +1053,8 @@ export const diaryRecords = {
         "desc": "学习 OVS，复习 Talk2DINO，准备晚上汇报",
         "isCooking": false,
         "mealType": null,
-        "dishGuess": null
+        "dishGuess": null,
+        "isStudy": true
       },
       {
         "status": "x",
@@ -1065,7 +1083,8 @@ export const diaryRecords = {
         "desc": "具体动作",
         "isCooking": false,
         "mealType": null,
-        "dishGuess": null
+        "dishGuess": null,
+        "isStudy": true
       }
     ]
   },
@@ -1094,7 +1113,8 @@ export const diaryRecords = {
         "desc": "开发自动同步睡眠数据到 iCloud 日历的快捷指令",
         "isCooking": false,
         "mealType": null,
-        "dishGuess": null
+        "dishGuess": null,
+        "isStudy": true
       },
       {
         "status": "x",
@@ -1211,7 +1231,8 @@ export const diaryRecords = {
         "desc": "回宿舍继续研究 OVS",
         "isCooking": false,
         "mealType": null,
-        "dishGuess": null
+        "dishGuess": null,
+        "isStudy": true
       }
     ]
   },
@@ -1248,7 +1269,8 @@ export const diaryRecords = {
         "desc": "下床搞一些日常开发",
         "isCooking": false,
         "mealType": null,
-        "dishGuess": null
+        "dishGuess": null,
+        "isStudy": true
       },
       {
         "status": "x",
@@ -1309,7 +1331,8 @@ export const diaryRecords = {
         "desc": "学习 OVS",
         "isCooking": false,
         "mealType": null,
-        "dishGuess": null
+        "dishGuess": null,
+        "isStudy": true
       },
       {
         "status": "x",
@@ -1330,7 +1353,8 @@ export const diaryRecords = {
         "desc": "研究 OVS",
         "isCooking": false,
         "mealType": null,
-        "dishGuess": null
+        "dishGuess": null,
+        "isStudy": true
       },
       {
         "status": "x",
@@ -1354,7 +1378,8 @@ export const diaryRecords = {
         "desc": "研究 OVS",
         "isCooking": false,
         "mealType": null,
-        "dishGuess": null
+        "dishGuess": null,
+        "isStudy": true
       },
       {
         "status": "x",
@@ -1431,7 +1456,8 @@ export const diaryRecords = {
         "desc": "在宿舍学习：① 租房事项 ② 配置 Hermes",
         "isCooking": false,
         "mealType": null,
-        "dishGuess": null
+        "dishGuess": null,
+        "isStudy": true
       }
     ]
   },
@@ -1476,7 +1502,8 @@ export const diaryRecords = {
         "desc": "修改 hermes 配置",
         "isCooking": false,
         "mealType": null,
-        "dishGuess": null
+        "dishGuess": null,
+        "isStudy": true
       },
       {
         "status": "x",
@@ -1492,7 +1519,8 @@ export const diaryRecords = {
         "desc": "继续研究 Hermes 以及 OVS",
         "isCooking": false,
         "mealType": null,
-        "dishGuess": null
+        "dishGuess": null,
+        "isStudy": true
       },
       {
         "status": "x",
@@ -1500,7 +1528,8 @@ export const diaryRecords = {
         "desc": "继续研究 Hermes",
         "isCooking": false,
         "mealType": null,
-        "dishGuess": null
+        "dishGuess": null,
+        "isStudy": true
       },
       {
         "status": "x",
@@ -1524,7 +1553,8 @@ export const diaryRecords = {
         "desc": "继续研究 Hermes",
         "isCooking": false,
         "mealType": null,
-        "dishGuess": null
+        "dishGuess": null,
+        "isStudy": true
       }
     ]
   },
@@ -1561,7 +1591,8 @@ export const diaryRecords = {
         "desc": "学 OVS",
         "isCooking": false,
         "mealType": null,
-        "dishGuess": null
+        "dishGuess": null,
+        "isStudy": true
       },
       {
         "status": "x",
@@ -1590,7 +1621,8 @@ export const diaryRecords = {
         "desc": "研究 OVS，跑特征实验",
         "isCooking": false,
         "mealType": null,
-        "dishGuess": null
+        "dishGuess": null,
+        "isStudy": true
       },
       {
         "status": "x",
@@ -1614,7 +1646,8 @@ export const diaryRecords = {
         "desc": "继续研究 OVS，跑复现实验",
         "isCooking": false,
         "mealType": null,
-        "dishGuess": null
+        "dishGuess": null,
+        "isStudy": true
       },
       {
         "status": "x",
@@ -1635,7 +1668,8 @@ export const diaryRecords = {
         "desc": "学习 OVS 并跑实验",
         "isCooking": false,
         "mealType": null,
-        "dishGuess": null
+        "dishGuess": null,
+        "isStudy": true
       },
       {
         "status": "x",
@@ -1659,7 +1693,8 @@ export const diaryRecords = {
         "desc": "学习 OVS 并做非线性表征的 PPT，中间吃了一个泡面",
         "isCooking": false,
         "mealType": null,
-        "dishGuess": null
+        "dishGuess": null,
+        "isStudy": true
       },
       {
         "status": "x",
@@ -1688,7 +1723,8 @@ export const diaryRecords = {
         "desc": "研究 open code",
         "isCooking": false,
         "mealType": null,
-        "dishGuess": null
+        "dishGuess": null,
+        "isStudy": true
       },
       {
         "status": "x",
@@ -1927,7 +1963,8 @@ export const diaryRecords = {
         "desc": "开发猫猫网站",
         "isCooking": false,
         "mealType": null,
-        "dishGuess": null
+        "dishGuess": null,
+        "isStudy": true
       },
       {
         "status": "x",
@@ -1951,7 +1988,8 @@ export const diaryRecords = {
         "desc": "继续完成猫猫网站开发，并开始撰写合同核对事项",
         "isCooking": false,
         "mealType": null,
-        "dishGuess": null
+        "dishGuess": null,
+        "isStudy": true
       },
       {
         "status": "x",
@@ -1967,7 +2005,8 @@ export const diaryRecords = {
         "desc": "复盘 Obsidian/Codex 卡顿发热与工作区变更清理",
         "isCooking": false,
         "mealType": null,
-        "dishGuess": null
+        "dishGuess": null,
+        "isStudy": true
       },
       {
         "status": "x",
@@ -2081,7 +2120,8 @@ export const diaryRecords = {
         "desc": "具体动作",
         "isCooking": false,
         "mealType": null,
-        "dishGuess": null
+        "dishGuess": null,
+        "isStudy": true
       }
     ]
   },
@@ -2341,7 +2381,8 @@ export const diaryRecords = {
         "desc": "研究 to desk",
         "isCooking": false,
         "mealType": null,
-        "dishGuess": null
+        "dishGuess": null,
+        "isStudy": true
       },
       {
         "status": "x",
@@ -2349,7 +2390,8 @@ export const diaryRecords = {
         "desc": "研究 Obsidian 为什么会卡 + 优化方向",
         "isCooking": false,
         "mealType": null,
-        "dishGuess": null
+        "dishGuess": null,
+        "isStudy": true
       },
       {
         "status": "x",
@@ -2588,7 +2630,8 @@ export const diaryRecords = {
         "desc": "在学校学习：非线性表征、CVPR 近三年文献",
         "isCooking": false,
         "mealType": null,
-        "dishGuess": null
+        "dishGuess": null,
+        "isStudy": true
       },
       {
         "status": "x",
@@ -2787,7 +2830,8 @@ export const diaryRecords = {
         "desc": "琐碎的网站开发（没开始科研）",
         "isCooking": false,
         "mealType": null,
-        "dishGuess": null
+        "dishGuess": null,
+        "isStudy": true
       },
       {
         "status": "x",
@@ -2872,7 +2916,8 @@ export const diaryRecords = {
         "desc": "拿体重秤回家、烧水、猫猫网站开发、换洗手液瓶、装路由器",
         "isCooking": false,
         "mealType": null,
-        "dishGuess": null
+        "dishGuess": null,
+        "isStudy": true
       },
       {
         "status": "x",
@@ -3018,7 +3063,8 @@ export const diaryRecords = {
         "desc": "工作：配置自己的域名和个人主页➕聚类记账分类",
         "isCooking": false,
         "mealType": null,
-        "dishGuess": null
+        "dishGuess": null,
+        "isStudy": true
       },
       {
         "status": "x",
@@ -3063,7 +3109,8 @@ export const diaryRecords = {
         "desc": "开发网站-猫猫➕居家，收拾西瓜",
         "isCooking": false,
         "mealType": null,
-        "dishGuess": null
+        "dishGuess": null,
+        "isStudy": true
       },
       {
         "status": "x",
@@ -5262,10 +5309,11 @@ export const diaryRecords = {
       {
         "status": "x",
         "time": "00:00-02:50",
-        "desc": "开发（r1 PDF to HTML skill 完成 + 熊窝 v0.21.0 LoL 重构 + devnotes 时间线补充）- 9 个 commit：reanotes b248924 02:49 feat(v0.7.0) 建立 pdf2blog-zh 论文转换工作流（100 文件 +2616/-675）<-- r1 关键 commit、reanotes 237baff 02:49 docs 记录 pdf2blog-zh skill 开发（1 文件 +26）；personal fc265e8 02:22 feat(v0.21.0) 英雄联盟板块重构为 RESG 全英雄数据驱动的英雄速查（187 文件 +4366/-237）、personal e499384 02:33 fix(v0.21.1) 补全 v0.21.0 遗漏的 34 个英雄小写头像（35 文件 +4）、personal c05cb51 02:49 style(lol) 英雄详情抽屉海克斯推荐改 2×2 网格并加宽至 700px（2 文件 +24/-2）；devnotes daa665e 02:26 feat(timeline) 补充英雄联盟 v0.21.0 与技能类时间线条目（3 文件 +76）/ e2fc27b 02:29 style(timeline) skill 类站点标识由「技能」改为 skill（2 文件 +4/-4）/ c82e796 02:34 feat(timeline) 补充熊窝 v0.21.1（1 文件 +9）/ 9299c40 02:38 style(timeline) 重写熊窝 v0.21.0 时间线为凝练摘要而非 commit message 搬运（1 文件 +6/-10）；session 内 chore：home 84c2fd5 00:56 chore(diary) 7/31 续补 + 8/1 占位",
+        "desc": "开发（r1 PDF to HTML skill 完成 + 熊窝 v0.21.0 LoL 重构 + devnotes 时间线补充）- 9 个 commit：reanotes b248924 02:49 feat(v0.7.0) 建立 pdf2blog-zh 论文转换工作流（100 文件 +2616/-675）<-- r1 关键 commit、reanotes 237baff 02:49 docs 记录 pdf2blog-zh skill 开发（1 文件 +26）；personal fc265e8 02:22 feat(v0.21.0) 英雄联盟板块重构为 RESG 全英雄数据驱动的英雄速查（187 文件 +4366/-237）、personal e499384 02:33 fix(v0.21.1) 补全 v0.21.0 遗漏的 34 个英雄小写头像（35 文件 +4）、personal c05cb51 02:49 style(lol) 英雄详情抽屉海克斯推荐改 2×2 网格并加宽至 700px（2 文件 +24/-2）；devnotes daa665e 02:26 feat(timeline) 补充英雄联盟 v0.21.0 与技能类时间线条目（3 文件 +76）/ e2fc27b 02:29 style(timeline) skill 类站点标识由「技能」改为 skill（2 文件 +4/-4）/ c82e796 02:34 feat(timeline) 补充熊窝 v0.21.1（1 文件 +9）/ 9299c40 02:38 style(timeline) 重写熊窝 v0.21.0 时间线为凝练摘要而非 commit message 搬运（1 文件 +6/-10）；session 内 chore：home 84c2fd5 00:56 chore(diary) 7/31 续补 + 8/1 占位 #area/dev",
         "isCooking": false,
         "mealType": null,
-        "dishGuess": null
+        "dishGuess": null,
+        "isStudy": true
       },
       {
         "status": "x",
@@ -5339,10 +5387,11 @@ export const diaryRecords = {
       {
         "status": "x",
         "time": "00:00-02:50",
-        "desc": "开发（多站点 v0.9.0/v0.21.2-v0.21.3/v0.22.0 + 赫兹档案 + 路由表移动端 + 抽屉式导航 + 时间线补充）- 11 个 commit：cats ab4dc3a 01:04 feat(v0.9.0) 补全赫兹档案与移动端体验（6 文件 +49/-20）；personal 9679b82 01:32 fix(v0.21.2) 优化路由表移动端体验（4 文件 +159/-18）、personal db4cb15 01:36 feat(routes) 新增链动小铺 1 链接（2 文件 +35/-9）、personal aede09a 01:36 feat(valorant) 移动端板块侧栏改为抽屉式导航（2 文件 +274/-80）、personal f71aacb 01:59 feat(v0.21.3) 英雄速查搜索支持英雄称号匹配（5 文件 +19/-4）、personal 4b782d3 02:44 feat(v0.22.0) 无畏契约战术库视觉升级（20 文件 +459/-497）；devnotes c4a20ab 01:04 docs 补充猫猫 v0.9.0 开发时间线（1 文件 +26）/ 75ffb3b 01:33 docs 补充熊窝 v0.21.2 时间线（1 文件 +13）/ 635d404 01:37 docs 记录 image-vision skill 开发时间线（1 文件 +30）/ b075454 02:00 feat(timeline) 补充熊窝 v0.21.3（1 文件 +13）/ 54d09ff 02:45 docs 记录 xhs-image-note skill 开发时间线（1 文件 +33）；session 内 chore 6 commit：home 4824f37 chore(todo) l7 处理甲醛 todo -> doing / 5ae9cb6 chore(todo) l8 赫兹复诊 / 6a3343e feat(food-map) 钟楼魏世纪 / bcae517 chore(diary) 8/1 17:30-24:00 / 05ddbac chore(diary) 8/1 16:53-17:30 / afe30a7 chore(diary) 8/1 15:40-16:53",
+        "desc": "开发（多站点 v0.9.0/v0.21.2-v0.21.3/v0.22.0 + 赫兹档案 + 路由表移动端 + 抽屉式导航 + 时间线补充）- 11 个 commit：cats ab4dc3a 01:04 feat(v0.9.0) 补全赫兹档案与移动端体验（6 文件 +49/-20）；personal 9679b82 01:32 fix(v0.21.2) 优化路由表移动端体验（4 文件 +159/-18）、personal db4cb15 01:36 feat(routes) 新增链动小铺 1 链接（2 文件 +35/-9）、personal aede09a 01:36 feat(valorant) 移动端板块侧栏改为抽屉式导航（2 文件 +274/-80）、personal f71aacb 01:59 feat(v0.21.3) 英雄速查搜索支持英雄称号匹配（5 文件 +19/-4）、personal 4b782d3 02:44 feat(v0.22.0) 无畏契约战术库视觉升级（20 文件 +459/-497）；devnotes c4a20ab 01:04 docs 补充猫猫 v0.9.0 开发时间线（1 文件 +26）/ 75ffb3b 01:33 docs 补充熊窝 v0.21.2 时间线（1 文件 +13）/ 635d404 01:37 docs 记录 image-vision skill 开发时间线（1 文件 +30）/ b075454 02:00 feat(timeline) 补充熊窝 v0.21.3（1 文件 +13）/ 54d09ff 02:45 docs 记录 xhs-image-note skill 开发时间线（1 文件 +33）；session 内 chore 6 commit：home 4824f37 chore(todo) l7 处理甲醛 todo -> doing / 5ae9cb6 chore(todo) l8 赫兹复诊 / 6a3343e feat(food-map) 钟楼魏世纪 / bcae517 chore(diary) 8/1 17:30-24:00 / 05ddbac chore(diary) 8/1 16:53-17:30 / afe30a7 chore(diary) 8/1 15:40-16:53 #area/dev",
         "isCooking": false,
         "mealType": null,
-        "dishGuess": null
+        "dishGuess": null,
+        "isStudy": true
       },
       {
         "status": "x",
@@ -5379,10 +5428,11 @@ export const diaryRecords = {
       {
         "status": "x",
         "time": "15:00-19:15",
-        "desc": "开发（个人 v0.23.0/v0.23.1 游戏板块迁移 + 追踪快照/数据链路修复 + devnotes 时间线补充 + 计算机网络知识库 + 多个 skill 时间线）- 15 个 commit：personal 61070bf 15:36 feat(tracker) 储蓄目标 10000 → 13028（2 文件 +34/-11）、personal c82f9cd 15:57 fix 移除游戏板块导航入口（1 文件 +1/-3）、personal 1f77a2e 16:04 refactor 移除已迁移的游戏板块（416 文件 +2/-4899）、personal 7e6dc49 16:04 fix 路由表切换自有域名并固定端口（3 文件 +6/-5）、personal 1ca8965 16:13 feat(v0.23.0) 暖纸路由视觉与游戏板块迁移（4 文件 +535/-8）、personal fdb2fa3 17:04 fix(v0.23.1) 天气弹窗与追踪快照一致性（14 文件 +681/-129）、personal ac3214b 17:51 fix 完善追踪看板每日数据链路（2 文件 +87/-33）、personal 0fad048 18:48 fix 修复追踪快照与历史统计（5 文件 +450/-84）；devnotes e64e487 15:49 docs 记录本地站点缓存重定向排查（2 文件 +38/-3）/ b90764a 16:13 docs 补充熊窝 v0.22.0 与 v0.23.0 时间线（2 文件 +47）/ 421fd6b 17:06 docs 补充 GameNotes v0.2.0 开发时间线（1 文件 +19）/ cc8fa96 19:05 docs 补充 GameNotes v0.2.1 开发时间线（1 文件 +19）/ 2358bf5 19:06 docs 完善计算机网络入门知识库内容（1 文件 +288/-9）/ d006775 19:08 docs 时间线记录 wx-article-note skill（微信文章解析）（1 文件 +43）；session 内 chore：home b953f04 16:54 feat(routes) 猪窝激活页 redirect 到每日追踪 / 1a55bcb 17:38 chore(diary) 8/2 续补 15:00-17:30",
+        "desc": "开发（个人 v0.23.0/v0.23.1 游戏板块迁移 + 追踪快照/数据链路修复 + devnotes 时间线补充 + 计算机网络知识库 + 多个 skill 时间线）- 15 个 commit：personal 61070bf 15:36 feat(tracker) 储蓄目标 10000 → 13028（2 文件 +34/-11）、personal c82f9cd 15:57 fix 移除游戏板块导航入口（1 文件 +1/-3）、personal 1f77a2e 16:04 refactor 移除已迁移的游戏板块（416 文件 +2/-4899）、personal 7e6dc49 16:04 fix 路由表切换自有域名并固定端口（3 文件 +6/-5）、personal 1ca8965 16:13 feat(v0.23.0) 暖纸路由视觉与游戏板块迁移（4 文件 +535/-8）、personal fdb2fa3 17:04 fix(v0.23.1) 天气弹窗与追踪快照一致性（14 文件 +681/-129）、personal ac3214b 17:51 fix 完善追踪看板每日数据链路（2 文件 +87/-33）、personal 0fad048 18:48 fix 修复追踪快照与历史统计（5 文件 +450/-84）；devnotes e64e487 15:49 docs 记录本地站点缓存重定向排查（2 文件 +38/-3）/ b90764a 16:13 docs 补充熊窝 v0.22.0 与 v0.23.0 时间线（2 文件 +47）/ 421fd6b 17:06 docs 补充 GameNotes v0.2.0 开发时间线（1 文件 +19）/ cc8fa96 19:05 docs 补充 GameNotes v0.2.1 开发时间线（1 文件 +19）/ 2358bf5 19:06 docs 完善计算机网络入门知识库内容（1 文件 +288/-9）/ d006775 19:08 docs 时间线记录 wx-article-note skill（微信文章解析）（1 文件 +43）；session 内 chore：home b953f04 16:54 feat(routes) 猪窝激活页 redirect 到每日追踪 / 1a55bcb 17:38 chore(diary) 8/2 续补 15:00-17:30 #area/dev",
         "isCooking": false,
         "mealType": null,
-        "dishGuess": null
+        "dishGuess": null,
+        "isStudy": true
       },
       {
         "status": "x",
@@ -5395,10 +5445,11 @@ export const diaryRecords = {
       {
         "status": "x",
         "time": "20:25-21:10",
-        "desc": "开发（个人 v0.24.0 追踪看板升级 + devnotes 时间线补充）- 4 个 commit：personal 8c313c4 20:29 fix(v0.24.0) 完善追踪看板数据链路与长期目标视图（8 文件 +2137/-129）；devnotes 783947b 20:28 docs 更新 MiniMax API Key 更换笔记（新增 Claude Code MCP 位置）（1 文件 +6/-4）/ 42ba6c9 20:28 docs 补充熊窝 v0.23.1 时间线（天气弹窗与追踪快照一致性）（1 文件 +24）/ 2c546e1 20:30 docs 补充熊窝 v0.24.0 开发时间线（1 文件 +22）",
+        "desc": "开发（个人 v0.24.0 追踪看板升级 + devnotes 时间线补充）- 4 个 commit：personal 8c313c4 20:29 fix(v0.24.0) 完善追踪看板数据链路与长期目标视图（8 文件 +2137/-129）；devnotes 783947b 20:28 docs 更新 MiniMax API Key 更换笔记（新增 Claude Code MCP 位置）（1 文件 +6/-4）/ 42ba6c9 20:28 docs 补充熊窝 v0.23.1 时间线（天气弹窗与追踪快照一致性）（1 文件 +24）/ 2c546e1 20:30 docs 补充熊窝 v0.24.0 开发时间线（1 文件 +22） #area/dev",
         "isCooking": false,
         "mealType": null,
-        "dishGuess": null
+        "dishGuess": null,
+        "isStudy": true
       },
       {
         "status": "x",
@@ -5416,10 +5467,11 @@ export const diaryRecords = {
       {
         "status": "x",
         "time": "00:00-01:15",
-        "desc": "开发（devnotes 时间线补充）- 1 个 commit：devnotes 67e4749 01:03 docs 补充游戏笔记 v0.3.0 开发时间线（3 文件 +29/-8）",
+        "desc": "开发（devnotes 时间线补充）- 1 个 commit：devnotes 67e4749 01:03 docs 补充游戏笔记 v0.3.0 开发时间线（3 文件 +29/-8） #area/dev",
         "isCooking": false,
         "mealType": null,
-        "dishGuess": null
+        "dishGuess": null,
+        "isStudy": true
       },
       {
         "status": "x",
@@ -5594,10 +5646,11 @@ export const diaryRecords = {
       {
         "status": "x",
         "time": "13:30-19:30",
-        "desc": "开发（devnotes 知识库重建 v0.9.0/v0.10.0/v0.10.1 + 个人路由表图标本地化 + lifenotes 菜谱新增小炒黄牛肉 + 多项 meta 更新）- 11 个 commit：devnotes f799335 15:02 feat 知识库渲染增强与内容更新（15 文件 +890/-200）、devnotes a491d04 15:01 docs(timeline) 补充熊窝 v0.24.1 时间线（1 文件 +21）、devnotes 3093879 15:08 feat(v0.9.0) 知识库渲染增强与写作体验优化（4 文件 +22/-3）、devnotes b44f4ae 17:20 feat(v0.10.0) 重建知识库分类体系（39 文件 +181/-130）、devnotes 6d5c9f6 18:57 docs bili-audio-transcribe skill 修复实录（1 文件 +47）、devnotes ccbb449 19:13 feat(v0.10.1) 统一知识库命名并增加排序（39 文件 +259/-94）；personal 70f7e6b 14:46 feat(v0.24.1) 路由表图标全面本地化，移除 Google favicon API 依赖（21 文件 +150/-21）；lifenotes b0b2ba5 14:15 feat(cooking) 家常菜谱新增第四节（牛肉炒玉米 + 冬阴功）（1 文件 +35）、lifenotes a763bc0 14:18 chore(meta) frontmatter 更新（1 文件 +4/-2）、lifenotes b11a1b2 14:22 feat(meta) 文章页渲染「发布于 X · 更新于 Y」对齐 devnotes（3 文件 +3/-3）、lifenotes 3985c74 19:06 feat 家常菜谱新增小炒黄牛肉与通用技巧章节（1 文件 +43/-4）；session 内 chore 9 commit：home 0c8ddd3 13:42 chore(utility) 8/5 电表 15.52 / fa91ebc 13:54 chore(diary+food-map) 8/4 续补 / 752f35e 14:00 feat(relationship) 西安 walk 德发兴约会 / 90dd0f7 14:04 chore(diary+food) 新建 8/5 / 6fd40a9 14:42 chore(todo) l10 看牙 / ac66edf 14:44 chore(todo) l11 不锈钢碗 / 9fd492f 15:05 chore(expense) 8/5 医疗保健 / ec66097 15:58 chore(todo) c8 服务器 / 84b880c 18:08 chore(todo) c9 番茄钟+仪表盘 / 871e023 18:45 chore(todo) c10 美食地图升级",
+        "desc": "开发（devnotes 知识库重建 v0.9.0/v0.10.0/v0.10.1 + 个人路由表图标本地化 + lifenotes 菜谱新增小炒黄牛肉 + 多项 meta 更新）- 11 个 commit：devnotes f799335 15:02 feat 知识库渲染增强与内容更新（15 文件 +890/-200）、devnotes a491d04 15:01 docs(timeline) 补充熊窝 v0.24.1 时间线（1 文件 +21）、devnotes 3093879 15:08 feat(v0.9.0) 知识库渲染增强与写作体验优化（4 文件 +22/-3）、devnotes b44f4ae 17:20 feat(v0.10.0) 重建知识库分类体系（39 文件 +181/-130）、devnotes 6d5c9f6 18:57 docs bili-audio-transcribe skill 修复实录（1 文件 +47）、devnotes ccbb449 19:13 feat(v0.10.1) 统一知识库命名并增加排序（39 文件 +259/-94）；personal 70f7e6b 14:46 feat(v0.24.1) 路由表图标全面本地化，移除 Google favicon API 依赖（21 文件 +150/-21）；lifenotes b0b2ba5 14:15 feat(cooking) 家常菜谱新增第四节（牛肉炒玉米 + 冬阴功）（1 文件 +35）、lifenotes a763bc0 14:18 chore(meta) frontmatter 更新（1 文件 +4/-2）、lifenotes b11a1b2 14:22 feat(meta) 文章页渲染「发布于 X · 更新于 Y」对齐 devnotes（3 文件 +3/-3）、lifenotes 3985c74 19:06 feat 家常菜谱新增小炒黄牛肉与通用技巧章节（1 文件 +43/-4）；session 内 chore 9 commit：home 0c8ddd3 13:42 chore(utility) 8/5 电表 15.52 / fa91ebc 13:54 chore(diary+food-map) 8/4 续补 / 752f35e 14:00 feat(relationship) 西安 walk 德发兴约会 / 90dd0f7 14:04 chore(diary+food) 新建 8/5 / 6fd40a9 14:42 chore(todo) l10 看牙 / ac66edf 14:44 chore(todo) l11 不锈钢碗 / 9fd492f 15:05 chore(expense) 8/5 医疗保健 / ec66097 15:58 chore(todo) c8 服务器 / 84b880c 18:08 chore(todo) c9 番茄钟+仪表盘 / 871e023 18:45 chore(todo) c10 美食地图升级 #area/dev",
         "isCooking": false,
         "mealType": null,
-        "dishGuess": null
+        "dishGuess": null,
+        "isStudy": true
       },
       {
         "status": "x",
@@ -5663,10 +5716,11 @@ export const diaryRecords = {
       {
         "status": "x",
         "time": "12:40-14:00",
-        "desc": "学习（南宁美食 + 记录今天日记随想）",
+        "desc": "学习（南宁美食 + 记录今天日记随想） #area/study",
         "isCooking": false,
         "mealType": null,
-        "dishGuess": null
+        "dishGuess": null,
+        "isStudy": true
       },
       {
         "status": "x",
@@ -5687,18 +5741,20 @@ export const diaryRecords = {
       {
         "status": "x",
         "time": "16:15-16:40",
-        "desc": "开发（devnotes 脚注/案例/v0.11.0 知识库重构 + 时间线补充 + lifenotes v0.9.4 schema 迁移 + 菜谱/合集/训练 多篇新内容 + 内容版本号升级）- 14 个 commit：devnotes 9767634 16:22 feat 优化脚注悬浮框与图片预览（2 文件 +245/-13）、devnotes ee011c7 16:22 fix 修复两格缩进脚注列表边界（1 文件 +57/-3）、devnotes 6f35ecd 16:22 refactor 重组随想文章分类（8 文件 +8/-69）、devnotes 45a5e82 16:24 refactor 合并开发资源合集（8 文件 +79/-146）、devnotes 17dcc70 16:24 docs 更新开发案例与视频字幕图像工作流（4 文件 +172/-11）、devnotes ddabeff 16:25 docs 补充游戏笔记 v0.3.1 开发时间线（1 文件 +24）、devnotes 8a44dc8 16:26 feat(v0.11.0) 重构知识库内容体系并增强 Markdown 阅读体验（4 文件 +43/-7）、devnotes 825757c 16:38 docs 常识笔记 v0.9.4 开发时间线 + OpenCode 模型路由配置（2 文件 +34/-3）；lifenotes eb44aa4 16:29 chore(meta) 内容 schema 迁移 date/updated 必填并补齐全量 frontmatter（35 文件 +67/-1）、lifenotes 8ca5272 16:30 feat(cooking) 家常菜谱新增爆炒鱿鱼/肉末茄子/煎牛排/腐乳炒空心菜（1 文件 +60/-1）、lifenotes c12798e 16:30 feat 新增西安地铁直达商场合集（2 文件 +170）、lifenotes 12258f0 16:30 feat 新增引体向上速成训练方法（1 文件 +28）、lifenotes fd7d569 16:30 feat 南宁美食探店链接暂存（1 文件 +15）、lifenotes 9ac5f76 16:32 chore v0.9.4 内容 schema 迁移（1 文件 +1/-1）；session 内 chore：home 43e14e1 16:20 chore(diary) 8/6 续补 15:00-16:15",
+        "desc": "开发（devnotes 脚注/案例/v0.11.0 知识库重构 + 时间线补充 + lifenotes v0.9.4 schema 迁移 + 菜谱/合集/训练 多篇新内容 + 内容版本号升级）- 14 个 commit：devnotes 9767634 16:22 feat 优化脚注悬浮框与图片预览（2 文件 +245/-13）、devnotes ee011c7 16:22 fix 修复两格缩进脚注列表边界（1 文件 +57/-3）、devnotes 6f35ecd 16:22 refactor 重组随想文章分类（8 文件 +8/-69）、devnotes 45a5e82 16:24 refactor 合并开发资源合集（8 文件 +79/-146）、devnotes 17dcc70 16:24 docs 更新开发案例与视频字幕图像工作流（4 文件 +172/-11）、devnotes ddabeff 16:25 docs 补充游戏笔记 v0.3.1 开发时间线（1 文件 +24）、devnotes 8a44dc8 16:26 feat(v0.11.0) 重构知识库内容体系并增强 Markdown 阅读体验（4 文件 +43/-7）、devnotes 825757c 16:38 docs 常识笔记 v0.9.4 开发时间线 + OpenCode 模型路由配置（2 文件 +34/-3）；lifenotes eb44aa4 16:29 chore(meta) 内容 schema 迁移 date/updated 必填并补齐全量 frontmatter（35 文件 +67/-1）、lifenotes 8ca5272 16:30 feat(cooking) 家常菜谱新增爆炒鱿鱼/肉末茄子/煎牛排/腐乳炒空心菜（1 文件 +60/-1）、lifenotes c12798e 16:30 feat 新增西安地铁直达商场合集（2 文件 +170）、lifenotes 12258f0 16:30 feat 新增引体向上速成训练方法（1 文件 +28）、lifenotes fd7d569 16:30 feat 南宁美食探店链接暂存（1 文件 +15）、lifenotes 9ac5f76 16:32 chore v0.9.4 内容 schema 迁移（1 文件 +1/-1）；session 内 chore：home 43e14e1 16:20 chore(diary) 8/6 续补 15:00-16:15 #area/dev",
         "isCooking": false,
         "mealType": null,
-        "dishGuess": null
+        "dishGuess": null,
+        "isStudy": true
       },
       {
         "status": "x",
         "time": "16:40-19:30",
-        "desc": "开发（cats 渣男改名赫兹 + 个人路由表链接更新 + devnotes 资源合集补充）- 4 个 commit：cats 9e17ff2 16:49 feat 水手/大头/漂亮橘各加 1 张新照片（7 文件 +3/-3）、cats 352ea8e 18:17 feat 渣男改名赫兹并加新照 + 漂亮橘加第 7 张照（12 文件 +5/-5）、personal 8592107 18:08 feat 路由表链动小铺站点链接更新指向开发资源合集（1 文件 +1/-2）、devnotes d2c1bf6 18:08 docs 开发资源合集补充 AI 订阅渠道链接（1 文件 +7）；session 内 chore 3 commit：home 537ad94 16:48 chore(diary) 8/6 续补 16:15-16:40 / b7392b1 18:03 chore(todo) l12 让大贝果取猫粮 / 88a9073 18:07 chore(expense) 8/6 通讯订阅/AI订阅 ¥24",
+        "desc": "开发（cats 渣男改名赫兹 + 个人路由表链接更新 + devnotes 资源合集补充）- 4 个 commit：cats 9e17ff2 16:49 feat 水手/大头/漂亮橘各加 1 张新照片（7 文件 +3/-3）、cats 352ea8e 18:17 feat 渣男改名赫兹并加新照 + 漂亮橘加第 7 张照（12 文件 +5/-5）、personal 8592107 18:08 feat 路由表链动小铺站点链接更新指向开发资源合集（1 文件 +1/-2）、devnotes d2c1bf6 18:08 docs 开发资源合集补充 AI 订阅渠道链接（1 文件 +7）；session 内 chore 3 commit：home 537ad94 16:48 chore(diary) 8/6 续补 16:15-16:40 / b7392b1 18:03 chore(todo) l12 让大贝果取猫粮 / 88a9073 18:07 chore(expense) 8/6 通讯订阅/AI订阅 ¥24 #area/dev",
         "isCooking": false,
         "mealType": null,
-        "dishGuess": null
+        "dishGuess": null,
+        "isStudy": true
       },
       {
         "status": "x",
@@ -5727,10 +5783,11 @@ export const diaryRecords = {
       {
         "status": "x",
         "time": "23:00-24:00",
-        "desc": "开发（home 视频视图改造为汇总视图 + 删除看板视频板块 + 归档 v10/devnotes 个人时间线 vCaptions 字幕插件）- 5 个 commit：home 4c5eeed 23:51 feat(todo) 每日看板视频视图改造为汇总视图（4 文件 +89/-44）、home f877ddf 23:53 chore(todo) 删除看板视频板块（2 文件 +1/-7）、home 84eefc3 23:54 chore(todo) 归档 v10 图表 skill 任务（2 文件 +2/-2）、devnotes c2317af 23:29 feat 个人开发时间线新增 vCaptions 字幕插件条目（1 文件 +25）、devnotes eca6fc8 00:02 docs 开发时间线记录 v1.6.1（1 文件 +30）；session 内 chore 3 commit：home 608fa6e 23:22 r2 归档 / 1fbe8a7 23:01 续补 16:40-23:00 / c54a080 00:05 归档 v2 v11 视频任务",
+        "desc": "开发（home 视频视图改造为汇总视图 + 删除看板视频板块 + 归档 v10/devnotes 个人时间线 vCaptions 字幕插件）- 5 个 commit：home 4c5eeed 23:51 feat(todo) 每日看板视频视图改造为汇总视图（4 文件 +89/-44）、home f877ddf 23:53 chore(todo) 删除看板视频板块（2 文件 +1/-7）、home 84eefc3 23:54 chore(todo) 归档 v10 图表 skill 任务（2 文件 +2/-2）、devnotes c2317af 23:29 feat 个人开发时间线新增 vCaptions 字幕插件条目（1 文件 +25）、devnotes eca6fc8 00:02 docs 开发时间线记录 v1.6.1（1 文件 +30）；session 内 chore 3 commit：home 608fa6e 23:22 r2 归档 / 1fbe8a7 23:01 续补 16:40-23:00 / c54a080 00:05 归档 v2 v11 视频任务 #area/dev",
         "isCooking": false,
         "mealType": null,
-        "dishGuess": null
+        "dishGuess": null,
+        "isStudy": true
       }
     ]
   },
@@ -5740,10 +5797,11 @@ export const diaryRecords = {
       {
         "status": "x",
         "time": "00:00-01:00",
-        "desc": "开发",
+        "desc": "开发 #area/dev",
         "isCooking": false,
         "mealType": null,
-        "dishGuess": null
+        "dishGuess": null,
+        "isStudy": true
       },
       {
         "status": "x",
@@ -5772,10 +5830,11 @@ export const diaryRecords = {
       {
         "status": "x",
         "time": "12:30-14:00",
-        "desc": "开发",
+        "desc": "开发 #area/dev",
         "isCooking": false,
         "mealType": null,
-        "dishGuess": null
+        "dishGuess": null,
+        "isStudy": true
       },
       {
         "status": "x",
@@ -5796,10 +5855,11 @@ export const diaryRecords = {
       {
         "status": "x",
         "time": "16:00-19:30",
-        "desc": "开发",
+        "desc": "开发 #area/dev",
         "isCooking": false,
         "mealType": null,
-        "dishGuess": null
+        "dishGuess": null,
+        "isStudy": true
       },
       {
         "status": "x",
@@ -5865,10 +5925,11 @@ export const diaryRecords = {
       {
         "status": "x",
         "time": "13:30-15:00",
-        "desc": "开发 + 学习（3 个 commit：home f8bb7a4 13:46 chore(utility) 8/8 电费剩余 13.03 元（1 文件 +1）；devnotes fd9d947 13:45 diary 补充爱情随想与故事悬浮框（1 文件 +64/-1）；personal a8d9fdd 14:03 feat 路由表娱乐分组更名购物娱乐，新增京东商城入口（3 文件 +11/-2））+ session 内学习）",
+        "desc": "开发 + 学习（3 个 commit：home f8bb7a4 13:46 chore(utility) 8/8 电费剩余 13.03 元（1 文件 +1）；devnotes fd9d947 13:45 diary 补充爱情随想与故事悬浮框（1 文件 +64/-1）；personal a8d9fdd 14:03 feat 路由表娱乐分组更名购物娱乐，新增京东商城入口（3 文件 +11/-2））+ session 内学习） #area/study #area/dev",
         "isCooking": false,
         "mealType": null,
-        "dishGuess": null
+        "dishGuess": null,
+        "isStudy": true
       },
       {
         "status": "x",
@@ -5889,10 +5950,11 @@ export const diaryRecords = {
       {
         "status": "x",
         "time": "23:15-24:00",
-        "desc": "开发（8 个 commit：home e07b0bb 23:19 chore(food-places) 删掉没去过的店只保留雷记/南铁/水街夜市 + 新增水街夜市（69 文件 +28/-1140）；home aa8bc70 23:49 fix(food-map) 恢复西安美食记录（18 文件 +284）；home e262f2e 23:57 feat(todo) 每日看板新增组会/京东 PLUS 积分/浏览器连接器研究三项待办（1 文件 +4/-1）；devnotes 3e0d250 23:40 feat 初稿新增编程语言综述（1 文件 +60）；devnotes c6bcffd 23:40 diary 随想随笔更新至 2026-08-09 初稿（1 文件 +9）；devnotes 1a78966 23:49 docs(debug) 记录猪窝美食地图排障（1 文件 +24）；cats 7a78c86 23:49 feat 赫兹加水手各加新照片（7 文件 +2/-2）；cats f96eb55 23:53 fix 水手4与赫兹5替换为新照片（4 文件 +0/-0））",
+        "desc": "开发（8 个 commit：home e07b0bb 23:19 chore(food-places) 删掉没去过的店只保留雷记/南铁/水街夜市 + 新增水街夜市（69 文件 +28/-1140）；home aa8bc70 23:49 fix(food-map) 恢复西安美食记录（18 文件 +284）；home e262f2e 23:57 feat(todo) 每日看板新增组会/京东 PLUS 积分/浏览器连接器研究三项待办（1 文件 +4/-1）；devnotes 3e0d250 23:40 feat 初稿新增编程语言综述（1 文件 +60）；devnotes c6bcffd 23:40 diary 随想随笔更新至 2026-08-09 初稿（1 文件 +9）；devnotes 1a78966 23:49 docs(debug) 记录猪窝美食地图排障（1 文件 +24）；cats 7a78c86 23:49 feat 赫兹加水手各加新照片（7 文件 +2/-2）；cats f96eb55 23:53 fix 水手4与赫兹5替换为新照片（4 文件 +0/-0）） #area/dev",
         "isCooking": false,
         "mealType": null,
-        "dishGuess": null
+        "dishGuess": null,
+        "isStudy": true
       }
     ]
   },
@@ -5902,10 +5964,11 @@ export const diaryRecords = {
       {
         "status": "x",
         "time": "00:00-01:15",
-        "desc": "开发（8 个 commit：lifenotes d1e9c79 00:06 feat 新增猫咪价格速查表（金吉拉询价，南宁水街，含售后信息）（1 文件 +21）；home cd82449 00:07 chore(diary) 8/8 横县看爷爷奶奶 + 水街夜市（1 文件 +45）；home c3a8b41 00:07 chore(expense) 8/8 水街夜市 3 笔 ¥28（1 文件 +21）；home 2b06c24 00:48 feat(todo) 新增 B 站视频项目复现任务（BV11mNA6vEJX，8/10）（1 文件 +1）；home 45e8490 01:15 chore(todo) 细化 l1 做相册步骤（1 文件 +1/-1）；personal be696ba 00:12 feat 完善生活仪表盘追踪看板（2 文件 +363/-225）；personal 0c3d9f8 00:21 feat 调整生活仪表盘每日习惯（1 文件 +7/-8）；personal 8ed04e8 00:36 chore 升级生活仪表盘版本至 0.24.2（2 文件 +3/-3））",
+        "desc": "开发（8 个 commit：lifenotes d1e9c79 00:06 feat 新增猫咪价格速查表（金吉拉询价，南宁水街，含售后信息）（1 文件 +21）；home cd82449 00:07 chore(diary) 8/8 横县看爷爷奶奶 + 水街夜市（1 文件 +45）；home c3a8b41 00:07 chore(expense) 8/8 水街夜市 3 笔 ¥28（1 文件 +21）；home 2b06c24 00:48 feat(todo) 新增 B 站视频项目复现任务（BV11mNA6vEJX，8/10）（1 文件 +1）；home 45e8490 01:15 chore(todo) 细化 l1 做相册步骤（1 文件 +1/-1）；personal be696ba 00:12 feat 完善生活仪表盘追踪看板（2 文件 +363/-225）；personal 0c3d9f8 00:21 feat 调整生活仪表盘每日习惯（1 文件 +7/-8）；personal 8ed04e8 00:36 chore 升级生活仪表盘版本至 0.24.2（2 文件 +3/-3）） #area/dev",
         "isCooking": false,
         "mealType": null,
-        "dishGuess": null
+        "dishGuess": null,
+        "isStudy": true
       },
       {
         "status": "x",
@@ -5942,10 +6005,11 @@ export const diaryRecords = {
       {
         "status": "x",
         "time": "15:00-19:00",
-        "desc": "研究别人的网站架构",
+        "desc": "研究别人的网站架构 #area/study",
         "isCooking": false,
         "mealType": null,
-        "dishGuess": null
+        "dishGuess": null,
+        "isStudy": true
       },
       {
         "status": "x",
@@ -5974,10 +6038,11 @@ export const diaryRecords = {
       {
         "status": "x",
         "time": "23:00-24:00",
-        "desc": "开发",
+        "desc": "开发 #area/dev",
         "isCooking": false,
         "mealType": null,
-        "dishGuess": null
+        "dishGuess": null,
+        "isStudy": true
       }
     ]
   },
@@ -5987,10 +6052,11 @@ export const diaryRecords = {
       {
         "status": "x",
         "time": "00:00-01:15",
-        "desc": "开发（14 个 commit：Astro 7 全站点升级批次——devnotes 52e2026 22:50 docs: 补充 Astro 7 版本时间线；devnotes 418c13b 22:46 feat(v0.12.0): 升级 Astro 7 并提交第32周随笔；home 7fdbb88 22:24 chore(diary): 8/9 记录开发/睡觉/吃饭/逛街 + 奶茶/宝宝礼物/AI 订阅 + 电费 12.04 + 新增 explore.poker-plus 会员；home 7e2ad21 22:31 feat(v1.8.0): 升级 Astro 7 并迁移内容集合；home a6014f5 22:40 chore(todo): l12/l14 完成归档（取猫粮 + 大组会）；reanotes 3196bdd 22:58 feat(v0.8.0): 升级 Astro 7 并迁移内容集合；devnotes 5b48af6 22:59 docs: 补充 ReaNotes v0.8.0 时间线；lifenotes 2fe753b 23:05 feat(v0.10.0): 升级 Astro 7 并迁移内容集合；devnotes 83d96df 23:06 docs: 补充常识笔记 v0.10.0 时间线；cats b02dd41 23:07 feat(v0.10.0): 升级 Astro 7 内容集合；devnotes 9c9a82b 23:08 docs: 补充猫猫 v0.10.0 时间线；personal c116cd0 23:09 feat(v0.25.0): 升级 Astro 7 运行环境；devnotes 3f6ab6e 23:10 docs: 补充熊窝 v0.25.0 时间线；devnotes 43839ad 23:12 docs: 补充游戏笔记 v0.4.0 时间线）",
+        "desc": "开发（14 个 commit：Astro 7 全站点升级批次——devnotes 52e2026 22:50 docs: 补充 Astro 7 版本时间线；devnotes 418c13b 22:46 feat(v0.12.0): 升级 Astro 7 并提交第32周随笔；home 7fdbb88 22:24 chore(diary): 8/9 记录开发/睡觉/吃饭/逛街 + 奶茶/宝宝礼物/AI 订阅 + 电费 12.04 + 新增 explore.poker-plus 会员；home 7e2ad21 22:31 feat(v1.8.0): 升级 Astro 7 并迁移内容集合；home a6014f5 22:40 chore(todo): l12/l14 完成归档（取猫粮 + 大组会）；reanotes 3196bdd 22:58 feat(v0.8.0): 升级 Astro 7 并迁移内容集合；devnotes 5b48af6 22:59 docs: 补充 ReaNotes v0.8.0 时间线；lifenotes 2fe753b 23:05 feat(v0.10.0): 升级 Astro 7 并迁移内容集合；devnotes 83d96df 23:06 docs: 补充常识笔记 v0.10.0 时间线；cats b02dd41 23:07 feat(v0.10.0): 升级 Astro 7 内容集合；devnotes 9c9a82b 23:08 docs: 补充猫猫 v0.10.0 时间线；personal c116cd0 23:09 feat(v0.25.0): 升级 Astro 7 运行环境；devnotes 3f6ab6e 23:10 docs: 补充熊窝 v0.25.0 时间线；devnotes 43839ad 23:12 docs: 补充游戏笔记 v0.4.0 时间线） #area/dev",
         "isCooking": false,
         "mealType": null,
-        "dishGuess": null
+        "dishGuess": null,
+        "isStudy": true
       },
       {
         "status": "x",
@@ -6088,10 +6154,11 @@ export const diaryRecords = {
       {
         "status": "x",
         "time": "11:00-12:00",
-        "desc": "开发（美食地图搜索框与筛选弹窗）",
+        "desc": "开发（美食地图搜索框与筛选弹窗） #area/dev",
         "isCooking": false,
         "mealType": null,
-        "dishGuess": null
+        "dishGuess": null,
+        "isStudy": true
       },
       {
         "status": "x",
@@ -6112,10 +6179,11 @@ export const diaryRecords = {
       {
         "status": "x",
         "time": "15:00-17:30",
-        "desc": "开发",
+        "desc": "开发 #area/dev",
         "isCooking": false,
         "mealType": null,
-        "dishGuess": null
+        "dishGuess": null,
+        "isStudy": true
       },
       {
         "status": "x",
@@ -6144,10 +6212,11 @@ export const diaryRecords = {
       {
         "status": "x",
         "time": "23:30-24:00",
-        "desc": "开发",
+        "desc": "开发 #area/dev",
         "isCooking": false,
         "mealType": null,
-        "dishGuess": null
+        "dishGuess": null,
+        "isStudy": true
       }
     ]
   },
@@ -6157,10 +6226,11 @@ export const diaryRecords = {
       {
         "status": "x",
         "time": "00:00-01:30",
-        "desc": "开发（lifenotes 7e28157 00:23 沟通笔记；home 34f5b9d 00:46 看板更新）",
+        "desc": "开发（lifenotes 7e28157 00:23 沟通笔记；home 34f5b9d 00:46 看板更新） #area/dev",
         "isCooking": false,
         "mealType": null,
-        "dishGuess": null
+        "dishGuess": null,
+        "isStudy": true
       },
       {
         "status": "x",
@@ -6181,10 +6251,11 @@ export const diaryRecords = {
       {
         "status": "x",
         "time": "10:40-13:20",
-        "desc": "开发（chatnotes 60a562f 11:14 v0.3.0 UI 收束；devnotes efecf5d 11:15 UI 时间线、71062a0 13:20 浏览器连接器实测）",
+        "desc": "开发（chatnotes 60a562f 11:14 v0.3.0 UI 收束；devnotes efecf5d 11:15 UI 时间线、71062a0 13:20 浏览器连接器实测） #area/dev",
         "isCooking": false,
         "mealType": null,
-        "dishGuess": null
+        "dishGuess": null,
+        "isStudy": true
       },
       {
         "status": "x",
@@ -6197,10 +6268,11 @@ export const diaryRecords = {
       {
         "status": "x",
         "time": "14:10-19:30",
-        "desc": "开发（devnotes a621a3f 15:41 ChatNotes 双栏滚动）",
+        "desc": "开发（devnotes a621a3f 15:41 ChatNotes 双栏滚动） #area/dev",
         "isCooking": false,
         "mealType": null,
-        "dishGuess": null
+        "dishGuess": null,
+        "isStudy": true
       },
       {
         "status": "x",
@@ -6213,10 +6285,11 @@ export const diaryRecords = {
       {
         "status": "x",
         "time": "20:00-21:30",
-        "desc": "开发",
+        "desc": "开发 #area/dev",
         "isCooking": false,
         "mealType": null,
-        "dishGuess": null
+        "dishGuess": null,
+        "isStudy": true
       },
       {
         "status": "x",
@@ -6298,10 +6371,11 @@ export const diaryRecords = {
       {
         "status": "x",
         "time": "15:20-17:20",
-        "desc": "开发",
+        "desc": "开发 #area/dev",
         "isCooking": false,
         "mealType": null,
-        "dishGuess": null
+        "dishGuess": null,
+        "isStudy": true
       },
       {
         "status": "x",
@@ -6367,10 +6441,11 @@ export const diaryRecords = {
       {
         "status": "x",
         "time": "10:30-12:30",
-        "desc": "开发（home 69c8329 10:46 扇贝会员+8/14记录、175f2ed 11:07 琅西归档+美食；chatnotes cc62130 12:48 节点交互；lifenotes 9475220 11:47 博客目录布局；devnotes 16f71b9 11:36 博客宽度调试）",
+        "desc": "开发（home 69c8329 10:46 扇贝会员+8/14记录、175f2ed 11:07 琅西归档+美食；chatnotes cc62130 12:48 节点交互；lifenotes 9475220 11:47 博客目录布局；devnotes 16f71b9 11:36 博客宽度调试） #area/dev",
         "isCooking": false,
         "mealType": null,
-        "dishGuess": null
+        "dishGuess": null,
+        "isStudy": true
       },
       {
         "status": "x",
@@ -6383,10 +6458,11 @@ export const diaryRecords = {
       {
         "status": "x",
         "time": "14:00-19:30",
-        "desc": "开发（chatnotes c629e69 15:09 联网核查卡片；lifenotes 95bb161 16:58 v1.0.0、13b6969 19:39 v1.1.0 CMS 升级；devnotes 9d37d68 16:23 设计笔记、ce5690f/ba5cbc9/67a4fc8/db84a78/ae757df/caf1ca4/fcc4f29 17:02-18:32 时间线 UI、f4c4296 19:40 LifeNotes v1.1.0）",
+        "desc": "开发（chatnotes c629e69 15:09 联网核查卡片；lifenotes 95bb161 16:58 v1.0.0、13b6969 19:39 v1.1.0 CMS 升级；devnotes 9d37d68 16:23 设计笔记、ce5690f/ba5cbc9/67a4fc8/db84a78/ae757df/caf1ca4/fcc4f29 17:02-18:32 时间线 UI、f4c4296 19:40 LifeNotes v1.1.0） #area/dev",
         "isCooking": false,
         "mealType": null,
-        "dishGuess": null
+        "dishGuess": null,
+        "isStudy": true
       },
       {
         "status": "x",
@@ -6428,10 +6504,11 @@ export const diaryRecords = {
       {
         "status": "x",
         "time": "00:40-01:30",
-        "desc": "进行了一些开发",
+        "desc": "进行了一些开发 #area/dev",
         "isCooking": false,
         "mealType": null,
-        "dishGuess": null
+        "dishGuess": null,
+        "isStudy": true
       },
       {
         "status": "x",
@@ -6460,10 +6537,11 @@ export const diaryRecords = {
       {
         "status": "x",
         "time": "13:30-15:00",
-        "desc": "开发",
+        "desc": "开发 #area/dev",
         "isCooking": false,
         "mealType": null,
-        "dishGuess": null
+        "dishGuess": null,
+        "isStudy": true
       },
       {
         "status": "x",
@@ -6476,10 +6554,11 @@ export const diaryRecords = {
       {
         "status": "x",
         "time": "16:30-19:00",
-        "desc": "开发",
+        "desc": "开发 #area/dev",
         "isCooking": false,
         "mealType": null,
-        "dishGuess": null
+        "dishGuess": null,
+        "isStudy": true
       },
       {
         "status": "x",
@@ -6545,10 +6624,11 @@ export const diaryRecords = {
       {
         "status": "x",
         "time": "13:00-18:30",
-        "desc": "开发（重度开发：chatnotes 重构阅读区与卡片视觉、完善工作区与卡片交互、接入 AI 网关与模型路由（新增 MiniMax/deepseek 接口与本地 agent bridge）；lifenotes 新增 AI 灰产术语笔记并调整 CMS 排序；home 设置浏览器标签图标、美食地图新增晶隆烧烤；devnotes 补充 ChatNotes 与猫猫站 v0.12 开发时间线、统一内容库字段与命名体系、新增本地内容管理后台）",
+        "desc": "开发（重度开发：chatnotes 重构阅读区与卡片视觉、完善工作区与卡片交互、接入 AI 网关与模型路由（新增 MiniMax/deepseek 接口与本地 agent bridge）；lifenotes 新增 AI 灰产术语笔记并调整 CMS 排序；home 设置浏览器标签图标、美食地图新增晶隆烧烤；devnotes 补充 ChatNotes 与猫猫站 v0.12 开发时间线、统一内容库字段与命名体系、新增本地内容管理后台） #area/dev",
         "isCooking": false,
         "mealType": null,
-        "dishGuess": null
+        "dishGuess": null,
+        "isStudy": true
       },
       {
         "status": "x",
@@ -6569,10 +6649,11 @@ export const diaryRecords = {
       {
         "status": "x",
         "time": "22:40-24:00",
-        "desc": "进行开发（devnotes 新增配置记录「Harness-本地任务分配路由」并重构开发资源合集为领域分组、新增霸王茶姬全栈 demo、优化 Markdown 编辑器光标留白；lifenotes 同步优化 Markdown 编辑器光标留白、更新南宁美食集合描述）",
+        "desc": "进行开发（devnotes 新增配置记录「Harness-本地任务分配路由」并重构开发资源合集为领域分组、新增霸王茶姬全栈 demo、优化 Markdown 编辑器光标留白；lifenotes 同步优化 Markdown 编辑器光标留白、更新南宁美食集合描述） #area/dev",
         "isCooking": false,
         "mealType": null,
-        "dishGuess": null
+        "dishGuess": null,
+        "isStudy": true
       }
     ]
   },
@@ -6667,10 +6748,11 @@ export const diaryRecords = {
       {
         "status": "x",
         "time": "13:00-14:00",
-        "desc": "开发（home：美食地图新增姜胖胖自助烤肉、久雀棋牌（江南万达），category 枚举扩充含棋牌娱乐）",
+        "desc": "开发（home：美食地图新增姜胖胖自助烤肉、久雀棋牌（江南万达），category 枚举扩充含棋牌娱乐） #area/dev",
         "isCooking": false,
         "mealType": null,
-        "dishGuess": null
+        "dishGuess": null,
+        "isStudy": true
       },
       {
         "status": "x",
@@ -6683,18 +6765,20 @@ export const diaryRecords = {
       {
         "status": "x",
         "time": "15:30-17:50",
-        "desc": "开发（devnotes：补全个人开发时间线视觉档案，为猫猫/猪窝/GameNotes/常识/科研/熊窝/ChatNotes/开发笔记各站点补全历史 UI 时间线、持久化开发时间线分页状态，发布 v0.15.0，补写第 33/34 周随笔）",
+        "desc": "开发（devnotes：补全个人开发时间线视觉档案，为猫猫/猪窝/GameNotes/常识/科研/熊窝/ChatNotes/开发笔记各站点补全历史 UI 时间线、持久化开发时间线分页状态，发布 v0.15.0，补写第 33/34 周随笔） #area/dev",
         "isCooking": false,
         "mealType": null,
-        "dishGuess": null
+        "dishGuess": null,
+        "isStudy": true
       },
       {
         "status": "x",
         "time": "17:50-19:30",
-        "desc": "开发（home：美食地图新增布拉王（七星直营店·中山街道·推荐，含韭菜虾肉肠粉），整理 c14 归档、c10 备注细化、相册重构为 AlbumPage；devnotes：合并月度随笔并统一列表样式，完善后台编辑体验并发布 v0.15.1，补充个人开发时间线与 UI 设计与审美基础知识）",
+        "desc": "开发（home：美食地图新增布拉王（七星直营店·中山街道·推荐，含韭菜虾肉肠粉），整理 c14 归档、c10 备注细化、相册重构为 AlbumPage；devnotes：合并月度随笔并统一列表样式，完善后台编辑体验并发布 v0.15.1，补充个人开发时间线与 UI 设计与审美基础知识） #area/dev",
         "isCooking": false,
         "mealType": null,
-        "dishGuess": null
+        "dishGuess": null,
+        "isStudy": true
       },
       {
         "status": "x",
@@ -6707,10 +6791,11 @@ export const diaryRecords = {
       {
         "status": "x",
         "time": "20:20-20:40",
-        "desc": "开发收尾（devnotes：清理脚注悬浮窗回链；lifenotes：对齐常识笔记 Markdown 预览）",
+        "desc": "开发收尾（devnotes：清理脚注悬浮窗回链；lifenotes：对齐常识笔记 Markdown 预览） #area/dev",
         "isCooking": false,
         "mealType": null,
-        "dishGuess": null
+        "dishGuess": null,
+        "isStudy": true
       },
       {
         "status": "x",
@@ -6784,10 +6869,11 @@ export const diaryRecords = {
       {
         "status": "x",
         "time": "14:00-18:00",
-        "desc": "开发（devnotes：补充猫猫站 v0.13.0 的首页视觉时间线、UI 交互态截图）",
+        "desc": "开发（devnotes：补充猫猫站 v0.13.0 的首页视觉时间线、UI 交互态截图） #area/dev",
         "isCooking": false,
         "mealType": null,
-        "dishGuess": null
+        "dishGuess": null,
+        "isStudy": true
       },
       {
         "status": "x",
@@ -6837,10 +6923,11 @@ export const diaryRecords = {
       {
         "status": "x",
         "time": "09:00-10:20",
-        "desc": "开发（lifenotes：完善常识笔记后台编辑体验与存量内容（v1.1.2）、按更新时间排序常识笔记列表、优化笔记打印与 PDF 导出；devnotes：补充常识笔记 v1.1.2 开发时间线）",
+        "desc": "开发（lifenotes：完善常识笔记后台编辑体验与存量内容（v1.1.2）、按更新时间排序常识笔记列表、优化笔记打印与 PDF 导出；devnotes：补充常识笔记 v1.1.2 开发时间线） #area/dev",
         "isCooking": false,
         "mealType": null,
-        "dishGuess": null
+        "dishGuess": null,
+        "isStudy": true
       },
       {
         "status": "x",
@@ -6853,10 +6940,11 @@ export const diaryRecords = {
       {
         "status": "x",
         "time": "10:40-13:00",
-        "desc": "去图书馆学习，探索人工智能综述",
+        "desc": "去图书馆学习，探索人工智能综述 #area/study",
         "isCooking": false,
         "mealType": null,
-        "dishGuess": null
+        "dishGuess": null,
+        "isStudy": true
       },
       {
         "status": "x",
@@ -6885,10 +6973,11 @@ export const diaryRecords = {
       {
         "status": "x",
         "time": "20:30-23:30",
-        "desc": "开发（home：美食地图新增 Together Coffee（新竹路·推荐）、方几咖啡（民族广场·想去）；lifenotes：新增咖啡科普笔记）",
+        "desc": "开发（home：美食地图新增 Together Coffee（新竹路·推荐）、方几咖啡（民族广场·想去）；lifenotes：新增咖啡科普笔记） #area/dev",
         "isCooking": false,
         "mealType": null,
-        "dishGuess": null
+        "dishGuess": null,
+        "isStudy": true
       },
       {
         "status": "x",
@@ -6930,10 +7019,11 @@ export const diaryRecords = {
       {
         "status": "x",
         "time": "09:00-09:30",
-        "desc": "开发聊天站（chatnotes：增加 Dots 路由与回答模式、完善工作区批量操作与关系视图）",
+        "desc": "开发聊天站（chatnotes：增加 Dots 路由与回答模式、完善工作区批量操作与关系视图） #area/dev",
         "isCooking": false,
         "mealType": null,
-        "dishGuess": null
+        "dishGuess": null,
+        "isStudy": true
       },
       {
         "status": "x",
@@ -6946,10 +7036,11 @@ export const diaryRecords = {
       {
         "status": "x",
         "time": "11:00-13:00",
-        "desc": "在区图自习，进行开发（devnotes：更新开发知识库内容、补充八月随笔、修正后台预览区底部留白、发布 v0.15.3 增加后台自动保存、补充自动保存开发时间线、按大版本判断时间线缺口；lifenotes：v1.1.3 增加后台自动保存、重整沟通技巧笔记）",
+        "desc": "在区图自习，进行开发（devnotes：更新开发知识库内容、补充八月随笔、修正后台预览区底部留白、发布 v0.15.3 增加后台自动保存、补充自动保存开发时间线、按大版本判断时间线缺口；lifenotes：v1.1.3 增加后台自动保存、重整沟通技巧笔记） #area/study #area/dev",
         "isCooking": false,
         "mealType": null,
-        "dishGuess": null
+        "dishGuess": null,
+        "isStudy": true
       },
       {
         "status": "x",
@@ -6970,10 +7061,11 @@ export const diaryRecords = {
       {
         "status": "x",
         "time": "14:15-17:00",
-        "desc": "开发",
+        "desc": "开发 #area/dev",
         "isCooking": false,
         "mealType": null,
-        "dishGuess": null
+        "dishGuess": null,
+        "isStudy": true
       },
       {
         "status": "x",
@@ -6994,10 +7086,11 @@ export const diaryRecords = {
       {
         "status": "x",
         "time": "18:30-19:30",
-        "desc": "学习",
+        "desc": "学习 #area/study",
         "isCooking": false,
         "mealType": null,
-        "dishGuess": null
+        "dishGuess": null,
+        "isStudy": true
       },
       {
         "status": "x",
@@ -7164,10 +7257,11 @@ export const diaryRecords = {
       {
         "status": "x",
         "time": "13:30-18:00",
-        "desc": "边开大组会，边思考学习，整理日程支出，开发学习思考",
+        "desc": "边开大组会，边思考学习，整理日程支出，开发学习思考 #area/study #area/dev",
         "isCooking": false,
         "mealType": null,
-        "dishGuess": null
+        "dishGuess": null,
+        "isStudy": true
       },
       {
         "status": "x",
@@ -7265,10 +7359,11 @@ export const diaryRecords = {
       {
         "status": "x",
         "time": "16:00-18:40",
-        "desc": "学了一会",
+        "desc": "学了一会 #area/study",
         "isCooking": false,
         "mealType": null,
-        "dishGuess": null
+        "dishGuess": null,
+        "isStudy": true
       },
       {
         "status": "x",
@@ -7289,10 +7384,11 @@ export const diaryRecords = {
       {
         "status": "x",
         "time": "22:20-24:00",
-        "desc": "做课件",
+        "desc": "做课件 #area/study",
         "isCooking": false,
         "mealType": null,
-        "dishGuess": null
+        "dishGuess": null,
+        "isStudy": true
       }
     ]
   },
@@ -7302,10 +7398,11 @@ export const diaryRecords = {
       {
         "status": "x",
         "time": "00:00-02:00",
-        "desc": "搞 PPT（做大模型扩展能力的 PPT）",
+        "desc": "搞 PPT（做大模型扩展能力的 PPT） #area/study",
         "isCooking": false,
         "mealType": null,
-        "dishGuess": null
+        "dishGuess": null,
+        "isStudy": true
       },
       {
         "status": "x",
@@ -7318,10 +7415,11 @@ export const diaryRecords = {
       {
         "status": "x",
         "time": "07:00-15:00",
-        "desc": "搞 PPT（继续做大模型扩展能力的 PPT，累计用时 10 小时：0-2 点 2 小时 + 7-15 点 8 小时）",
+        "desc": "搞 PPT（继续做大模型扩展能力的 PPT，累计用时 10 小时：0-2 点 2 小时 + 7-15 点 8 小时） #area/study",
         "isCooking": false,
         "mealType": null,
-        "dishGuess": null
+        "dishGuess": null,
+        "isStudy": true
       },
       {
         "status": "x",
@@ -7334,10 +7432,11 @@ export const diaryRecords = {
       {
         "status": "x",
         "time": "16:00-16:30",
-        "desc": "点了一个不保存，继续改 PPT，暂时改到满意了一版",
+        "desc": "点了一个不保存，继续改 PPT，暂时改到满意了一版 #area/study",
         "isCooking": false,
         "mealType": null,
-        "dishGuess": null
+        "dishGuess": null,
+        "isStudy": true
       },
       {
         "status": "x",
@@ -7435,10 +7534,11 @@ export const diaryRecords = {
       {
         "status": "x",
         "time": "18:45-20:00",
-        "desc": "学了一会，整理了一下之前的笔记",
+        "desc": "学了一会，整理了一下之前的笔记 #area/study",
         "isCooking": false,
         "mealType": null,
-        "dishGuess": null
+        "dishGuess": null,
+        "isStudy": true
       },
       {
         "status": "x",
@@ -7467,10 +7567,11 @@ export const diaryRecords = {
       {
         "status": "x",
         "time": "23:20-24:00",
-        "desc": "学习",
+        "desc": "学习 #area/study",
         "isCooking": false,
         "mealType": null,
-        "dishGuess": null
+        "dishGuess": null,
+        "isStudy": true
       }
     ]
   },
@@ -7480,10 +7581,11 @@ export const diaryRecords = {
       {
         "status": "x",
         "time": "00:00-01:00",
-        "desc": "学习开发更新游戏",
+        "desc": "学习开发更新游戏 #area/study #area/dev",
         "isCooking": false,
         "mealType": null,
-        "dishGuess": null
+        "dishGuess": null,
+        "isStudy": true
       },
       {
         "status": "x",
@@ -7496,10 +7598,11 @@ export const diaryRecords = {
       {
         "status": "x",
         "time": "09:00-11:00",
-        "desc": "学习和构建 PPT 思路",
+        "desc": "学习和构建 PPT 思路 #area/study",
         "isCooking": false,
         "mealType": null,
-        "dishGuess": null
+        "dishGuess": null,
+        "isStudy": true
       },
       {
         "status": "x",
@@ -7528,10 +7631,11 @@ export const diaryRecords = {
       {
         "status": "x",
         "time": "13:20-18:30",
-        "desc": "学习，制作大组会的 PPT",
+        "desc": "学习，制作大组会的 PPT #area/study",
         "isCooking": false,
         "mealType": null,
-        "dishGuess": null
+        "dishGuess": null,
+        "isStudy": true
       },
       {
         "status": "x",
@@ -7568,10 +7672,11 @@ export const diaryRecords = {
       {
         "status": "x",
         "time": "20:40-23:00",
-        "desc": "做课件",
+        "desc": "做课件 #area/study",
         "isCooking": false,
         "mealType": null,
-        "dishGuess": null
+        "dishGuess": null,
+        "isStudy": true
       },
       {
         "status": "x",
@@ -7605,10 +7710,11 @@ export const diaryRecords = {
       {
         "status": "x",
         "time": "10:00-12:20",
-        "desc": "学习（进行了一些站点改动，主要是对每个站点的侧边栏进行逻辑修改，增加\"非悬停时折叠，悬停时展开\"的逻辑）",
+        "desc": "学习（进行了一些站点改动，主要是对每个站点的侧边栏进行逻辑修改，增加\"非悬停时折叠，悬停时展开\"的逻辑） #area/study #area/dev",
         "isCooking": false,
         "mealType": null,
-        "dishGuess": null
+        "dishGuess": null,
+        "isStudy": true
       },
       {
         "status": "x",
@@ -7621,10 +7727,11 @@ export const diaryRecords = {
       {
         "status": "x",
         "time": "13:10-17:00",
-        "desc": "学习和开发（多站点侧边栏折叠/展开交互与品牌区升级：home 侧边栏品牌区视觉升级 v1.11.0、整理活跃看板清单（6 归档+5 清理+c11→生活）；lifenotes 默认折叠侧边栏与品牌区升级 v1.4.0、统一常识笔记内容结构 v1.3.0、省钱速查补京东 PLUS 积分兑换；devnotes 侧边栏交互与站点 UI 留档升级 v0.17.0、对齐知识库字段并记录常识笔记 v1.3.0；cats 默认折叠侧边栏并统一展开交互 v0.14.0；home 收支分类归一化脚本与看板 c15 链接更新）",
+        "desc": "学习和开发（多站点侧边栏折叠/展开交互与品牌区升级：home 侧边栏品牌区视觉升级 v1.11.0、整理活跃看板清单（6 归档+5 清理+c11→生活）；lifenotes 默认折叠侧边栏与品牌区升级 v1.4.0、统一常识笔记内容结构 v1.3.0、省钱速查补京东 PLUS 积分兑换；devnotes 侧边栏交互与站点 UI 留档升级 v0.17.0、对齐知识库字段并记录常识笔记 v1.3.0；cats 默认折叠侧边栏并统一展开交互 v0.14.0；home 收支分类归一化脚本与看板 c15 链接更新） #area/study #area/dev",
         "isCooking": false,
         "mealType": null,
-        "dishGuess": null
+        "dishGuess": null,
+        "isStudy": true
       },
       {
         "status": "x",
@@ -7645,10 +7752,11 @@ export const diaryRecords = {
       {
         "status": "x",
         "time": "20:00-21:00",
-        "desc": "学习",
+        "desc": "学习 #area/study",
         "isCooking": false,
         "mealType": null,
-        "dishGuess": null
+        "dishGuess": null,
+        "isStudy": true
       },
       {
         "status": "x",
@@ -7682,10 +7790,11 @@ export const diaryRecords = {
       {
         "status": "x",
         "time": "10:00-12:40",
-        "desc": "开发和学习了，换购了一个 token plan，从 MiniMax 的 token plan 换到了火山方舟的 coding plan，更新了相关配置和文档（devnotes：更新开发笔记内容与 Debug Markdown）",
+        "desc": "开发和学习了，换购了一个 token plan，从 MiniMax 的 token plan 换到了火山方舟的 coding plan，更新了相关配置和文档（devnotes：更新开发笔记内容与 Debug Markdown） #area/study #area/dev",
         "isCooking": false,
         "mealType": null,
-        "dishGuess": null
+        "dishGuess": null,
+        "isStudy": true
       },
       {
         "status": "x",
@@ -7714,10 +7823,11 @@ export const diaryRecords = {
       {
         "status": "x",
         "time": "22:30-23:30",
-        "desc": "开发（熊窝任务看板 v0.28.0 升级：新增甘特图视图与排期管理、优化完成历史热力图交互与布局，补充看板甘特图时间线，归档 c19 参考 B 站视频优化看板视图）",
+        "desc": "开发（熊窝任务看板 v0.28.0 升级：新增甘特图视图与排期管理、优化完成历史热力图交互与布局，补充看板甘特图时间线，归档 c19 参考 B 站视频优化看板视图） #area/dev",
         "isCooking": false,
         "mealType": null,
-        "dishGuess": null
+        "dishGuess": null,
+        "isStudy": true
       },
       {
         "status": "x",
@@ -7767,10 +7877,11 @@ export const diaryRecords = {
       {
         "status": "x",
         "time": "15:30-19:30",
-        "desc": "在家学习，进行一些开发和科研阅读",
+        "desc": "在家学习，进行一些开发和科研阅读 #area/study #area/dev",
         "isCooking": false,
         "mealType": null,
-        "dishGuess": null
+        "dishGuess": null,
+        "isStudy": true
       },
       {
         "status": "x",
@@ -7791,10 +7902,11 @@ export const diaryRecords = {
       {
         "status": "x",
         "time": "21:15-23:00",
-        "desc": "学习，开发",
+        "desc": "学习，开发 #area/study #area/dev",
         "isCooking": false,
         "mealType": null,
-        "dishGuess": null
+        "dishGuess": null,
+        "isStudy": true
       },
       {
         "status": "x",
@@ -7836,10 +7948,11 @@ export const diaryRecords = {
       {
         "status": "x",
         "time": "11:00-13:00",
-        "desc": "开发、学习、科研（lifenotes：新增租房固定支出缴费计划文档（含共同财务 6:4 分摊）、完善租房固定支出缴费计划+两人存钱计划+京东白条修正、新增我们的清单（咖啡自习/酒馆/观影）、补充预算管理固定支出及攒钱计划；devnotes：合并 Mac 购置历史与定时提醒为单一配置记录）",
+        "desc": "开发、学习、科研（lifenotes：新增租房固定支出缴费计划文档（含共同财务 6:4 分摊）、完善租房固定支出缴费计划+两人存钱计划+京东白条修正、新增我们的清单（咖啡自习/酒馆/观影）、补充预算管理固定支出及攒钱计划；devnotes：合并 Mac 购置历史与定时提醒为单一配置记录） #area/study #area/dev",
         "isCooking": false,
         "mealType": null,
-        "dishGuess": null
+        "dishGuess": null,
+        "isStudy": true
       },
       {
         "status": "x",
@@ -7868,10 +7981,11 @@ export const diaryRecords = {
       {
         "status": "x",
         "time": "18:50-19:30",
-        "desc": "继续自习",
+        "desc": "继续自习 #area/study",
         "isCooking": false,
         "mealType": null,
-        "dishGuess": null
+        "dishGuess": null,
+        "isStudy": true
       },
       {
         "status": "x",
@@ -7900,10 +8014,11 @@ export const diaryRecords = {
       {
         "status": "x",
         "time": "22:10-23:34",
-        "desc": "回家给小车充电，然后开发（猫猫笔记升级及后台升级，偷偷完成 todo c21 并归档）",
+        "desc": "回家给小车充电，然后开发（猫猫笔记升级及后台升级，偷偷完成 todo c21 并归档） #area/dev",
         "isCooking": false,
         "mealType": null,
-        "dishGuess": null
+        "dishGuess": null,
+        "isStudy": true
       },
       {
         "status": "x",
@@ -8017,7 +8132,8 @@ export const diaryRecords = {
         "desc": "做 PPT（大组会 PPT）",
         "isCooking": false,
         "mealType": null,
-        "dishGuess": null
+        "dishGuess": null,
+        "isStudy": true
       },
       {
         "status": "x",
@@ -8025,7 +8141,8 @@ export const diaryRecords = {
         "desc": "做 PPT（大组会 PPT）",
         "isCooking": false,
         "mealType": null,
-        "dishGuess": null
+        "dishGuess": null,
+        "isStudy": true
       },
       {
         "status": "x",
@@ -8041,7 +8158,8 @@ export const diaryRecords = {
         "desc": "做 PPT（大组会 PPT）",
         "isCooking": false,
         "mealType": null,
-        "dishGuess": null
+        "dishGuess": null,
+        "isStudy": true
       },
       {
         "status": "x",
@@ -8057,7 +8175,8 @@ export const diaryRecords = {
         "desc": "做 PPT（大组会 PPT）",
         "isCooking": false,
         "mealType": null,
-        "dishGuess": null
+        "dishGuess": null,
+        "isStudy": true
       }
     ]
   },
@@ -8086,7 +8205,8 @@ export const diaryRecords = {
         "desc": "做PPT（继续做大组会 PPT）",
         "isCooking": false,
         "mealType": null,
-        "dishGuess": null
+        "dishGuess": null,
+        "isStudy": true
       },
       {
         "status": "x",
@@ -8102,7 +8222,8 @@ export const diaryRecords = {
         "desc": "做大组会PPT",
         "isCooking": false,
         "mealType": null,
-        "dishGuess": null
+        "dishGuess": null,
+        "isStudy": true
       },
       {
         "status": "x",
@@ -8126,7 +8247,8 @@ export const diaryRecords = {
         "desc": "思考与学习",
         "isCooking": false,
         "mealType": null,
-        "dishGuess": null
+        "dishGuess": null,
+        "isStudy": true
       },
       {
         "status": "x",
@@ -8163,7 +8285,8 @@ export const diaryRecords = {
         "desc": "学习、开发（熊窝任务看板：甘特图视图增加按小时排期；常识笔记 & 开发笔记：CMS 优化视图；开发笔记：调整分类）",
         "isCooking": false,
         "mealType": null,
-        "dishGuess": null
+        "dishGuess": null,
+        "isStudy": true
       },
       {
         "status": "x",
@@ -8179,7 +8302,8 @@ export const diaryRecords = {
         "desc": "继续学习、开发（熊窝任务看板：甘特图按小时排期；常识笔记 & 开发笔记：CMS 视图优化；开发笔记：分类调整）",
         "isCooking": false,
         "mealType": null,
-        "dishGuess": null
+        "dishGuess": null,
+        "isStudy": true
       },
       {
         "status": "x",
@@ -8227,7 +8351,8 @@ export const diaryRecords = {
         "desc": "整理开发笔记内容，给开发笔记 CMS 加排序精度细化",
         "isCooking": false,
         "mealType": null,
-        "dishGuess": null
+        "dishGuess": null,
+        "isStudy": true
       },
       {
         "status": "x",
@@ -8235,7 +8360,8 @@ export const diaryRecords = {
         "desc": "继续整理开发笔记内容",
         "isCooking": false,
         "mealType": null,
-        "dishGuess": null
+        "dishGuess": null,
+        "isStudy": true
       }
     ]
   },
@@ -8264,7 +8390,8 @@ export const diaryRecords = {
         "desc": "在网安大楼学习",
         "isCooking": false,
         "mealType": null,
-        "dishGuess": null
+        "dishGuess": null,
+        "isStudy": true
       },
       {
         "status": "x",
@@ -8280,7 +8407,8 @@ export const diaryRecords = {
         "desc": "学习，做明天大组会的工作总结准备",
         "isCooking": false,
         "mealType": null,
-        "dishGuess": null
+        "dishGuess": null,
+        "isStudy": true
       },
       {
         "status": "x",
@@ -8317,7 +8445,8 @@ export const diaryRecords = {
         "desc": "继续做大组会 PPT",
         "isCooking": false,
         "mealType": null,
-        "dishGuess": null
+        "dishGuess": null,
+        "isStudy": true
       },
       {
         "status": "x",
@@ -8333,7 +8462,8 @@ export const diaryRecords = {
         "desc": "开大组会（工作总结及学期计划），和 3 个工程博士见面聊各自方向",
         "isCooking": false,
         "mealType": null,
-        "dishGuess": null
+        "dishGuess": null,
+        "isStudy": true
       },
       {
         "status": "x",
@@ -8410,7 +8540,8 @@ export const diaryRecords = {
         "desc": "在图书馆二楼学习（整理常识笔记内容，重构分类学）",
         "isCooking": false,
         "mealType": null,
-        "dishGuess": null
+        "dishGuess": null,
+        "isStudy": true
       },
       {
         "status": "x",
@@ -8434,7 +8565,8 @@ export const diaryRecords = {
         "desc": "学习",
         "isCooking": false,
         "mealType": null,
-        "dishGuess": null
+        "dishGuess": null,
+        "isStudy": true
       },
       {
         "status": "x",
@@ -8479,7 +8611,8 @@ export const diaryRecords = {
         "desc": "在图书馆学习",
         "isCooking": false,
         "mealType": null,
-        "dishGuess": null
+        "dishGuess": null,
+        "isStudy": true
       },
       {
         "status": "x",
@@ -8556,7 +8689,8 @@ export const diaryRecords = {
         "desc": "在图书馆学习（整理开发笔记、常识笔记；思考重构猪窝日程和财务）",
         "isCooking": false,
         "mealType": null,
-        "dishGuess": null
+        "dishGuess": null,
+        "isStudy": true
       },
       {
         "status": "x",
@@ -8588,7 +8722,8 @@ export const diaryRecords = {
         "desc": "继续开发，思考猪窝的日程和财务页面如何设计",
         "isCooking": false,
         "mealType": null,
-        "dishGuess": null
+        "dishGuess": null,
+        "isStudy": true
       }
     ]
   },
@@ -8609,7 +8744,8 @@ export const diaryRecords = {
         "desc": "开发：继续微调猪窝的日程和财务",
         "isCooking": false,
         "mealType": null,
-        "dishGuess": null
+        "dishGuess": null,
+        "isStudy": true
       },
       {
         "status": "x",
@@ -8625,7 +8761,8 @@ export const diaryRecords = {
         "desc": "来图书馆学习，进行猪窝的日程财务的开发收尾",
         "isCooking": false,
         "mealType": null,
-        "dishGuess": null
+        "dishGuess": null,
+        "isStudy": true
       }
     ]
   }

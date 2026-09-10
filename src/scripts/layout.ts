@@ -1,7 +1,6 @@
 const toggle = document.getElementById('sidebarToggle');
 const backdrop = document.getElementById('sidebarBackdrop');
 const close = document.getElementById('sidebarClose');
-const collapse = document.getElementById('sidebarCollapse');
 const sidebar = document.getElementById('sidebar');
 const DESKTOP_BREAKPOINT = 720;
 
@@ -76,12 +75,6 @@ toggle?.addEventListener('click', () => {
 });
 backdrop?.addEventListener('click', closeSidebar);
 close?.addEventListener('click', closeSidebar);
-collapse?.addEventListener('click', () => {
-  desktopPinned = false;
-  desktopHovered = false;
-  clearHoverCloseTimer();
-  syncDesktopSidebar();
-});
 sidebar?.addEventListener('mouseenter', () => {
   if (!compactLayout) setDesktopHover(true);
 });
