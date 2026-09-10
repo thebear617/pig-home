@@ -3212,7 +3212,7 @@ body[data-page="schedule-finance"][data-view="membership"] .sf-month-switcher {
     "expense expense"
     "schedule schedule"
     "sleep subscription"
-    "utility .";
+    "utility study";
   gap: 10px;
   min-width: 0;
 }
@@ -3240,6 +3240,7 @@ body[data-page="schedule-finance"][data-view="membership"] .sf-month-switcher {
   grid-area: sleep;
 }
 .sf-context-utility { grid-area: utility; }
+.sf-context-study { grid-area: study; position: relative; }
 .sf-context-subscription {
   position: relative;
   grid-area: subscription;
@@ -3272,6 +3273,7 @@ body[data-page="schedule-finance"][data-view="membership"] .sf-month-switcher {
 .sf-context-section-icon.is-schedule { background: #e8f0ff; color: #3f7bd8; }
 .sf-context-section-icon.is-subscription { background: #fff4df; color: #d69a15; }
 .sf-context-section-icon.is-utility { background: #fff4e4; color: var(--orange); }
+.sf-context-section-icon.is-study { background: #efeafd; color: #6a4fd0; }
 
 .sf-context-expenses > header > div,
 .sf-context-mini > div {
@@ -3450,6 +3452,61 @@ body[data-page="schedule-finance"][data-view="membership"] .sf-month-switcher {
   font-size: 13px;
   line-height: 1.5;
   overflow-wrap: anywhere;
+}
+
+/* 学习时长气泡：向上展开，右对齐，内容用无序列表呈现。 */
+.sf-context-study > .sf-context-popover {
+  top: auto;
+  right: 0;
+  bottom: calc(100% + 8px);
+  left: auto;
+}
+
+.sf-context-study > .sf-context-popover::before {
+  top: auto;
+  right: 22px;
+  bottom: -6px;
+  left: auto;
+  border-top: 0;
+  border-left: 0;
+  border-right: 1px solid #ebd4bd;
+  border-bottom: 1px solid #ebd4bd;
+}
+
+.sf-context-study-list {
+  max-height: min(330px, 50vh);
+  margin: 5px 0 0;
+  padding: 0;
+  overflow: auto;
+  list-style: none;
+}
+
+.sf-context-study-list li {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 2px;
+  border-bottom: 1px solid var(--divider);
+  color: var(--text-primary);
+  font-size: 13px;
+}
+
+.sf-context-study-list li:last-child { border-bottom: 0; }
+
+.sf-context-study-list li::before {
+  flex: 0 0 auto;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #6a4fd0;
+  content: '';
+}
+
+.sf-context-study-list li span { flex: 1 1 auto; }
+
+.sf-context-study-list li strong {
+  color: #6a4fd0;
+  font-weight: 700;
 }
 
 .sf-context-row-icon {
@@ -5031,6 +5088,7 @@ body[data-page="schedule-finance"] .expense-top-panel .expense-top-list {
 
 .expense-line-tooltip {
   position: absolute;
+  top: var(--tooltip-top, 8px);
   left: clamp(204px, var(--point-x), calc(100% - 204px));
   z-index: 1;
   width: min(408px, calc(100% - 1.5rem));
@@ -5079,6 +5137,32 @@ body[data-page="schedule-finance"] .expense-top-panel .expense-top-list {
   flex-direction: column;
   gap: .45rem;
   list-style: none;
+}
+
+/* 趋势气泡：限制在图表区域内并让明细列表内部滚动，避免被卡片裁切。 */
+body[data-page="schedule-finance"] .sf-trend-card .expense-line-tooltip,
+body[data-page="schedule-finance"] .expense-analysis-card .expense-line-tooltip {
+  --tooltip-top-clamped: clamp(6px, var(--tooltip-top, 8px), calc(100% - 128px));
+  top: var(--tooltip-top-clamped);
+  display: flex;
+  min-height: 0;
+  max-height: calc(100% - var(--tooltip-top-clamped) - 6px);
+  flex-direction: column;
+  overflow: hidden;
+}
+
+body[data-page="schedule-finance"] .sf-trend-card .expense-line-tooltip-head,
+body[data-page="schedule-finance"] .expense-analysis-card .expense-line-tooltip-head {
+  flex: 0 0 auto;
+}
+
+body[data-page="schedule-finance"] .sf-trend-card .expense-line-tooltip ul,
+body[data-page="schedule-finance"] .expense-analysis-card .expense-line-tooltip ul {
+  flex: 1 1 auto;
+  min-height: 0;
+  padding-right: 2px;
+  overflow-y: auto;
+  overscroll-behavior: contain;
 }
 
 .expense-line-tooltip li {
@@ -12481,15 +12565,7 @@ body.k-drawer-open .main-area { overflow: hidden; }
       "expense expense"
       "schedule schedule"
       "sleep subscription"
-      "utility .";
-  }
-
-  body[data-page="schedule-finance"] .sf-context-body:not(.has-utility) {
-    grid-template-rows: minmax(0, 1.75fr) minmax(0, 1.3fr) minmax(0, .9fr);
-    grid-template-areas:
-      "expense expense"
-      "schedule schedule"
-      "sleep subscription";
+      "utility study";
   }
 
   body[data-page="schedule-finance"] .sf-context-expenses {
@@ -12550,7 +12626,8 @@ body.k-drawer-open .main-area { overflow: hidden; }
 
   body[data-page="schedule-finance"] .sf-context-sleep,
   body[data-page="schedule-finance"] .sf-context-subscription,
-  body[data-page="schedule-finance"] .sf-context-utility {
+  body[data-page="schedule-finance"] .sf-context-utility,
+  body[data-page="schedule-finance"] .sf-context-study {
     min-height: 0;
     align-self: stretch;
   }

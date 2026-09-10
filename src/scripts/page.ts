@@ -338,6 +338,21 @@ function dailyContextHtml(key: string | null): string {
     const endValue = toMinutes(endText);
     if (!Number.isNaN(start) && !Number.isNaN(endValue)) sleepDuration = (endValue <= start ? endValue + 1440 : endValue) - start;
   }
+  const timeRangeMinutes = (time: string) => {
+    const parts = String(time || '').split('-');
+    if (parts.length !== 2) return 0;
+    const toMinutes = (value: string) => {
+      const [hour, minute] = value.trim().split(':').map(Number);
+      return hour * 60 + minute;
+    };
+    const start = toMinutes(parts[0]);
+    const endValue = toMinutes(parts[1]);
+    if (Number.isNaN(start) || Number.isNaN(endValue)) return 0;
+    return (endValue <= start ? endValue + 1440 : endValue) - start;
+  };
+  const studyTasks = (record?.tasks || []).filter((task: any) => isStudyTask(task) && timeRangeMinutes(task.time) > 0);
+  const studyDuration = studyTasks.reduce((sum: number, task: any) => sum + timeRangeMinutes(task.time), 0);
+  const studyRows = studyTasks.map((task: any) => `<li><span>${escape(task.time || '')}</span><strong>${(timeRangeMinutes(task.time) / 60).toFixed(1)}h</strong></li>`).join('');
   const weekday = new Intl.DateTimeFormat('zh-CN', { weekday: 'short' }).format(day);
   const dateTitle = `${day.getMonth() + 1}月${day.getDate()}日 ${weekday}`;
   const expenseRow = (item: any) => `<div class="sf-context-expense-row"><span class="sf-context-row-icon" aria-hidden="true">${contextExpenseIcon(item)}</span><span class="sf-context-expense-name">${escape(item.sub)}${item.note ? `<small>${escape(item.note)}</small>` : ''}</span><strong>¥${item.amount.toFixed(2)}</strong></div>`;
@@ -351,6 +366,7 @@ function dailyContextHtml(key: string | null): string {
     : '<span class="sf-context-muted">当天无日程</span>';
   const schedulePreviewRows = tasks.slice(0, CONTEXT_PREVIEW_LIMIT).map(scheduleRow).join('');
   const utility = window.__utilityRecords?.[key];
+  const utilityText = utility ? `¥${utility.elecRemaining.toFixed(2)}` : '—';
   const nextSubscriptionDateText = nextSubscription ? (() => { const nextDate = new Date(`${nextSubscription.expireDate}T00:00:00`); return `${nextDate.getMonth() + 1}月${nextDate.getDate()}日`; })() : '';
   const subscriptionText = subscriptions.length
     ? `今日 ${subscriptions.length} 项续费`
@@ -359,10 +375,11 @@ function dailyContextHtml(key: string | null): string {
     ? `今日 ${subscriptions.length} 项续费`
     : nextSubscription ? `下次续费：${nextSubscriptionDateText} ${escape(nextSubscription.name)}` : '暂无待续费项目';
   return `<div class="sf-context-header"><div class="sf-context-heading"><h2>${dateTitle}</h2></div><p>“平凡的一天，<br />也是值得记录的生活。”</p></div>
-<div class="sf-context-body${utility ? ' has-utility' : ''}"><section class="sf-context-expenses" data-sf-popover="expenses" aria-label="今日支出"><header><span class="sf-context-section-icon is-wallet" aria-hidden="true">▰</span><div><strong>¥${expenseTotal.toFixed(2)}</strong></div><button class="sf-context-record-button" type="button" data-sf-record-expense data-sf-view-btn="expense-records">＋ 记一笔</button></header><div class="sf-context-expense-list">${expenses.length ? expensePreviewRows : expenseRows}</div>${expenses.length > CONTEXT_PREVIEW_LIMIT ? `<div class="sf-context-popover sf-context-expense-popover" id="sfExpensePopover" role="tooltip" aria-hidden="true"><div class="sf-context-popover-head"><span>全部支出</span><small>${expenses.length} 项记录</small></div><div class="sf-context-popover-list">${expenseRows}</div></div>` : ''}</section>
+<div class="sf-context-body has-utility"><section class="sf-context-expenses" data-sf-popover="expenses" aria-label="今日支出"><header><span class="sf-context-section-icon is-wallet" aria-hidden="true">▰</span><div><strong>¥${expenseTotal.toFixed(2)}</strong></div><button class="sf-context-record-button" type="button" data-sf-record-expense data-sf-view-btn="expense-records">＋ 记一笔</button></header><div class="sf-context-expense-list">${expenses.length ? expensePreviewRows : expenseRows}</div>${expenses.length > CONTEXT_PREVIEW_LIMIT ? `<div class="sf-context-popover sf-context-expense-popover" id="sfExpensePopover" role="tooltip" aria-hidden="true"><div class="sf-context-popover-head"><span>全部支出</span><small>${expenses.length} 项记录</small></div><div class="sf-context-popover-list">${expenseRows}</div></div>` : ''}</section>
 <section class="sf-context-mini sf-context-sleep" aria-label="睡眠"><span class="sf-context-section-icon is-sleep" aria-hidden="true">☾</span><div><strong>${sleepDuration ? `${(sleepDuration / 60).toFixed(1)}h` : '—'}</strong></div><small>${sleepText || '暂无睡眠记录'}</small></section>
 <section class="sf-context-mini sf-context-schedule" data-sf-popover="schedule" aria-label="今日日程"><span class="sf-context-section-icon is-schedule" aria-hidden="true">▦</span><div><div class="sf-context-schedule-list">${tasks.length ? schedulePreviewRows : scheduleRows}</div></div>${tasks.length > CONTEXT_PREVIEW_LIMIT ? `<div class="sf-context-popover sf-context-schedule-popover" id="sfSchedulePopover" role="tooltip" aria-hidden="true"><div class="sf-context-popover-head"><span>全部日程</span><small>${tasks.length} 项安排</small></div><div class="sf-context-popover-list">${scheduleRows}</div></div>` : ''}</section>
-${utility ? `<section class="sf-context-mini sf-context-utility" aria-label="电费余额"><span class="sf-context-section-icon is-utility" aria-hidden="true">ϟ</span><div><strong>¥${utility.elecRemaining.toFixed(2)}</strong></div></section>` : ''}
+<section class="sf-context-mini sf-context-utility" aria-label="电费余额"><span class="sf-context-section-icon is-utility" aria-hidden="true">ϟ</span><div><strong>${utilityText}</strong></div></section>
+<section class="sf-context-mini sf-context-study" data-sf-popover="study" aria-label="学习时长"><span class="sf-context-section-icon is-study" aria-hidden="true">✎</span><div><strong>${studyDuration ? `${(studyDuration / 60).toFixed(1)}h` : '—'}</strong></div>${studyTasks.length ? `<div class="sf-context-popover sf-context-study-popover" id="sfStudyPopover" role="tooltip" aria-hidden="true"><div class="sf-context-popover-head"><span>学习时段</span><small>${studyTasks.length} 段</small></div><ul class="sf-context-study-list">${studyRows}</ul></div>` : ''}</section>
 <section class="sf-context-mini sf-context-subscription" data-sf-popover="subscription" aria-label="订阅与续费"><span class="sf-context-section-icon is-subscription" aria-hidden="true">♛</span><div><small>${subscriptionText}</small></div><div class="sf-context-popover sf-context-subscription-popover" id="sfSubscriptionPopover" role="tooltip" aria-hidden="true"><div class="sf-context-popover-head"><span>续费详情</span><small>完整信息</small></div><div class="sf-context-popover-copy">${subscriptionDetailText}</div></div></section></div>`;
 }
 
@@ -611,7 +628,7 @@ function expenseTrendHtml(): string {
     const selectedRecords = records.filter(record => Number(record.date.slice(-2)) === expenseTrendSelectedDay);
     const details = selectedRecords.length ? selectedRecords.map(record => `<li><span><b>${escape(record.cat)}</b> · ${escape(record.sub)}${record.note ? `<small>${escape(record.note)}</small>` : ''}</span><strong class="${activeTrendView === 'income' ? 'income-amount' : ''}">¥${record.amount.toFixed(2)}</strong></li>`).join('') : `<li class="expense-line-tooltip-empty">当天无${trendLabel}</li>`;
     const tooltipTop = selectedPoint.y > 88 ? Math.max(8, selectedPoint.y - 84) : selectedPoint.y + 12;
-    tooltip = `<div class="expense-line-tooltip" style="--point-x:${(selectedPoint.x / width * 100).toFixed(2)}%; top:${tooltipTop.toFixed(1)}px"><div class="expense-line-tooltip-head"><strong>${state.month}/${expenseTrendSelectedDay} · ¥${dailyTotals[selectedIndex].toFixed(2)}</strong><button class="expense-line-tooltip-close" type="button" aria-label="关闭当天${trendLabel}详情">×</button></div><ul>${details}</ul></div>`;
+    tooltip = `<div class="expense-line-tooltip" style="--point-x:${(selectedPoint.x / width * 100).toFixed(2)}%; --tooltip-top:${tooltipTop.toFixed(1)}px"><div class="expense-line-tooltip-head"><strong>${state.month}/${expenseTrendSelectedDay} · ¥${dailyTotals[selectedIndex].toFixed(2)}</strong><button class="expense-line-tooltip-close" type="button" aria-label="关闭当天${trendLabel}详情">×</button></div><ul>${details}</ul></div>`;
   }
   const peak = Math.max(...dailyTotals);
   const peakDay = dailyTotals.indexOf(peak) + 1;

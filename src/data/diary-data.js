@@ -8728,7 +8728,7 @@ export const diaryRecords = {
     ]
   },
   "2026-09-10": {
-    "value": 4,
+    "value": 13,
     "tasks": [
       {
         "status": "x",
@@ -8763,6 +8763,80 @@ export const diaryRecords = {
         "mealType": null,
         "dishGuess": null,
         "isStudy": true
+      },
+      {
+        "status": "x",
+        "time": "14:30-15:00",
+        "desc": "送过马路去网安",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      },
+      {
+        "status": "x",
+        "time": "15:00-17:30",
+        "desc": "回图书馆继续学习，解决猫猫数据爬取问题，复盘内容站搭建 pipeline",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null,
+        "isStudy": true
+      },
+      {
+        "status": "x",
+        "time": "17:30-18:10",
+        "desc": "去网安大楼，和同门给汪老师送教师节的花和礼物",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      },
+      {
+        "status": "x",
+        "time": "18:10-19:20",
+        "desc": "和过马路一起骑车回家，吃螺蛳粉",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      },
+      {
+        "status": "x",
+        "time": "19:20-21:30",
+        "desc": "继续学习和开发，复盘内容站创作问题，对齐补全猫猫字段",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null,
+        "isStudy": true
+      },
+      {
+        "status": "x",
+        "time": "21:30-22:10",
+        "desc": "和过马路一起去兴隆夜市买烧烤和炒饼丝",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      },
+      {
+        "status": "x",
+        "time": "22:10-22:55",
+        "desc": "和过马路回家吃夜宵看密室大逃脱",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      },
+      {
+        "status": "x",
+        "time": "22:55-23:05",
+        "desc": "洗漱",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      },
+      {
+        "status": "x",
+        "time": "23:05-24:00",
+        "desc": "和过马路继续看电视",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
       }
     ]
   }
