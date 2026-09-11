@@ -11906,15 +11906,18 @@ body[data-page="food-records"] .k-dash {
 .k-shelf-ref { font-size: 0.72rem; font-weight: 700; color: var(--k-muted); background: var(--k-surface-soft); border: 1px solid var(--k-line); padding: 0.12rem 0.5rem; border-radius: 999px; }
 
 /* ── 价格速查 ── */
-.k-price-body { display: flex; flex-direction: column; gap: 0.6rem; }
-.k-price-tabs { display: flex; flex-wrap: wrap; gap: 0.35rem; }
+/* 卡片高度固定（340px），正文需要 flex 撑满、列表内部滚动，否则长列表被裁切 */
+.k-card#kPrices { display: flex; flex-direction: column; min-height: 0; }
+.k-card#kPrices .k-card-head { flex: 0 0 auto; }
+.k-price-body { display: flex; flex-direction: column; gap: 0.6rem; flex: 1 1 auto; min-height: 0; overflow: hidden; }
+.k-price-tabs { display: flex; flex-wrap: wrap; gap: 0.35rem; flex: 0 0 auto; }
 .k-price-tab {
   display: inline-flex; align-items: center; gap: 0.3rem; padding: 0.28rem 0.6rem; font-size: 0.76rem; font-weight: 800;
   color: var(--k-muted); background: var(--k-surface-soft); border: 1px solid var(--k-line); border-radius: 999px; cursor: pointer;
 }
 .k-price-tab em { font-style: normal; font-size: 0.66rem; color: var(--k-muted); }
 .k-price-tab.active { color: var(--k-primary-deep); background: var(--k-primary-soft); border-color: #f2d0b6; }
-.k-price-list { display: flex; flex-direction: column; gap: 0.3rem; }
+.k-price-list { display: flex; flex-direction: column; gap: 0.3rem; flex: 1 1 auto; min-height: 0; overflow-y: auto; overscroll-behavior: contain; }
 .k-price-row { display: flex; align-items: center; gap: 0.55rem; width: 100%; text-align: left; padding: 0.42rem 0.15rem; border: none; background: none; cursor: pointer; border-radius: 8px; }
 .k-price-row:hover { background: var(--k-surface-soft); }
 .k-price-emoji { flex-shrink: 0; width: 32px; height: 32px; display: grid; place-items: center; background: var(--k-surface-soft); border-radius: 9px; font-size: 1rem; }
