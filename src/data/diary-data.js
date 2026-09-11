@@ -8839,6 +8839,84 @@ export const diaryRecords = {
         "dishGuess": null
       }
     ]
+  },
+  "2026-09-11": {
+    "value": 9,
+    "tasks": [
+      {
+        "status": "x",
+        "time": "00:00-10:00",
+        "desc": "睡觉",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      },
+      {
+        "status": "x",
+        "time": "10:00-10:40",
+        "desc": "洗澡收拾",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      },
+      {
+        "status": "x",
+        "time": "10:40-11:20",
+        "desc": "拉群约人组局（和梓健哥他们的局）",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      },
+      {
+        "status": "x",
+        "time": "11:20-12:00",
+        "desc": "和过马路煮酸汤面",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      },
+      {
+        "status": "x",
+        "time": "12:00-12:40",
+        "desc": "自己去吃油泼面，买蛋挞皮等",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      },
+      {
+        "status": "x",
+        "time": "12:40-14:00",
+        "desc": "梳理猫猫 QA 和现有资料，提交给 1931 那边",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      },
+      {
+        "status": "x",
+        "time": "14:00-15:00",
+        "desc": "和过马路烤蛋挞看花少喝雪梨汤",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      },
+      {
+        "status": "x",
+        "time": "15:00-18:30",
+        "desc": "学习，继续进行猫猫网站的数据字段补全和视觉调整，并讨论熊窝 CRM 的视觉方案",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null,
+        "isStudy": true
+      },
+      {
+        "status": "x",
+        "time": "18:30-20:15",
+        "desc": "做菜吃饭",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      }
+    ]
   }
 };
 export const specialEvents = {
