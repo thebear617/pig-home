@@ -9111,7 +9111,7 @@ export const diaryRecords = {
     ]
   },
   "2026-09-14": {
-    "value": 5,
+    "value": 6,
     "tasks": [
       {
         "status": "x",
@@ -9152,6 +9152,15 @@ export const diaryRecords = {
         "isCooking": false,
         "mealType": null,
         "dishGuess": null
+      },
+      {
+        "status": "x",
+        "time": "13:30-18:30",
+        "desc": "在图书馆学习：重构熊窝的 CRM 视图",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null,
+        "isStudy": true
       }
     ]
   }
