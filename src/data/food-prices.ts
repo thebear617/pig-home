@@ -35,4 +35,5 @@ export const foodPrices: FoodPriceItem[] = [
   { category: '蔬菜', name: '包菜', spec: '一颗', price: '1.5 元', updated: '2026-09-11', note: '1.5 元一颗' },
   { category: '蔬菜', name: '绿线椒', spec: '6 根', price: '0.5 元', updated: '2026-09-11', note: '很便宜，5 毛 6 根' },
   { category: '蔬菜', name: '红线椒', spec: '6 根', price: '0.5 元', updated: '2026-09-11', note: '很便宜，5 毛 6 根' },
+  { category: '冷冻速食', name: '蛋挞皮', spec: '30 个', price: '11.8 元', updated: '2026-09-12', note: '一包 30 个' },
 ];

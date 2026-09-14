@@ -8841,7 +8841,7 @@ export const diaryRecords = {
     ]
   },
   "2026-09-11": {
-    "value": 9,
+    "value": 11,
     "tasks": [
       {
         "status": "x",
@@ -8912,6 +8912,243 @@ export const diaryRecords = {
         "status": "x",
         "time": "18:30-20:15",
         "desc": "做菜吃饭",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      },
+      {
+        "status": "x",
+        "time": "20:15-23:00",
+        "desc": "学习，搭建个人关系 CRM，调整猫猫网站详情面板",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null,
+        "isStudy": true
+      },
+      {
+        "status": "x",
+        "time": "23:00-24:00",
+        "desc": "和过马路打扑克",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      }
+    ]
+  },
+  "2026-09-12": {
+    "value": 11,
+    "tasks": [
+      {
+        "status": "x",
+        "time": "00:00-02:00",
+        "desc": "和过马路打扑克",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      },
+      {
+        "status": "x",
+        "time": "02:00-12:00",
+        "desc": "睡觉",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      },
+      {
+        "status": "x",
+        "time": "12:00-12:50",
+        "desc": "继续学习，进行 CRM 网站的调整",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null,
+        "isStudy": true
+      },
+      {
+        "status": "x",
+        "time": "12:50-13:30",
+        "desc": "洗澡",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      },
+      {
+        "status": "x",
+        "time": "13:30-14:20",
+        "desc": "和过马路去吃牛肉炒面",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      },
+      {
+        "status": "x",
+        "time": "14:20-16:20",
+        "desc": "去网安开大组会（张晋伦讲 YOLO-Master，一篇 MOE 做目标检测的论文）",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null,
+        "isStudy": true
+      },
+      {
+        "status": "x",
+        "time": "16:20-18:20",
+        "desc": "在图书馆学习：爬取西电猫猫腾讯文档的数据，一边开发 CRM",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null,
+        "isStudy": true
+      },
+      {
+        "status": "x",
+        "time": "18:20-18:50",
+        "desc": "吃泰式打抛饭",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      },
+      {
+        "status": "x",
+        "time": "18:50-20:00",
+        "desc": "依旧是猫猫网站和 CRM 的开发",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null,
+        "isStudy": true
+      },
+      {
+        "status": "x",
+        "time": "20:00-21:00",
+        "desc": "骑车回家",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      },
+      {
+        "status": "x",
+        "time": "21:00-24:00",
+        "desc": "打电动",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      }
+    ]
+  },
+  "2026-09-13": {
+    "value": 9,
+    "tasks": [
+      {
+        "status": "x",
+        "time": "00:00-01:00",
+        "desc": "看视频解说",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      },
+      {
+        "status": "x",
+        "time": "01:00-10:00",
+        "desc": "睡觉",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      },
+      {
+        "status": "x",
+        "time": "10:00-11:00",
+        "desc": "学习，猫猫网站和个人管理 CRM 相关",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null,
+        "isStudy": true
+      },
+      {
+        "status": "x",
+        "time": "11:00-11:40",
+        "desc": "洗澡",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      },
+      {
+        "status": "x",
+        "time": "11:40-12:40",
+        "desc": "出门坐地铁去丈八北路吃铁锅炖，和子健哥他们汇合",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      },
+      {
+        "status": "x",
+        "time": "12:40-14:00",
+        "desc": "在那吃铁锅炖（山河屯铁锅炖-排骨锅，大鹅锅）",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      },
+      {
+        "status": "x",
+        "time": "14:00-22:00",
+        "desc": "和梓健哥、董传天、赵钰彬、马钰程、陆才哥、田均恺、郑炟哥、吴镇宇一起去大茂城的无忧桌游打桌游（玩了揭秘希特勒、女巫镇、忍者大战三款桌游）",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      },
+      {
+        "status": "x",
+        "time": "22:00-23:30",
+        "desc": "和梓健哥他们去吃状元阁东北烧烤",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      },
+      {
+        "status": "x",
+        "time": "23:30-24:00",
+        "desc": "打车回家",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      }
+    ]
+  },
+  "2026-09-14": {
+    "value": 5,
+    "tasks": [
+      {
+        "status": "x",
+        "time": "00:00-00:40",
+        "desc": "坐地铁回家",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      },
+      {
+        "status": "x",
+        "time": "00:40-01:00",
+        "desc": "回家收拾拖地",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      },
+      {
+        "status": "x",
+        "time": "01:00-10:00",
+        "desc": "睡觉",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      },
+      {
+        "status": "x",
+        "time": "10:00-12:00",
+        "desc": "出门买包子给过马路吃，取快递，记录昨日支出和日程",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      },
+      {
+        "status": "x",
+        "time": "12:00-13:30",
+        "desc": "出门吃饭，吃的是南昌拌粉",
         "isCooking": false,
         "mealType": null,
         "dishGuess": null
