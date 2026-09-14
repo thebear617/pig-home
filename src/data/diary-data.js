@@ -9111,7 +9111,7 @@ export const diaryRecords = {
     ]
   },
   "2026-09-14": {
-    "value": 6,
+    "value": 11,
     "tasks": [
       {
         "status": "x",
@@ -9157,6 +9157,47 @@ export const diaryRecords = {
         "status": "x",
         "time": "13:30-18:30",
         "desc": "在图书馆学习：重构熊窝的 CRM 视图",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null,
+        "isStudy": true
+      },
+      {
+        "status": "x",
+        "time": "18:30-19:30",
+        "desc": "在学校吃饭，吃的是三顾冒菜",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      },
+      {
+        "status": "x",
+        "time": "19:30-19:40",
+        "desc": "去看猫猫们，看大头漂亮菊他们",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      },
+      {
+        "status": "x",
+        "time": "19:40-22:10",
+        "desc": "去逛盒马",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      },
+      {
+        "status": "x",
+        "time": "22:10-22:20",
+        "desc": "回家洗澡",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      },
+      {
+        "status": "x",
+        "time": "22:20-24:00",
+        "desc": "学习开发",
         "isCooking": false,
         "mealType": null,
         "dishGuess": null,
