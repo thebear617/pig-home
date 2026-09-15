@@ -114,9 +114,9 @@ function isStudyTask(task: any): boolean {
   return taskAreas(task).some(area => STUDY_AREAS.has(area));
 }
 
-// 可支配余额不包含租房储蓄：已攒 4000 元，本月再预留 1850 元。
-const RENT_RESERVE = 4000;
-const RENT_SAVING_RESERVE = 1850;
+// 可支配余额不包含租房预留：8 月租房预留 4000 元，9 月租房预留 1350 元。
+const AUG_RENT_RESERVE = 4000;
+const SEP_RENT_RESERVE = 1350;
 const BALANCE_ADJUSTMENT = 529.31;
 
 function getAvailableBalance(): number | null {
@@ -130,7 +130,7 @@ function getAvailableBalance(): number | null {
     .filter(item => item.date >= base.date && item.date <= todayKey)
     .reduce((sum, item) => sum + item.amount, 0);
   const currentBalance = base.amount + sinceIncome - sinceExpense;
-  return currentBalance - RENT_RESERVE - RENT_SAVING_RESERVE - BALANCE_ADJUSTMENT;
+  return currentBalance - AUG_RENT_RESERVE - SEP_RENT_RESERVE - BALANCE_ADJUSTMENT;
 }
 
 function lunarText(year: number, month: number, day: number) {

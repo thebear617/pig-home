@@ -9206,7 +9206,7 @@ export const diaryRecords = {
     ]
   },
   "2026-09-15": {
-    "value": 3,
+    "value": 12,
     "tasks": [
       {
         "status": "x",
@@ -9228,6 +9228,82 @@ export const diaryRecords = {
         "status": "x",
         "time": "10:00-11:18",
         "desc": "玩手机",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      },
+      {
+        "status": "x",
+        "time": "11:18-12:00",
+        "desc": "开发，复盘 CRM 开发",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null,
+        "isStudy": true
+      },
+      {
+        "status": "x",
+        "time": "12:00-13:00",
+        "desc": "和过马路回学校吃紫菜拌饭",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      },
+      {
+        "status": "x",
+        "time": "13:00-14:40",
+        "desc": "和过马路去图书馆学习，整理之前的猫猫改动和其他零散碎片信息",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null,
+        "isStudy": true
+      },
+      {
+        "status": "x",
+        "time": "14:40-15:20",
+        "desc": "和过马路去校医院，然后回来逛图书馆",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      },
+      {
+        "status": "x",
+        "time": "15:20-17:10",
+        "desc": "继续学习，讨论大组会的一些东西，准备大组会",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null,
+        "isStudy": true
+      },
+      {
+        "status": "x",
+        "time": "17:10-18:10",
+        "desc": "吃肥姨妈螺蛳粉",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      },
+      {
+        "status": "x",
+        "time": "18:10-18:40",
+        "desc": "在宿舍继续学习，准备大组会",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null,
+        "isStudy": true
+      },
+      {
+        "status": "x",
+        "time": "18:40-20:00",
+        "desc": "和过马路去南校区网安大楼听腾讯的宣讲会",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      },
+      {
+        "status": "x",
+        "time": "20:00-20:56",
+        "desc": "回家，取快递，给小车充电",
         "isCooking": false,
         "mealType": null,
         "dishGuess": null
