@@ -2351,5 +2351,19 @@ export const expenseRecords = [
     "sub": "门诊挂号·校医院皮肤科挂号",
     "amount": 2.0,
     "note": ""
+  },
+  {
+    "date": "2026-09-16",
+    "cat": "医疗保健",
+    "sub": "外科治疗·脸上 HPV 疣激光治疗",
+    "amount": 40.11,
+    "note": ""
+  },
+  {
+    "date": "2026-09-16",
+    "cat": "市内出行",
+    "sub": "面食泡馍·拉条子",
+    "amount": 11.5,
+    "note": ""
   }
 ];

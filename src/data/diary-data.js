@@ -9329,7 +9329,7 @@ export const diaryRecords = {
     ]
   },
   "2026-09-16": {
-    "value": 6,
+    "value": 10,
     "tasks": [
       {
         "status": "x",
@@ -9376,6 +9376,40 @@ export const diaryRecords = {
         "status": "x",
         "time": "11:50-13:30",
         "desc": "和过马路收拾食材，接着来学校吃煲仔饭",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      },
+      {
+        "status": "x",
+        "time": "13:30-14:50",
+        "desc": "在图书馆二楼学习，学习表征学习的内容",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null,
+        "isStudy": true
+      },
+      {
+        "status": "x",
+        "time": "14:50-16:00",
+        "desc": "和过马路去校医院治疗脸上 HPV 引起的疣（激光治疗，痛感类似电蚊拍打在脸上）",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      },
+      {
+        "status": "x",
+        "time": "16:00-18:20",
+        "desc": "图书馆三楼学习：继续从表征角度学习深度学习",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null,
+        "isStudy": true
+      },
+      {
+        "status": "x",
+        "time": "18:20-19:15",
+        "desc": "去丁香吃饭，看大头，回宿舍拿充电线",
         "isCooking": false,
         "mealType": null,
         "dishGuess": null
