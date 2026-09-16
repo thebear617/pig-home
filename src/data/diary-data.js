@@ -9206,7 +9206,7 @@ export const diaryRecords = {
     ]
   },
   "2026-09-15": {
-    "value": 12,
+    "value": 14,
     "tasks": [
       {
         "status": "x",
@@ -9298,12 +9298,84 @@ export const diaryRecords = {
         "desc": "和过马路去南校区网安大楼听腾讯的宣讲会",
         "isCooking": false,
         "mealType": null,
-        "dishGuess": null
+        "dishGuess": null,
+        "isStudy": true
       },
       {
         "status": "x",
         "time": "20:00-20:56",
         "desc": "回家，取快递，给小车充电",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      },
+      {
+        "status": "x",
+        "time": "20:56-23:00",
+        "desc": "学习，继续准备大组会",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null,
+        "isStudy": true
+      },
+      {
+        "status": "x",
+        "time": "23:00-24:00",
+        "desc": "和过马路休息，看花儿与少年",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      }
+    ]
+  },
+  "2026-09-16": {
+    "value": 6,
+    "tasks": [
+      {
+        "status": "x",
+        "time": "00:00-00:30",
+        "desc": "继续看花儿与少年",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      },
+      {
+        "status": "x",
+        "time": "00:30-09:00",
+        "desc": "睡觉",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      },
+      {
+        "status": "x",
+        "time": "09:00-10:00",
+        "desc": "玩手机",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      },
+      {
+        "status": "x",
+        "time": "10:00-11:20",
+        "desc": "在家学习，继续讨论深度学习的一些内容，准备大组会",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null,
+        "isStudy": true
+      },
+      {
+        "status": "x",
+        "time": "11:20-11:50",
+        "desc": "和过马路去喜客来生活超市采购（促销日 88 折）",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      },
+      {
+        "status": "x",
+        "time": "11:50-13:30",
+        "desc": "和过马路收拾食材，接着来学校吃煲仔饭",
         "isCooking": false,
         "mealType": null,
         "dishGuess": null
