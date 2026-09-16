@@ -1412,6 +1412,127 @@ button {
   color: var(--muted);
 }
 
+/* ─── 超市会员日（每月固定几号，规则见 src/data/supermarket-promos.ts）─── */
+
+.cal-promo-day { background: #fff6f2; }
+.cal-promo-day:hover { background: #fdeadf; }
+
+/* 16 号恰逢周一时两个标记会叠在一起，用渐变各留一半，别让后声明的把前一个盖掉 */
+.cal-promo-day.cal-hema-day { background: linear-gradient(135deg, #fffaf0 0%, #fff2ea 100%); }
+.cal-promo-day.cal-hema-day:hover { background: linear-gradient(135deg, #fdf2dc 0%, #fdeadf 100%); }
+
+.cal-promo-icons {
+  display: inline-block;
+  font-size: .7rem;
+  margin-left: .15rem;
+  vertical-align: middle;
+}
+
+/* 悬停气泡：不用原生 title，自绘一个对齐页面暖色调的气泡 */
+.cal-promo-bubble {
+  position: fixed;
+  z-index: 2000;
+  width: max-content;
+  max-width: min(280px, calc(100vw - 24px));
+  padding: .55rem .7rem .6rem;
+  border-radius: 12px;
+  background: #fffdf9;
+  border: 1px solid #eadfd2;
+  box-shadow: 0 12px 30px rgba(47, 41, 36, .16), 0 2px 6px rgba(47, 41, 36, .07);
+  color: var(--dark);
+  font-size: .72rem;
+  line-height: 1.5;
+  pointer-events: none;
+  opacity: 0;
+  transform: translateY(3px);
+  transition: opacity .12s ease, transform .12s ease;
+}
+
+.cal-promo-bubble.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.cal-promo-bubble::after {
+  content: '';
+  position: absolute;
+  width: 8px;
+  height: 8px;
+  background: #fffdf9;
+  transform: rotate(45deg);
+}
+
+/* 气泡在图标下方 → 小三角朝上 */
+.cal-promo-bubble.is-below::after {
+  top: -5px;
+  left: var(--tip-arrow-x, 18px);
+  border-left: 1px solid #eadfd2;
+  border-top: 1px solid #eadfd2;
+}
+
+/* 气泡在图标上方 → 小三角朝下 */
+.cal-promo-bubble.is-above::after {
+  bottom: -5px;
+  left: var(--tip-arrow-x, 18px);
+  border-right: 1px solid #eadfd2;
+  border-bottom: 1px solid #eadfd2;
+}
+
+.cal-promo-bubble-head {
+  font-size: .76rem;
+  font-weight: 800;
+  color: var(--dark);
+}
+
+.cal-promo-bubble-sub {
+  margin-top: .1rem;
+  font-size: .66rem;
+  color: var(--muted);
+}
+
+.cal-promo-bubble-list {
+  margin-top: .45rem;
+  padding-top: .45rem;
+  border-top: 1px dashed #ece0d1;
+  display: grid;
+  grid-template-columns: auto 1fr;
+  align-items: center;
+  gap: .22rem .5rem;
+}
+
+.cal-promo-bubble-row { display: contents; }
+
+.cal-promo-bubble-row b {
+  padding: .05rem .34rem;
+  border-radius: 999px;
+  background: #fdeede;
+  color: #9a5b12;
+  font-size: .64rem;
+  font-weight: 800;
+  text-align: center;
+  white-space: nowrap;
+}
+
+.cal-promo-bubble-row span {
+  font-size: .7rem;
+  color: var(--text);
+}
+
+.cal-promo-bubble-foot {
+  margin-top: .4rem;
+  font-size: .64rem;
+  color: var(--muted);
+}
+
+.promo-tag { background: #fdeede; color: #9a5b12; }
+
+.promo-note {
+  margin: .1rem 0 0;
+  font-size: .78rem;
+  line-height: 1.6;
+  color: var(--muted);
+}
+
 /* ─── Expense records view (迁移自 personal 记账 Tab) ─── */
 
 .expense-view { animation: fadeIn .2s ease; }

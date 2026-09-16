@@ -10,11 +10,12 @@ import { expenseCategories } from '../data/expense-categories';
 import { incomeCategories } from '../data/income-categories';
 import { balanceBase } from '../data/balance-base';
 import { membershipRecords } from '../data/membership-data';
+import { supermarketPromos } from '../data/supermarket-promos';
 ---
 
 <Layout activeTab="schedule-finance" title="日程和财务 · 猪窝">
   <ScheduleFinance />
-  <script define:vars={{ hemaDayRecords, diaryRecords, specialEvents, expenseRecords, incomeRecords, utilityRecords, expenseCategories, incomeCategories, balanceBase, membershipRecords }}>
+  <script define:vars={{ hemaDayRecords, diaryRecords, specialEvents, expenseRecords, incomeRecords, utilityRecords, expenseCategories, incomeCategories, balanceBase, membershipRecords, supermarketPromos }}>
     window.__hemaDayRecords = hemaDayRecords;
     window.__diaryRecords = diaryRecords;
     window.__specialEvents = specialEvents;
@@ -25,6 +26,7 @@ import { membershipRecords } from '../data/membership-data';
     window.__incomeCategories = incomeCategories;
     window.__balanceBase = balanceBase;
     window.__membershipRecords = membershipRecords;
+    window.__supermarketPromos = supermarketPromos;
   </script>
   <script>
     import '../scripts/page';

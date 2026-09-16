@@ -13,6 +13,7 @@ declare global {
     __incomeCategories?: any[];
     __balanceBase?: { amount: number; date: string };
     __membershipRecords?: any[];
+    __supermarketPromos?: any[];
   }
 }
 
@@ -237,6 +238,72 @@ function formatMin(min: number): string {
   return m ? `${h}小时${m}分钟` : `${h}小时`;
 }
 
+// ─── 超市会员日（每月固定几号，规则见 src/data/supermarket-promos.ts）───
+function promosOfDay(day: number) {
+  return (window.__supermarketPromos || []).filter((shop: any) => Number(shop?.day) === day);
+}
+
+function promoRateText(rate: number) {
+  return `${Number((Number(rate) * 10).toFixed(1))} 折`;
+}
+
+// 悬停气泡：不用原生 title，自己画一个对齐页面风格的气泡（位置算法参考 .membership-note-tooltip）
+let promoBubble: HTMLElement | null = null;
+
+function promoBubbleHtml(day: number): string {
+  return promosOfDay(day)
+    .map((shop: any) => {
+      const rows = (shop.tiers || [])
+        .map((tier: any) => `<span class="cal-promo-bubble-row"><b>${promoRateText(tier.rate)}</b><span>${escape(tier.label)}</span></span>`)
+        .join('');
+      const foot = shop.excludes?.length ? `<div class="cal-promo-bubble-foot">不参与：${escape(shop.excludes.join('、'))}</div>` : '';
+      return `<div class="cal-promo-bubble-head">🛒 ${escape(shop.name)}</div><div class="cal-promo-bubble-sub">每月 ${escape(shop.day)} 号 · 会员日折扣</div><div class="cal-promo-bubble-list">${rows}</div>${foot}`;
+    })
+    .join('');
+}
+
+function showPromoBubble(icon: HTMLElement) {
+  const cell = icon.closest<HTMLElement>('[data-date]');
+  const day = cell?.dataset.date ? Number(cell.dataset.date.slice(8, 10)) : 0;
+  const html = promoBubbleHtml(day);
+  if (!html) return;
+  if (!promoBubble) {
+    promoBubble = document.createElement('div');
+    promoBubble.className = 'cal-promo-bubble';
+    document.body.appendChild(promoBubble);
+  }
+  const tip = promoBubble;
+  tip.innerHTML = html;
+  tip.style.display = 'block';
+  tip.style.visibility = 'hidden';
+  const iconRect = icon.getBoundingClientRect();
+  const tipRect = tip.getBoundingClientRect();
+  const anchorX = iconRect.left + iconRect.width / 2;
+  let left = anchorX - 18;
+  left = Math.min(Math.max(12, left), Math.max(12, window.innerWidth - tipRect.width - 12));
+  let arrowX = anchorX - left - 4;
+  arrowX = Math.min(Math.max(10, arrowX), Math.max(10, tipRect.width - 18));
+  let top = iconRect.bottom + 10;
+  let below = true;
+  if (top + tipRect.height > window.innerHeight - 12) {
+    top = Math.max(12, iconRect.top - tipRect.height - 10);
+    below = false;
+  }
+  tip.style.left = `${Math.round(left)}px`;
+  tip.style.top = `${Math.round(top)}px`;
+  tip.style.setProperty('--tip-arrow-x', `${Math.round(arrowX)}px`);
+  tip.classList.toggle('is-below', below);
+  tip.classList.toggle('is-above', !below);
+  tip.classList.add('is-visible');
+  tip.style.visibility = 'visible';
+}
+
+function hidePromoBubble() {
+  if (!promoBubble) return;
+  promoBubble.classList.remove('is-visible');
+  promoBubble.style.display = 'none';
+}
+
 function dailyGrid() {
   const diary = window.__diaryRecords || {};
   const expenses = window.__expenseRecords || [];
@@ -250,6 +317,7 @@ function dailyGrid() {
     const hasExpense = expenses.some(item => item.date === key);
     const hasIncome = incomes.some(item => item.date === key);
     const monday = new Date(`${key}T00:00:00`).getDay() === 1;
+    const promoShops = promosOfDay(day);
     const event = special[key];
     const hasSchedule = Boolean(record?.tasks?.length);
     const hasSleep = Boolean(record?.tasks?.some((task: any) => task.desc === '睡觉' || task.desc === '睡懒觉'));
@@ -258,9 +326,10 @@ function dailyGrid() {
     if (today) classes.push('cal-today');
     if (record || hasExpense || hasIncome || monday) classes.push('cal-has-data');
     if (monday) classes.push('cal-hema-day');
+    if (promoShops.length) classes.push('cal-promo-day');
     if (state.selected === key) classes.push('cal-selected');
     if (event) classes.push('cal-special');
-    return `<div class="${classes.join(' ')}" data-date="${key}"><span class="cal-date${today ? ' cal-date-today' : ''}">${day}日</span>${lunarText(state.year, state.month, day)}${hasExpense ? '<span class="cal-expense-dot" title="有支出"></span>' : ''}${hasSchedule ? '<span class="cal-schedule-dot" title="有日程"></span>' : ''}${hasSubscription ? '<span class="cal-subscription-dot" title="有订阅"></span>' : ''}${hasSleep ? '<span class="cal-sleep-dot" title="睡眠良好"></span>' : ''}${event ? `<span class="cal-special-icons" title="${escape(event.keywords?.join('、'))}">${event.icons?.join('') || ''}</span>` : ''}</div>`;
+    return `<div class="${classes.join(' ')}" data-date="${key}"><span class="cal-date${today ? ' cal-date-today' : ''}">${day}日</span>${lunarText(state.year, state.month, day)}${hasExpense ? '<span class="cal-expense-dot" title="有支出"></span>' : ''}${hasSchedule ? '<span class="cal-schedule-dot" title="有日程"></span>' : ''}${hasSubscription ? '<span class="cal-subscription-dot" title="有订阅"></span>' : ''}${hasSleep ? '<span class="cal-sleep-dot" title="睡眠良好"></span>' : ''}${promoShops.length ? '<span class="cal-promo-icons" role="img" tabindex="0" aria-label="超市会员日折扣，悬停查看">🛒</span>' : ''}${event ? `<span class="cal-special-icons" title="${escape(event.keywords?.join('、'))}">${event.icons?.join('') || ''}</span>` : ''}</div>`;
   });
 }
 
@@ -272,7 +341,8 @@ function dailyDetail(key: string | null) {
   const hema = window.__hemaDayRecords?.[key];
   const utility = window.__utilityRecords?.[key];
   const monday = new Date(`${key}T00:00:00`).getDay() === 1;
-  if (!record && !expenses.length && !incomes.length && !hema && !monday && !utility) return '';
+  const promoShops = promosOfDay(Number(key.slice(8, 10)));
+  if (!record && !expenses.length && !incomes.length && !hema && !monday && !utility && !promoShops.length) return '';
   const day = new Date(`${key}T00:00:00`);
   let html = `<div class="detail-panel"><div class="detail-header"><span class="detail-title">${day.getMonth() + 1}月${day.getDate()}日</span><button class="detail-close util-dc">✕</button></div><div class="detail-body">`;
   if (utility) {
@@ -301,6 +371,16 @@ function dailyDetail(key: string | null) {
     if (hema?.bought) html += `<div class="hema-block"><span class="hema-tag hema-bought">本周购买</span><p class="hema-text">${escape(hema.bought)}</p></div>`;
     if (hema?.nextPlan) html += `<div class="hema-block"><span class="hema-tag hema-next">下周想买</span><p class="hema-text">${escape(hema.nextPlan)}</p></div>`;
     if (!hema) html += '<div class="hema-empty">本周还没记录盒马日，记得补上～</div>';
+  }
+  if (promoShops.length) {
+    promoShops.forEach((shop: any) => {
+      const tiers = (shop.tiers || [])
+        .map((tier: any) => `<div class="hema-block"><span class="hema-tag promo-tag">${promoRateText(tier.rate)}</span><p class="hema-text">${escape(tier.label)}</p></div>`)
+        .join('');
+      const excludes = shop.excludes?.length ? `<p class="promo-note">不参与：${escape(shop.excludes.join('、'))}</p>` : '';
+      const note = shop.note ? `<p class="promo-note">${escape(shop.note)}</p>` : '';
+      html += `<div class="detail-row"><span class="detail-label">🛒 超市会员日</span><span class="detail-val">${escape(shop.name)} · 每月 ${escape(shop.day)} 号</span></div><div class="hema-section">${tiers}${excludes}${note}</div>`;
+    });
   }
   return `${html}</div></div>`;
 }
@@ -858,6 +938,7 @@ function setupAccordions(root: ParentNode = document) {
 }
 
 function renderView(view: string) {
+  hidePromoBubble();
   if (view === 'daily-tracker') {
     document.getElementById('dailyCalendar')!.innerHTML = dailyGrid();
     document.getElementById('dailyDetail')!.innerHTML = dailyDetail(state.selected);
@@ -1140,6 +1221,23 @@ document.addEventListener('mouseout', event => {
   if ((event.target as HTMLElement).closest('.membership-row-note, .membership-row-note-mobile')) hideMembershipNoteTip();
 });
 window.addEventListener('scroll', hideMembershipNoteTip, true);
+
+// 超市会员日：悬停 🛒 图标弹自绘气泡（不用原生 title）
+document.addEventListener('mouseover', event => {
+  const icon = (event.target as HTMLElement).closest<HTMLElement>('.cal-promo-icons');
+  if (icon) showPromoBubble(icon);
+});
+document.addEventListener('mouseout', event => {
+  if ((event.target as HTMLElement).closest('.cal-promo-icons')) hidePromoBubble();
+});
+document.addEventListener('focusin', event => {
+  const icon = (event.target as HTMLElement).closest<HTMLElement>('.cal-promo-icons');
+  if (icon) showPromoBubble(icon);
+});
+document.addEventListener('focusout', event => {
+  if ((event.target as HTMLElement).closest('.cal-promo-icons')) hidePromoBubble();
+});
+window.addEventListener('scroll', hidePromoBubble, true);
 
 window.addEventListener('popstate', () => {
   if (page !== SCHEDULE_FINANCE_PAGE) return;
