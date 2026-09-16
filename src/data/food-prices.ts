@@ -35,5 +35,17 @@ export const foodPrices: FoodPriceItem[] = [
   { category: '蔬菜', name: '包菜', spec: '一颗', price: '1.5 元', updated: '2026-09-11', note: '1.5 元一颗' },
   { category: '蔬菜', name: '绿线椒', spec: '6 根', price: '0.5 元', updated: '2026-09-11', note: '很便宜，5 毛 6 根' },
   { category: '蔬菜', name: '红线椒', spec: '6 根', price: '0.5 元', updated: '2026-09-11', note: '很便宜，5 毛 6 根' },
-  { category: '冷冻速食', name: '蛋挞皮', spec: '30 个', price: '11.8 元', updated: '2026-09-12', note: '一包 30 个' },
+  { category: '冷冻速食', name: '蛋挞皮', spec: '一包 30 个', price: '11.80 元', source: '喜客来生活超市（隆江店）', updated: '2026-09-16' },
+  // ── 2026-09-16 喜客来 16 号会员日（记原价；称重商品按斤）──
+  { category: '肉禽蛋', name: '猪前排', price: '9.90 元/斤', source: '喜客来生活超市（隆江店）', updated: '2026-09-16' },
+  { category: '肉禽蛋', name: '鸡脯', price: '8.80 元/斤', source: '喜客来生活超市（隆江店）', updated: '2026-09-16' },
+  { category: '调料干货', name: '银耳', price: '48.00 元/斤', source: '喜客来生活超市（隆江店）', updated: '2026-09-16' },
+  { category: '调料干货', name: '香醋', price: '6.00 元', source: '喜客来生活超市（隆江店）', updated: '2026-09-16' },
+  { category: '调料干货', name: '麻婆豆腐调料', price: '3.80 元', source: '喜客来生活超市（隆江店）', updated: '2026-09-16' },
+  { category: '调料干货', name: '鸡精', price: '4.90 元', source: '喜客来生活超市（隆江店）', updated: '2026-09-16' },
+  { category: '调料干货', name: '味精', price: '2.80 元', source: '喜客来生活超市（隆江店）', updated: '2026-09-16' },
+  { category: '调料干货', name: '孜然粉', price: '4.00 元', source: '喜客来生活超市（隆江店）', updated: '2026-09-16' },
+  { category: '调料干货', name: '花椒粉', price: '7.50 元', source: '喜客来生活超市（隆江店）', updated: '2026-09-16' },
+  { category: '冷冻速食', name: '蛋挞液', price: '10.80 元', source: '喜客来生活超市（隆江店）', updated: '2026-09-16' },
+  { category: '冷冻速食', name: '云吞', price: '7.90 元', source: '喜客来生活超市（隆江店）', updated: '2026-09-16' },
 ];
