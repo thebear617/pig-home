@@ -2365,5 +2365,12 @@ export const expenseRecords = [
     "sub": "面食泡馍·拉条子",
     "amount": 11.5,
     "note": ""
+  },
+  {
+    "date": "2026-09-16",
+    "cat": "居家生活",
+    "sub": "零食·凤爪、辣条",
+    "amount": 6.49,
+    "note": ""
   }
 ];
