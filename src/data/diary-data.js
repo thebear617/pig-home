@@ -9448,6 +9448,415 @@ export const diaryRecords = {
         "dishGuess": null
       }
     ]
+  },
+  "2026-09-17": {
+    "value": 15,
+    "tasks": [
+      {
+        "status": "x",
+        "time": "00:00-01:00",
+        "desc": "和过马路看花儿与少年",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      },
+      {
+        "status": "x",
+        "time": "01:00-09:00",
+        "desc": "睡觉",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      },
+      {
+        "status": "x",
+        "time": "09:00-10:30",
+        "desc": "玩手机",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      },
+      {
+        "status": "x",
+        "time": "10:30-12:00",
+        "desc": "来学校找过马路，先回宿舍拿装置、看大头他们，把装置放到海五给小兰充电，然后和过马路一起吃竹园小牛拌饭",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      },
+      {
+        "status": "x",
+        "time": "12:00-14:20",
+        "desc": "在图书馆学习，继续准备大组会 PPT",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null,
+        "isStudy": true
+      },
+      {
+        "status": "x",
+        "time": "14:20-15:00",
+        "desc": "和胡哥讨论后续科研思路",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null,
+        "isStudy": true
+      },
+      {
+        "status": "x",
+        "time": "15:00-16:00",
+        "desc": "继续做大组会 PPT",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null,
+        "isStudy": true
+      },
+      {
+        "status": "x",
+        "time": "16:00-16:40",
+        "desc": "和曹先伟师兄讨论上下文分割论文的可扩展性",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null,
+        "isStudy": true
+      },
+      {
+        "status": "x",
+        "time": "16:40-18:30",
+        "desc": "在宿舍用显示器继续做大组会 PPT",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null,
+        "isStudy": true
+      },
+      {
+        "status": "x",
+        "time": "18:30-19:30",
+        "desc": "去吃小碗菜（地三鲜、麻婆豆腐、孜然炒肉，别人请）",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      },
+      {
+        "status": "x",
+        "time": "19:30-20:30",
+        "desc": "在宿舍继续做大组会 PPT",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null,
+        "isStudy": true
+      },
+      {
+        "status": "x",
+        "time": "20:30-21:07",
+        "desc": "和过马路一起回家",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      },
+      {
+        "status": "x",
+        "time": "21:07-22:25",
+        "desc": "打电动和洗漱",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      },
+      {
+        "status": "x",
+        "time": "22:25-23:10",
+        "desc": "打电动",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      },
+      {
+        "status": "x",
+        "time": "23:10-24:00",
+        "desc": "和过马路一边看花儿与少年一边打德州扑克",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      }
+    ]
+  },
+  "2026-09-18": {
+    "value": 11,
+    "tasks": [
+      {
+        "status": "x",
+        "time": "00:00-00:30",
+        "desc": "边看花儿与少年边打德州扑克",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      },
+      {
+        "status": "x",
+        "time": "00:30-09:30",
+        "desc": "睡觉",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      },
+      {
+        "status": "x",
+        "time": "09:30-10:00",
+        "desc": "和过马路一起去学校",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      },
+      {
+        "status": "x",
+        "time": "10:00-12:00",
+        "desc": "在宿舍做大组会 PPT",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null,
+        "isStudy": true
+      },
+      {
+        "status": "x",
+        "time": "12:00-13:00",
+        "desc": "和过马路去吃饭（三顾冒菜）",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      },
+      {
+        "status": "x",
+        "time": "13:00-15:30",
+        "desc": "继续做大组会 PPT",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null,
+        "isStudy": true
+      },
+      {
+        "status": "x",
+        "time": "15:30-16:00",
+        "desc": "去图书馆准备小组会的讲解",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null,
+        "isStudy": true
+      },
+      {
+        "status": "x",
+        "time": "16:00-17:30",
+        "desc": "讲小组会（和胡哥、张轩旗师兄他们组一起）",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null,
+        "isStudy": true
+      },
+      {
+        "status": "x",
+        "time": "17:30-21:30",
+        "desc": "和胡哥他们及师兄师姐师弟师妹一起去张伟铜锅涮肉聚餐（胡哥请）",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      },
+      {
+        "status": "x",
+        "time": "21:30-22:42",
+        "desc": "骑车回家，收拾家里，和过马路聊天，跟饼饼鼠玩",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      },
+      {
+        "status": "x",
+        "time": "22:42-24:00",
+        "desc": "打电动",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      }
+    ]
+  },
+  "2026-09-19": {
+    "value": 11,
+    "tasks": [
+      {
+        "status": "x",
+        "time": "00:00-01:00",
+        "desc": "打电动",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      },
+      {
+        "status": "x",
+        "time": "01:00-10:30",
+        "desc": "睡觉",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      },
+      {
+        "status": "x",
+        "time": "10:30-11:10",
+        "desc": "玩手机",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      },
+      {
+        "status": "x",
+        "time": "11:10-12:30",
+        "desc": "在家学习开发",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null,
+        "isStudy": true
+      },
+      {
+        "status": "x",
+        "time": "12:30-14:00",
+        "desc": "回学校吃海棠餐厅，吃的是杏鲍菇炒肉",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      },
+      {
+        "status": "x",
+        "time": "14:00-14:30",
+        "desc": "去了一趟网安改卷子，然后放充电线",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      },
+      {
+        "status": "x",
+        "time": "14:30-15:30",
+        "desc": "和过马路一起坐地铁去万科",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      },
+      {
+        "status": "x",
+        "time": "15:30-19:30",
+        "desc": "在万科的知意咖啡自习，整理这几天的碎片信息",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null,
+        "isStudy": true
+      },
+      {
+        "status": "x",
+        "time": "19:30-21:30",
+        "desc": "和过马路在万科吃肉蟹煲鸡爪煲",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      },
+      {
+        "status": "x",
+        "time": "21:30-22:30",
+        "desc": "和过马路打车回家",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      },
+      {
+        "status": "x",
+        "time": "22:30-24:00",
+        "desc": "在床上进行学习开发和整理",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null,
+        "isStudy": true
+      }
+    ]
+  },
+  "2026-09-20": {
+    "value": 10,
+    "tasks": [
+      {
+        "status": "x",
+        "time": "00:00-02:00",
+        "desc": "玩手机，吵架啥的",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      },
+      {
+        "status": "x",
+        "time": "02:00-10:00",
+        "desc": "睡觉",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      },
+      {
+        "status": "x",
+        "time": "10:00-11:00",
+        "desc": "起床洗漱洗澡",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      },
+      {
+        "status": "x",
+        "time": "11:00-11:30",
+        "desc": "骑车去地铁站",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      },
+      {
+        "status": "x",
+        "time": "11:30-12:30",
+        "desc": "坐地铁去吃铁锅炖",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      },
+      {
+        "status": "x",
+        "time": "12:30-14:30",
+        "desc": "吃铁锅炖",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      },
+      {
+        "status": "x",
+        "time": "14:30-19:30",
+        "desc": "在大茂城的无忧桌游和轩他们一起 10 个人打桌游",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      },
+      {
+        "status": "x",
+        "time": "19:30-22:00",
+        "desc": "和轩他们走路到 3511 夜市，吃三友仔老友粉，请他们吃爆炒牛杂",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      },
+      {
+        "status": "x",
+        "time": "22:00-23:00",
+        "desc": "坐地铁回学校，和过马路一起去夜市买吃的",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      },
+      {
+        "status": "x",
+        "time": "23:00-24:00",
+        "desc": "回来吃夜宵，然后收拾了一下家",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      }
+    ]
   }
 };
 export const specialEvents = {

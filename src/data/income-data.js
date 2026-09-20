@@ -55,5 +55,12 @@ export const incomeRecords = [
     "sub": "基础工资",
     "amount": 1850.0,
     "note": "研究生 26 年 9 月国家补助金"
+  },
+  {
+    "date": "2026-09-20",
+    "cat": "工资收入",
+    "sub": "基础工资",
+    "amount": 300.0,
+    "note": "助研金 26 年 7 月"
   }
 ];
