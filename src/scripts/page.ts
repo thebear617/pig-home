@@ -115,9 +115,9 @@ function isStudyTask(task: any): boolean {
   return taskAreas(task).some(area => STUDY_AREAS.has(area));
 }
 
-// 可支配余额不包含租房预留：8 月租房预留 4000 元，9 月租房预留 1350 元。
+// 可支配余额不包含租房预留：8 月租房预留 4000 元，9 月租房预留 500 元。
 const AUG_RENT_RESERVE = 4000;
-const SEP_RENT_RESERVE = 1350;
+const SEP_RENT_RESERVE = 500;
 const BALANCE_ADJUSTMENT = 529.31;
 
 function getAvailableBalance(): number | null {
