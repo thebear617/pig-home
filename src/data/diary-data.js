@@ -9857,6 +9857,52 @@ export const diaryRecords = {
         "dishGuess": null
       }
     ]
+  },
+  "2026-09-21": {
+    "value": 5,
+    "tasks": [
+      {
+        "status": "x",
+        "time": "00:00-01:00",
+        "desc": "学习开发",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null,
+        "isStudy": true
+      },
+      {
+        "status": "x",
+        "time": "01:00-02:00",
+        "desc": "玩手机",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      },
+      {
+        "status": "x",
+        "time": "02:00-08:45",
+        "desc": "睡觉",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      },
+      {
+        "status": "x",
+        "time": "08:45-09:10",
+        "desc": "起床洗澡洗漱",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      },
+      {
+        "status": "x",
+        "time": "09:10-10:15",
+        "desc": "来学校，去网安上厕所，图书馆买早餐",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      }
+    ]
   }
 };
 export const specialEvents = {
