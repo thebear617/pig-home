@@ -2,11 +2,12 @@
 import {
   albumChapters,
   albumEntries,
-  ALBUM_CHAPTER_NUMERAL,
   TOTAL_PAGES,
 } from '../../data/album-data';
 import type { AlbumEntry } from '../../data/album-data';
 import AlbumPage from './AlbumPage.astro';
+import AlbumShelf from './AlbumShelf.astro';
+import type { ShelfChapter } from './AlbumShelf.astro';
 
 const base = import.meta.env.BASE_URL;
 
@@ -31,24 +32,108 @@ function buildPages() {
 
 const pages = buildPages();
 
-// 章节 → 起始对开页：从实际条目推导，避免章节内容变更后跳转失效。
-const chapterStartPage = albumChapters.map((chapter) => {
-  const firstEntry = albumEntries
-    .filter(entry => entry.chapterId === chapter.id)
-    .sort((a, b) => a.page - b.page)[0];
-  return firstEntry?.page ?? 0;
-});
-
 const filledCount = albumEntries.filter(e => e.status === 'filled').length;
 const pendingCount = albumEntries.length - filledCount;
 
+// ── 章节数据：第二层书架，每本「册」= 一个章节 ──
+const shelfChapters: ShelfChapter[] = albumChapters.map((chapter) => {
+  const entries = albumEntries.filter(e => e.chapterId === chapter.id);
+  const chapterPages = [...new Set(entries.map(e => e.page))].sort((a, b) => a - b);
+  return {
+    id: chapter.id,
+    title: chapter.title,
+    kicker: chapter.kicker,
+    startPage: chapterPages[0] ?? 1,
+    spreadCount: chapterPages.length,
+    filledCount: entries.filter(e => e.status === 'filled').length,
+    momentCount: entries.length,
+  };
+});
 ---
 
 <div data-tab="couple-album" data-album-root tabindex="-1">
+
+  {/* ── 第一层 · 书馆书架：《我们》+《它们》 ── */}
+  <div data-album-view-section="book">
+    <section class="album-shelf" aria-label="书馆书架">
+      <div class="album-shelf-head">
+        <div class="album-shelf-brand">
+          <strong>OUR LITTLE LIBRARY</strong>
+          <span>A PERSONAL COLLECTION</span>
+          <p class="album-shelf-stats">
+            2 BOOKS<br />
+            {shelfChapters.length} CHAPTERS · {TOTAL_PAGES} SPREADS · {albumEntries.length} MOMENTS<br />
+            {filledCount} PAGES FILLED
+          </p>
+        </div>
+        <div class="album-shelf-head-right">
+          <p class="album-shelf-zh">给时间一个书架</p>
+          <p>ON THE SHELF / 2 BOOKS</p>
+        </div>
+      </div>
+      <div class="album-shelf-row" data-shelf-row>
+        <button
+          class="album-shelf-book"
+          type="button"
+          data-album-book-open="us"
+          style="--hpct:80%; --w:72px; --bg:#26241f; --ink:#e9e4da;"
+          data-tip="「我们」"
+          data-tip-sub={`8 章 · 40 对开页 · 已填 ${filledCount}`}
+          aria-label="打开相簿「我们」"
+        >
+          <span class="album-shelf-book-title">我们</span>
+          <span class="album-shelf-book-vol">01-40</span>
+        </button>
+        <button
+          class="album-shelf-book is-pending"
+          type="button"
+          data-album-book-open="pet"
+          style="--hpct:70%; --w:64px; --bg:#c96f2f; --ink:#f6ead9;"
+          data-tip="「它们」"
+          data-tip-sub="这一本还在装订中"
+          aria-label="打开相簿「它们」（装订中）"
+        >
+          <span class="album-shelf-book-title">它们</span>
+          <span class="album-shelf-book-vol">装订中</span>
+        </button>
+      </div>
+      <div class="album-shelf-foot">
+        <span>2 BOOKS / ONE SHELF</span>
+        <span>回忆，装订成册。</span>
+        <span>Click a book to open. ↗</span>
+      </div>
+    </section>
+  </div>
+
+  {/* ── 《它们》· 待装订占位 ── */}
+  <div data-album-view-section="pet" hidden>
+    <div class="album-petstage">
+      <p class="album-petstage-kicker">VOL. 02 · BINDING</p>
+      <h2 class="album-petstage-title">它们</h2>
+      <p class="album-petstage-sub">这一本还在装订中——照片收集中，敬请期待。</p>
+      <button class="album-petstage-back" type="button" data-album-pet-back>← 书架</button>
+    </div>
+  </div>
+
+  {/* ── 第二层 · 章节书架 ── */}
+  <div data-album-view-section="shelf" hidden>
+    <AlbumShelf chapters={shelfChapters} filledCount={filledCount} />
+  </div>
+
+  {/* ── 第三层 · 翻页视图 ── */}
+  <div data-album-view-section="flip" hidden>
+
+  {/* ── 阅读顶栏：返回章节 / 标题 / 卷号 ── */}
+  <div class="album-readerbar">
+    <button class="album-readerbar-back" type="button" data-album-shelf-back>← 章节</button>
+    <span class="album-readerbar-title" data-album-reader-title>THE TWO OF US</span>
+    <span class="album-readerbar-vol" data-album-reader-vol>COVER</span>
+  </div>
+
   <div class="album-flip">
 
     {/* ── 封面页（page 0）── */}
-    <section class="album-sheet" data-album-sheet="0">
+    <section class="album-sheet" data-album-sheet="0" data-album-title="封面 · THE TWO OF US">
       <div class="album-masthead"><span>THE TWO OF US</span><span>VOL. 01 · 2026</span></div>
       <div class="album-cover2">
         <p class="album-cover2-kicker">A PHOTO ALBUM OF ME AND TA</p>
@@ -74,7 +159,7 @@ const pendingCount = albumEntries.length - filledCount;
 
     {/* ── 40 个对开页 ── */}
     {pages.map(({ page, left, right }) => (
-      <section class="album-sheet" data-album-sheet={page} hidden>
+      <section class="album-sheet" data-album-sheet={page} data-album-title={left?.title || right?.title || `第 ${page} 对开页`} hidden>
         <div class="album-masthead"><span>THE TWO OF US</span><span>{String(page).padStart(2, '0')} — {String(TOTAL_PAGES).padStart(2, '0')}</span></div>
         <div class="album-open">
           {/* 左页 */}
@@ -97,49 +182,31 @@ const pendingCount = albumEntries.length - filledCount;
 
   </div>
 
-  {/* ── 底部翻页控制器 ── */}
-  <div class="album-flipbar">
-    <button class="album-flip-btn" type="button" data-album-prev aria-label="上一页">◀ 上一页</button>
-    <div class="album-flip-nav">
-      <span class="album-flip-page-label">第</span>
-      <select class="album-flip-select" data-album-select aria-label="跳转页码">
-        <option value="0">封面</option>
-        {pages.map(({ page }) => (
-          <option value={page}>{page} / {TOTAL_PAGES}</option>
-        ))}
-      </select>
-      <span class="album-flip-page-label">页</span>
+  {/* ── 底部页码条：页码 + 翻页提示 + 左右箭头 ── */}
+  <div class="album-pagebar">
+    <button class="album-pagebar-arrow is-prev" type="button" data-album-prev aria-label="上一页">←</button>
+    <div class="album-pagebar-center">
+      <span class="album-pagebar-num" data-album-pagebar-num>封面</span>
+      <span class="album-pagebar-hint">点击书页两侧、滑动，或使用方向键</span>
     </div>
-    <button class="album-flip-btn" type="button" data-album-next aria-label="下一页">下一页 ▶</button>
+    <button class="album-pagebar-arrow is-next" type="button" data-album-next aria-label="下一页">→</button>
   </div>
-
-  {/* ── 章节快捷跳转（可选收起）── */}
-  <details class="album-chapters2" open>
-    <summary class="album-chapters2-summary">跳转章节</summary>
-    <div class="album-chapters2-grid">
-       <button class="album-chapters2-tab" type="button" data-album-goto="0">
-        <span class="album-chapters2-num">✦</span><span>封面</span>
-      </button>
-      {albumChapters.map((c, i) => (
-        <button class="album-chapters2-tab" type="button" data-album-goto={chapterStartPage[i]}>
-          <span class="album-chapters2-num">{ALBUM_CHAPTER_NUMERAL[c.id]}</span><span>{c.title}</span>
-        </button>
-      ))}
-    </div>
-  </details>
+  </div>{/* /翻页视图 */}
 </div>
 
 <script>
   const root = document.querySelector<HTMLElement>('[data-album-root]');
   if (root) {
     const sheets = Array.from(root.querySelectorAll<HTMLElement>('[data-album-sheet]'));
-    const select = root.querySelector<HTMLSelectElement>('[data-album-select]');
     const mainArea = root.closest<HTMLElement>('.main-area');
     const totalPages = sheets.reduce((max, sheet) => {
       const page = Number(sheet.dataset.albumSheet);
       return page > max ? page : max;
     }, 0);
     let current = 0;
+    const readerTitle = root.querySelector<HTMLElement>('[data-album-reader-title]');
+    const readerVol = root.querySelector<HTMLElement>('[data-album-reader-vol]');
+    const pagebarNum = root.querySelector<HTMLElement>('[data-album-pagebar-num]');
 
     function fitActiveSheet() {
       const activeSheet = sheets.find(sheet => Number(sheet.dataset.albumSheet) === current);
@@ -156,38 +223,151 @@ const pendingCount = albumEntries.length - filledCount;
       sheets.forEach(s => {
         s.hidden = Number(s.dataset.albumSheet) !== current;
       });
-      if (select) select.value = String(current);
       const url = new URL(window.location.href);
       if (current === 0) url.searchParams.delete('p');
       else url.searchParams.set('p', String(current));
       window.history.replaceState({}, '', url);
+      // 同步阅读顶栏与底部页码条
+      const activeSheet = sheets.find(s => Number(s.dataset.albumSheet) === current);
+      if (readerTitle) readerTitle.textContent = activeSheet?.dataset.albumTitle || 'THE TWO OF US';
+      if (readerVol) readerVol.textContent = current === 0
+        ? 'COVER'
+        : `VOL. ${String(current).padStart(2, '0')} / ${String(totalPages).padStart(2, '0')}`;
+      if (pagebarNum) pagebarNum.textContent = current === 0
+        ? '封面'
+        : `${String(current).padStart(2, '0')} / ${String(totalPages).padStart(2, '0')}`;
       mainArea?.scrollTo({ top: 0 });
       root.focus({ preventScroll: true });
       requestAnimationFrame(fitActiveSheet);
     }
 
+    // ── 三层视图切换：book（书馆书架）→ shelf（章节书架）→ flip（翻页） ──
+    type AlbumView = 'book' | 'shelf' | 'flip' | 'pet';
+    const viewSections = root.querySelectorAll<HTMLElement>('[data-album-view-section]');
+    let currentView: AlbumView = 'book';
+    function setView(view: AlbumView) {
+      currentView = view;
+      viewSections.forEach(s => { s.hidden = s.dataset.albumViewSection !== view; });
+      try { localStorage.setItem('album-view', view); } catch { /* 隐私模式忽略 */ }
+      // 黑场阅读模式（body 级主题切换）
+      document.body.dataset.albumMode = view;
+      mainArea?.scrollTo({ top: 0 });
+      if (view === 'flip') fitActiveSheet();
+    }
+
+    // 书馆书架：按书分发 ——《我们》→ 章节书架，《它们》→ 装订占位
+    root.querySelectorAll<HTMLButtonElement>('[data-album-book-open]').forEach(btn => {
+      btn.addEventListener('click', () => {
+        setView(btn.dataset.albumBookOpen === 'pet' ? 'pet' : 'shelf');
+      });
+    });
+    // 《它们》装订占位 → 书馆书架
+    root.querySelector<HTMLButtonElement>('[data-album-pet-back]')
+      ?.addEventListener('click', () => setView('book'));
+    // 章节书架 → 书本
+    root.querySelector<HTMLButtonElement>('[data-album-book-back]')
+      ?.addEventListener('click', () => setView('book'));
+    // 翻页 → 章节书架
+    root.querySelector<HTMLButtonElement>('[data-album-shelf-back]')
+      ?.addEventListener('click', () => setView('shelf'));
+
+    // ── 章节书架：点击章节 → 进入该章节的对开页 ──
+    root.querySelectorAll<HTMLElement>('[data-shelf-chapter]').forEach(book => {
+      book.addEventListener('click', () => {
+        showPage(Number(book.dataset.shelfChapterPage) || 1);
+        setView('flip');
+      });
+    });
+
     root.querySelectorAll<HTMLButtonElement>('[data-album-prev]').forEach(b =>
       b.addEventListener('click', () => showPage(current - 1)));
     root.querySelectorAll<HTMLButtonElement>('[data-album-next]').forEach(b =>
       b.addEventListener('click', () => showPage(current + 1)));
+    // 封面「翻开相册」等页内跳转
     root.querySelectorAll<HTMLButtonElement>('[data-album-goto]').forEach(b =>
-      b.addEventListener('click', () => showPage(Number(b.dataset.albumGoto) || 0)));
-    select?.addEventListener('change', () => showPage(Number(select.value) || 0));
+      b.addEventListener('click', () => { showPage(Number(b.dataset.albumGoto) || 0); setView('flip'); }));
 
-    // 键盘左右翻页
+    // ── 点击书页两侧翻页（避开照片按钮等交互元素）──
+    root.querySelectorAll<HTMLElement>('[data-album-sheet]').forEach(sheet => {
+      sheet.addEventListener('click', (e: MouseEvent) => {
+        const target = e.target as HTMLElement;
+        if (target.closest('button, a, select, input, textarea, [data-image-src]')) return;
+        const rect = sheet.getBoundingClientRect();
+        const ratio = (e.clientX - rect.left) / rect.width;
+        if (ratio < 0.35) showPage(current - 1);
+        else if (ratio > 0.65) showPage(current + 1);
+      });
+    });
+
+    // ── 滑动翻页（触屏）──
+    const flipArea = root.querySelector<HTMLElement>('.album-flip');
+    let touchX = 0;
+    flipArea?.addEventListener('touchstart', (e: TouchEvent) => {
+      touchX = e.touches[0]?.clientX ?? 0;
+    }, { passive: true });
+    flipArea?.addEventListener('touchend', (e: TouchEvent) => {
+      const dx = (e.changedTouches[0]?.clientX ?? 0) - touchX;
+      if (Math.abs(dx) > 48) showPage(dx < 0 ? current + 1 : current - 1);
+    }, { passive: true });
+
+    // 键盘左右翻页（仅翻页视图响应）
     document.addEventListener('keydown', (event) => {
       if (modal && !modal.hidden) return;
+      if (currentView !== 'flip') return;
       const target = event.target as HTMLElement | null;
       if (target?.matches('input, select, textarea, button, [contenteditable="true"]')) return;
       if (event.key === 'ArrowRight') { event.preventDefault(); showPage(current + 1); }
       if (event.key === 'ArrowLeft') { event.preventDefault(); showPage(current - 1); }
     });
 
-    // 初始页码：URL ?p=
+    // 初始状态：URL ?p= 直达翻页；否则默认书架（书馆层），不再恢复「翻页」视图
     const initial = new URLSearchParams(window.location.search).get('p');
+    const initialView: AlbumView = initial
+      ? 'flip'
+      : (() => {
+          try {
+            const saved = localStorage.getItem('album-view');
+            return saved === 'shelf' || saved === 'pet' ? saved : 'book';
+          } catch { return 'book'; }
+        })();
     showPage(initial ? Number(initial) || 0 : 0);
+    if (initial) {
+      // ?p= 是一次性深链：读取后立刻从地址栏移除，
+      // 避免开发热重载/刷新时固定停在翻页视图
+      const url = new URL(window.location.href);
+      url.searchParams.delete('p');
+      window.history.replaceState({}, '', url);
+    }
+    setView(initialView);
     window.addEventListener('resize', fitActiveSheet);
   }
+
+  // ── 书架气泡提示（自定义样式，跟随鼠标） ──
+  const tip = document.createElement('div');
+  tip.className = 'album-tip';
+  tip.hidden = true;
+  document.body.appendChild(tip);
+  document.querySelectorAll<HTMLElement>('[data-tip]').forEach(el => {
+    el.addEventListener('mouseenter', () => {
+      // 两段式：标题行 + 详情行（详情可自然换行）
+      tip.innerHTML = '';
+      const title = document.createElement('strong');
+      title.className = 'album-tip-title';
+      title.textContent = el.dataset.tip || '';
+      const sub = document.createElement('span');
+      sub.className = 'album-tip-sub';
+      sub.textContent = el.dataset.tipSub || '';
+      tip.append(title, sub);
+      tip.hidden = !el.dataset.tip;
+    });
+    el.addEventListener('mousemove', (e: MouseEvent) => {
+      // 默认悬在鼠标上方，靠右时自动收进来，避免溢出屏幕
+      const x = Math.min(e.clientX, window.innerWidth - tip.offsetWidth - 14);
+      tip.style.left = `${Math.max(8, x)}px`;
+      tip.style.top = `${Math.max(8, e.clientY - tip.offsetHeight - 14)}px`;
+    });
+    el.addEventListener('mouseleave', () => { tip.hidden = true; });
+  });
 
   // ── 图片灯箱（对开页内单图放大） ──
   const modal = document.querySelector<HTMLElement>('#albumImageModal');

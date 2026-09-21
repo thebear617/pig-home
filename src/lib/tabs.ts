@@ -11,7 +11,7 @@ export const TABS: Tab[] = [
   { id: 'schedule-finance', title: '日程和财务', icon: '📅', months: true },
   { id: 'food-map', title: '美食地图', icon: '🗺️' },
   { id: 'relationship-timeline', title: '关系时间线', icon: '💞' },
-  { id: 'couple-album', title: '情侣相册', icon: '📸' },
+  { id: 'couple-album', title: '相簿', icon: '📸' },
 ];
 
 export const DEFAULT_TAB = 'schedule-finance';

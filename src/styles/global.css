@@ -11162,7 +11162,7 @@ body[data-page="food-map"] .foodmap-city-summary .foodmap-directory-usage {
  * ──────────────────────────────────────────────────────────────────────────── */
 
 body[data-page="couple-album"] {
-  --album-bg: #f2efe8;
+  --album-bg: #0d0c0b;
   --album-fg: #26221e;
   --album-muted: #8c8579;
   --album-accent: #6b6258;
@@ -11173,15 +11173,133 @@ body[data-page="couple-album"] {
   --album-shadow-soft: 0 6px 18px rgba(38, 34, 30, .06);
   --album-serif: Georgia, "Songti SC", "STSong", "SimSun", serif;
   --album-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
-  background: var(--album-bg);
-  color: var(--album-fg);
+  /* 相簿 = 黑场书馆：三层（书本/章节/翻页）都在暗色里 */
+  background: #0d0c0b;
+  color: #e8e2d6;
 }
 
 body[data-page="couple-album"] .app-shell {
-  width: min(1280px, 100%);
-  max-width: 1280px;
-  padding-right: 1.5rem;
-  padding-left: 1.5rem;
+  width: 100%;
+  max-width: none;
+  margin: 0;
+  padding: 0;
+}
+
+/* 纵向 flex 链：书架/翻页视图撑满整个内容区高度 */
+body[data-page="couple-album"] .main-area {
+  display: flex;
+  flex-direction: column;
+}
+
+body[data-page="couple-album"] .app-shell {
+  flex: 1 0 auto;
+  display: flex;
+  flex-direction: column;
+}
+
+body[data-page="couple-album"] [data-album-root] {
+  flex: 1 0 auto;
+  display: flex;
+  flex-direction: column;
+  /* 容器被 JS focus() 时不画焦点框 */
+  outline: none;
+}
+
+body[data-page="couple-album"] [data-album-view-section]:not([hidden]) {
+  flex: 1 0 auto;
+  display: flex;
+  flex-direction: column;
+}
+
+/* 翻页视图：允许收缩，让书页高度受控于实际可用空间 */
+body[data-page="couple-album"] [data-album-view-section="flip"]:not([hidden]) {
+  flex: 1 1 auto;
+  min-height: 0;
+}
+
+/* ── 书架气泡提示（米白纸片，跟随鼠标） ── */
+body[data-page="couple-album"] .album-tip {
+  position: fixed;
+  z-index: 90;
+  display: flex;
+  flex-direction: column;
+  gap: .3rem;
+  max-width: 300px;
+  padding: .55rem .8rem;
+  border-radius: 4px;
+  background: #f3efe4;
+  color: #26221e;
+  font-family: var(--album-sans);
+  box-shadow: 0 12px 28px rgba(0, 0, 0, .5);
+  pointer-events: none;
+}
+
+/* display:flex 会盖掉 hidden 的默认隐藏，这里显式补回 */
+body[data-page="couple-album"] .album-tip[hidden] { display: none; }
+
+body[data-page="couple-album"] .album-tip-title {
+  font-size: .7rem;
+  font-weight: 700;
+  letter-spacing: .14em;
+}
+
+body[data-page="couple-album"] .album-tip-sub {
+  font-size: .62rem;
+  letter-spacing: .06em;
+  line-height: 1.8;
+  color: #6d675c;
+}
+
+/* ── 《它们》· 待装订占位 ── */
+body[data-page="couple-album"] .album-petstage {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1.1rem;
+  padding: 2rem 1.5rem;
+  text-align: center;
+}
+
+body[data-page="couple-album"] .album-petstage-kicker {
+  font-size: .6rem;
+  letter-spacing: .34em;
+  color: #8c8577;
+}
+
+body[data-page="couple-album"] .album-petstage-title {
+  margin: 0;
+  font-family: var(--album-serif);
+  font-size: 2.8rem;
+  letter-spacing: .45em;
+  text-indent: .45em;
+  color: #ece5d7;
+}
+
+body[data-page="couple-album"] .album-petstage-sub {
+  margin: 0;
+  font-size: .74rem;
+  letter-spacing: .24em;
+  color: #8c8577;
+}
+
+body[data-page="couple-album"] .album-petstage-back {
+  margin-top: .8rem;
+  padding: .45rem 1.1rem;
+  border: 1px solid rgba(236, 229, 215, .25);
+  border-radius: 2px;
+  background: transparent;
+  color: #b5ad9c;
+  font-family: inherit;
+  font-size: .62rem;
+  letter-spacing: .22em;
+  cursor: pointer;
+  transition: border-color .2s, color .2s;
+}
+body[data-page="couple-album"] .album-petstage-back:hover {
+  border-color: #ece5d7;
+  color: #ece5d7;
 }
 
 body[data-page="couple-album"] .album-flip {
@@ -11544,105 +11662,200 @@ body[data-page="couple-album"] .album-cover2-open {
 }
 body[data-page="couple-album"] .album-cover2-open:hover { opacity: .82; }
 
-/* ── 底部翻页控制条 ── */
-body[data-page="couple-album"] .album-flipbar {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 1.2rem;
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: .7rem 1.2rem;
-  border-top: 1px solid var(--album-rule);
-  border-bottom: 1px solid var(--album-rule);
-  background: transparent;
+/* ── 翻页视图 · 黑场阅读模式（body[data-album-mode="flip"]）── */
+body[data-page="couple-album"][data-album-mode="flip"] {
+  --album-bg: #060606;
+  --album-fg: #ece5d7;
+  --album-muted: #8c8577;
+  --album-rule: rgba(236, 229, 215, .16);
+  background: #060606;
 }
 
-body[data-page="couple-album"] .album-flip-btn {
-  padding: .5rem .2rem;
+body[data-page="couple-album"][data-album-mode="flip"] .album-viewbar { display: none; }
+
+/* ── 阅读顶栏：← 书架 / 标题 / 卷号 ── */
+body[data-page="couple-album"] .album-readerbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  width: 100%;
+  padding: 1.5rem 2.4rem .8rem;
+  font-family: var(--album-sans);
+  font-size: .62rem;
+  letter-spacing: .18em;
+  color: #8c8577;
+}
+
+body[data-page="couple-album"] .album-readerbar-back {
+  flex: 0 0 auto;
+  padding: .3rem 0;
   border: none;
   background: transparent;
-  color: var(--album-fg);
-  font-family: var(--album-sans);
-  font-size: .78rem;
-  letter-spacing: .12em;
-  text-transform: uppercase;
+  color: #b5ad9c;
+  font-family: inherit;
+  font-size: .62rem;
+  letter-spacing: .18em;
   cursor: pointer;
   transition: color .2s;
 }
-body[data-page="couple-album"] .album-flip-btn:hover { color: var(--album-muted); }
+body[data-page="couple-album"] .album-readerbar-back:hover { color: #ece5d7; }
 
-body[data-page="couple-album"] .album-flip-nav {
-  display: flex;
-  align-items: center;
-  gap: .5rem;
-  font-family: var(--album-sans);
-  font-size: .78rem;
-  color: var(--album-muted);
-  letter-spacing: .08em;
-}
-
-body[data-page="couple-album"] .album-flip-select {
-  padding: .35rem .5rem;
-  border: none;
-  border-bottom: 1px solid var(--album-rule);
-  border-radius: 0;
-  background: transparent;
-  color: var(--album-fg);
-  font-family: var(--album-sans);
-  font-size: .78rem;
-  cursor: pointer;
-}
-
-/* ── 章节快捷跳转 ── */
-body[data-page="couple-album"] .album-chapters2 {
-  max-width: 1200px;
-  margin: 0 auto;
-  border-top: 1px solid var(--album-rule);
-  background: transparent;
-}
-
-body[data-page="couple-album"] .album-chapters2-summary {
-  padding: .8rem 0;
-  font-family: var(--album-sans);
-  font-size: .75rem;
-  font-weight: 500;
-  letter-spacing: .14em;
-  text-transform: uppercase;
-  color: var(--album-muted);
-  cursor: pointer;
-  user-select: none;
-}
-
-body[data-page="couple-album"] .album-chapters2-grid {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: .6rem;
-  padding: 0 0 1rem;
-}
-
-body[data-page="couple-album"] .album-chapters2-tab {
-  display: flex;
-  align-items: center;
-  gap: .5rem;
-  padding: .55rem .7rem;
-  border: 1px solid var(--album-rule);
-  border-radius: 0;
-  background: transparent;
-  color: var(--album-fg);
-  font-family: var(--album-sans);
-  font-size: .78rem;
-  cursor: pointer;
-  text-align: left;
-  transition: background .15s, color .15s;
-}
-body[data-page="couple-album"] .album-chapters2-tab:hover {
-  background: var(--album-fg);
-  color: var(--album-paper);
-}
-body[data-page="couple-album"] .album-chapters2-num {
+body[data-page="couple-album"] .album-readerbar-title {
   font-family: var(--album-serif);
-  font-weight: 400;
+  font-size: .95rem;
+  letter-spacing: .34em;
+  color: #ece5d7;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+body[data-page="couple-album"] .album-readerbar-vol {
+  flex: 0 0 auto;
+  letter-spacing: .22em;
+}
+
+/* ── 底部页码条 ── */
+body[data-page="couple-album"] .album-pagebar {
+  position: relative;
+  width: 100%;
+  padding: 2.1rem 2.4rem 1.7rem;
+  text-align: center;
+}
+
+body[data-page="couple-album"] .album-pagebar-center {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: .45rem;
+}
+
+body[data-page="couple-album"] .album-pagebar-num {
+  font-family: var(--album-sans);
+  font-size: .72rem;
+  letter-spacing: .3em;
+  color: #d8d2c4;
+}
+
+body[data-page="couple-album"] .album-pagebar-hint {
+  font-family: var(--album-sans);
+  font-size: .56rem;
+  letter-spacing: .18em;
+  color: #6d675c;
+}
+
+body[data-page="couple-album"] .album-pagebar-arrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 44px;
+  height: 44px;
+  border: 1px solid rgba(236, 229, 215, .16);
+  border-radius: 50%;
+  background: transparent;
+  color: #b5ad9c;
+  font-family: var(--album-sans);
+  font-size: .95rem;
+  cursor: pointer;
+  transition: border-color .2s, color .2s;
+}
+body[data-page="couple-album"] .album-pagebar-arrow:hover {
+  border-color: #ece5d7;
+  color: #ece5d7;
+}
+body[data-page="couple-album"] .album-pagebar-arrow.is-prev { left: 8%; }
+body[data-page="couple-album"] .album-pagebar-arrow.is-next { right: 8%; }
+
+/* ── 翻页视图内容区：作为 size 容器，书页宽 = min(容器宽, 容器高 × 3/2) ── */
+body[data-page="couple-album"][data-album-mode="flip"] .album-flip {
+  flex: 1 1 auto;
+  min-height: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  container-type: size;
+}
+
+/* ── 黑场下的对开页：整张纸页 + 纸纹质感 ── */
+body[data-page="couple-album"][data-album-mode="flip"] .album-sheet {
+  width: min(100cqw, 150cqh);
+  border: none;
+  border-radius: 3px;
+  background:
+    radial-gradient(130% 110% at 50% 0%, rgba(255, 255, 255, .3), transparent 55%),
+    radial-gradient(90% 60% at 50% 110%, rgba(92, 72, 44, .10), transparent 60%),
+    #ece5d5;
+  box-shadow:
+    0 34px 90px rgba(0, 0, 0, .65),
+    inset 0 0 110px rgba(74, 58, 34, .13);
+  overflow: hidden;
+}
+
+/* 纸纹噪点（盖在内容上，不挡点击） */
+body[data-page="couple-album"][data-album-mode="flip"] .album-sheet::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 6;
+  pointer-events: none;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='240' height='240'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/><feColorMatrix type='saturate' values='0'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
+  opacity: .14;
+  mix-blend-mode: multiply;
+}
+
+/* 纸页上的内容不再自带底色，统一用纸页底 */
+body[data-page="couple-album"][data-album-mode="flip"] .album-page-left,
+body[data-page="couple-album"][data-album-mode="flip"] .album-page-right {
+  background: transparent;
+}
+
+/* ── 书页排版：粗黑印刷标题 + 图章式日期 ── */
+body[data-page="couple-album"][data-album-mode="flip"] .album-page-title {
+  font-family: var(--album-sans);
+  font-weight: 800;
+  font-size: 1.3rem;
+  letter-spacing: .14em;
+}
+
+body[data-page="couple-album"][data-album-mode="flip"] .album-page-date {
+  display: inline-block;
+  padding: .22rem .55rem;
+  border: 1.5px solid rgba(38, 34, 30, .75);
+  font-weight: 700;
+  letter-spacing: .22em;
+}
+
+body[data-page="couple-album"][data-album-mode="flip"] .album-page-photo {
+  background: transparent;
+  filter: drop-shadow(0 7px 12px rgba(40, 30, 14, .38));
+}
+
+/* 撕纸边缘照片（三种撕口轮换） */
+body[data-page="couple-album"][data-album-mode="flip"] .album-page-photo img {
+  filter: sepia(.14) contrast(1.04) saturate(.9);
+  clip-path: polygon(1% 4%, 22% 1%, 46% 4%, 72% 0%, 100% 3%, 99% 26%, 100% 52%, 98% 76%, 100% 97%, 78% 100%, 52% 97%, 28% 100%, 6% 98%, 0% 74%, 2% 48%, 0% 22%);
+}
+
+body[data-page="couple-album"][data-album-mode="flip"] .album-page-photo:nth-child(2n) img {
+  clip-path: polygon(0% 2%, 28% 5%, 55% 0%, 78% 4%, 100% 1%, 98% 30%, 100% 58%, 97% 82%, 99% 99%, 74% 96%, 47% 100%, 20% 97%, 2% 100%, 1% 70%, 3% 40%, 0% 14%);
+}
+
+body[data-page="couple-album"][data-album-mode="flip"] .album-page-photo:nth-child(3n) img {
+  clip-path: polygon(2% 0%, 30% 3%, 58% 0%, 82% 3%, 100% 0%, 99% 24%, 97% 50%, 100% 74%, 98% 98%, 72% 100%, 45% 98%, 18% 100%, 0% 97%, 2% 66%, 0% 38%, 1% 12%);
+}
+
+body[data-page="couple-album"][data-album-mode="flip"] .album-sheet .album-masthead { display: none; }
+
+body[data-page="couple-album"][data-album-mode="flip"] .album-page {
+  padding: 3% 3.2%;
+}
+
+body[data-page="couple-album"][data-album-mode="flip"] .album-spine {
+  background: linear-gradient(to bottom, transparent, rgba(38, 34, 30, .26) 9%, rgba(38, 34, 30, .26) 91%, transparent);
+}
+body[data-page="couple-album"][data-album-mode="flip"] .album-spine::before {
+  background: linear-gradient(to right, rgba(0, 0, 0, .09), transparent 38%, transparent 62%, rgba(0, 0, 0, .09));
 }
 
 /* ── 响应式 ── */
@@ -11650,8 +11863,6 @@ body[data-page="couple-album"] .album-chapters2-num {
   body[data-page="couple-album"] .album-sheet { aspect-ratio: 4 / 3; }
   body[data-page="couple-album"] .album-page { padding: 6% 5% 6%; }
   body[data-page="couple-album"] .album-page-photos { gap: 8px; }
-  body[data-page="couple-album"] .album-chapters2-grid { grid-template-columns: repeat(2, 1fr); }
-  body[data-page="couple-album"] .album-flipbar { flex-wrap: wrap; }
 }
 
 @media (max-width: 560px) {
@@ -11689,6 +11900,236 @@ body[data-page="couple-album"] .album-chapters2-num {
     grid-auto-rows: minmax(115px, auto);
   }
 }
+/* ────────────────────────────────────────────────────────────────────────────
+ * 情侣相册 · 书架视图
+ * 黑底书架：每本「册」= 一个对开页，章节配色 + 确定性伪随机形状，单排层板。
+ * ──────────────────────────────────────────────────────────────────────────── */
+
+/* ── 书架（黑底，全幅铺满内容区） ── */
+body[data-page="couple-album"] .album-shelf {
+  flex: 1 0 auto;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  margin: 0;
+  padding: 2.2rem 2.6rem 1.2rem;
+  border-radius: 0;
+  background: #0d0c0b;
+  color: #e8e2d6;
+  font-family: var(--album-sans);
+}
+
+body[data-page="couple-album"] .album-shelf-head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 1.5rem;
+  padding-bottom: 1.4rem;
+}
+
+body[data-page="couple-album"] .album-shelf-back {
+  display: inline-block;
+  margin-bottom: .9rem;
+  padding: 0;
+  border: none;
+  background: transparent;
+  color: #b5ad9c;
+  font-family: inherit;
+  font-size: .6rem;
+  letter-spacing: .2em;
+  cursor: pointer;
+  transition: color .2s;
+}
+body[data-page="couple-album"] .album-shelf-back:hover { color: #ece5d7; }
+
+body[data-page="couple-album"] .album-shelf-brand strong {
+  display: block;
+  font-size: .66rem;
+  font-weight: 600;
+  letter-spacing: .22em;
+  color: #ece5d7;
+}
+
+body[data-page="couple-album"] .album-shelf-brand > span {
+  display: block;
+  margin-top: .3rem;
+  font-size: .58rem;
+  letter-spacing: .22em;
+  color: #8c8577;
+}
+
+body[data-page="couple-album"] .album-shelf-stats {
+  margin: .7rem 0 0;
+  font-size: .58rem;
+  line-height: 1.9;
+  letter-spacing: .16em;
+  color: #7c7568;
+}
+
+body[data-page="couple-album"] .album-shelf-head-right {
+  text-align: right;
+  font-size: .58rem;
+  letter-spacing: .2em;
+  color: #8c8577;
+}
+
+body[data-page="couple-album"] .album-shelf-zh {
+  margin: 0 0 .35rem;
+  font-family: var(--album-serif);
+  font-size: .88rem;
+  letter-spacing: .42em;
+  color: #ece5d7;
+}
+
+/* ── 书架层板：一排书 + 底部层板（撑满剩余高度，书按百分比缩放） ── */
+body[data-page="couple-album"] .album-shelf-row {
+  position: relative;
+  flex: 1 1 auto;
+  display: flex;
+  align-items: flex-end;
+  gap: 6px;
+  min-height: 240px;
+  padding: 0 .4rem;
+  overflow-x: auto;
+  overflow-y: visible;
+  border-bottom: 10px solid #1a1714;
+}
+
+/* 层板木板质感（可滚动，故用 ::after 随内容宽度） */
+body[data-page="couple-album"] .album-shelf-row::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -10px;
+  height: 10px;
+  background: linear-gradient(#2a241d, #15120e);
+}
+
+body[data-page="couple-album"] .album-shelf-book {
+  position: relative;
+  flex: 0 0 auto;
+  width: var(--w, 30px);
+  height: var(--hpct, 70%);
+  padding: .6rem .1rem 1.2rem;
+  border: none;
+  border-radius: 2px 3px 3px 2px;
+  background: var(--bg, #444);
+  color: var(--ink, #eee);
+  cursor: pointer;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  box-shadow:
+    inset -3px 0 6px rgba(0, 0, 0, .25),
+    inset 1px 0 2px rgba(255, 255, 255, .16),
+    0 2px 5px rgba(0, 0, 0, .55);
+  transition: transform .18s ease, box-shadow .18s ease, opacity .18s;
+}
+
+body[data-page="couple-album"] .album-shelf-book:hover {
+  transform: translateY(-9px);
+  box-shadow:
+    inset -3px 0 6px rgba(0, 0, 0, .25),
+    inset 1px 0 2px rgba(255, 255, 255, .16),
+    0 10px 18px rgba(0, 0, 0, .6);
+}
+
+body[data-page="couple-album"] .album-shelf-book-title {
+  writing-mode: vertical-rl;
+  font-family: var(--album-serif);
+  font-size: .88rem;
+  letter-spacing: .18em;
+  line-height: 1;
+  max-height: calc(100% - 1.4rem);
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+body[data-page="couple-album"] .album-shelf-book-vol {
+  position: absolute;
+  bottom: .4rem;
+  left: 0;
+  right: 0;
+  text-align: center;
+  font-family: var(--album-sans);
+  font-size: .5rem;
+  letter-spacing: .08em;
+  opacity: .75;
+}
+
+body[data-page="couple-album"] .album-shelf-book.is-pending {
+  filter: saturate(.55) brightness(.96);
+}
+
+/* ── 书脊小装饰（deco 0-3 轮换） ── */
+body[data-page="couple-album"] .album-shelf-book.deco-1::before {
+  content: '';
+  position: absolute;
+  top: 14px;
+  left: 4px;
+  right: 4px;
+  height: 16px;
+  background: repeating-linear-gradient(to bottom, currentColor 0 1px, transparent 1px 6px);
+  opacity: .45;
+}
+
+body[data-page="couple-album"] .album-shelf-book.deco-2::after {
+  content: '';
+  position: absolute;
+  top: 20px;
+  left: 50%;
+  width: 9px;
+  height: 9px;
+  margin-left: -4.5px;
+  border-radius: 50%;
+  border: 1px solid currentColor;
+  opacity: .5;
+}
+
+body[data-page="couple-album"] .album-shelf-book.deco-3::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 24%;
+  background: currentColor;
+  opacity: .14;
+}
+
+/* ── 书架页脚 ── */
+body[data-page="couple-album"] .album-shelf-foot {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: .85rem .2rem .3rem;
+  font-size: .56rem;
+  letter-spacing: .18em;
+  color: #7c7568;
+}
+
+/* ── 书架响应式 ── */
+@media (max-width: 820px) {
+  body[data-page="couple-album"] .album-shelf {
+    padding: 1.4rem 1rem .7rem;
+  }
+  body[data-page="couple-album"] .album-readerbar { padding: 1.2rem 1.2rem .6rem; }
+  body[data-page="couple-album"] .album-pagebar { padding: 1.6rem 1.2rem 1.2rem; }
+  body[data-page="couple-album"][data-album-mode="flip"] .album-sheet { width: 100%; }
+  body[data-page="couple-album"] .album-shelf-head {
+    flex-direction: column;
+    gap: .7rem;
+  }
+  body[data-page="couple-album"] .album-shelf-head-right { text-align: left; }
+  body[data-page="couple-album"] .album-shelf-book-title { font-size: .64rem; }
+}
+
+@media (max-width: 560px) {
+  body[data-page="couple-album"] .album-shelf-foot span:nth-child(2) { display: none; }
+}
+
 /* ═══════════════ 厨房工作台 KitchenDashboard（body[data-page=food-records] 专用） ═══════════════ */
 body[data-page="food-records"] {
   --k-bg: #f6f1e9;

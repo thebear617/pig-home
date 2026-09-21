@@ -1,0 +1,100 @@
+---
+/**
+ * 相簿 · 章节书架（第二层）
+ * 黑底书架：每本「册」= 一个章节，点击进入该章节的对开页（第三层）。
+ * 配色按章节固定，形状由章节 id 做确定性伪随机。
+ * 交互（脚本在 CoupleAlbum.astro 内）：点击阅读；「← 书本」返回第一层。
+ */
+export interface ShelfChapter {
+  id: number;          // 1..8
+  title: string;       // 章节标题（书脊）
+  kicker: string;      // 章节引言（hover 提示）
+  startPage: number;   // 章节起始对开页
+  spreadCount: number; // 章节内对开页数
+  filledCount: number; // 章节内已填条目数
+  momentCount: number; // 章节内条目总数
+}
+
+interface Props {
+  chapters: ShelfChapter[];
+  filledCount: number;
+}
+
+const { chapters, filledCount } = Astro.props;
+
+/** 8 章配色：bg 书脊底色 / ink 书脊文字与装饰色 */
+const CHAPTER_PALETTE: Record<number, { bg: string; ink: string }> = {
+  1: { bg: '#a83a2a', ink: '#f3e6d8' }, // 相识与心动 · 绛红
+  2: { bg: '#c96f2f', ink: '#f6ead9' }, // 恋爱里的第一次 · 橙
+  3: { bg: '#e6ddc8', ink: '#3a342c' }, // 普通日常 · 米白
+  4: { bg: '#6f9cbf', ink: '#f0f4f7' }, // 可爱的小细节 · 灰蓝
+  5: { bg: '#2f4d78', ink: '#e8edf4' }, // 一起去过的地方 · 藏蓝
+  6: { bg: '#b03a68', ink: '#f6e6ec' }, // 节日与纪念 · 品红
+  7: { bg: '#7d7d46', ink: '#f1f0dd' }, // 相互陪伴 · 橄榄
+  8: { bg: '#26241f', ink: '#e9e4da' }, // 未来与此刻 · 炭黑
+};
+
+/** 确定性伪随机：同一章节每次渲染形状一致 */
+function seedRand(n: number, salt: number) {
+  const x = Math.sin(n * 127.1 + salt * 311.7) * 43758.5453;
+  return x - Math.floor(x);
+}
+
+const styledChapters = chapters.map((c) => {
+  const palette = CHAPTER_PALETTE[c.id] ?? CHAPTER_PALETTE[8];
+  const h = 232 + Math.round(seedRand(c.id, 1) * 72); // 基准 232-304px（层板高 342px）
+  return {
+    ...c,
+    bg: palette.bg,
+    ink: palette.ink,
+    hpct: Math.round((h / 342) * 100),                   // 高度按层板百分比缩放
+    w: 58 + Math.round(seedRand(c.id, 2) * 26),          // 58-84px，章节册更宽
+    deco: c.id % 4,                                      // 0 无 / 1 线 / 2 圆 / 3 色带
+    pageRange: `${String(c.startPage).padStart(2, '0')}-${String(c.startPage + c.spreadCount - 1).padStart(2, '0')}`,
+    numeral: ['零', '壹', '贰', '叁', '肆', '伍', '陆', '柒', '捌'][c.id] ?? '',
+  };
+});
+---
+
+<section class="album-shelf" data-shelf aria-label="相簿章节书架">
+  <div class="album-shelf-head">
+    <div class="album-shelf-brand">
+      <button class="album-shelf-back" type="button" data-album-book-back>← 书本</button>
+      <strong>THE TWO OF US LIBRARY</strong>
+      <span>CHAPTERS ON THE SHELF</span>
+      <p class="album-shelf-stats">
+        {chapters.length} CHAPTERS<br />
+        {chapters.reduce((n, c) => n + c.spreadCount, 0)} SPREADS · {chapters.reduce((n, c) => n + c.momentCount, 0)} MOMENTS<br />
+        {filledCount} PAGES FILLED
+      </p>
+    </div>
+    <div class="album-shelf-head-right">
+      <p class="album-shelf-zh">给时间一个书架</p>
+      <p>ONE BOOK / VOL. 01-{String(chapters.length).padStart(2, '0')}</p>
+    </div>
+  </div>
+
+  <div class="album-shelf-row" data-shelf-row>
+    {styledChapters.map((c) => (
+      <button
+        class={`album-shelf-book deco-${c.deco}${c.filledCount === 0 ? ' is-pending' : ''}`}
+        type="button"
+        data-shelf-chapter={c.id}
+        data-shelf-chapter-page={c.startPage}
+        style={`--hpct:${c.hpct}%; --w:${c.w}px; --bg:${c.bg}; --ink:${c.ink};`}
+        data-tip={`第${c.numeral}章 · ${c.title}`}
+        data-tip-sub={`${c.kicker.replace(/。$/, '')} · 已填 ${c.filledCount}`}
+        aria-label={`第${c.numeral}章 ${c.title}`}
+      >
+        <span class="album-shelf-book-title">{c.title}</span>
+        <span class="album-shelf-book-vol">{c.pageRange}</span>
+      </button>
+    ))}
+  </div>
+
+  <div class="album-shelf-foot">
+    <span>{chapters.length} CHAPTERS / ONE BOOK</span>
+    <span>回忆，装订成册。</span>
+    <span>Click a chapter to read. ↗</span>
+  </div>
+</section>
