@@ -9859,7 +9859,7 @@ export const diaryRecords = {
     ]
   },
   "2026-09-21": {
-    "value": 5,
+    "value": 16,
     "tasks": [
       {
         "status": "x",
@@ -9901,6 +9901,242 @@ export const diaryRecords = {
         "isCooking": false,
         "mealType": null,
         "dishGuess": null
+      },
+      {
+        "status": "x",
+        "time": "10:15-11:00",
+        "desc": "在图书馆学习，研究网关升级成 APP 的可能性，探索相册如何升级成相簿",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null,
+        "isStudy": true
+      },
+      {
+        "status": "x",
+        "time": "11:00-13:00",
+        "desc": "在图书馆学习",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null,
+        "isStudy": true
+      },
+      {
+        "status": "x",
+        "time": "13:00-14:10",
+        "desc": "去吃牧野小厨，然后回去丁香看大头（酸汤兔）",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      },
+      {
+        "status": "x",
+        "time": "14:10-16:50",
+        "desc": "继续在图书馆学习，把网关升级成了 APP",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null,
+        "isStudy": true
+      },
+      {
+        "status": "x",
+        "time": "16:50-17:25",
+        "desc": "和过马路一起去买奶茶，庆祝他实验有成果，然后看 OPPO 的百团大战",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      },
+      {
+        "status": "x",
+        "time": "17:25-18:25",
+        "desc": "去网安的高算中心待了会，和张晋伦他们聊天",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      },
+      {
+        "status": "x",
+        "time": "18:25-19:15",
+        "desc": "和过马路一起去丁香吃晚饭，吃的是照烧鸡双拼饭；饭后送过马路回图书馆",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      },
+      {
+        "status": "x",
+        "time": "19:15-21:40",
+        "desc": "去北操打球",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      },
+      {
+        "status": "x",
+        "time": "21:40-22:20",
+        "desc": "回图书馆接过马路一起回家",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      },
+      {
+        "status": "x",
+        "time": "22:20-23:36",
+        "desc": "回家上厕所、洗衣服、洗澡、收拾、涂红花油",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      },
+      {
+        "status": "x",
+        "time": "23:36-24:00",
+        "desc": "学习，整理今天的碎片信息和日程、支出",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null,
+        "isStudy": true
+      }
+    ]
+  },
+  "2026-09-22": {
+    "value": 8,
+    "tasks": [
+      {
+        "status": "x",
+        "time": "00:00-01:30",
+        "desc": "打电动",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      },
+      {
+        "status": "x",
+        "time": "01:30-11:00",
+        "desc": "睡觉",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      },
+      {
+        "status": "x",
+        "time": "11:00-12:40",
+        "desc": "学习开发",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null,
+        "isStudy": true
+      },
+      {
+        "status": "x",
+        "time": "12:40-13:40",
+        "desc": "和过马路一起去吃老菜场夹馍",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      },
+      {
+        "status": "x",
+        "time": "13:40-18:50",
+        "desc": "学习：整理相簿的分类学、整理相片，继续开发 Agent 浮窗 App",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null,
+        "isStudy": true
+      },
+      {
+        "status": "x",
+        "time": "18:50-20:00",
+        "desc": "和过马路一起煮咖喱拌面",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      },
+      {
+        "status": "x",
+        "time": "20:00-22:30",
+        "desc": "继续学习：开发整理 Agent 浮窗 App、整理相片",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null,
+        "isStudy": true
+      },
+      {
+        "status": "x",
+        "time": "22:30-24:00",
+        "desc": "打电动",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      }
+    ]
+  },
+  "2026-09-23": {
+    "value": 8,
+    "tasks": [
+      {
+        "status": "x",
+        "time": "00:00-01:00",
+        "desc": "打电动",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      },
+      {
+        "status": "x",
+        "time": "01:00-03:00",
+        "desc": "继续开发完善 Agent Desktop App，并完成项目的分类和整理",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null,
+        "isStudy": true
+      },
+      {
+        "status": "x",
+        "time": "03:00-11:00",
+        "desc": "睡觉",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      },
+      {
+        "status": "x",
+        "time": "11:00-11:47",
+        "desc": "玩手机",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      },
+      {
+        "status": "x",
+        "time": "11:47-12:30",
+        "desc": "做了一下开发，继续完善 Agent Desktop",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null,
+        "isStudy": true
+      },
+      {
+        "status": "x",
+        "time": "12:30-13:00",
+        "desc": "洗漱洗澡",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      },
+      {
+        "status": "x",
+        "time": "13:00-14:20",
+        "desc": "来学校吃黄焖鸡",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null
+      },
+      {
+        "status": "x",
+        "time": "14:30-15:30",
+        "desc": "继续学习",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null,
+        "isStudy": true
       }
     ]
   }
