@@ -22,16 +22,16 @@ interface Props {
 
 const { chapters, filledCount } = Astro.props;
 
-/** 8 章配色：bg 书脊底色 / ink 书脊文字与装饰色 */
+/** 章节配色：bg 书脊底色 / ink 书脊文字与装饰色（第 8 个作兜底，防止新增章节没配色） */
 const CHAPTER_PALETTE: Record<number, { bg: string; ink: string }> = {
-  1: { bg: '#a83a2a', ink: '#f3e6d8' }, // 相识与心动 · 绛红
-  2: { bg: '#c96f2f', ink: '#f6ead9' }, // 恋爱里的第一次 · 橙
-  3: { bg: '#e6ddc8', ink: '#3a342c' }, // 普通日常 · 米白
-  4: { bg: '#6f9cbf', ink: '#f0f4f7' }, // 可爱的小细节 · 灰蓝
-  5: { bg: '#2f4d78', ink: '#e8edf4' }, // 一起去过的地方 · 藏蓝
-  6: { bg: '#b03a68', ink: '#f6e6ec' }, // 节日与纪念 · 品红
-  7: { bg: '#7d7d46', ink: '#f1f0dd' }, // 相互陪伴 · 橄榄
-  8: { bg: '#26241f', ink: '#e9e4da' }, // 未来与此刻 · 炭黑
+  1: { bg: '#a83a2a', ink: '#f3e6d8' }, // 相遇与约会 · 绛红
+  2: { bg: '#c96f2f', ink: '#f6ead9' }, // 我们的日常 · 橙
+  3: { bg: '#e6ddc8', ink: '#3a342c' }, // 两个人的样子 · 米白
+  4: { bg: '#6f9cbf', ink: '#f0f4f7' }, // 一起去过的地方 · 灰蓝
+  5: { bg: '#2f4d78', ink: '#e8edf4' }, // 纪念日与节日 · 藏蓝
+  6: { bg: '#b03a68', ink: '#f6e6ec' }, // 一起努力 · 品红
+  7: { bg: '#7d7d46', ink: '#f1f0dd' }, // 未完待续 · 橄榄
+  8: { bg: '#26241f', ink: '#e9e4da' }, // 兜底 · 炭黑
 };
 
 /** 确定性伪随机：同一章节每次渲染形状一致 */
@@ -83,7 +83,7 @@ const styledChapters = chapters.map((c) => {
         data-shelf-chapter-page={c.startPage}
         style={`--hpct:${c.hpct}%; --w:${c.w}px; --bg:${c.bg}; --ink:${c.ink};`}
         data-tip={`第${c.numeral}章 · ${c.title}`}
-        data-tip-sub={`${c.kicker.replace(/。$/, '')} · 已填 ${c.filledCount}`}
+        data-tip-sub={`${c.kicker} · 已填 ${c.filledCount}`}
         aria-label={`第${c.numeral}章 ${c.title}`}
       >
         <span class="album-shelf-book-title">{c.title}</span>
@@ -94,7 +94,7 @@ const styledChapters = chapters.map((c) => {
 
   <div class="album-shelf-foot">
     <span>{chapters.length} CHAPTERS / ONE BOOK</span>
-    <span>回忆，装订成册。</span>
+    <span>回忆，装订成册</span>
     <span>Click a chapter to read. ↗</span>
   </div>
 </section>

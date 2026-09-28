@@ -2,6 +2,7 @@
 import {
   albumChapters,
   albumEntries,
+  ALBUM_CHAPTER_NUMERAL,
   TOTAL_PAGES,
 } from '../../data/album-data';
 import type { AlbumEntry } from '../../data/album-data';
@@ -11,7 +12,7 @@ import type { ShelfChapter } from './AlbumShelf.astro';
 
 const base = import.meta.env.BASE_URL;
 
-/** 把 80 条 entry 按对开页(page) 分组，每组含 { page, left, right } */
+/** 把 entry 按对开页(page) 分组，每组含 { page, left, right } */
 function buildPages() {
   const pages: Array<{ page: number; left: AlbumEntry | null; right: AlbumEntry | null }> = [];
   const byPage = new Map<number, AlbumEntry[]>();
@@ -31,6 +32,13 @@ function buildPages() {
 }
 
 const pages = buildPages();
+
+/** 某对开页所属章节的标签，如「第壹章 · 相遇与约会」，供顶部阅读栏使用 */
+function chapterLabelOfPage(page: number): string {
+  const entry = albumEntries.find(e => e.page === page);
+  const chapter = entry && albumChapters.find(c => c.id === entry.chapterId);
+  return chapter ? `第${ALBUM_CHAPTER_NUMERAL[chapter.id]}章 · ${chapter.title}` : '';
+}
 
 const filledCount = albumEntries.filter(e => e.status === 'filled').length;
 const pendingCount = albumEntries.length - filledCount;
@@ -78,11 +86,11 @@ const shelfChapters: ShelfChapter[] = albumChapters.map((chapter) => {
           data-album-book-open="us"
           style="--hpct:80%; --w:72px; --bg:#26241f; --ink:#e9e4da;"
           data-tip="「我们」"
-          data-tip-sub={`8 章 · 40 对开页 · 已填 ${filledCount}`}
+          data-tip-sub={`${albumChapters.length} 章 · ${TOTAL_PAGES} 对开页 · 已填 ${filledCount}`}
           aria-label="打开相簿「我们」"
         >
           <span class="album-shelf-book-title">我们</span>
-          <span class="album-shelf-book-vol">01-40</span>
+          <span class="album-shelf-book-vol">01-{String(TOTAL_PAGES).padStart(2, '0')}</span>
         </button>
         <button
           class="album-shelf-book is-pending"
@@ -99,7 +107,7 @@ const shelfChapters: ShelfChapter[] = albumChapters.map((chapter) => {
       </div>
       <div class="album-shelf-foot">
         <span>2 BOOKS / ONE SHELF</span>
-        <span>回忆，装订成册。</span>
+        <span>回忆，装订成册</span>
         <span>Click a book to open. ↗</span>
       </div>
     </section>
@@ -110,7 +118,7 @@ const shelfChapters: ShelfChapter[] = albumChapters.map((chapter) => {
     <div class="album-petstage">
       <p class="album-petstage-kicker">VOL. 02 · BINDING</p>
       <h2 class="album-petstage-title">它们</h2>
-      <p class="album-petstage-sub">这一本还在装订中——照片收集中，敬请期待。</p>
+      <p class="album-petstage-sub">这一本还在装订中——照片收集中，敬请期待</p>
       <button class="album-petstage-back" type="button" data-album-pet-back>← 书架</button>
     </div>
   </div>
@@ -157,9 +165,9 @@ const shelfChapters: ShelfChapter[] = albumChapters.map((chapter) => {
       </div>
     </section>
 
-    {/* ── 40 个对开页 ── */}
+    {/* ── 对开页 ── */}
     {pages.map(({ page, left, right }) => (
-      <section class="album-sheet" data-album-sheet={page} data-album-title={left?.title || right?.title || `第 ${page} 对开页`} hidden>
+      <section class="album-sheet" data-album-sheet={page} data-album-chapter={chapterLabelOfPage(page)} data-album-title={left?.title || right?.title || `第 ${page} 对开页`} hidden>
         <div class="album-masthead"><span>THE TWO OF US</span><span>{String(page).padStart(2, '0')} — {String(TOTAL_PAGES).padStart(2, '0')}</span></div>
         <div class="album-open">
           {/* 左页 */}
@@ -186,13 +194,36 @@ const shelfChapters: ShelfChapter[] = albumChapters.map((chapter) => {
   <div class="album-pagebar">
     <button class="album-pagebar-arrow is-prev" type="button" data-album-prev aria-label="上一页">←</button>
     <div class="album-pagebar-center">
-      <span class="album-pagebar-num" data-album-pagebar-num>封面</span>
+      <span class="album-pagebar-num">慢一点翻，日子还长</span>
       <span class="album-pagebar-hint">点击书页两侧、滑动，或使用方向键</span>
     </div>
     <button class="album-pagebar-arrow is-next" type="button" data-album-next aria-label="下一页">→</button>
   </div>
   </div>{/* /翻页视图 */}
 </div>
+
+<script is:inline>
+  // 首屏同步定好显示哪一层视图。
+  // 下面的主脚本是 defer，等它执行会先渲染出默认的「book」层，造成刷新时闪一下书架。
+  (function () {
+    try {
+      var p = Number(new URLSearchParams(location.search).get('p')) || 0;
+      if (!p) p = Number(localStorage.getItem('album-page')) || 0;
+      var v = localStorage.getItem('album-view');
+      var view = p > 0 ? 'flip' : (v === 'shelf' || v === 'pet' ? v : 'book');
+      document.querySelectorAll('[data-album-view-section]').forEach(function (el) {
+        el.hidden = el.getAttribute('data-album-view-section') !== view;
+      });
+      document.body.dataset.albumMode = view;
+      // 翻页视图里还要立刻显示对应那一页，否则首屏是一整片空白
+      if (view === 'flip') {
+        document.querySelectorAll('[data-album-sheet]').forEach(function (el) {
+          el.hidden = Number(el.getAttribute('data-album-sheet')) !== p;
+        });
+      }
+    } catch (e) { /* 隐私模式等异常时保持默认视图 */ }
+  })();
+</script>
 
 <script>
   const root = document.querySelector<HTMLElement>('[data-album-root]');
@@ -206,7 +237,6 @@ const shelfChapters: ShelfChapter[] = albumChapters.map((chapter) => {
     let current = 0;
     const readerTitle = root.querySelector<HTMLElement>('[data-album-reader-title]');
     const readerVol = root.querySelector<HTMLElement>('[data-album-reader-vol]');
-    const pagebarNum = root.querySelector<HTMLElement>('[data-album-pagebar-num]');
 
     function fitActiveSheet() {
       const activeSheet = sheets.find(sheet => Number(sheet.dataset.albumSheet) === current);
@@ -227,15 +257,15 @@ const shelfChapters: ShelfChapter[] = albumChapters.map((chapter) => {
       if (current === 0) url.searchParams.delete('p');
       else url.searchParams.set('p', String(current));
       window.history.replaceState({}, '', url);
+      // 双保险：页码另存一份，URL 参数丢失时也能还原
+      try { localStorage.setItem('album-page', String(current)); } catch { /* 隐私模式忽略 */ }
       // 同步阅读顶栏与底部页码条
       const activeSheet = sheets.find(s => Number(s.dataset.albumSheet) === current);
-      if (readerTitle) readerTitle.textContent = activeSheet?.dataset.albumTitle || 'THE TWO OF US';
+      // 顶栏当「章节指示器」用：优先显示所属章节，没有则退回该页标题
+      if (readerTitle) readerTitle.textContent = activeSheet?.dataset.albumChapter || activeSheet?.dataset.albumTitle || 'THE TWO OF US';
       if (readerVol) readerVol.textContent = current === 0
         ? 'COVER'
-        : `VOL. ${String(current).padStart(2, '0')} / ${String(totalPages).padStart(2, '0')}`;
-      if (pagebarNum) pagebarNum.textContent = current === 0
-        ? '封面'
-        : `${String(current).padStart(2, '0')} / ${String(totalPages).padStart(2, '0')}`;
+        : `PAGE ${String(current).padStart(2, '0')} / ${String(totalPages).padStart(2, '0')}`;
       mainArea?.scrollTo({ top: 0 });
       root.focus({ preventScroll: true });
       requestAnimationFrame(fitActiveSheet);
@@ -320,24 +350,20 @@ const shelfChapters: ShelfChapter[] = albumChapters.map((chapter) => {
       if (event.key === 'ArrowLeft') { event.preventDefault(); showPage(current - 1); }
     });
 
-    // 初始状态：URL ?p= 直达翻页；否则默认书架（书馆层），不再恢复「翻页」视图
-    const initial = new URLSearchParams(window.location.search).get('p');
-    const initialView: AlbumView = initial
+    // 初始状态：优先 URL 的 ?p=（可分享的深链），其次读本地备份的页码，最后才退回视图层级。
+    // 刷新 / 开发热重载后要停在原来那一页，所以这里不再把 ?p 从地址栏删掉。
+    const pageFromUrl = Number(new URLSearchParams(window.location.search).get('p')) || 0;
+    let pageFromStore = 0;
+    let savedView: string | null = null;
+    try {
+      pageFromStore = Number(localStorage.getItem('album-page')) || 0;
+      savedView = localStorage.getItem('album-view');
+    } catch { /* 隐私模式忽略 */ }
+    const initialPage = pageFromUrl || pageFromStore;
+    const initialView: AlbumView = initialPage > 0
       ? 'flip'
-      : (() => {
-          try {
-            const saved = localStorage.getItem('album-view');
-            return saved === 'shelf' || saved === 'pet' ? saved : 'book';
-          } catch { return 'book'; }
-        })();
-    showPage(initial ? Number(initial) || 0 : 0);
-    if (initial) {
-      // ?p= 是一次性深链：读取后立刻从地址栏移除，
-      // 避免开发热重载/刷新时固定停在翻页视图
-      const url = new URL(window.location.href);
-      url.searchParams.delete('p');
-      window.history.replaceState({}, '', url);
-    }
+      : (savedView === 'shelf' || savedView === 'pet' ? savedView : 'book');
+    showPage(initialPage);
     setView(initialView);
     window.addEventListener('resize', fitActiveSheet);
   }
@@ -389,6 +415,7 @@ const shelfChapters: ShelfChapter[] = albumChapters.map((chapter) => {
   document.addEventListener('keydown', event => {
     if (event.key === 'Escape' && modal && !modal.hidden) close();
   });
+
 </script>
 
 <div class="home-image-modal" id="albumImageModal" role="dialog" aria-modal="true" aria-label="相册图片预览" hidden>

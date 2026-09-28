@@ -1,5 +1,5 @@
 ---
-import type { AlbumEntry, AlbumBlock } from '../../data/album-data';
+import type { AlbumEntry, AlbumBlock, AlbumLayout } from '../../data/album-data';
 
 interface Props {
   entry: AlbumEntry;
@@ -15,11 +15,15 @@ const mediaList = entry.media || [];
 const blocks: AlbumBlock[] = entry.blocks?.length
   ? entry.blocks
   : (entry.text ? [{ type: 'paragraph', text: entry.text }] : []);
-const photoClass = mediaList.length === 1
-  ? 'single'
-  : mediaList.length > 4
-    ? 'count-more'
-    : `count-${mediaList.length}`;
+/** 不填 entry.layout 时，按照片张数取该张数的默认模板（5 张及以上走 many-dense） */
+const DEFAULT_LAYOUT_BY_COUNT: Partial<Record<number, AlbumLayout>> = {
+  1: 'one-full',
+  2: 'two-split',
+  3: 'three-hero',
+  4: 'four-grid',
+};
+const layoutName = entry.layout ?? DEFAULT_LAYOUT_BY_COUNT[mediaList.length] ?? 'many-dense';
+const photoClass = `layout-${layoutName}`;
 ---
 
 <Fragment>

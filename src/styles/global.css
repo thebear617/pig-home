@@ -11344,7 +11344,10 @@ body[data-page="couple-album"] .album-open {
   position: relative;
   display: grid;
   grid-template-columns: 1fr 1px 1fr;
-  height: auto;
+  /* 行高锁死为容器高度；minmax(0,1fr) 允许内容收缩，
+     否则页面内容会把行高撑开、进而把文字挤出纸外 */
+  grid-template-rows: minmax(0, 1fr);
+  height: 100%;
   min-height: 100%;
 }
 
@@ -11353,7 +11356,8 @@ body[data-page="couple-album"] .album-page {
   position: relative;
   display: flex;
   flex-direction: column;
-  height: auto;
+  /* 明确撑满所在面，给内部 flex 一个可靠的高度基准（否则照片区会算多、把文字挤出纸外） */
+  height: 100%;
   padding: 5% 6% 5.5%;
   overflow: visible;
 }
@@ -11381,7 +11385,8 @@ body[data-page="couple-album"] .album-spine::before {
 /* ── 页内：视觉区 ── */
 body[data-page="couple-album"] .album-page-visual {
   position: relative;
-  flex: 0 0 clamp(260px, 30vw, 420px);
+  /* 吃掉所在面的剩余高度，让照片区撑满；文字多时自动让位，260px 保底 */
+  flex: 1;
   min-height: 260px;
   display: flex;
   align-items: center;
@@ -11391,31 +11396,68 @@ body[data-page="couple-album"] .album-page-visual {
 body[data-page="couple-album"] .album-page-photos {
   display: grid;
   gap: 12px;
-  grid-template-columns: repeat(2, 1fr);
+  grid-template-columns: repeat(2, minmax(0, 1fr));
   width: 100%;
   height: 100%;
 }
-body[data-page="couple-album"] .album-page-photos.single {
+
+/* ── 版面模板 ──
+   名字格式 `<张数>-<风格>`，取值见 src/data/album-data.ts 的 AlbumLayout。
+   不填 entry.layout 时，组件按照片张数挑该张数的默认模板。 */
+
+/* 1 张 · 满版 */
+body[data-page="couple-album"] .album-page-photos.layout-one-full {
   grid-template-columns: 1fr;
 }
-body[data-page="couple-album"] .album-page-photos.count-2 {
+
+/* 2 张 · 左右等分 */
+body[data-page="couple-album"] .album-page-photos.layout-two-split {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+/* 2 张 · 左大右小 */
+body[data-page="couple-album"] .album-page-photos.layout-two-hero {
   grid-template-columns: minmax(0, 1.35fr) minmax(0, .8fr);
 }
-body[data-page="couple-album"] .album-page-photos.count-3 {
+
+/* 3 张 · 左大（跨两行）+ 右上右下 */
+body[data-page="couple-album"] .album-page-photos.layout-three-hero {
   grid-template-columns: minmax(0, 1.2fr) minmax(0, .8fr);
   grid-template-rows: repeat(2, minmax(0, 1fr));
 }
-body[data-page="couple-album"] .album-page-photos.count-3 .album-page-photo:first-child {
+body[data-page="couple-album"] .album-page-photos.layout-three-hero > :first-child {
   grid-row: 1 / -1;
 }
-body[data-page="couple-album"] .album-page-photos.count-4 {
+
+/* 3 张 · 三条竖排 */
+body[data-page="couple-album"] .album-page-photos.layout-three-strip {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  grid-template-rows: 1fr;
+}
+
+/* 4 张 · 2×2（左列略宽） */
+body[data-page="couple-album"] .album-page-photos.layout-four-grid {
   grid-template-columns: minmax(0, 1.15fr) minmax(0, .85fr);
   grid-template-rows: repeat(2, minmax(0, 1fr));
 }
-body[data-page="couple-album"] .album-page-photos.count-more {
+
+/* 4 张 · 对角大小错落 */
+body[data-page="couple-album"] .album-page-photos.layout-four-mosaic {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  grid-template-rows: repeat(2, minmax(0, 1fr));
+}
+body[data-page="couple-album"] .album-page-photos.layout-four-mosaic > :nth-child(1),
+body[data-page="couple-album"] .album-page-photos.layout-four-mosaic > :nth-child(4) {
+  grid-column: span 2;
+}
+
+/* 5 张及以上 · 两列自动往下 */
+body[data-page="couple-album"] .album-page-photos.layout-many-dense {
   grid-template-columns: repeat(2, minmax(0, 1fr));
   grid-auto-rows: minmax(0, 1fr);
 }
+
+/* 单张微调（可与任意模板叠加） */
 body[data-page="couple-album"] .album-page-photo.span-wide { grid-column: span 2; }
 body[data-page="couple-album"] .album-page-photo.span-tall { grid-row: span 2; }
 
@@ -11495,6 +11537,9 @@ body[data-page="couple-album"] .album-page-placeholder-hint {
 body[data-page="couple-album"] .album-page-copy {
   margin-top: 1.1rem;
   flex-shrink: 0;
+  /* 保底高度取「右页文案区（日期 + 标题 + 两行正文）的自然高度」，
+     让左页文案区不矮于右页，同时右页分毫不动（其自然高度恰等于此值） */
+  min-height: 8rem;
 }
 
 /* 左页文字居中，右页文字左对齐，形成杂志对页节奏 */
@@ -11812,10 +11857,13 @@ body[data-page="couple-album"][data-album-mode="flip"] .album-page-right {
 
 /* ── 书页排版：粗黑印刷标题 + 图章式日期 ── */
 body[data-page="couple-album"][data-album-mode="flip"] .album-page-title {
-  font-family: var(--album-sans);
-  font-weight: 800;
-  font-size: 1.3rem;
-  letter-spacing: .14em;
+  font-family: var(--album-serif);
+  font-weight: 700;
+  font-size: 1.35rem;
+  letter-spacing: .05em;
+  /* 翻页模式下的 --album-fg 是给黑场背景准备的浅色，但纸面本身仍是浅米色，
+     标题必须显式用深色，否则米色纸上印米色字、等于看不见 */
+  color: #26221e;
 }
 
 body[data-page="couple-album"][data-album-mode="flip"] .album-page-date {
