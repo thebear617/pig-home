@@ -1,26 +1,25 @@
 ---
 import {
-  albumChapters,
-  albumEntries,
+  albumBooks,
+  findBook,
   ALBUM_CHAPTER_NUMERAL,
-  TOTAL_PAGES,
 } from '../../data/album-data';
-import type { AlbumEntry } from '../../data/album-data';
+import type { AlbumEntry, AlbumBook } from '../../data/album-data';
 import AlbumPage from './AlbumPage.astro';
 import AlbumShelf from './AlbumShelf.astro';
 import type { ShelfChapter } from './AlbumShelf.astro';
 
 const base = import.meta.env.BASE_URL;
 
-/** 把 entry 按对开页(page) 分组，每组含 { page, left, right } */
-function buildPages() {
+/** 把某本书的 entry 按对开页(page) 分组，每组含 { page, left, right } */
+function buildPages(book: AlbumBook) {
   const pages: Array<{ page: number; left: AlbumEntry | null; right: AlbumEntry | null }> = [];
   const byPage = new Map<number, AlbumEntry[]>();
-  for (const e of albumEntries) {
+  for (const e of book.entries) {
     if (!byPage.has(e.page)) byPage.set(e.page, []);
     byPage.get(e.page)!.push(e);
   }
-  for (let p = 1; p <= TOTAL_PAGES; p++) {
+  for (let p = 1; p <= book.totalPages; p++) {
     const list = byPage.get(p) || [];
     pages.push({
       page: p,
@@ -31,37 +30,62 @@ function buildPages() {
   return pages;
 }
 
-const pages = buildPages();
-
 /** 某对开页所属章节的标签，如「第壹章 · 相遇与约会」，供顶部阅读栏使用 */
-function chapterLabelOfPage(page: number): string {
-  const entry = albumEntries.find(e => e.page === page);
-  const chapter = entry && albumChapters.find(c => c.id === entry.chapterId);
+function chapterLabelOfPage(book: AlbumBook, page: number): string {
+  const entry = book.entries.find(e => e.page === page);
+  const chapter = entry && book.chapters.find(c => c.id === entry.chapterId);
   return chapter ? `第${ALBUM_CHAPTER_NUMERAL[chapter.id]}章 · ${chapter.title}` : '';
 }
 
-const filledCount = albumEntries.filter(e => e.status === 'filled').length;
-const pendingCount = albumEntries.length - filledCount;
+/** 某本书的章节书架数据：第二层，每本「册」= 一个章节 */
+function buildShelfChapters(book: AlbumBook): ShelfChapter[] {
+  return book.chapters.map((chapter) => {
+    const entries = book.entries.filter(e => e.chapterId === chapter.id);
+    const chapterPages = [...new Set(entries.map(e => e.page))].sort((a, b) => a - b);
+    return {
+      id: chapter.id,
+      title: chapter.title,
+      kicker: chapter.kicker,
+      startPage: chapterPages[0] ?? 1,
+      spreadCount: chapterPages.length,
+      filledCount: entries.filter(e => e.status === 'filled').length,
+      momentCount: entries.length,
+    };
+  });
+}
 
-// ── 章节数据：第二层书架，每本「册」= 一个章节 ──
-const shelfChapters: ShelfChapter[] = albumChapters.map((chapter) => {
-  const entries = albumEntries.filter(e => e.chapterId === chapter.id);
-  const chapterPages = [...new Set(entries.map(e => e.page))].sort((a, b) => a - b);
-  return {
-    id: chapter.id,
-    title: chapter.title,
-    kicker: chapter.kicker,
-    startPage: chapterPages[0] ?? 1,
-    spreadCount: chapterPages.length,
-    filledCount: entries.filter(e => e.status === 'filled').length,
-    momentCount: entries.length,
-  };
-});
+/** 每本书 + 它自己的派生数据（对开页分组、章节书架） */
+const books = albumBooks.map((b) => ({
+  ...b,
+  pages: buildPages(b),
+  shelfChapters: buildShelfChapters(b),
+}));
+
+/** 书脊配色与尺寸（按 book.id） */
+const BOOK_STYLE: Record<string, { bg: string; ink: string; hpct: number; w: number }> = {
+  us:     { bg: '#26241f', ink: '#e9e4da', hpct: 80, w: 72 },
+  pet:    { bg: '#c96f2f', ink: '#f6ead9', hpct: 70, w: 64 },
+  family: { bg: '#7d7d46', ink: '#f1f0dd', hpct: 74, w: 68 },
+};
+const styledBooks = books.map((b) => ({ ...b, ...(BOOK_STYLE[b.id] ?? BOOK_STYLE.us) }));
+
+// ── 书馆层统计（跨全部三本书）──
+const totalChapters = books.reduce((n, b) => n + b.chapters.length, 0);
+const totalSpreads = books.reduce((n, b) => n + b.totalPages, 0);
+const totalMoments = books.reduce((n, b) => n + b.entries.length, 0);
+const totalFilled = books.reduce((n, b) => n + b.filledCount, 0);
+
+// ── 《我们》的引用（封面区统计等仍用得到）──
+const us = findBook('us');
+const albumEntries = us.entries;
+const filledCount = us.filledCount;
+const pendingCount = us.entries.length - us.filledCount;
+const TOTAL_PAGES = us.totalPages;
 ---
 
 <div data-tab="couple-album" data-album-root tabindex="-1">
 
-  {/* ── 第一层 · 书馆书架：《我们》+《它们》 ── */}
+  {/* ── 第一层 · 书馆书架：三本书 ── */}
   <div data-album-view-section="book">
     <section class="album-shelf" aria-label="书馆书架">
       <div class="album-shelf-head">
@@ -69,44 +93,38 @@ const shelfChapters: ShelfChapter[] = albumChapters.map((chapter) => {
           <strong>OUR LITTLE LIBRARY</strong>
           <span>A PERSONAL COLLECTION</span>
           <p class="album-shelf-stats">
-            2 BOOKS<br />
-            {shelfChapters.length} CHAPTERS · {TOTAL_PAGES} SPREADS · {albumEntries.length} MOMENTS<br />
-            {filledCount} PAGES FILLED
+            {albumBooks.length} BOOKS<br />
+            {totalChapters} CHAPTERS · {totalSpreads} SPREADS · {totalMoments} MOMENTS<br />
+            {totalFilled} PAGES FILLED
           </p>
         </div>
         <div class="album-shelf-head-right">
           <p class="album-shelf-zh">给时间一个书架</p>
-          <p>ON THE SHELF / 2 BOOKS</p>
+          <p>ON THE SHELF / {albumBooks.length} BOOKS</p>
         </div>
       </div>
       <div class="album-shelf-row" data-shelf-row>
-        <button
-          class="album-shelf-book"
-          type="button"
-          data-album-book-open="us"
-          style="--hpct:80%; --w:72px; --bg:#26241f; --ink:#e9e4da;"
-          data-tip="「我们」"
-          data-tip-sub={`${albumChapters.length} 章 · ${TOTAL_PAGES} 对开页 · 已填 ${filledCount}`}
-          aria-label="打开相簿「我们」"
-        >
-          <span class="album-shelf-book-title">我们</span>
-          <span class="album-shelf-book-vol">01-{String(TOTAL_PAGES).padStart(2, '0')}</span>
-        </button>
-        <button
-          class="album-shelf-book is-pending"
-          type="button"
-          data-album-book-open="pet"
-          style="--hpct:70%; --w:64px; --bg:#c96f2f; --ink:#f6ead9;"
-          data-tip="「它们」"
-          data-tip-sub="这一本还在装订中"
-          aria-label="打开相簿「它们」（装订中）"
-        >
-          <span class="album-shelf-book-title">它们</span>
-          <span class="album-shelf-book-vol">装订中</span>
-        </button>
+        {styledBooks.map((b) => (
+          <button
+            class={`album-shelf-book${b.ready ? '' : ' is-pending'}`}
+            type="button"
+            data-album-book-open={b.id}
+            style={`--hpct:${b.hpct}%; --w:${b.w}px; --bg:${b.bg}; --ink:${b.ink};`}
+            data-tip={`「${b.title}」`}
+            data-tip-sub={b.ready
+              ? `${b.chapters.length} 章 · ${b.totalPages} 对开页 · 已填 ${b.filledCount}`
+              : b.kicker}
+            aria-label={`打开相簿「${b.title}」${b.ready ? '' : '（装订中）'}`}
+          >
+            <span class="album-shelf-book-title">{b.title}</span>
+            <span class="album-shelf-book-vol">
+              {b.ready ? `01-${String(b.totalPages).padStart(2, '0')}` : '装订中'}
+            </span>
+          </button>
+        ))}
       </div>
       <div class="album-shelf-foot">
-        <span>2 BOOKS / ONE SHELF</span>
+        <span>{albumBooks.length} BOOKS / ONE SHELF</span>
         <span>回忆，装订成册</span>
         <span>Click a book to open. ↗</span>
       </div>
@@ -123,10 +141,12 @@ const shelfChapters: ShelfChapter[] = albumChapters.map((chapter) => {
     </div>
   </div>
 
-  {/* ── 第二层 · 章节书架 ── */}
-  <div data-album-view-section="shelf" hidden>
-    <AlbumShelf chapters={shelfChapters} filledCount={filledCount} />
-  </div>
+  {/* ── 第二层 · 章节书架（每本书一个，按 data-album-book 切换）── */}
+  {books.map((b) => (
+    <div data-album-view-section="shelf" data-album-book={b.id} hidden>
+      <AlbumShelf chapters={b.shelfChapters} filledCount={b.filledCount} />
+    </div>
+  ))}
 
   {/* ── 第三层 · 翻页视图 ── */}
   <div data-album-view-section="flip" hidden>
@@ -139,55 +159,57 @@ const shelfChapters: ShelfChapter[] = albumChapters.map((chapter) => {
   </div>
 
   <div class="album-flip">
+    {books.map((b) => (
+      <>
+        {/* ── 封面页（page 0）── */}
+        <section class="album-sheet" data-album-book={b.id} data-album-sheet="0" data-album-title={`封面 · ${b.title}`} hidden>
+          <div class="album-masthead"><span>{b.title.toUpperCase()}</span><span>VOL. 01 · 2026</span></div>
+          <div class="album-cover2">
+            <p class="album-cover2-kicker">{b.cover.kicker}</p>
+            <h1 class="album-cover2-title">{b.cover.line1}<br />{b.cover.line2}</h1>
+            <p class="album-cover2-sub">{b.cover.sub}</p>
+            <div class="album-cover2-stats">
+              <div class="album-cover2-stat">
+                <span class="album-cover2-stat-num">{b.entries.length}</span>
+                <span class="album-cover2-stat-label">个瞬间</span>
+              </div>
+              <div class="album-cover2-stat">
+                <span class="album-cover2-stat-num">{b.filledCount}</span>
+                <span class="album-cover2-stat-label">已记录</span>
+              </div>
+              <div class="album-cover2-stat">
+                <span class="album-cover2-stat-num">{b.entries.length - b.filledCount}</span>
+                <span class="album-cover2-stat-label">待填</span>
+              </div>
+            </div>
+            <button class="album-cover2-open" type="button" data-album-goto="1">翻开相册 →</button>
+          </div>
+        </section>
 
-    {/* ── 封面页（page 0）── */}
-    <section class="album-sheet" data-album-sheet="0" data-album-title="封面 · THE TWO OF US">
-      <div class="album-masthead"><span>THE TWO OF US</span><span>VOL. 01 · 2026</span></div>
-      <div class="album-cover2">
-        <p class="album-cover2-kicker">A PHOTO ALBUM OF ME AND TA</p>
-        <h1 class="album-cover2-title">从第一次见面<br />到还会继续</h1>
-        <p class="album-cover2-sub">我和 ta · 第 80 页 · 未完待续</p>
-        <div class="album-cover2-stats">
-          <div class="album-cover2-stat">
-            <span class="album-cover2-stat-num">{albumEntries.length}</span>
-            <span class="album-cover2-stat-label">个瞬间</span>
-          </div>
-          <div class="album-cover2-stat">
-            <span class="album-cover2-stat-num">{filledCount}</span>
-            <span class="album-cover2-stat-label">已记录</span>
-          </div>
-          <div class="album-cover2-stat">
-            <span class="album-cover2-stat-num">{pendingCount}</span>
-            <span class="album-cover2-stat-label">待填</span>
-          </div>
-        </div>
-        <button class="album-cover2-open" type="button" data-album-goto="1">翻开相册 →</button>
-      </div>
-    </section>
-
-    {/* ── 对开页 ── */}
-    {pages.map(({ page, left, right }) => (
-      <section class="album-sheet" data-album-sheet={page} data-album-chapter={chapterLabelOfPage(page)} data-album-title={left?.title || right?.title || `第 ${page} 对开页`} hidden>
-        <div class="album-masthead"><span>THE TWO OF US</span><span>{String(page).padStart(2, '0')} — {String(TOTAL_PAGES).padStart(2, '0')}</span></div>
-        <div class="album-open">
-          {/* 左页 */}
-          <div class="album-page album-page-left">
-            {left && (
-              <AlbumPage entry={left} base={base} pageNum={page * 2 - 1} isLeft={true} />
-            )}
-          </div>
-          {/* 中央折线 */}
-          <div class="album-spine"></div>
-          {/* 右页 */}
-          <div class="album-page album-page-right">
-            {right && (
-              <AlbumPage entry={right} base={base} pageNum={page * 2} isLeft={false} />
-            )}
-          </div>
-        </div>
-      </section>
+        {/* ── 对开页 ── */}
+        {b.pages.map(({ page, left, right }) => (
+          <section class="album-sheet" data-album-book={b.id} data-album-sheet={page} data-album-chapter={chapterLabelOfPage(b, page)} data-album-title={left?.title || right?.title || `第 ${page} 对开页`} hidden>
+            <div class="album-masthead"><span>{b.title.toUpperCase()}</span><span>{String(page).padStart(2, '0')} — {String(b.totalPages).padStart(2, '0')}</span></div>
+            <div class="album-open">
+              {/* 左页 */}
+              <div class="album-page album-page-left">
+                {left && (
+                  <AlbumPage entry={left} base={base} pageNum={page * 2 - 1} isLeft={true} />
+                )}
+              </div>
+              {/* 中央折线 */}
+              <div class="album-spine"></div>
+              {/* 右页 */}
+              <div class="album-page album-page-right">
+                {right && (
+                  <AlbumPage entry={right} base={base} pageNum={page * 2} isLeft={false} />
+                )}
+              </div>
+            </div>
+          </section>
+        ))}
+      </>
     ))}
-
   </div>
 
   {/* ── 底部页码条：页码 + 翻页提示 + 左右箭头 ── */}
@@ -207,18 +229,32 @@ const shelfChapters: ShelfChapter[] = albumChapters.map((chapter) => {
   // 下面的主脚本是 defer，等它执行会先渲染出默认的「book」层，造成刷新时闪一下书架。
   (function () {
     try {
-      var p = Number(new URLSearchParams(location.search).get('p')) || 0;
+      var q = new URLSearchParams(location.search);
+      var p = Number(q.get('p')) || 0;
       if (!p) p = Number(localStorage.getItem('album-page')) || 0;
+      var b = q.get('book') || localStorage.getItem('album-book') || 'us';
       var v = localStorage.getItem('album-view');
       var view = p > 0 ? 'flip' : (v === 'shelf' || v === 'pet' ? v : 'book');
+      // 目标书不存在或没内容时，退回书本层，避免打开一片空白
+      if (view === 'shelf' || view === 'flip') {
+        var exists = false;
+        document.querySelectorAll('[data-album-sheet]').forEach(function (el) {
+          if (el.getAttribute('data-album-book') === b) exists = true;
+        });
+        if (!exists) { b = 'us'; view = 'book'; p = 0; }
+      }
       document.querySelectorAll('[data-album-view-section]').forEach(function (el) {
-        el.hidden = el.getAttribute('data-album-view-section') !== view;
+        var viewOk = el.getAttribute('data-album-view-section') === view;
+        var bk = el.getAttribute('data-album-book');
+        var bookOk = !bk || bk === b;
+        el.hidden = !(viewOk && bookOk);
       });
       document.body.dataset.albumMode = view;
       // 翻页视图里还要立刻显示对应那一页，否则首屏是一整片空白
       if (view === 'flip') {
         document.querySelectorAll('[data-album-sheet]').forEach(function (el) {
-          el.hidden = Number(el.getAttribute('data-album-sheet')) !== p;
+          el.hidden = el.getAttribute('data-album-book') !== b
+            || Number(el.getAttribute('data-album-sheet')) !== p;
         });
       }
     } catch (e) { /* 隐私模式等异常时保持默认视图 */ }
@@ -228,12 +264,21 @@ const shelfChapters: ShelfChapter[] = albumChapters.map((chapter) => {
 <script>
   const root = document.querySelector<HTMLElement>('[data-album-root]');
   if (root) {
-    const sheets = Array.from(root.querySelectorAll<HTMLElement>('[data-album-sheet]'));
     const mainArea = root.closest<HTMLElement>('.main-area');
-    const totalPages = sheets.reduce((max, sheet) => {
-      const page = Number(sheet.dataset.albumSheet);
-      return page > max ? page : max;
-    }, 0);
+    const allSheets = Array.from(root.querySelectorAll<HTMLElement>('[data-album-sheet]'));
+
+    // 当前正在读哪本书（三本书的对开页各自独立编号，靠 data-album-book 隔离）
+    let currentBook = 'us';
+    // 只属于当前这本书的 sheet
+    let sheets = allSheets.filter(s => s.dataset.albumBook === currentBook);
+    let totalPages = sheets.reduce((max, s) => Math.max(max, Number(s.dataset.albumSheet) || 0), 0);
+
+    function syncBook(bookId: string) {
+      currentBook = bookId;
+      sheets = allSheets.filter(s => s.dataset.albumBook === currentBook);
+      totalPages = sheets.reduce((max, s) => Math.max(max, Number(s.dataset.albumSheet) || 0), 0);
+    }
+
     let current = 0;
     const readerTitle = root.querySelector<HTMLElement>('[data-album-reader-title]');
     const readerVol = root.querySelector<HTMLElement>('[data-album-reader-vol]');
@@ -250,15 +295,21 @@ const shelfChapters: ShelfChapter[] = albumChapters.map((chapter) => {
 
     function showPage(page: number) {
       current = Math.max(0, Math.min(totalPages, page));
-      sheets.forEach(s => {
-        s.hidden = Number(s.dataset.albumSheet) !== current;
+      // 隐藏所有书的页，只点亮当前这本书的目标页
+      allSheets.forEach(s => {
+        s.hidden = s.dataset.albumBook !== currentBook || Number(s.dataset.albumSheet) !== current;
       });
       const url = new URL(window.location.href);
       if (current === 0) url.searchParams.delete('p');
       else url.searchParams.set('p', String(current));
+      if (currentBook === 'us') url.searchParams.delete('book');
+      else url.searchParams.set('book', currentBook);
       window.history.replaceState({}, '', url);
-      // 双保险：页码另存一份，URL 参数丢失时也能还原
-      try { localStorage.setItem('album-page', String(current)); } catch { /* 隐私模式忽略 */ }
+      // 双保险：页码与书名另存一份，URL 参数丢失时也能还原
+      try {
+        localStorage.setItem('album-page', String(current));
+        localStorage.setItem('album-book', currentBook);
+      } catch { /* 隐私模式忽略 */ }
       // 同步阅读顶栏与底部页码条
       const activeSheet = sheets.find(s => Number(s.dataset.albumSheet) === current);
       // 顶栏当「章节指示器」用：优先显示所属章节，没有则退回该页标题
@@ -271,13 +322,19 @@ const shelfChapters: ShelfChapter[] = albumChapters.map((chapter) => {
       requestAnimationFrame(fitActiveSheet);
     }
 
-    // ── 三层视图切换：book（书馆书架）→ shelf（章节书架）→ flip（翻页） ──
+    // ── 三层视图切换：book（书馆书架）→ shelf（章节书架）→ flip（翻页）/ pet（装订中） ──
     type AlbumView = 'book' | 'shelf' | 'flip' | 'pet';
     const viewSections = root.querySelectorAll<HTMLElement>('[data-album-view-section]');
     let currentView: AlbumView = 'book';
-    function setView(view: AlbumView) {
+    function setView(view: AlbumView, bookId = currentBook) {
+      syncBook(bookId);
       currentView = view;
-      viewSections.forEach(s => { s.hidden = s.dataset.albumViewSection !== view; });
+      // 视图要匹配，且（如果是书架层）要匹配当前这本书
+      viewSections.forEach(s => {
+        const viewOk = s.dataset.albumViewSection === view;
+        const bookOk = !s.dataset.albumBook || s.dataset.albumBook === bookId;
+        s.hidden = !(viewOk && bookOk);
+      });
       try { localStorage.setItem('album-view', view); } catch { /* 隐私模式忽略 */ }
       // 黑场阅读模式（body 级主题切换）
       document.body.dataset.albumMode = view;
@@ -285,27 +342,31 @@ const shelfChapters: ShelfChapter[] = albumChapters.map((chapter) => {
       if (view === 'flip') fitActiveSheet();
     }
 
-    // 书馆书架：按书分发 ——《我们》→ 章节书架，《它们》→ 装订占位
+    // 书馆书架：按书分发 —— 有内容的进章节书架，未装订的进占位页
     root.querySelectorAll<HTMLButtonElement>('[data-album-book-open]').forEach(btn => {
       btn.addEventListener('click', () => {
-        setView(btn.dataset.albumBookOpen === 'pet' ? 'pet' : 'shelf');
+        const bookId = btn.dataset.albumBookOpen || 'us';
+        const isPending = btn.classList.contains('is-pending');
+        if (isPending) { setView('pet', bookId); return; }
+        showPage(0);
+        setView('shelf', bookId);
       });
     });
-    // 《它们》装订占位 → 书馆书架
+    // 装订占位 → 书馆书架
     root.querySelector<HTMLButtonElement>('[data-album-pet-back]')
-      ?.addEventListener('click', () => setView('book'));
-    // 章节书架 → 书本
-    root.querySelector<HTMLButtonElement>('[data-album-book-back]')
-      ?.addEventListener('click', () => setView('book'));
-    // 翻页 → 章节书架
+      ?.addEventListener('click', () => setView('book', 'us'));
+    // 章节书架 → 书本（每本书一个按钮，都要绑）
+    root.querySelectorAll<HTMLButtonElement>('[data-album-book-back]').forEach(b =>
+      b.addEventListener('click', () => setView('book', 'us')));
+    // 翻页 → 章节书架（回到当前这本书）
     root.querySelector<HTMLButtonElement>('[data-album-shelf-back]')
-      ?.addEventListener('click', () => setView('shelf'));
+      ?.addEventListener('click', () => setView('shelf', currentBook));
 
-    // ── 章节书架：点击章节 → 进入该章节的对开页 ──
-    root.querySelectorAll<HTMLElement>('[data-shelf-chapter]').forEach(book => {
-      book.addEventListener('click', () => {
-        showPage(Number(book.dataset.shelfChapterPage) || 1);
-        setView('flip');
+    // ── 章节书架：点击章节 → 进入该章节的对开页（当前书的）──
+    root.querySelectorAll<HTMLElement>('[data-shelf-chapter]').forEach(node => {
+      node.addEventListener('click', () => {
+        showPage(Number(node.dataset.shelfChapterPage) || 1);
+        setView('flip', currentBook);
       });
     });
 
@@ -315,7 +376,7 @@ const shelfChapters: ShelfChapter[] = albumChapters.map((chapter) => {
       b.addEventListener('click', () => showPage(current + 1)));
     // 封面「翻开相册」等页内跳转
     root.querySelectorAll<HTMLButtonElement>('[data-album-goto]').forEach(b =>
-      b.addEventListener('click', () => { showPage(Number(b.dataset.albumGoto) || 0); setView('flip'); }));
+      b.addEventListener('click', () => { showPage(Number(b.dataset.albumGoto) || 0); setView('flip', currentBook); }));
 
     // ── 点击书页两侧翻页（避开照片按钮等交互元素）──
     root.querySelectorAll<HTMLElement>('[data-album-sheet]').forEach(sheet => {
@@ -350,21 +411,27 @@ const shelfChapters: ShelfChapter[] = albumChapters.map((chapter) => {
       if (event.key === 'ArrowLeft') { event.preventDefault(); showPage(current - 1); }
     });
 
-    // 初始状态：优先 URL 的 ?p=（可分享的深链），其次读本地备份的页码，最后才退回视图层级。
+    // 初始状态：优先 URL 的 ?p= 与 ?book=（可分享的深链），其次本地备份，最后退回书本层。
     // 刷新 / 开发热重载后要停在原来那一页，所以这里不再把 ?p 从地址栏删掉。
-    const pageFromUrl = Number(new URLSearchParams(window.location.search).get('p')) || 0;
+    const initParams = new URLSearchParams(window.location.search);
+    const pageFromUrl = Number(initParams.get('p')) || 0;
+    const bookFromUrl = initParams.get('book') || '';
     let pageFromStore = 0;
     let savedView: string | null = null;
+    let bookFromStore = '';
     try {
       pageFromStore = Number(localStorage.getItem('album-page')) || 0;
       savedView = localStorage.getItem('album-view');
+      bookFromStore = localStorage.getItem('album-book') || '';
     } catch { /* 隐私模式忽略 */ }
+    const initialBook = bookFromUrl || bookFromStore || 'us';
     const initialPage = pageFromUrl || pageFromStore;
     const initialView: AlbumView = initialPage > 0
       ? 'flip'
       : (savedView === 'shelf' || savedView === 'pet' ? savedView : 'book');
+    syncBook(initialBook);
     showPage(initialPage);
-    setView(initialView);
+    setView(initialView, initialBook);
     window.addEventListener('resize', fitActiveSheet);
   }
 
