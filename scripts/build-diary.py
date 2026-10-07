@@ -80,10 +80,16 @@ for fname in sorted(os.listdir(DIARY_DIR)):
                 start = match.group(2)
                 end = match.group(3)
                 time = f'{start}-{end}'
-                desc = match.group(4).strip()
+                # 语义标签只用于统计，不进 desc：
+                # 标签写在 ⏳ 之前会落进 desc，导致前端把它显示出来，
+                # 并让 `task.desc === '睡觉'` 这类精确匹配失效（睡眠统计命不中）。
+                # 所以这里把标签剥离成独立的 areas 字段（前端 taskAreas() 优先读它）。
+                desc_raw = match.group(4).strip()
                 area_tags = sorted(set(re.findall(r'(?<!\S)#area/[A-Za-z0-9_-]+', line)))
+                areas = sorted({tag.split('/', 1)[1] for tag in area_tags})
+                desc = re.sub(r'\s*(?<!\S)#area/[A-Za-z0-9_-]+', '', desc_raw).strip()
                 study_areas = {'study', 'dev', 'research'}
-                is_study = any(tag.split('/', 1)[1] in study_areas for tag in area_tags)
+                is_study = any(area in study_areas for area in areas)
                 is_cooking = '做饭' in desc
                 meal_type = classify_meal(start) if is_cooking else None
                 dish_guess = extract_dish(desc) if is_cooking else None
@@ -95,6 +101,8 @@ for fname in sorted(os.listdir(DIARY_DIR)):
                     'mealType': meal_type,
                     'dishGuess': dish_guess,
                 }
+                if areas:
+                    task['areas'] = areas
                 if is_study:
                     task['isStudy'] = True
                 tasks.append(task)
