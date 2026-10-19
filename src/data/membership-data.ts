@@ -16,7 +16,7 @@ export const membershipRecords = [
   { name: 'explore.poker-plus', expireDate: '2026-09-08', willRenew: false, price: 35, cycleMonths: 1, tags: ['AI'], note: '', icon: '../assets/membership/explore-poker.png', url: 'https://ai.explore.poker/chat' },
   { name: 'ChatGPT Plus 会员 3', expireDate: '2026-08-12', willRenew: false, price: 25, cycleMonths: 1, tags: ['AI'], note: '号过期的第 4 天，ChatGPT 网页端才失效，但是 Codex 端仍可以使用；失效后的第 7 天，Codex 就变成 free。', icon: '../assets/membership/chatgpt.png' },
   { name: 'ChatGPT Plus 会员 4', expireDate: '2026-08-18', willRenew: false, price: 29, cycleMonths: 1, tags: ['AI'], note: '已失效（8/19 凌晨 2 点开通，下午 16 点就死掉了，账号被封）；邮箱是随机生成的（不是 iCloud 和谷歌邮箱）；绑定的是英国那边的银行卡。', icon: '../assets/membership/chatgpt.png' },
-  { name: 'ChatGPT Plus 会员 5', expireDate: '2026-09-18', willRenew: true, price: 36.04, cycleMonths: 1, tags: ['AI'], note: '8/19 开通，30 天；这次用的是谷歌邮箱，是用越南银行卡买的', icon: '../assets/membership/chatgpt.png' },
+  { name: 'ChatGPT Plus 会员 5', expireDate: '2026-09-18', willRenew: false, price: 36.04, cycleMonths: 1, tags: ['AI'], note: '8/19 开通，30 天；这次用的是谷歌邮箱，是用越南银行卡买的。已于 2026 年 10 月 18 日彻底过期（9/18 订阅到期后又活了约 30 天），累计存活约 60 天。', icon: '../assets/membership/chatgpt.png' },
   { name: '阿里 qoder 国际版', expireDate: '2026-09-30', willRenew: false, price: 0, cycleMonths: 1, tags: ['AI'], note: '800 次千问 3.8 max 调用', icon: '../assets/membership/qoder.png' },
   { name: '88vip➕网易云➕优酷年会员', expireDate: '2026-09-30', willRenew: false, price: 0, cycleMonths: 12, tags: ['购物'], note: '' },
   { name: '百度云', expireDate: '2027-09-13', willRenew: false, price: 148, cycleMonths: 12, tags: ['网盘'], note: '学生优惠148一年', icon: '../assets/membership/baidu-netdisk.svg' },
@@ -35,4 +35,5 @@ export const membershipRecords = [
   { name: '阿里 qoder 4000 积分', expireDate: '2026-09-30', willRenew: false, price: 0, cycleMonths: null, tags: ['AI'], note: '9/30 前开通可以有 4000 积分送', icon: '../assets/membership/qoder.png', url: 'https://docs.qoder.cn/events/bogo?spm=5176.28644950.0.0.1df579bb3dM2AI' },
   { name: 'workbuddy 1000 积分领取', expireDate: '2026-10-31', willRenew: false, price: 0, cycleMonths: null, tags: ['其他'], note: '只要认证的大学生都可以领取这 1000 积分', icon: '../assets/membership/workbuddy.svg', url: 'https://www.workbuddy.cn/events/campus-freshman/' },
   { name: '芒果 TV 会员', expireDate: '2026-11-05', willRenew: true, price: 9, cycleMonths: 1, tags: ['视频'], note: '10/5 开通，首两个月 9 元，原价 22 元/月，暂时开着自动续费', icon: '../assets/membership/mango.ico' },
+  { name: 'Figma 教育专业版', expireDate: '2027-10-10', willRenew: false, price: 35, cycleMonths: 12, tags: ['工具'], note: '10/10 开通教育专业版，一年 35 元，不打算续费', icon: '../assets/membership/figma.ico' },
 ];
