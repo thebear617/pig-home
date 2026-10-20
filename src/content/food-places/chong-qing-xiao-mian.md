@@ -12,6 +12,6 @@ lng: 108.804385
 lat: 34.130613
 date: '2026-07-31'
 note: 炸酱面 ¥11，味道一般
-status: tried
+status: no
 coordinateStatus: confirmed
 ---

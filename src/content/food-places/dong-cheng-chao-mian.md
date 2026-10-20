@@ -10,7 +10,7 @@ dishes:
     note: 味道可以
 date: '2026-07-31'
 note: 炒饼丝 ¥11，味道可以
-status: tried
+status: no
 lng: 108.728806
 lat: 34.205541
 coordinateStatus: confirmed

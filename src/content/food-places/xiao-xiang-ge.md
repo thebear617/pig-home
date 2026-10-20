@@ -13,7 +13,7 @@ dishes:
     note: 很一般，除了辣没味道还贵
 date: '2026-07-17'
 note: 酸菜粉皮和牛蛙很一般，除了辣没味道还贵；金钱蛋不错，价格实惠
-status: tried
+status: no
 lng: 108.882251
 lat: 34.194826
 coordinateStatus: confirmed

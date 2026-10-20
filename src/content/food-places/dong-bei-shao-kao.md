@@ -12,7 +12,7 @@ dishes:
   - name: 烤羊肉
 date: '2026-07-09'
 note: 酱味很浓，偏甜口
-status: tried
+status: no
 lng: 108.82032
 lat: 34.125024
 coordinateStatus: confirmed

@@ -16,7 +16,7 @@ dishes:
     price: '¥8/串'
     note: 其他菜没有记忆点，味道一般，都比较贵
 note: 有点像烧烤类型的小酒馆，但比不上正规酒馆，实力小于名气。人均65元，吃得一般，价格偏贵。
-status: tried
+status: no
 lng: 108.322723
 lat: 22.819602
 coordinateStatus: confirmed

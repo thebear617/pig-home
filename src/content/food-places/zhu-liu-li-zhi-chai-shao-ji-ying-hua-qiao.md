@@ -10,7 +10,7 @@ dishes:
 address: 亭江路17号HAB33-34
 date: '2026-08-11'
 note: 其他的烧烤也偏贵。
-status: tried
+status: no
 lng: 108.325254
 lat: 22.774224
 coordinateStatus: confirmed

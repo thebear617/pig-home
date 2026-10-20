@@ -13,7 +13,7 @@ dishes:
     note: 很好吃
 date: '2026-07-27'
 note: 小炒肉盖浇饭味道一般；韭菜炒蛋盖浇饭比较不错，就是有点寡淡；泡菜肉丝盖浇饭很好吃
-status: tried
+status: no
 lng: 108.82032
 lat: 34.125024
 coordinateStatus: confirmed

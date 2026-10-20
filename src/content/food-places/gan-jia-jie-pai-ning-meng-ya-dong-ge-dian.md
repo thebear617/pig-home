@@ -16,7 +16,7 @@ dishes:
     price: '¥58'
     note: 味道还可以，蘸酱蛮好吃的
 note: 鸭肉也就那样，吃起来比较一般，其他菜也没什么特色，中规中矩。
-status: tried
+status: no
 lng: 108.356224
 lat: 22.826846
 coordinateStatus: confirmed

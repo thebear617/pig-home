@@ -9,7 +9,7 @@ export const TABS: Tab[] = [
   { id: 'home-archive', title: '家居档案', icon: '🏠' },
   { id: 'food-records', title: '厨房工作台', icon: '🍳', months: true },
   { id: 'schedule-finance', title: '日程和财务', icon: '📅', months: true },
-  { id: 'food-map', title: '美食地图', icon: '🗺️' },
+  { id: 'food-map', title: '地图', icon: '🗺️' },
   { id: 'relationship-timeline', title: '关系时间线', icon: '💞' },
   { id: 'couple-album', title: '相簿', icon: '📸' },
 ];

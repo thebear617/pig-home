@@ -54,8 +54,8 @@ const foodPlacesCollection = defineCollection({
     address: z.string(),
     date: z.string(),
     note: z.string().default(''),
-    // 状态必填，4 档：recommend推荐 / tried一般 / no不推荐 / wanna还没去吃过（不再靠 note 推断）
-    status: z.enum(['recommend', 'tried', 'no', 'wanna']).default('wanna'),
+    // 状态必填，3 档：recommend推荐 / no不推荐 / wanna还没去过（原「一般」已并入不推荐，不再靠 note 推断）
+    status: z.enum(['recommend', 'no', 'wanna']).default('wanna'),
     lng: z.number().optional(),
     lat: z.number().optional(),
     // 坐标状态默认 pending（待补全），confirmed/unavailable 显式标注
@@ -73,8 +73,8 @@ const foodRegion = z.object({
   address: z.string(),
   // 评价正文（整体感受、值得去的点、避坑提示等）
   note: z.string(),
-  // 状态（必填）：recommend 推荐 / tried 一般 / no 不推荐 / wanna 想去
-  status: z.enum(['recommend', 'tried', 'no', 'wanna']),
+  // 状态（必填）：recommend 推荐 / no 不推荐 / wanna 想去（「一般」已并入不推荐）
+  status: z.enum(['recommend', 'no', 'wanna']),
   // 10 分制评分（可选）：去过打分；wanna 未去可不填
   score: z.number().min(0).max(10).optional(),
   // 区域中心点坐标（必填）
@@ -85,6 +85,30 @@ const foodRegion = z.object({
 const foodRegionsCollection = defineCollection({
   loader: glob({ pattern: '**/*.md', base: './src/content/food-regions' }),
   schema: foodRegion,
+});
+
+// 学习/自习好去处集合：评价维度与餐厅完全不同（插座、适用场景），故独立成集合，
+// 但共用「地图」页的视图与筛选；新增其他业态时按同样方式再加一个集合即可。
+const studySpotsCollection = defineCollection({
+  loader: glob({ pattern: '**/*.md', base: './src/content/study-spots' }),
+  schema: z.object({
+    name: z.string(),
+    city: z.string(),
+    // 片区（可选）：地图上的地区筛选用
+    region: z.string().default(''),
+    address: z.string(),
+    // 插座情况，三选一
+    power: z.enum(['插座充足', '仅大桌可插', '插座少']),
+    // 适用场景，可多选：打卡 / 商务 / 自习
+    scene: z.array(z.enum(['适合打卡', '适合商务', '适合自习'])).default([]),
+    // 状态：recommend 推荐 / no 不推荐 / wanna 想去
+    status: z.enum(['recommend', 'no', 'wanna']).default('wanna'),
+    // 备注：一段话自由评价
+    note: z.string().default(''),
+    lng: z.number().optional(),
+    lat: z.number().optional(),
+    coordinateStatus: z.enum(['confirmed', 'pending', 'unavailable']).default('pending'),
+  }),
 });
 
 const tripsCollection = defineCollection({
@@ -134,6 +158,7 @@ export const collections = {
   procurement: procurementCollection,
   'food-places': foodPlacesCollection,
   'food-regions': foodRegionsCollection,
+  'study-spots': studySpotsCollection,
   trips: tripsCollection,
   'xian-trips': xianTripsCollection,
   quarrels: quarrelsCollection,

@@ -15,7 +15,7 @@ dishes:
     note: 还可以
 date: '2026-07-22'
 note: 下次点餐建议：尽量点 12.8 元以下的菜
-status: tried
+status: no
 lng: 108.728806
 lat: 34.205541
 coordinateStatus: confirmed

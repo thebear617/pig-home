@@ -3324,5 +3324,12 @@ export const expenseRecords = [
     "sub": "交通·充电",
     "amount": 2.0,
     "note": "给小车充电瓶"
+  },
+  {
+    "date": "2026-10-19",
+    "cat": "居家生活",
+    "sub": "厨房用品·福临门食用油 900ml",
+    "amount": 4.9,
+    "note": ""
   }
 ];
