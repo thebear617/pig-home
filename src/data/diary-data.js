@@ -14641,7 +14641,7 @@ export const diaryRecords = {
     ]
   },
   "2026-10-19": {
-    "value": 10,
+    "value": 11,
     "tasks": [
       {
         "status": "x",
@@ -14753,6 +14753,163 @@ export const diaryRecords = {
           "study"
         ],
         "isStudy": true
+      },
+      {
+        "status": "x",
+        "time": "23:00-24:00",
+        "desc": "和过马路看《花儿与少年》",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null,
+        "areas": [
+          "chill"
+        ]
+      }
+    ]
+  },
+  "2026-10-20": {
+    "value": 9,
+    "tasks": [
+      {
+        "status": "x",
+        "time": "00:00-08:40",
+        "desc": "睡觉",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null,
+        "areas": [
+          "sleep"
+        ]
+      },
+      {
+        "status": "x",
+        "time": "08:40-10:40",
+        "desc": "学习",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null,
+        "areas": [
+          "study"
+        ],
+        "isStudy": true
+      },
+      {
+        "status": "x",
+        "time": "10:40-12:00",
+        "desc": "和过马路去学校吃饭，吃的是爆肚面",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null,
+        "areas": [
+          "routine"
+        ]
+      },
+      {
+        "status": "x",
+        "time": "12:00-12:30",
+        "desc": "给大头贴减肥公告，然后洗头",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null,
+        "areas": [
+          "routine"
+        ]
+      },
+      {
+        "status": "x",
+        "time": "12:30-14:00",
+        "desc": "回家煮了薏米红豆水，还采购了酸奶、面包、饮料",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null,
+        "areas": [
+          "routine"
+        ]
+      },
+      {
+        "status": "x",
+        "time": "14:00-19:00",
+        "desc": "学习",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null,
+        "areas": [
+          "study"
+        ],
+        "isStudy": true
+      },
+      {
+        "status": "x",
+        "time": "19:00-20:30",
+        "desc": "去学校吃三顾冒菜",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null,
+        "areas": [
+          "routine"
+        ]
+      },
+      {
+        "status": "x",
+        "time": "20:30-23:00",
+        "desc": "学习",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null,
+        "areas": [
+          "study"
+        ],
+        "isStudy": true
+      },
+      {
+        "status": "x",
+        "time": "23:00-24:00",
+        "desc": "玩手机",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null,
+        "areas": [
+          "chill"
+        ]
+      }
+    ]
+  },
+  "2026-10-21": {
+    "value": 3,
+    "tasks": [
+      {
+        "status": "x",
+        "time": "00:00-08:00",
+        "desc": "睡觉",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null,
+        "areas": [
+          "sleep"
+        ]
+      },
+      {
+        "status": "x",
+        "time": "08:00-09:00",
+        "desc": "学习",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null,
+        "areas": [
+          "study"
+        ],
+        "isStudy": true
+      },
+      {
+        "status": "x",
+        "time": "09:00-09:30",
+        "desc": "下去买包子",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null,
+        "areas": [
+          "routine"
+        ]
       }
     ]
   }
