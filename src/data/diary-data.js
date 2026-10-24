@@ -14875,7 +14875,7 @@ export const diaryRecords = {
     ]
   },
   "2026-10-21": {
-    "value": 3,
+    "value": 10,
     "tasks": [
       {
         "status": "x",
@@ -14904,6 +14904,406 @@ export const diaryRecords = {
         "status": "x",
         "time": "09:00-09:30",
         "desc": "下去买包子",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null,
+        "areas": [
+          "routine"
+        ]
+      },
+      {
+        "status": "x",
+        "time": "09:30-12:00",
+        "desc": "继续学习",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null,
+        "areas": [
+          "study"
+        ],
+        "isStudy": true
+      },
+      {
+        "status": "x",
+        "time": "12:00-14:30",
+        "desc": "和过马路回学校吃三顾冒菜，看大头",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null,
+        "areas": [
+          "routine"
+        ]
+      },
+      {
+        "status": "x",
+        "time": "14:30-18:00",
+        "desc": "继续学习",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null,
+        "areas": [
+          "study"
+        ],
+        "isStudy": true
+      },
+      {
+        "status": "x",
+        "time": "18:00-19:00",
+        "desc": "和过马路吃皇家泡馍",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null,
+        "areas": [
+          "routine"
+        ]
+      },
+      {
+        "status": "x",
+        "time": "19:00-23:00",
+        "desc": "和王广轩他们打扑克",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null,
+        "areas": [
+          "social"
+        ]
+      },
+      {
+        "status": "x",
+        "time": "23:00-23:30",
+        "desc": "回家，充了个电瓶",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null,
+        "areas": [
+          "routine"
+        ]
+      },
+      {
+        "status": "x",
+        "time": "23:30-24:00",
+        "desc": "洗漱睡觉，和过马路一起看《花儿与少年》",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null,
+        "areas": [
+          "chill",
+          "routine"
+        ]
+      }
+    ]
+  },
+  "2026-10-22": {
+    "value": 9,
+    "tasks": [
+      {
+        "status": "x",
+        "time": "00:00-00:30",
+        "desc": "和过马路一起看《花儿与少年》",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null,
+        "areas": [
+          "chill"
+        ]
+      },
+      {
+        "status": "x",
+        "time": "00:30-11:30",
+        "desc": "睡觉",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null,
+        "areas": [
+          "sleep"
+        ]
+      },
+      {
+        "status": "x",
+        "time": "11:30-12:30",
+        "desc": "和过马路吃了沙县小吃",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null,
+        "areas": [
+          "routine"
+        ]
+      },
+      {
+        "status": "x",
+        "time": "12:30-15:40",
+        "desc": "学习",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null,
+        "areas": [
+          "study"
+        ],
+        "isStudy": true
+      },
+      {
+        "status": "x",
+        "time": "15:40-16:00",
+        "desc": "洗澡",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null,
+        "areas": [
+          "routine"
+        ]
+      },
+      {
+        "status": "x",
+        "time": "16:00-22:00",
+        "desc": "和陈鹏宇去万象城逛生命之树，吃了很贵的自助烤肉，还逛了陕颂文创店",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null,
+        "areas": [
+          "social"
+        ]
+      },
+      {
+        "status": "x",
+        "time": "22:00-22:30",
+        "desc": "骑车回家，买了赵一鸣的零食",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null,
+        "areas": [
+          "routine"
+        ]
+      },
+      {
+        "status": "x",
+        "time": "22:30-23:00",
+        "desc": "回来给过马路吃蛋糕、吃甜品，收拾倒垃圾，打车",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null,
+        "areas": [
+          "routine"
+        ]
+      },
+      {
+        "status": "x",
+        "time": "23:00-24:00",
+        "desc": "学习",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null,
+        "areas": [
+          "study"
+        ],
+        "isStudy": true
+      }
+    ]
+  },
+  "2026-10-23": {
+    "value": 12,
+    "tasks": [
+      {
+        "status": "x",
+        "time": "00:00-09:30",
+        "desc": "睡觉",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null,
+        "areas": [
+          "sleep"
+        ]
+      },
+      {
+        "status": "x",
+        "time": "09:30-10:30",
+        "desc": "学习",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null,
+        "areas": [
+          "study"
+        ],
+        "isStudy": true
+      },
+      {
+        "status": "x",
+        "time": "10:30-11:00",
+        "desc": "出门买早餐，爬楼梯买了包子",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null,
+        "areas": [
+          "routine"
+        ]
+      },
+      {
+        "status": "x",
+        "time": "11:00-12:30",
+        "desc": "学习",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null,
+        "areas": [
+          "study"
+        ],
+        "isStudy": true
+      },
+      {
+        "status": "x",
+        "time": "12:30-13:00",
+        "desc": "和过马路出门吃油泼面",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null,
+        "areas": [
+          "routine"
+        ]
+      },
+      {
+        "status": "x",
+        "time": "13:00-15:45",
+        "desc": "学习",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null,
+        "areas": [
+          "study"
+        ],
+        "isStudy": true
+      },
+      {
+        "status": "x",
+        "time": "15:45-18:00",
+        "desc": "学习",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null,
+        "areas": [
+          "study"
+        ],
+        "isStudy": true
+      },
+      {
+        "status": "x",
+        "time": "18:00-19:00",
+        "desc": "去三顾冒菜吃饭",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null,
+        "areas": [
+          "routine"
+        ]
+      },
+      {
+        "status": "x",
+        "time": "19:00-22:30",
+        "desc": "和薛浩元、王麒量他们打球",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null,
+        "areas": [
+          "social"
+        ]
+      },
+      {
+        "status": "x",
+        "time": "22:30-23:00",
+        "desc": "回家收拾、洗澡、洗衣服",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null,
+        "areas": [
+          "routine"
+        ]
+      },
+      {
+        "status": "x",
+        "time": "23:00-23:50",
+        "desc": "学习",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null,
+        "areas": [
+          "study"
+        ],
+        "isStudy": true
+      },
+      {
+        "status": "x",
+        "time": "23:50-24:00",
+        "desc": "打电动",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null,
+        "areas": [
+          "game"
+        ]
+      }
+    ]
+  },
+  "2026-10-24": {
+    "value": 6,
+    "tasks": [
+      {
+        "status": "x",
+        "time": "00:00-01:00",
+        "desc": "打电动",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null,
+        "areas": [
+          "game"
+        ]
+      },
+      {
+        "status": "x",
+        "time": "01:00-02:00",
+        "desc": "玩手机",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null,
+        "areas": [
+          "chill"
+        ]
+      },
+      {
+        "status": "x",
+        "time": "02:00-10:30",
+        "desc": "睡觉",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null,
+        "areas": [
+          "sleep"
+        ]
+      },
+      {
+        "status": "x",
+        "time": "10:30-11:00",
+        "desc": "洗漱",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null,
+        "areas": [
+          "routine"
+        ]
+      },
+      {
+        "status": "x",
+        "time": "11:00-11:30",
+        "desc": "学习",
+        "isCooking": false,
+        "mealType": null,
+        "dishGuess": null,
+        "areas": [
+          "study"
+        ],
+        "isStudy": true
+      },
+      {
+        "status": "x",
+        "time": "11:30-12:30",
+        "desc": "来学校剪头发吃饭",
         "isCooking": false,
         "mealType": null,
         "dishGuess": null,
